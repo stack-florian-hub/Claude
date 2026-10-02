@@ -120,7 +120,7 @@ const TRIBUNAUX=["Nantes","Saint-Nazaire","La Roche-sur-Yon","Les Sables-d'Olonn
 const STATUTS={repere:"Repéré",analyse:"Analysé",plafond:"Plafond fixé",enchere:"Enchère mandatée",gagne:"Gagné",perdu:"Non gagné",retire:"Retiré / reporté",revendu:"Revendu",horsjeu:"Écarté"};
 const FUNNEL=["repere","analyse","plafond","enchere","gagne","revendu"];
 const DEF={cash:50000,financement:0,reserve:5000,fraisFixe:2500,fraisPct:0.10,droitsPct:0.00715,droitsCommun:0.0581,csiPct:0.001,agence:0.05,multCible:2,multConfort:3,margeMin:10000,honoraires:2000,publication:450,autresDefaut:3000,coutTentative:220,cautionMin:3000,cautionPct:0.10,portageMois:250};
-const S={lots:[],resultats:[],contacts:[],actions:[],archives:[],params:{...DEF},db:null,ro:false,tab:"pilotage",lotSel:null};
+const S={lots:[],resultats:[],contacts:[],actions:[],archives:[],veille:[],params:{...DEF},db:null,ro:false,tab:"pilotage",lotSel:null};
 
 /* ---------- utilitaires ---------- */
 const $=s=>document.querySelector(s);
@@ -274,6 +274,7 @@ function vPilotage(){
     ${kpi("Prochaine audience",next?fdate(next.audience):"aucune",next?esc(next.titre)+" · J-"+days(next.audience):"")}
     ${kpi("Priorité 1",String(prio),ranked.length+" lots actifs")}
   </div>
+  ${veillePanel()}
   ${digest(al,ranked,openA)}
   <div class="grid2">
     <section class="panel"><div class="panel-head"><h2>Alertes</h2><span class="muted small">${al.length} point${al.length>1?"s":""}</span></div>
@@ -304,6 +305,13 @@ function vPilotage(){
 function reach(l){const i=FUNNEL.indexOf(l.statut);return i>=0?i:l.statut==="perdu"?3:0}
 function modelErr(){const e=errStats();return e.n?`Erreur moyenne prédit vs réel : <b class="num">${pct(e.mae)}</b> sur ${e.n} lot${e.n>1?"s":""} suivi${e.n>1?"s":""}.`:""}
 function errStats(){const p=S.lots.filter(l=>num(l.predit)&&num(l.adjuge));return{n:p.length,mae:p.length?p.reduce((s,l)=>s+Math.abs(+l.predit-+l.adjuge)/+l.adjuge,0)/p.length:null}}
+function veillePanel(){
+  const v=[...S.veille].sort((a,b)=>b.id.localeCompare(a.id))[0];
+  if(!v)return `<section class="panel"><h2>Veille automatique</h2><div class="small muted">Aucun passage pour l'instant. Claude relève chaque lundi matin les nouvelles ventes, les changements et les adjudications, et note ici ce qu'il a fait.</div></section>`;
+  const L=(t,a)=>a&&a.length?`<div><h3>${t}</h3><ul class="check small">${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"";
+  return `<section class="panel"><div class="panel-head"><h2>Veille du ${fdate(v.id)}</h2><span class="small muted">${esc(v.resume||"")}</span></div>
+  <div class="grid2">${L("Nouveaux lots",v.nouveaux)}${L("Changements",v.changements)}${L("Adjudications relevées",v.resultats)}${L("Sources inaccessibles",v.bloquees)}</div></section>`;
+}
 function digest(al,ranked,openA){
   const acts=[...openA.slice(0,5).map(a=>a.titre)];
   const top=ranked.filter(r=>days(r.l.audience)>=0).slice(0,3);
@@ -476,7 +484,7 @@ render();
   try{const u=await window.claude.use("user");const w=u?await u.can("data.write"):null;if(w===false){S.ro=true;$("#dbstatus").textContent="Lecture seule"}}catch(_){}
   let t=null;const sched=()=>{clearTimeout(t);t=setTimeout(render,30)};
   const err=e=>{$("#dbstatus").textContent="Base interrompue : recharge la page ("+e.code+")"};
-  ["lots","resultats","contacts","actions","archives"].forEach(c=>db.collection(c).onSnapshot(s=>{S[c]=s.docs.map(d=>({id:d.id,...d.data()}));sched()},err));
+  ["lots","resultats","contacts","actions","archives","veille"].forEach(c=>db.collection(c).onSnapshot(s=>{S[c]=s.docs.map(d=>({id:d.id,...d.data()}));sched()},err));
   db.doc("params/global").onSnapshot(s=>{S.params={...DEF,...(s.exists?s.data():{})};sched()},err);
 })();
 })();
