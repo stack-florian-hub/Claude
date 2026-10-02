@@ -64,9 +64,9 @@ def detail(path):
     d["titre"], d["commune"] = (m.group(1), m.group(2)) if m else ("", "")
     d["type"] = typ(d["titre"])
     trib = next((l for l in L if l.startswith("Tribunal")), "")
-    m = re.search(r"Tribunal (?:Judiciaire|de Grande Instance|Judiciaire de Proximité) d[eu'] ?(?:la )?(.+?)\s*(?:\(|$)", trib)
+    m = re.search(r"Tribunal (?:Judiciaire|de Grande Instance|Judiciaire de Proximité) (?:de |d'|du )(.+?)\s*(?:\(|$)", trib)
     d["tribunal_brut"] = re.sub(r"\s+", " ", trib)
-    d["tribunal"] = m.group(1).strip().replace("LA ROCHE", "La Roche").title().replace("Sur", "sur").replace("D'", "d'") if m else ""
+    d["tribunal"] = re.sub(r"\s+", " ", m.group(1)).strip() if m else ""
     i = next((k for k, l in enumerate(L) if l.startswith("Vente aux enchères publiques")), None)
     d["date"] = date_fr(L[i + 1]) if i is not None and i + 1 < len(L) else None
     j = " ".join(L)
@@ -91,7 +91,7 @@ def detail(path):
     return d
 
 def listing(region, hist):
-    rows, p = [], 1
+    rows, p, seen = [], 1, set()
     while True:
         url = f"{BASE}/ventes-aux-encheres-immobilieres/{region}.html?" + ("type=H&" if hist else "") + f"p={p}"
         s = get(url)
@@ -99,9 +99,11 @@ def listing(region, hist):
         if not links:
             break
         dates = re.findall(r"(\d{2})-(\d{2})-(\d{4})\s*:", "\n".join(text(s)))
-        if hist and dates and all(f"{y}-{m}-{d}" < CUTOFF for d, m, y in dates):
+        new = [l for l in dict.fromkeys(links) if l[0] not in seen]
+        if not new:
             break
-        for path, dept, ref in dict.fromkeys(links):
+        for path, dept, ref in new:
+            seen.add(path)
             if dept in DEPTS:
                 rows.append((path, DEPTS[dept]))
         p += 1

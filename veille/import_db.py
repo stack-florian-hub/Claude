@@ -9,7 +9,7 @@ ZONE = {"Nantes", "Saint-Nazaire", "La Roche-sur-Yon", "Les Sables-d'Olonne", "A
 data = json.load(open(src))
 existing = json.load(open(existing_path)) if os.path.exists(existing_path) else {}
 MAP_MAX = 40000
-TRIB = {"nantes": "Nantes", "saint-nazaire": "Saint-Nazaire", "la roche-sur-yon": "La Roche-sur-Yon", "les sables-d'olonne": "Les Sables-d'Olonne",
+TRIB = {"nantes": "Nantes", "saint-nazaire": "Saint-Nazaire", "saint nazaire": "Saint-Nazaire", "la roche-sur-yon": "La Roche-sur-Yon", "les sables-d'olonne": "Les Sables-d'Olonne",
         "angers": "Angers", "saumur": "Saumur", "tours": "Tours", "blois": "Blois", "le mans": "Le Mans", "laval": "Laval",
         "poitiers": "Poitiers", "orleans": "Orléans", "chateauroux": "Châteauroux", "montargis": "Montargis"}
 
