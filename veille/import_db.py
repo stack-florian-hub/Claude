@@ -4,6 +4,8 @@ Usage : python3 import_db.py licitor.json lots_existants.json OUT_DIR
 import json, os, re, sys, unicodedata
 
 src, existing_path, out = sys.argv[1], sys.argv[2], sys.argv[3]
+vench = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else []
+ZONE = {"Nantes", "Saint-Nazaire", "La Roche-sur-Yon", "Les Sables-d'Olonne", "Angers", "Saumur", "Tours", "Blois", "Le Mans", "Laval", "Poitiers", "Orléans", "Châteauroux", "Montargis"}
 data = json.load(open(src))
 existing = json.load(open(existing_path)) if os.path.exists(existing_path) else {}
 MAP_MAX = 40000
@@ -26,7 +28,7 @@ def clean(d):
 
 docs = []
 for r in data["resultats"]:
-    if not r.get("adjuge") or not r.get("map"):
+    if not r.get("adjuge") or not r.get("map") or trib(r["tribunal"]) not in ZONE:
         continue
     docs.append(("resultats", "lic-" + r["ref"], clean({
         "date": r["date"][:10], "tribunal": trib(r["tribunal"]), "commune": r["commune"], "dept": r["dept"], "type": r["type"],
@@ -53,6 +55,20 @@ for r in data["avenir"]:
         "type": r["type"], "tribunal": trib(r["tribunal"]), "audience": r["date"], "map": r["map"], "surface": r["surface"],
         "occupation": r["occupation"], "poursuivant": r["poursuivant"], "lien": r["lien"], "statut": "repere",
         "notes": (r["description"] + (" | " + r["visite_txt"] if r.get("visite_txt") else ""))[:500]})))
+
+def key(commune, m):
+    return (ascii_(re.sub(r"\s*\(.*", "", commune or ""))[:12], m)
+seen = {key(v["data"].get("commune"), v["data"].get("map")) for v in existing.values()}
+seen |= {key(b["commune"], b["map"]) for _, _, b in new_lots}
+seen |= {key(r["commune"], r.get("map")) for r in data["avenir"]}
+for v in vench:
+    if not v.get("map") or v["map"] > MAP_MAX or not v.get("ref") or key(v["commune"], v["map"]) in seen or v["ref"] in existing:
+        continue
+    seen.add(key(v["commune"], v["map"]))
+    new_lots.append(("lots", v["ref"], clean({
+        "ref": v["ref"], "titre": f'{v["titre"]} {v["commune"]}', "commune": v["commune"], "type": v["type"], "tribunal": v["tribunal"],
+        "audience": v["audience"], "visite": v.get("visite"), "map": v["map"], "surface": v.get("surface"), "occupation": "inconnu",
+        "lien": v.get("lien"), "statut": "repere", "notes": "Source vench.fr (liste publique ; détail réservé aux abonnés). Cahier des conditions de vente à demander à l'avocat poursuivant."})))
 
 os.makedirs(out, exist_ok=True)
 writes = []

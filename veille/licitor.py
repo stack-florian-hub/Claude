@@ -73,7 +73,11 @@ def detail(path):
     m = re.search(r"Adjudication : ([\d  .]+) €", j); d["adjuge"] = eur(m.group(1)) if m else None
     maps = re.findall(r"Mise à prix : ([\d  .]+) €", j); d["map"] = eur(maps[-1]) if maps else None
     d["baisse"] = "oui" if re.search(r"baisse|abaiss", j, re.I) else "non"
-    m = re.search(r"([\d  ]+(?:[,.]\d+)?) ?m²", j); d["surface"] = float(m.group(1).replace(" ", "").replace(" ", "").replace(",", ".")) if m else None
+    m = re.search(r"([\d  ]+(?:[,.]\d+)?) ?m²", j)
+    try:
+        d["surface"] = float(m.group(1).replace(" ", "").replace("\u202f", "").replace("\xa0", "").replace(",", ".")) if m else None
+    except ValueError:
+        d["surface"] = None
     desc_start = next((k for k, l in enumerate(L) if l.lower().startswith(("un ", "une ", "des ", "deux ", "trois ", "lot"))), None)
     desc = L[desc_start:desc_start + 6] if desc_start is not None else []
     desc = desc[:next((k for k, l in enumerate(desc) if l.startswith(("Adjudication", "Mise à prix", "(Mise"))), len(desc))]
@@ -94,12 +98,12 @@ def listing(region, hist):
         links = re.findall(r'href="(/annonce/[^"]+?/([a-z-]+)/(\d+)\.html)"', s)
         if not links:
             break
-        dates = re.findall(r"(\d{2})-(\d{2})-(\d{4}) :", s)
+        dates = re.findall(r"(\d{2})-(\d{2})-(\d{4})\s*:", "\n".join(text(s)))
+        if hist and dates and all(f"{y}-{m}-{d}" < CUTOFF for d, m, y in dates):
+            break
         for path, dept, ref in dict.fromkeys(links):
             if dept in DEPTS:
                 rows.append((path, DEPTS[dept]))
-        if hist and dates and all(f"{y}-{m}-{d}" < CUTOFF for d, m, y in dates):
-            break
         p += 1
         if p > 150:
             break
