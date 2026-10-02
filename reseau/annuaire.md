@@ -8,13 +8,13 @@ Règle : on enchérit uniquement par un avocat inscrit au **barreau du tribunal*
 | Tribunal | Avocat pour enchérir | Statut | Lots concernés |
 |---|---|---|---|
 | TJ Nantes | Me Guillotin (Lexar) ; Me Marquer, Me Luciano en second | OK | Sautron 16/10 |
-| TJ La Roche-sur-Yon | Avocats vendéens (Billaud, Pannozzo...) selon Florian | À confirmer par écrit | Pineaux 12/10, West Campus 02/11 |
+| TJ La Roche-sur-Yon | Me Pannozzo (intervient déjà pour Florian à La Roche) | OK | Pineaux 12/10, West Campus 02/11 |
 | TJ Les Sables-d'Olonne | Me Pannozzo, Me Billaud, Me Yarroudh-Feurion, Me Potier | À appeler | aucun lot suivi |
 | TJ Angers | Me Mérillon-Gourgues (candidate) | À mandater | Contigné 12/10 |
 | TJ Tours | Me Jolly, Me Le Coz (candidats) | À mandater | lots du 13/10 et 10/11 |
 | TJ Blois, Le Mans | aucun | À chercher | Blois 15/10, Le Mans 06/10 |
 
-**Point Pineaux (12/10, TJ La Roche-sur-Yon)** : Florian indique que les avocats vendéens enchérissent aux Sables comme à La Roche. Recherche du 02/10 : ce sont deux ordres distincts (Maison de l'Avocat des Sables, 1 place du Palais de Justice ; La Roche, 54 rue de Verdun). L'article 5 de la loi du 31/12/1971 permet de plaider partout dans le ressort de la cour d'appel (Poitiers), sauf en saisie immobilière, partage et licitation : là, il faut un avocat du barreau du tribunal. Les annonces du TJ des Sables précisent d'ailleurs « avocat inscrit au barreau des Sables-d'Olonne ». Pineaux est une saisie (créancier Crédit Agricole) : faire confirmer par écrit par l'avocat qu'il peut enchérir à La Roche-sur-Yon avant de lui remettre le chèque.
+**Pineaux (12/10, TJ La Roche-sur-Yon)** : Me Pannozzo plaide déjà pour Florian à La Roche-sur-Yon (audience du 05/10). Lui confier l'enchère : mandat, plafond écrit, ordre du chèque, forfaits.
 
 ## Nantes
 - **Me Stéphanie Guillotin**, Cabinet Lexar. 06 11 19 77 74 / 02 40 16 81 60. contact@guillotin-avocat.fr. www.guillotin-avocat.fr. Avocate de Florian. Forfait non retenue 180 € ou 240 € : à confirmer par écrit.
