@@ -64,19 +64,27 @@ def detail(path):
     d["titre"], d["commune"] = (m.group(1), m.group(2)) if m else ("", "")
     d["type"] = typ(d["titre"])
     trib = next((l for l in L if l.startswith("Tribunal")), "")
-    m = re.search(r"Tribunal (?:Judiciaire|de Grande Instance|Judiciaire de Proximité) (?:de |d'|du )(.+?)\s*(?:\(|$)", trib)
+    m = re.search(r"Tribunal (?:Judiciaire|de Grande Instance|Judiciaire de Proximité) (?:de |d'|du |des )(.+?)\s*(?:\(|$)", trib)
     d["tribunal_brut"] = re.sub(r"\s+", " ", trib)
     d["tribunal"] = re.sub(r"\s+", " ", m.group(1)).strip() if m else ""
+    if re.search(r"Tribunal [^(]* du ", trib): d["tribunal"] = "Le " + d["tribunal"]
+    if re.search(r"Tribunal [^(]* des ", trib): d["tribunal"] = "Les " + d["tribunal"]
     i = next((k for k, l in enumerate(L) if l.startswith("Vente aux enchères publiques")), None)
     d["date"] = date_fr(L[i + 1]) if i is not None and i + 1 < len(L) else None
     j = " ".join(L)
-    m = re.search(r"Adjudication : ([\d  .]+) €", j); d["adjuge"] = eur(m.group(1)) if m else None
-    maps = re.findall(r"Mise à prix : ([\d  .]+) €", j); d["map"] = eur(maps[-1]) if maps else None
+    pairs = re.findall(r"(?:Adjudication\s*:\s*([\d\s.]+?)\s*€|Carence d'enchères)\s*\(Mise à prix\s*:\s*([\d\s.]+?)\s*€\)", j)
+    sold = [(a, b) for a, b in pairs if a]
+    d["lots"] = len(pairs)
+    d["adjuge"] = eur(sold[0][0]) if sold else None
+    maps = re.findall(r"Mise à prix\s*:\s*([\d\s.]+?)\s*€", j)
+    d["map"] = eur(sold[0][1]) if sold else (eur(maps[0]) if maps else None)
     d["baisse"] = "oui" if re.search(r"baisse|abaiss", j, re.I) else "non"
     m = re.search(r"([\d  ]+(?:[,.]\d+)?) ?m²", j)
     try:
         d["surface"] = float(m.group(1).replace(" ", "").replace("\u202f", "").replace("\xa0", "").replace(",", ".")) if m else None
     except ValueError:
+        d["surface"] = None
+    if len(pairs) > 1:
         d["surface"] = None
     desc_start = next((k for k, l in enumerate(L) if l.lower().startswith(("un ", "une ", "des ", "deux ", "trois ", "lot"))), None)
     desc = L[desc_start:desc_start + 6] if desc_start is not None else []
@@ -99,15 +107,16 @@ def listing(region, hist):
         if not links:
             break
         dates = re.findall(r"(\d{2})-(\d{2})-(\d{4})\s*:", "\n".join(text(s)))
+        if p == 1:
+            m = re.search(r"(\d[\d\s]*)\s*annonces", "\n".join(text(s)))
+            last = -(-int(re.sub(r"\D", "", m.group(1))) // 5) if m else 150
         new = [l for l in dict.fromkeys(links) if l[0] not in seen]
-        if not new:
-            break
         for path, dept, ref in new:
             seen.add(path)
             if dept in DEPTS:
                 rows.append((path, DEPTS[dept]))
         p += 1
-        if p > 150:
+        if p > min(last, 150):
             break
     return rows
 

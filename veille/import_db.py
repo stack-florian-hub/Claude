@@ -26,9 +26,12 @@ def slug(s):
 def clean(d):
     return {k: v for k, v in d.items() if v not in (None, "")}
 
-docs = []
+docs, rseen = [], set()
 for r in data["resultats"]:
-    if not r.get("adjuge") or not r.get("map") or trib(r["tribunal"]) not in ZONE:
+    if r["ref"] in rseen:
+        continue
+    rseen.add(r["ref"])
+    if not r.get("adjuge") or not r.get("map") or r.get("lots", 1) > 1 or trib(r["tribunal"]) not in ZONE:
         continue
     docs.append(("resultats", "lic-" + r["ref"], clean({
         "date": r["date"][:10], "tribunal": trib(r["tribunal"]), "commune": r["commune"], "dept": r["dept"], "type": r["type"],
@@ -36,8 +39,15 @@ for r in data["resultats"]:
         "surenchere": "non", "source": "Licitor", "lien": r["lien"], "verifie": "oui", "notes": r["description"][:300]})))
 
 new_lots, updates = [], []
+def key(commune, m):
+    return (ascii_(re.sub(r"\s*\(.*", "", commune or ""))[:12], m)
+seen_ex = {key(v["data"].get("commune"), v["data"].get("map")) for v in existing.values()}
+done = set()
 for r in data["avenir"]:
     ref = r["ref"]
+    if ref in done:
+        continue
+    done.add(ref)
     if ref in existing:
         cur = existing[ref]["data"]
         ch = {}
@@ -48,7 +58,7 @@ for r in data["avenir"]:
         if ch and cur.get("statut") not in ("plafond", "enchere", "gagne", "revendu"):
             updates.append((ref, existing[ref]["version"], ch, cur))
         continue
-    if not r.get("map") or r["map"] > MAP_MAX:
+    if not r.get("map") or r["map"] > MAP_MAX or trib(r["tribunal"]) not in ZONE or key(r["commune"], r["map"]) in seen_ex:
         continue
     new_lots.append(("lots", ref, clean({
         "ref": ref, "titre": (r["titre"][:1].upper() + r["titre"][1:] + " " + r["commune"]).strip(), "commune": f"{r['commune']} ({r['dept']})",
@@ -56,8 +66,6 @@ for r in data["avenir"]:
         "occupation": r["occupation"], "poursuivant": r["poursuivant"], "lien": r["lien"], "statut": "repere",
         "notes": (r["description"] + (" | " + r["visite_txt"] if r.get("visite_txt") else ""))[:500]})))
 
-def key(commune, m):
-    return (ascii_(re.sub(r"\s*\(.*", "", commune or ""))[:12], m)
 seen = {key(v["data"].get("commune"), v["data"].get("map")) for v in existing.values()}
 seen |= {key(b["commune"], b["map"]) for _, _, b in new_lots}
 seen |= {key(r["commune"], r.get("map")) for r in data["avenir"]}
