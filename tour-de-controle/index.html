@@ -1,0 +1,483 @@
+<title>Tour de contrôle enchères</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : bandeau de pilotage en tête, onglets, contenu en grille qui passe à une colonne sur téléphone */
+:root{
+  --bg:#eef1f3; --panel:#fbfcfc; --ink:#14232b; --muted:#5b6b73; --line:#d5dde1;
+  --accent:#0f5e6e; --accent-soft:#d9ecef;
+  --ok:#1f7a4a; --ok-soft:#dcefe3; --warn:#a15c00; --warn-soft:#f8ead2; --bad:#b0302a; --bad-soft:#f6dcda;
+  --f-display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f171b; --panel:#162228; --ink:#e3ecef; --muted:#93a5ad; --line:#2a3a41;
+  --accent:#5cc0d1; --accent-soft:#163a42;
+  --ok:#5fcf8f; --ok-soft:#173527; --warn:#f0b35a; --warn-soft:#3b2c14; --bad:#f08b84; --bad-soft:#3d1f1d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f171b; --panel:#162228; --ink:#e3ecef; --muted:#93a5ad; --line:#2a3a41;
+  --accent:#5cc0d1; --accent-soft:#163a42;
+  --ok:#5fcf8f; --ok-soft:#173527; --warn:#f0b35a; --warn-soft:#3b2c14; --bad:#f08b84; --bad-soft:#3d1f1d; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.45;padding:0 16px;padding-block:16px 48px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:16px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:.01em}
+h1{font-size:26px} h2{font-size:19px} h3{font-size:16px}
+.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 16px}
+header.top .sub{color:var(--muted);font-size:13px}
+.status-db{font-size:12px;color:var(--muted)}
+nav.tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+nav.tabs button{font:600 14px var(--f-body);background:none;border:0;color:var(--muted);padding:8px 12px;border-bottom:3px solid transparent;cursor:pointer}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.kpi{background:var(--panel);padding:12px 14px;display:grid;gap:2px}
+.kpi .lab{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.kpi .val{font:500 22px var(--f-mono);font-variant-numeric:tabular-nums}
+.kpi .hint{font-size:12px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}
+.grid2>*{min-width:0}
+section.panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:grid;gap:10px;align-content:start;min-width:0}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{font:600 11px var(--f-body);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.num,th.num{text-align:right;white-space:nowrap}
+tr.click{cursor:pointer} tr.click:hover td{background:var(--accent-soft)}
+.pill{display:inline-block;font:600 11px var(--f-body);padding:2px 8px;border-radius:99px;white-space:nowrap;border:1px solid transparent}
+.p-ok{background:var(--ok-soft);color:var(--ok)} .p-warn{background:var(--warn-soft);color:var(--warn)} .p-bad{background:var(--bad-soft);color:var(--bad)} .p-info{background:var(--accent-soft);color:var(--accent)} .p-mute{border-color:var(--line);color:var(--muted)}
+ul.alerts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+ul.alerts li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:8px 10px;border-radius:4px;background:var(--bg)}
+ul.alerts li .sev{width:8px;height:100%;min-height:18px;border-radius:2px}
+.sev.bad{background:var(--bad)} .sev.warn{background:var(--warn)} .sev.info{background:var(--accent)}
+.agenda{display:grid;gap:4px}
+.ag{display:grid;grid-template-columns:92px 1fr;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.ag .d{font:500 12px var(--f-mono);color:var(--muted)}
+.ag .d b{color:var(--ink);font-weight:600}
+.funnel{display:grid;gap:4px}
+.fn{display:grid;grid-template-columns:110px 1fr 28px;gap:8px;align-items:center;font-size:13px}
+.fn .bar{height:14px;background:var(--accent);border-radius:2px;min-width:2px}
+.fn .track{background:var(--bg);border-radius:2px}
+button.btn{font:600 13px var(--f-body);background:var(--accent);color:var(--panel);border:0;border-radius:4px;padding:7px 12px;cursor:pointer}
+button.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+button.btn.danger{background:transparent;color:var(--bad);border:1px solid var(--bad)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.lotcard{display:grid;gap:12px}
+.decision{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 12px;border-radius:4px;background:var(--bg)}
+.decision .why{flex:1 1 240px;min-width:0}
+.ceil{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.ceil div{border:1px solid var(--line);border-radius:4px;padding:8px 10px}
+.ceil .lab{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.ceil .v{font:500 18px var(--f-mono)}
+.ceil .reco{border-color:var(--accent);background:var(--accent-soft)}
+.check{margin:0;padding-left:18px;display:grid;gap:3px}
+.overlay{position:fixed;inset:0;background:rgba(10,20,25,.45);display:grid;place-items:center;padding:16px;z-index:10}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:6px;width:min(720px,100%);max-height:90vh;overflow:auto;padding:16px;display:grid;gap:12px}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.form label{display:grid;gap:3px;font-size:12px;color:var(--muted)}
+.form label.wide{grid-column:1/-1}
+input,select,textarea{font:14px var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 8px;width:100%}
+textarea{min-height:70px}
+.empty{padding:18px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:6px}
+.tag{font:500 11px var(--f-mono);color:var(--muted)}
+.cert{font:600 10px var(--f-body);letter-spacing:.04em;text-transform:uppercase;padding:1px 5px;border-radius:3px}
+.c-hyp{background:var(--warn-soft);color:var(--warn)} .c-ok{background:var(--ok-soft);color:var(--ok)}
+.digest{display:grid;gap:8px}
+.digest ol{margin:0;padding-left:20px;display:grid;gap:3px}
+@media (max-width:520px){h1{font-size:22px}.kpi .val{font-size:19px}.ag{grid-template-columns:78px 1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Tour de contrôle enchères</h1>
+      <div class="sub">Financière Tué et Fils · ventes judiciaires 44, 85, 49, 37 et 1h30 autour de Tours</div>
+    </div>
+    <div class="status-db" id="dbstatus">Connexion à la base…</div>
+  </header>
+
+  <nav class="tabs" role="tablist" id="tabs">
+    <button role="tab" data-tab="pilotage">Pilotage</button>
+    <button role="tab" data-tab="lots">Lots</button>
+    <button role="tab" data-tab="resultats">Résultats</button>
+    <button role="tab" data-tab="reseau">Réseau</button>
+    <button role="tab" data-tab="parametres">Paramètres</button>
+  </nav>
+
+  <main id="view"></main>
+</div>
+<div id="modal-root"></div>
+
+<script>
+(function(){
+const TRIBUNAUX=["Nantes","Saint-Nazaire","La Roche-sur-Yon","Les Sables-d'Olonne","Angers","Saumur","Tours","Blois","Le Mans","Laval","Poitiers","Orléans"];
+const STATUTS={repere:"Repéré",analyse:"Analysé",plafond:"Plafond fixé",enchere:"Enchère mandatée",gagne:"Gagné",perdu:"Non gagné",retire:"Retiré / reporté",revendu:"Revendu",horsjeu:"Écarté"};
+const FUNNEL=["repere","analyse","plafond","enchere","gagne","revendu"];
+const DEF={cash:50000,financement:0,reserve:5000,fraisFixe:2500,fraisPct:0.10,droitsPct:0.00715,droitsCommun:0.0581,csiPct:0.001,agence:0.05,multCible:2,multConfort:3,margeMin:10000,honoraires:2000,publication:450,autresDefaut:3000,coutTentative:220,cautionMin:3000,cautionPct:0.10,portageMois:250};
+const S={lots:[],resultats:[],contacts:[],actions:[],archives:[],params:{...DEF},db:null,ro:false,tab:"pilotage",lotSel:null};
+
+/* ---------- utilitaires ---------- */
+const $=s=>document.querySelector(s);
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num=v=>(v===""||v==null||isNaN(+v))?null:+v;
+const eur=v=>v==null||!isFinite(v)?"n.d.":Math.round(v).toLocaleString("fr-FR")+" €";
+const keur=v=>v==null||!isFinite(v)?"n.d.":(v/1000).toLocaleString("fr-FR",{maximumFractionDigits:1})+" k€";
+const pct=v=>v==null||!isFinite(v)?"n.d.":Math.round(v*100)+" %";
+const x=v=>v==null||!isFinite(v)?"n.d.":"x"+v.toLocaleString("fr-FR",{maximumFractionDigits:2});
+const today=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
+const pd=s=>{if(!s)return null;const d=new Date(s);return isNaN(d)?null:d};
+const days=d=>d?Math.round((new Date(d).setHours(0,0,0,0)-today())/864e5):null;
+const fdate=s=>{const d=pd(s);if(!d)return "n.d.";return d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"2-digit"})+(s.length>10&&(d.getHours()||d.getMinutes())?" "+d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}):"")};
+const addDays=(s,n)=>{const d=pd(s);if(!d)return null;d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
+const addMonths=(s,n)=>{const d=pd(s);if(!d)return null;d.setMonth(d.getMonth()+n);return d.toISOString().slice(0,10)};
+const quant=(a,q)=>{if(!a.length)return null;const s=[...a].sort((m,n)=>m-n);const p=(s.length-1)*q,b=Math.floor(p);return s[b]+(s[b+1]!==undefined?(p-b)*(s[b+1]-s[b]):0)};
+const list=v=>String(v||"").split(",").map(t=>t.trim()).filter(Boolean);
+
+/* ---------- modèle ---------- */
+function ratios(type){
+  const all=S.resultats.filter(r=>num(r.map)&&num(r.adjuge)).map(r=>({...r,ratio:+r.adjuge/+r.map}));
+  const seg=type?all.filter(r=>r.type===type):[];
+  return seg.length>=3?{set:seg,label:"type "+type}:{set:all,label:"tous types"};
+}
+function coverage(trib){
+  const av=S.contacts.filter(c=>c.role==="avocat"&&c.statut!=="écarté");
+  const ok=av.filter(c=>list(c.tribunaux).includes(trib)&&["mandaté","contact"].includes(c.statut));
+  const conf=av.filter(c=>list(c.aConfirmer).includes(trib)||(list(c.tribunaux).includes(trib)&&!["mandaté","contact"].includes(c.statut)));
+  if(ok.length)return{level:"ok",names:ok.map(c=>c.nom)};
+  if(conf.length)return{level:"warn",names:conf.map(c=>c.nom)};
+  return{level:"bad",names:[]};
+}
+function calc(lot,Pover){
+  const P={...S.params,...(Pover||{})};
+  const L=lot;
+  const map=num(L.map),surface=num(L.surface),pm2=num(L.prixM2),dec=num(L.decote)??0.3;
+  const k=P.fraisPct+P.droitsPct+P.csiPct;
+  const revente=surface&&pm2?surface*pm2*(1-dec)*(P.reventeMult||1):null;
+  const travaux=(num(L.travaux)||0)*(P.travauxMult||1);
+  const autres=P.honoraires+P.publication+travaux+(num(L.autresFrais)??P.autresDefaut)+(P.moisSup||0)*P.portageMois;
+  const tva=P.tva?0.2:0;
+  const cout=p=>p*(1+k+tva)+P.fraisFixe;
+  const marge=p=>revente==null?null:revente*(1-P.agence)-cout(p)-autres;
+  const kk=1+k+tva;
+  const plafMult=revente==null?null:(revente/P.multCible-P.fraisFixe)/kk;
+  const plafConf=revente==null?null:(revente/P.multConfort-P.fraisFixe)/kk;
+  const plafCash=(P.cash+P.financement-P.reserve-P.fraisFixe-autres)/kk;
+  const plafMarge=revente==null?null:(revente*(1-P.agence)-P.fraisFixe-autres-P.margeMin)/kk;
+  const equilibre=revente==null?null:(revente*(1-P.agence)-P.fraisFixe-autres)/kk;
+  const reco=revente==null?null:Math.max(0,Math.min(plafMult,plafCash,plafMarge));
+  const eff=num(L.plafondDecide)??reco;
+  const R=ratios(L.type);
+  const rs=R.set.map(r=>r.ratio);
+  const med=quant(rs,.5);
+  const probable=map&&med?map*med:null;
+  const pWin=(map&&eff&&rs.length)?rs.filter(r=>r*map<=eff).length/rs.length:null;
+  const mEff=eff!=null?marge(eff):null;
+  const esper=(pWin!=null&&mEff!=null)?pWin*mEff-(1-pWin)*P.coutTentative:null;
+  const caution=map?Math.max(P.cautionMin,P.cautionPct*map):P.cautionMin;
+  const cov=L.tribunal?coverage(L.tribunal):{level:"bad",names:[]};
+  const conf=(num(L.prixM2Sources)||0)>=2?"ok":"faible";
+  // décision
+  let dec2,why,cls;
+  const done={gagne:1,perdu:1,retire:1,revendu:1,horsjeu:1};
+  if(done[L.statut]){dec2=STATUTS[L.statut];cls=L.statut==="gagne"||L.statut==="revendu"?"p-ok":"p-mute";why=L.statut==="perdu"&&num(L.adjuge)?"Adjugé "+eur(+L.adjuge)+(map?" ("+x(+L.adjuge/map)+" la MAP)":""):"Dossier clos."}
+  else if(revente==null){dec2="À creuser";cls="p-warn";why="Valorisation manquante : surface ou prix au m² non renseigné, aucun plafond calculable."}
+  else if(reco<(map||0)*0.75){dec2="Hors jeu";cls="p-bad";why="Plafond recommandé "+keur(reco)+" sous la MAP après baisse d'un quart ("+keur(map*0.75)+")."}
+  else if(reco<(map||0)){dec2="Tentative plafonnée";cls="p-warn";why="Gagnable seulement en cas de baisse d'un quart, sans autre enchérisseur."}
+  else if(pWin==null){dec2="À creuser";cls="p-warn";why="Plafond "+keur(reco)+" mais aucun résultat d'adjudication pour estimer la probabilité de gagner."}
+  else if(pWin>=0.5&&mEff>0){dec2="Priorité 1";cls="p-ok";why="Plafond "+keur(eff)+", gagne dans "+pct(pWin)+" des cas observés, marge "+keur(mEff)+"."}
+  else if(pWin>=0.2){dec2="Tentative plafonnée";cls="p-info";why="Gagne dans "+pct(pWin)+" des cas observés ("+R.set.length+" résultats). Se présenter avec un plafond ferme."}
+  else{dec2="Veille";cls="p-mute";why="Probabilité de gagner "+pct(pWin)+" au plafond "+keur(eff)+" : l'historique adjuge plus haut."}
+  return{P,k,revente,autres,cout,marge,plafMult,plafConf,plafCash,plafMarge,equilibre,reco,eff,R,med,probable,pWin,mEff,esper,caution,cov,conf,dec:dec2,why,cls,map};
+}
+
+/* ---------- alertes et agenda ---------- */
+function alerts(){
+  const out=[];const actifs=S.lots.filter(l=>!["gagne","perdu","retire","revendu","horsjeu"].includes(l.statut));
+  actifs.forEach(l=>{
+    const c=calc(l),d=days(l.audience);
+    if(d!=null&&d>=0&&d<=10&&c.cov.level!=="ok")out.push({s:c.cov.level==="warn"?"warn":"bad",t:`${l.titre} (${l.tribunal}, J-${d}) : ${c.cov.level==="warn"?"avocat à confirmer par écrit pour ce tribunal ("+c.cov.names.join(", ")+")":"aucun avocat pour enchérir au TJ "+l.tribunal}.`,lot:l.id});
+    if(d!=null&&d>=0&&d<=14&&c.revente==null)out.push({s:"warn",t:`${l.titre} : audience dans ${d} j et pas de valorisation.`,lot:l.id});
+    if(d!=null&&d>=0&&d<=14&&c.revente!=null&&c.conf==="faible")out.push({s:"info",t:`${l.titre} : prix au m² validé par moins de 2 sources, plafond à confiance faible.`,lot:l.id});
+  });
+  // conflits de cash : lots avec plafond fixé ou enchère dont les audiences sont à moins de 60 j
+  const eng=actifs.filter(l=>["plafond","enchere"].includes(l.statut)&&pd(l.audience));
+  for(let i=0;i<eng.length;i++)for(let j=i+1;j<eng.length;j++){
+    const a=eng[i],b=eng[j];const gap=Math.abs(pd(a.audience)-pd(b.audience))/864e5;
+    const need=calc(a).cout(calc(a).eff||0)+calc(b).cout(calc(b).eff||0);
+    if(gap<60&&need>S.params.cash+S.params.financement)out.push({s:"bad",t:`Conflit de cash : ${a.titre} et ${b.titre} (${Math.round(gap)} j d'écart). Gagner les deux demanderait ${keur(need)}.`});
+    if(gap<1)out.push({s:"warn",t:`Même jour : ${a.titre} et ${b.titre}.`});
+  }
+  S.actions.filter(a=>!a.fait&&a.echeance&&days(a.echeance)<0).forEach(a=>out.push({s:"warn",t:`Action en retard : ${a.titre} (${fdate(a.echeance)}).`}));
+  S.lots.filter(l=>l.statut==="gagne").forEach(l=>{const p=addMonths(l.audience,2);const d=days(p);if(d!=null&&d<=15)out.push({s:"bad",t:`${l.titre} : prix à consigner avant le ${fdate(p)} (J-${d}).`,lot:l.id})});
+  const ord={bad:0,warn:1,info:2};return out.sort((a,b)=>ord[a.s]-ord[b.s]);
+}
+function agenda(n){
+  const ev=[];const lim=n??14;
+  S.lots.forEach(l=>{
+    if(l.audience)ev.push({d:l.audience,t:"Audience",w:`${l.titre} · TJ ${l.tribunal}`,lot:l.id,k:"aud"});
+    if(l.visite)ev.push({d:l.visite,t:"Visite",w:l.titre,lot:l.id,k:"vis"});
+    if(l.statut==="gagne"){
+      ev.push({d:addDays(l.audience,10),t:"Fin surenchère",w:l.titre,lot:l.id});
+      ev.push({d:addMonths(l.audience,1),t:"Frais taxés",w:l.titre,lot:l.id});
+      ev.push({d:addMonths(l.audience,2),t:"Prix + droits + publication",w:l.titre,lot:l.id});
+    }
+  });
+  S.actions.filter(a=>!a.fait&&a.echeance).forEach(a=>ev.push({d:a.echeance,t:"Action",w:a.titre,k:"act"}));
+  return ev.filter(e=>{const d=days(e.d);return d!=null&&d>=0&&d<=lim}).sort((a,b)=>pd(a.d)-pd(b.d));
+}
+function cashState(){
+  const P=S.params;
+  const engage=S.lots.filter(l=>l.statut==="gagne").reduce((s,l)=>{const c=calc(l);return s+c.cout(num(l.adjuge)||0)+c.autres},0);
+  const cautions=S.lots.filter(l=>l.statut==="enchere"&&days(l.audience)>=0).reduce((s,l)=>s+calc(l).caution,0);
+  return{dispo:P.cash+P.financement,engage,cautions,libre:P.cash+P.financement-engage-cautions};
+}
+
+/* ---------- rendu ---------- */
+function render(){
+  document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===S.tab));
+  const v=$("#view");
+  const fn={pilotage:vPilotage,lots:vLots,resultats:vResultats,reseau:vReseau,parametres:vParams}[S.tab]||vPilotage;
+  v.innerHTML=fn();
+}
+function lotRow(l){
+  const c=calc(l);const d=days(l.audience);
+  return `<tr class="click" data-lot="${esc(l.id)}"><td><b>${esc(l.titre)}</b><div class="tag">${esc(l.ref||"")} · ${esc(l.commune||"")}</div></td>
+  <td>${esc(l.tribunal||"")}<div class="tag">${l.audience?fdate(l.audience):"date n.d."}${d!=null&&d>=0?" · J-"+d:""}</div></td>
+  <td class="num">${keur(num(l.map))}</td><td class="num">${keur(c.reco)}${num(l.plafondDecide)?`<div class="tag">décidé ${keur(+l.plafondDecide)}</div>`:""}</td>
+  <td class="num">${keur(c.probable)}</td><td class="num">${pct(c.pWin)}</td><td class="num">${keur(c.esper)}</td>
+  <td><span class="pill ${c.cls}">${esc(c.dec)}</span></td>
+  <td><span class="pill ${c.cov.level==="ok"?"p-ok":c.cov.level==="warn"?"p-warn":"p-bad"}">${c.cov.level==="ok"?"avocat OK":c.cov.level==="warn"?"à confirmer":"manquant"}</span></td></tr>`;
+}
+const lotHead=`<tr><th>Bien</th><th>Tribunal</th><th class="num">MAP</th><th class="num">Plafond reco.</th><th class="num">Adjugé probable</th><th class="num">P(gagner)</th><th class="num">Espérance</th><th>Décision</th><th>Avocat</th></tr>`;
+
+function vPilotage(){
+  const cs=cashState();const al=alerts();const ag=agenda(14);
+  const actifs=S.lots.filter(l=>!["perdu","retire","revendu","horsjeu"].includes(l.statut));
+  const next=S.lots.filter(l=>days(l.audience)>=0&&!["perdu","retire","horsjeu"].includes(l.statut)).sort((a,b)=>pd(a.audience)-pd(b.audience))[0];
+  const ranked=actifs.map(l=>({l,c:calc(l)})).sort((a,b)=>(b.c.esper??-1e9)-(a.c.esper??-1e9)||(pd(a.l.audience)||0)-(pd(b.l.audience)||0));
+  const prio=ranked.filter(r=>r.c.dec==="Priorité 1").length;
+  const openA=S.actions.filter(a=>!a.fait).sort((a,b)=>(pd(a.echeance)||9e15)-(pd(b.echeance)||9e15));
+  if(!S.lots.length&&!S.actions.length)return empty("Aucun lot dans la base. Ajoute un lot depuis l'onglet Lots, ou demande à Claude de charger les lots suivis.");
+  const R=ratios(null);const rs=R.set.map(r=>r.ratio);
+  return `<div class="wrap">
+  <div class="kpis">
+    ${kpi("Cash disponible",eur(cs.dispo),"SASU + financement")}
+    ${kpi("Engagé",eur(cs.engage),"lots gagnés non revendus")}
+    ${kpi("Cautions",eur(cs.cautions),"chèques remis, audiences à venir")}
+    ${kpi("Cash libre",eur(cs.libre),cs.libre<S.params.cautionMin?"sous la caution minimale":"une balle dans le fusil")}
+    ${kpi("Prochaine audience",next?fdate(next.audience):"aucune",next?esc(next.titre)+" · J-"+days(next.audience):"")}
+    ${kpi("Priorité 1",String(prio),ranked.length+" lots actifs")}
+  </div>
+  ${digest(al,ranked,openA)}
+  <div class="grid2">
+    <section class="panel"><div class="panel-head"><h2>Alertes</h2><span class="muted small">${al.length} point${al.length>1?"s":""}</span></div>
+      ${al.length?`<ul class="alerts">${al.map(a=>`<li ${a.lot?`data-lot="${esc(a.lot)}" style="cursor:pointer"`:""}><span class="sev ${a.s}"></span><span>${esc(a.t)}</span></li>`).join("")}</ul>`:`<div class="empty">Rien d'urgent.</div>`}
+    </section>
+    <section class="panel"><div class="panel-head"><h2>14 prochains jours</h2></div>
+      ${ag.length?`<div class="agenda">${ag.map(e=>`<div class="ag" ${e.lot?`data-lot="${esc(e.lot)}" style="cursor:pointer"`:""}><div class="d"><b>${fdate(e.d)}</b><br>J-${days(e.d)}</div><div><span class="pill ${e.k==="aud"?"p-info":e.k==="act"?"p-warn":"p-mute"}">${esc(e.t)}</span> ${esc(e.w)}</div></div>`).join("")}</div>`:`<div class="empty">Agenda vide.</div>`}
+    </section>
+  </div>
+  <section class="panel"><div class="panel-head"><h2>Lots classés par espérance</h2><span class="muted small">Espérance = P(gagner) x marge au plafond, moins le coût d'une tentative ratée</span></div>
+    <div class="tbl"><table>${lotHead}${ranked.map(r=>lotRow(r.l)).join("")}</table></div>
+  </section>
+  <div class="grid2">
+    <section class="panel"><div class="panel-head"><h2>Actions ouvertes</h2><button class="btn ghost" data-act="add-action">Ajouter</button></div>
+      ${openA.length?openA.map(a=>`<label class="row" style="justify-content:space-between;border-bottom:1px dashed var(--line);padding:4px 0"><span class="row"><input type="checkbox" style="width:auto" data-done="${esc(a.id)}" ${S.ro?"disabled":""}> <span>${esc(a.titre)}${a.qui?` <span class="tag">${esc(a.qui)}</span>`:""}</span></span><span class="tag">${a.echeance?fdate(a.echeance):""}</span></label>`).join(""):`<div class="empty">Aucune action ouverte.</div>`}
+    </section>
+    <section class="panel"><h2>Pipeline</h2>
+      <div class="funnel">${FUNNEL.map((k,i)=>{const n=S.lots.filter(l=>reach(l)>=i).length;return `<div class="fn"><span>${STATUTS[k]}</span><div class="track"><div class="bar" style="width:${n/Math.max(1,S.lots.length)*100}%"></div></div><span class="num">${n}</span></div>`}).join("")}</div>
+      <h3>Marché et modèle</h3>
+      <div class="small">${rs.length?`${rs.length} adjudication${rs.length>1?"s":""} en base. Ratio adjugé/MAP médian <b class="num">${x(quant(rs,.5))}</b>${rs.length>=4?`, P25 ${x(quant(rs,.25))}, P75 ${x(quant(rs,.75))}`:""}. ${modelErr()}`:"Aucun résultat d'adjudication : les probabilités de gagner ne sont pas calculables."}
+      ${rs.length<10?`<br><span class="pill p-warn">Confiance faible</span> moins de 10 résultats, objectif 24 mois d'historique.`:""}</div>
+    </section>
+  </div>
+  <section class="panel"><div class="panel-head"><h2>Archive du lundi</h2><button class="btn ghost" data-act="archive" ${S.ro?"disabled":""}>Archiver cette semaine</button></div>
+    ${S.archives.length?`<div class="tbl"><table><tr><th>Semaine</th><th class="num">Cash libre</th><th class="num">Lots actifs</th><th class="num">Priorité 1</th><th class="num">Résultats en base</th><th class="num">Erreur modèle</th></tr>${[...S.archives].sort((a,b)=>b.id.localeCompare(a.id)).map(a=>`<tr><td class="mono">${esc(a.id)}</td><td class="num">${eur(a.libre)}</td><td class="num">${a.actifs}</td><td class="num">${a.prio}</td><td class="num">${a.nres}</td><td class="num">${a.err==null?"n.d.":pct(a.err)}</td></tr>`).join("")}</table></div>`:`<div class="empty">Chaque lundi, archive l'état pour suivre la progression.</div>`}
+  </section></div>`;
+}
+function reach(l){const i=FUNNEL.indexOf(l.statut);return i>=0?i:l.statut==="perdu"?3:0}
+function modelErr(){const e=errStats();return e.n?`Erreur moyenne prédit vs réel : <b class="num">${pct(e.mae)}</b> sur ${e.n} lot${e.n>1?"s":""} suivi${e.n>1?"s":""}.`:""}
+function errStats(){const p=S.lots.filter(l=>num(l.predit)&&num(l.adjuge));return{n:p.length,mae:p.length?p.reduce((s,l)=>s+Math.abs(+l.predit-+l.adjuge)/+l.adjuge,0)/p.length:null}}
+function digest(al,ranked,openA){
+  const acts=[...openA.slice(0,5).map(a=>a.titre)];
+  const top=ranked.filter(r=>days(r.l.audience)>=0).slice(0,3);
+  const alert=al[0];
+  return `<section class="panel digest"><div class="panel-head"><h2>Digest de la semaine</h2><span class="muted small">5 actions, 3 lots, 1 alerte</span></div>
+  <div class="grid2"><div><h3>Actions</h3><ol>${acts.map(t=>`<li>${esc(t)}</li>`).join("")||"<li class='muted'>aucune</li>"}</ol></div>
+  <div><h3>Lots à regarder</h3><ol>${top.map(r=>`<li data-lot="${esc(r.l.id)}" style="cursor:pointer"><b>${esc(r.l.titre)}</b> · ${fdate(r.l.audience)} · plafond ${keur(r.c.eff)} <span class="pill ${r.c.cls}">${esc(r.c.dec)}</span></li>`).join("")||"<li class='muted'>aucun</li>"}</ol>
+  ${alert?`<h3 style="margin-top:8px">Alerte</h3><div class="small">${esc(alert.t)}</div>`:""}</div></div></section>`;
+}
+const kpi=(l,v,h)=>`<div class="kpi"><span class="lab">${l}</span><span class="val">${v}</span><span class="hint">${h||""}</span></div>`;
+const empty=t=>`<div class="empty">${esc(t)}</div>`;
+
+function vLots(){
+  const sel=S.lots.find(l=>l.id===S.lotSel);
+  const ord=[...S.lots].sort((a,b)=>(pd(a.audience)||9e15)-(pd(b.audience)||9e15));
+  return `<div class="wrap">${sel?lotDetail(sel):""}
+  <section class="panel"><div class="panel-head"><h2>Tous les lots</h2>${S.ro?"":`<button class="btn" data-act="add-lot">Nouveau lot</button>`}</div>
+  ${ord.length?`<div class="tbl"><table>${lotHead}${ord.map(lotRow).join("")}</table></div>`:empty("Aucun lot. Clique sur Nouveau lot.")}</section></div>`;
+}
+function lotDetail(l){
+  const c=calc(l);const P=c.P;
+  const sc=[["Base",{}],["Droits commun (5,81 %)",{droitsPct:P.droitsCommun}],["TVA 20 % sur le prix",{tva:true}],["Travaux +50 %",{travauxMult:1.5}],["Revente -15 %",{reventeMult:0.85}],["Délai +3 mois",{moisSup:3}]].map(([n,o])=>{const s=calc(l,o);const p=c.eff;return{n,reco:s.reco,mult:s.revente&&p?s.revente/s.cout(p):null,marge:p!=null?s.marge(p):null}});
+  const prices=[c.map&&c.map*0.75,c.map,c.reco,num(l.plafondDecide),c.probable,num(l.adjuge)].filter(v=>v);
+  const uniq=[...new Set(prices.map(Math.round))].sort((a,b)=>a-b);
+  const lbl=p=>[Math.round(c.map*0.75)===p?"MAP -25 %":"",Math.round(c.map)===p?"MAP":"",Math.round(c.reco)===p?"plafond reco.":"",Math.round(num(l.plafondDecide))===p?"plafond décidé":"",Math.round(c.probable)===p?"adjugé probable":"",Math.round(num(l.adjuge))===p?"adjugé réel":""].filter(Boolean).join(", ");
+  const miss=[];
+  if(!l.visite)miss.push("Date de visite");
+  if(!l.occupation||l.occupation==="inconnu")miss.push("Occupation (libre, occupé, bail)");
+  if(!num(l.surface))miss.push("Surface (Carrez ou mesurage)");
+  if(!num(l.prixM2))miss.push("Prix au m² à l'adresse (MeilleursAgents bas, DVF)");
+  if((num(l.prixM2Sources)||0)<2)miss.push("Deuxième source de prix au m²");
+  const qs=["État des frais préalables (frais taxés estimés)","Vente soumise à TVA ?","Occupation, bail, mobilier","Charges de copropriété et arriérés","Certificat d'urbanisme, servitudes","Ordre exact du chèque de banque (séquestre)"];
+  const cov=c.cov;
+  return `<section class="panel lotcard"><div class="panel-head"><div><h2>${esc(l.titre)}</h2><div class="muted small">${esc(l.ref||"")} · ${esc(l.commune||"")} · TJ ${esc(l.tribunal||"n.d.")} · ${l.audience?fdate(l.audience):"audience n.d."} · ${esc(l.occupation||"occupation n.d.")} · <span class="pill p-mute">${esc(STATUTS[l.statut]||l.statut||"")}</span></div></div>
+  <div class="row">${S.ro?"":`<button class="btn ghost" data-act="edit-lot" data-id="${esc(l.id)}">Modifier</button>`}<button class="btn ghost" data-act="close-lot">Fermer</button></div></div>
+  <div class="decision"><span class="pill ${c.cls}" style="font-size:13px">${esc(c.dec)}</span><span class="why">${esc(c.why)}</span></div>
+  <div class="ceil">
+    <div><span class="lab">Revente prudente</span><div class="v">${keur(c.revente)}</div><span class="tag">${num(l.surface)||"?"} m² x ${eur(num(l.prixM2))} x (1-${num(l.decote)??0.3}) <span class="cert ${c.conf==="ok"?"c-ok":"c-hyp"}">${c.conf==="ok"?"2 sources":"hypothèse"}</span></span></div>
+    <div><span class="lab">Plafond multiple x${P.multCible}</span><div class="v">${keur(c.plafMult)}</div><span class="tag">confort x${P.multConfort} : ${keur(c.plafConf)}</span></div>
+    <div><span class="lab">Plafond cash</span><div class="v">${keur(c.plafCash)}</div><span class="tag">réserve ${keur(P.reserve)} + frais annexes ${keur(c.autres)}</span></div>
+    <div><span class="lab">Plafond marge ${keur(P.margeMin)}</span><div class="v">${keur(c.plafMarge)}</div></div>
+    <div class="reco"><span class="lab">Plafond recommandé</span><div class="v">${keur(c.reco)}</div><span class="tag">${num(l.plafondDecide)?"décidé : "+keur(+l.plafondDecide):"le plus bas des trois"}</span></div>
+    <div><span class="lab">Prix d'équilibre</span><div class="v">${keur(c.equilibre)}</div><span class="tag">ne jamais dépasser</span></div>
+  </div>
+  <div class="grid2">
+    <div class="tbl"><h3>Scénarios de prix</h3><table><tr><th class="num">Prix</th><th class="num">Coût brut</th><th class="num">Cash total</th><th class="num">Multiple</th><th class="num">Marge</th><th>Repère</th></tr>
+    ${uniq.map(p=>`<tr><td class="num">${eur(p)}</td><td class="num">${eur(c.cout(p))}</td><td class="num">${eur(c.cout(p)+c.autres)}</td><td class="num">${c.revente?x(c.revente/c.cout(p)):"n.d."}</td><td class="num" style="color:${(c.marge(p)??0)<0?"var(--bad)":"inherit"}">${eur(c.marge(p))}</td><td class="small muted">${lbl(p)}</td></tr>`).join("")}</table>
+    <p class="small muted">Coût brut = prix x (1 + ${pct(P.fraisPct)} frais + ${(P.droitsPct*100).toFixed(3).replace(".",",")} % droits + CSI) + ${eur(P.fraisFixe)}. Cash total ajoute honoraires d'enchère, publication, travaux, serrurier, diagnostics, portage. Caution : ${eur(c.caution)}.</p></div>
+    <div class="tbl"><h3>Sensibilités au plafond ${keur(c.eff)}</h3><table><tr><th>Scénario</th><th class="num">Plafond reco.</th><th class="num">Multiple</th><th class="num">Marge</th></tr>
+    ${sc.map(s=>`<tr><td>${s.n}</td><td class="num">${keur(s.reco)}</td><td class="num">${x(s.mult)}</td><td class="num" style="color:${(s.marge??0)<0?"var(--bad)":"inherit"}">${keur(s.marge)}</td></tr>`).join("")}</table>
+    <p class="small muted">Adjugé probable : MAP x médiane ${x(c.med)} (${c.R.set.length} résultat${c.R.set.length>1?"s":""}, ${c.R.label}). P(gagner) : part des adjudications passées sous notre plafond.</p></div>
+  </div>
+  <div class="grid2">
+    <div><h3>Avocat pour enchérir au TJ ${esc(l.tribunal||"")}</h3>
+      <p class="small"><span class="pill ${cov.level==="ok"?"p-ok":cov.level==="warn"?"p-warn":"p-bad"}">${cov.level==="ok"?"Couvert":cov.level==="warn"?"À confirmer par écrit":"Aucun avocat"}</span> ${esc(cov.names.join(", "))}</p>
+      <h3>Pièces manquantes</h3>${miss.length?`<ul class="check">${miss.map(m=>`<li>${esc(m)}</li>`).join("")}</ul>`:`<p class="small muted">Fiche complète.</p>`}
+    </div>
+    <div><h3>Questions à l'avocat poursuivant</h3><p class="small muted">${esc(l.poursuivant||"Poursuivant n.d.")}</p><ul class="check">${qs.map(q=>`<li>${esc(q)}</li>`).join("")}</ul></div>
+  </div>
+  ${l.notes?`<div><h3>Notes</h3><p class="small" style="white-space:pre-wrap">${esc(l.notes)}</p></div>`:""}
+  ${l.postmortem||l.statut==="perdu"||l.statut==="gagne"?`<div><h3>Post-mortem</h3><p class="small" style="white-space:pre-wrap">${esc(l.postmortem||"À rédiger : notre plafond, le prix réel, l'écart, ce que le modèle aurait dû dire.")}</p>${num(l.predit)&&num(l.adjuge)?`<p class="small">Prédit ${eur(+l.predit)}, réel ${eur(+l.adjuge)}, écart <b>${pct((+l.predit-+l.adjuge)/+l.adjuge)}</b>.</p>`:""}</div>`:""}
+  ${l.lien?`<p class="small"><a href="${esc(l.lien)}" target="_blank" rel="noopener">Fiche de vente</a></p>`:""}
+  </section>`;
+}
+
+function vResultats(){
+  const rows=S.resultats.map(r=>({...r,ratio:num(r.map)&&num(r.adjuge)?+r.adjuge/+r.map:null,m2:num(r.surface)&&num(r.adjuge)?+r.adjuge/+r.surface:null})).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const rs=rows.map(r=>r.ratio).filter(v=>v);
+  const by={};rows.filter(r=>r.ratio).forEach(r=>{const k=(r.tribunal||"?")+" · "+(r.type||"?");(by[k]=by[k]||[]).push(r.ratio)});
+  const mapIn=num(S.mapSim)||25000;
+  return `<div class="wrap"><div class="kpis">
+    ${kpi("Résultats en base",String(rows.length),"objectif : 24 mois, zone élargie")}
+    ${kpi("Ratio médian",x(quant(rs,.5)),"adjugé / MAP")}
+    ${kpi("Sous 1,5 x MAP",rs.length?pct(rs.filter(r=>r<1.5).length/rs.length):"n.d.","part des ventes")}
+    ${kpi("Vérifiés",String(rows.filter(r=>r.verifie==="oui").length),"source confirmée")}
+  </div>
+  <div class="grid2">
+  <section class="panel"><h2>Quel plafond gagne ?</h2>
+    <label class="small muted" for="mapsim">Mise à prix testée (€)</label><input id="mapsim" type="number" value="${mapIn}" style="max-width:200px">
+    ${rs.length?`<table><tr><th>Gagne dans</th><th class="num">Ratio</th><th class="num">Plafond</th></tr>${[[.3,"30 % des cas"],[.5,"50 % des cas"],[.8,"80 % des cas"]].map(([q,t])=>`<tr><td>${t}</td><td class="num">${x(quant(rs,q))}</td><td class="num">${eur(quant(rs,q)*mapIn)}</td></tr>`).join("")}</table><p class="small muted">Calculé sur ${rs.length} résultat${rs.length>1?"s":""}. ${rs.length<10?"Trop peu de points : ordre de grandeur seulement.":""}</p>`:empty("Ajoute des résultats pour calculer.")}
+  </section>
+  <section class="panel"><h2>Par tribunal et type</h2>
+    ${Object.keys(by).length?`<div class="tbl"><table><tr><th>Segment</th><th class="num">n</th><th class="num">Médiane</th><th class="num">P25</th><th class="num">P75</th></tr>${Object.entries(by).map(([k,a])=>`<tr><td>${esc(k)}</td><td class="num">${a.length}</td><td class="num">${x(quant(a,.5))}</td><td class="num">${a.length>=4?x(quant(a,.25)):"n.d."}</td><td class="num">${a.length>=4?x(quant(a,.75)):"n.d."}</td></tr>`).join("")}</table></div>`:empty("Pas encore de segment.")}
+  </section></div>
+  <section class="panel"><div class="panel-head"><h2>Historique des adjudications</h2>${S.ro?"":`<button class="btn" data-act="add-res">Ajouter un résultat</button>`}</div>
+  ${rows.length?`<div class="tbl"><table><tr><th>Date</th><th>Bien</th><th>Tribunal</th><th class="num">MAP</th><th class="num">Adjugé</th><th class="num">Ratio</th><th class="num">€/m²</th><th>Occupation</th><th>Source</th></tr>
+  ${rows.map(r=>`<tr class="click" data-res="${esc(r.id)}"><td class="mono">${esc(r.date||"")}</td><td>${esc(r.type||"")} · ${esc(r.commune||"")}${r.surface?` · ${r.surface} m²`:""}</td><td>${esc(r.tribunal||"")}</td><td class="num">${eur(num(r.map))}</td><td class="num">${eur(num(r.adjuge))}</td><td class="num">${x(r.ratio)}</td><td class="num">${eur(r.m2)}</td><td>${esc(r.occupation||"")}</td><td><span class="cert ${r.verifie==="oui"?"c-ok":"c-hyp"}">${r.verifie==="oui"?"vérifié":"à vérifier"}</span> <span class="tag">${esc(r.source||"")}</span></td></tr>`).join("")}</table></div>`:empty("Aucun résultat. Chaque adjudication relevée (Licitor, encheres-publiques, vench) améliore le modèle.")}
+  </section></div>`;
+}
+
+function vReseau(){
+  const trib=[...new Set([...S.lots.map(l=>l.tribunal).filter(Boolean),...S.contacts.flatMap(c=>list(c.tribunaux))])];
+  const groups={};S.contacts.forEach(c=>{const k=c.barreau||"Autres";(groups[k]=groups[k]||[]).push(c)});
+  return `<div class="wrap"><section class="panel"><h2>Couverture par tribunal</h2>
+  <p class="small muted">On enchérit par un avocat inscrit au barreau du tribunal de la vente. Une couverture « à confirmer » doit être validée par écrit par l'avocat avant l'audience.</p>
+  <div class="tbl"><table><tr><th>Tribunal</th><th>Couverture</th><th>Avocats</th><th>Audiences à venir</th></tr>
+  ${trib.map(t=>{const c=coverage(t);const up=S.lots.filter(l=>l.tribunal===t&&days(l.audience)>=0&&!["perdu","retire","horsjeu"].includes(l.statut));return `<tr><td>TJ ${esc(t)}</td><td><span class="pill ${c.level==="ok"?"p-ok":c.level==="warn"?"p-warn":"p-bad"}">${c.level==="ok"?"Couvert":c.level==="warn"?"À confirmer":"Manquant"}</span></td><td>${esc(c.names.join(", ")||"aucun")}</td><td>${up.map(l=>esc(l.titre)+" ("+fdate(l.audience)+")").join("<br>")||"<span class='muted'>aucune</span>"}</td></tr>`}).join("")}</table></div></section>
+  <section class="panel"><div class="panel-head"><h2>Annuaire</h2>${S.ro?"":`<button class="btn" data-act="add-contact">Ajouter un contact</button>`}</div>
+  ${Object.keys(groups).length?Object.entries(groups).map(([g,cs])=>`<h3>${esc(g)}</h3><div class="tbl"><table><tr><th>Nom</th><th>Rôle</th><th>Téléphone</th><th>Email</th><th>Enchérit au TJ</th><th>Statut</th><th>Forfaits</th></tr>${cs.map(c=>`<tr class="click" data-contact="${esc(c.id)}"><td><b>${esc(c.nom||c.structure)}</b><div class="tag">${esc(c.nom?c.structure||"":"")}</div></td><td>${esc(c.role||"")}</td><td class="mono" style="white-space:nowrap">${esc(c.telephone||"")}</td><td class="mono small">${esc(c.email||"")}</td><td>${esc(list(c.tribunaux).join(", "))}${list(c.aConfirmer).length?`<div><span class="pill p-warn">à confirmer : ${esc(list(c.aConfirmer).join(", "))}</span></div>`:""}</td><td>${esc(c.statut||"")}</td><td class="small">${c.forfaitTentative?"tentative "+esc(c.forfaitTentative):""}${c.forfaitAdjudication?"<br>adjudication "+esc(c.forfaitAdjudication):""}</td></tr>`).join("")}</table></div>`).join(""):empty("Annuaire vide.")}
+  </section></div>`;
+}
+
+const PF=[["cash","Cash disponible (€)"],["financement","Financement complémentaire (€)"],["reserve","Réserve d'aléas (€)"],["fraisFixe","Frais taxés : part fixe (€)"],["fraisPct","Frais taxés : % du prix (0,10 = 10 %)"],["droitsPct","Droits marchand de biens (0,00715)"],["droitsCommun","Droits de droit commun (0,0581)"],["csiPct","Contribution sécurité immobilière (0,001)"],["agence","Commission d'agence (0,05)"],["multCible","Multiple cible ferme"],["multConfort","Multiple de confort"],["margeMin","Marge minimale (€)"],["honoraires","Honoraires avocat enchérisseur si adjudication (€)"],["publication","Publication du titre (€)"],["autresDefaut","Serrurier, diag, portage par défaut (€)"],["portageMois","Portage par mois (€)"],["coutTentative","Coût d'une tentative ratée (€)"],["cautionMin","Caution minimale (€)"],["cautionPct","Caution en % de la MAP"]];
+function vParams(){
+  return `<div class="wrap"><section class="panel"><h2>Paramètres du modèle</h2>
+  <p class="small muted">Valeurs du classeur pipeline_encheres_Q4_2026. Frais taxés et honoraires sont des hypothèses à faire confirmer par l'avocat, les droits réduits (art. 1115 CGI) par le comptable.</p>
+  <form class="form" id="pform">${PF.map(([k,l])=>`<label>${l}<input id="p-${k}" name="${k}" type="number" step="any" value="${S.params[k]}" ${S.ro?"disabled":""}></label>`).join("")}</form>
+  ${S.ro?"":`<div class="row"><button class="btn" data-act="save-params">Enregistrer</button><span class="small muted" id="psaved"></span></div>`}
+  </section></div>`;
+}
+
+/* ---------- formulaires ---------- */
+const FIELDS={
+  lots:[["titre","Bien"],["ref","Référence"],["commune","Commune"],["type","Type","select",["maison","appartement","studio","local","immeuble","terrain","autre"]],["tribunal","Tribunal","select",TRIBUNAUX],["audience","Audience","datetime-local"],["visite","Visite","datetime-local"],["statut","Statut","select",Object.keys(STATUTS)],["map","Mise à prix (€)","number"],["surface","Surface (m²)","number"],["prixM2","Prix m² bas (€)","number"],["prixM2Sources","Sources du prix m² (nombre)","number"],["decote","Décote état et sortie (0,3 = 30 %)","number"],["travaux","Travaux (€)","number"],["autresFrais","Serrurier, diag, portage (€)","number"],["occupation","Occupation","select",["libre","occupé","bail","inconnu"]],["plafondDecide","Plafond décidé (€)","number"],["predit","Prix prédit (€)","number"],["adjuge","Prix adjugé (€)","number"],["poursuivant","Avocat poursuivant"],["lien","Lien de la fiche"],["notes","Notes","textarea"],["postmortem","Post-mortem","textarea"]],
+  resultats:[["date","Date","date"],["tribunal","Tribunal","select",TRIBUNAUX],["commune","Commune"],["type","Type","select",["maison","appartement","studio","local","immeuble","terrain","autre"]],["surface","Surface (m²)","number"],["map","Mise à prix (€)","number"],["adjuge","Prix adjugé (€)","number"],["occupation","Occupation","select",["libre","occupé","bail","inconnu"]],["baisse","Baisse d'un quart","select",["non","oui"]],["surenchere","Surenchère","select",["non","oui"]],["source","Source"],["lien","Lien"],["verifie","Vérifié","select",["non","oui"]],["notes","Notes","textarea"]],
+  contacts:[["nom","Nom"],["structure","Cabinet ou étude"],["role","Rôle","select",["avocat","commissaire de justice","avocat poursuivant","banque","comptable","courtier","autre"]],["barreau","Barreau ou ressort"],["tribunaux","Enchérit au TJ (liste, virgules)"],["aConfirmer","TJ à confirmer (liste, virgules)"],["telephone","Téléphone"],["email","Email"],["site","Site"],["adresse","Adresse"],["statut","Statut","select",["mandaté","contact","candidat","repli","écarté","référence"]],["forfaitTentative","Forfait tentative"],["forfaitAdjudication","Forfait adjudication"],["notes","Notes","textarea"]],
+  actions:[["titre","Action"],["echeance","Échéance","date"],["qui","Qui"],["lotRef","Lot lié"]]
+};
+function openForm(col,doc){
+  const f=FIELDS[col];const d=doc||{};
+  const val=(k,t)=>{let v=d[k]??"";if(t==="datetime-local"&&v&&v.length===10)v+="T09:00";return esc(v)};
+  $("#modal-root").innerHTML=`<div class="overlay" id="ov"><div class="modal" role="dialog" aria-modal="true"><h2>${doc?"Modifier":"Ajouter"}</h2>
+  <form class="form" id="mform">${f.map(([k,l,t,opts])=>`<label class="${t==="textarea"?"wide":""}">${l}${t==="select"?`<select id="f-${k}" name="${k}"><option value=""></option>${opts.map(o=>`<option value="${esc(o)}" ${d[k]===o?"selected":""}>${esc(col==="lots"&&k==="statut"?STATUTS[o]:o)}</option>`).join("")}</select>`:t==="textarea"?`<textarea id="f-${k}" name="${k}">${esc(d[k]??"")}</textarea>`:`<input id="f-${k}" name="${k}" type="${t||"text"}" ${t==="number"?'step="any"':""} value="${val(k,t)}">`}</label>`).join("")}</form>
+  <div class="row" style="justify-content:space-between"><div class="row"><button class="btn" data-m="save">Enregistrer</button><button class="btn ghost" data-m="cancel">Annuler</button></div>${doc?`<button class="btn danger" data-m="del">Supprimer</button>`:""}</div><div class="small" id="merr" style="color:var(--bad)"></div></div></div>`;
+  const ov=$("#ov");let confirmDel=false;
+  ov.addEventListener("click",async e=>{
+    const m=e.target.dataset.m;if(e.target===ov||m==="cancel"){$("#modal-root").innerHTML="";return}
+    if(m==="del"){if(!confirmDel){confirmDel=true;e.target.textContent="Confirmer la suppression";return}
+      try{await S.db.collection(col).doc(doc.id).delete();if(col==="lots"&&S.lotSel===doc.id)S.lotSel=null;$("#modal-root").innerHTML=""}catch(err){$("#merr").textContent="Suppression refusée : "+(err.message||err.code)}}
+    if(m==="save"){
+      const out={};f.forEach(([k,,t])=>{const el=$("#f-"+k);let v=el.value;if(t==="number")v=v===""?null:+v;out[k]=v===""?null:v});
+      if(col==="lots"&&!out.statut)out.statut="repere";
+      const id=doc?doc.id:(col==="lots"&&out.ref?String(out.ref).replace(/[^\w-]/g,""):"")||undefined;
+      try{const ref=id?S.db.collection(col).doc(id):S.db.collection(col).doc();await ref.set({...(doc?stripId(doc):{}),...out});$("#modal-root").innerHTML="";if(col==="lots"){S.lotSel=ref.id}}
+      catch(err){$("#merr").textContent="Enregistrement refusé : "+(err.message||err.code)}
+    }
+  });
+}
+const stripId=d=>{const o={...d};delete o.id;return o};
+
+/* ---------- événements ---------- */
+document.addEventListener("click",async e=>{
+  const tab=e.target.closest("#tabs button");if(tab){S.tab=tab.dataset.tab;try{history.replaceState(null,"","#"+S.tab)}catch(_){}render();return}
+  const lot=e.target.closest("[data-lot]");if(lot&&!e.target.closest("input")){S.lotSel=lot.dataset.lot;S.tab="lots";render();window.scrollTo({top:0});return}
+  const res=e.target.closest("[data-res]");if(res&&!S.ro){openForm("resultats",S.resultats.find(r=>r.id===res.dataset.res));return}
+  const ct=e.target.closest("[data-contact]");if(ct&&!S.ro){openForm("contacts",S.contacts.find(r=>r.id===ct.dataset.contact));return}
+  const a=e.target.closest("[data-act]");if(!a)return;const act=a.dataset.act;
+  if(act==="add-lot")openForm("lots");
+  if(act==="edit-lot")openForm("lots",S.lots.find(l=>l.id===a.dataset.id));
+  if(act==="close-lot"){S.lotSel=null;render()}
+  if(act==="add-res")openForm("resultats");
+  if(act==="add-contact")openForm("contacts");
+  if(act==="add-action")openForm("actions");
+  if(act==="save-params"){const o={};PF.forEach(([k])=>{const v=num($("#p-"+k).value);if(v!=null)o[k]=v});try{await S.db.doc("params/global").set(o);$("#psaved").textContent="Enregistré."}catch(err){$("#psaved").textContent="Refusé : "+(err.message||err.code)}}
+  if(act==="archive"){const cs=cashState();const act2=S.lots.filter(l=>!["perdu","retire","revendu","horsjeu"].includes(l.statut));const d=today();const id=d.toISOString().slice(0,10);
+    try{await S.db.collection("archives").doc(id).set({libre:cs.libre,actifs:act2.length,prio:act2.filter(l=>calc(l).dec==="Priorité 1").length,nres:S.resultats.length,err:errStats().mae});a.textContent="Archivé"}catch(err){a.textContent="Refusé"}}
+});
+document.addEventListener("change",async e=>{
+  if(e.target.dataset.done){const id=e.target.dataset.done;try{await S.db.collection("actions").doc(id).update({fait:true})}catch(_){e.target.checked=false}}
+  if(e.target.id==="mapsim"){S.mapSim=e.target.value;render()}
+});
+
+/* ---------- démarrage ---------- */
+const h=(location.hash||"").slice(1);if(["pilotage","lots","resultats","reseau","parametres"].includes(h))S.tab=h;
+render();
+(async()=>{
+  const db=window.claude?await window.claude.use("db"):null;
+  if(!db){$("#dbstatus").textContent="Base non disponible dans cette vue : ouvre la page sur claude.ai, connecté.";S.ro=true;render();return}
+  S.db=db;$("#dbstatus").textContent="Base connectée · mise à jour en direct";
+  try{const u=await window.claude.use("user");const w=u?await u.can("data.write"):null;if(w===false){S.ro=true;$("#dbstatus").textContent="Lecture seule"}}catch(_){}
+  let t=null;const sched=()=>{clearTimeout(t);t=setTimeout(render,30)};
+  const err=e=>{$("#dbstatus").textContent="Base interrompue : recharge la page ("+e.code+")"};
+  ["lots","resultats","contacts","actions","archives"].forEach(c=>db.collection(c).onSnapshot(s=>{S[c]=s.docs.map(d=>({id:d.id,...d.data()}));sched()},err));
+  db.doc("params/global").onSnapshot(s=>{S.params={...DEF,...(s.exists?s.data():{})};sched()},err);
+})();
+})();
+</script>
