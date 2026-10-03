@@ -153,10 +153,17 @@ function coverage(trib){
   if(conf.length)return{level:"warn",names:conf.map(c=>c.nom)};
   return{level:"bad",names:[]};
 }
+const PM2_SRC=[["prixM2MA","MeilleursAgents (ville et type)"],["prixM2DVF","DVF ventes réelles (commune et type)"],["prixM2Annonces","Annonces comparables"],["prixM2Autre","Autre source"]];
+function pm2Sources(L){
+  const rows=PM2_SRC.map(([k,n])=>({k,n:k==="prixM2Autre"&&L.prixM2AutreSource?L.prixM2AutreSource:n,v:num(L[k])})).filter(r=>r.v);
+  if(rows.length)return{rows,n:rows.length,retenu:Math.min(...rows.map(r=>r.v)),auto:true};
+  const v=num(L.prixM2);return{rows:[],n:v?(num(L.prixM2Sources)||1):0,retenu:v,auto:false};
+}
 function calc(lot,Pover){
   const P={...S.params,...(Pover||{})};
   const L=lot;
-  const map=num(L.map),surface=num(L.surface),pm2=num(L.prixM2),dec=num(L.decote)??0.3;
+  const map=num(L.map),surface=num(L.surface),dec=num(L.decote)??0.3;
+  const src=pm2Sources(L);const pm2=src.retenu;
   const k=P.fraisPct+P.droitsPct+P.csiPct;
   const revente=surface&&pm2?surface*pm2*(1-dec)*(P.reventeMult||1):null;
   const travaux=(num(L.travaux)||0)*(P.travauxMult||1);
@@ -181,7 +188,7 @@ function calc(lot,Pover){
   const esper=(pWin!=null&&mEff!=null)?pWin*mEff-(1-pWin)*P.coutTentative:null;
   const caution=map?Math.max(P.cautionMin,P.cautionPct*map):P.cautionMin;
   const cov=L.tribunal?coverage(L.tribunal):{level:"bad",names:[]};
-  const conf=(num(L.prixM2Sources)||0)>=2?"ok":"faible";
+  const conf=src.n>=(L.type==="local"?3:2)?"ok":"faible";
   // décision
   let dec2,why,cls;
   const done={gagne:1,perdu:1,retire:1,revendu:1,horsjeu:1};
@@ -341,21 +348,24 @@ function lotDetail(l){
   if(!l.visite)miss.push("Date de visite");
   if(!l.occupation||l.occupation==="inconnu")miss.push("Occupation (libre, occupé, bail)");
   if(!num(l.surface))miss.push("Surface (Carrez ou mesurage)");
-  if(!num(l.prixM2))miss.push("Prix au m² à l'adresse (MeilleursAgents bas, DVF)");
-  if((num(l.prixM2Sources)||0)<2)miss.push("Deuxième source de prix au m²");
+  const ps=pm2Sources(l);
+  if(!num(l.prixM2MA))miss.push("Prix m² MeilleursAgents (ville et type, fourchette basse)");
+  if(!num(l.prixM2DVF))miss.push("Prix m² DVF (commune et type)");
+  if(l.type==="local"&&ps.n<3)miss.push("Local commercial : au moins 3 sources (MeilleursAgents, DVF locaux, annonces, adjudications)");
   const qs=["État des frais préalables (frais taxés estimés)","Vente soumise à TVA ?","Occupation, bail, mobilier","Charges de copropriété et arriérés","Certificat d'urbanisme, servitudes","Ordre exact du chèque de banque (séquestre)"];
   const cov=c.cov;
   return `<section class="panel lotcard"><div class="panel-head"><div><h2>${esc(l.titre)}</h2><div class="muted small">${esc(l.ref||"")} · ${esc(l.commune||"")} · TJ ${esc(l.tribunal||"n.d.")} · ${l.audience?fdate(l.audience):"audience n.d."} · ${esc(l.occupation||"occupation n.d.")} · <span class="pill p-mute">${esc(STATUTS[l.statut]||l.statut||"")}</span></div></div>
   <div class="row">${S.ro?"":`<button class="btn ghost" data-act="edit-lot" data-id="${esc(l.id)}">Modifier</button>`}<button class="btn ghost" data-act="close-lot">Fermer</button></div></div>
   <div class="decision"><span class="pill ${c.cls}" style="font-size:13px">${esc(c.dec)}</span><span class="why">${esc(c.why)}</span></div>
   <div class="ceil">
-    <div><span class="lab">Revente prudente</span><div class="v">${keur(c.revente)}</div><span class="tag">${num(l.surface)||"?"} m² x ${eur(num(l.prixM2))} x (1-${num(l.decote)??0.3}) <span class="cert ${c.conf==="ok"?"c-ok":"c-hyp"}">${c.conf==="ok"?"2 sources":"hypothèse"}</span></span></div>
+    <div><span class="lab">Revente prudente</span><div class="v">${keur(c.revente)}</div><span class="tag">${num(l.surface)||"?"} m² x ${eur(pm2Sources(l).retenu)} x (1-${num(l.decote)??0.3}) <span class="cert ${c.conf==="ok"?"c-ok":"c-hyp"}">${c.conf==="ok"?pm2Sources(l).n+" sources":"confiance faible"}</span></span></div>
     <div><span class="lab">Plafond multiple x${P.multCible}</span><div class="v">${keur(c.plafMult)}</div><span class="tag">confort x${P.multConfort} : ${keur(c.plafConf)}</span></div>
     <div><span class="lab">Plafond cash</span><div class="v">${keur(c.plafCash)}</div><span class="tag">réserve ${keur(P.reserve)} + frais annexes ${keur(c.autres)}</span></div>
     <div><span class="lab">Plafond marge ${keur(P.margeMin)}</span><div class="v">${keur(c.plafMarge)}</div></div>
     <div class="reco"><span class="lab">Plafond recommandé</span><div class="v">${keur(c.reco)}</div><span class="tag">${num(l.plafondDecide)?"décidé : "+keur(+l.plafondDecide):"le plus bas des trois"}</span></div>
     <div><span class="lab">Prix d'équilibre</span><div class="v">${keur(c.equilibre)}</div><span class="tag">ne jamais dépasser</span></div>
   </div>
+  ${pm2Block(l)}
   <div class="grid2">
     <div class="tbl"><h3>Scénarios de prix</h3><table><tr><th class="num">Prix</th><th class="num">Coût brut</th><th class="num">Cash total</th><th class="num">Multiple</th><th class="num">Marge</th><th>Repère</th></tr>
     ${uniq.map(p=>`<tr><td class="num">${eur(p)}</td><td class="num">${eur(c.cout(p))}</td><td class="num">${eur(c.cout(p)+c.autres)}</td><td class="num">${c.revente?x(c.revente/c.cout(p)):"n.d."}</td><td class="num" style="color:${(c.marge(p)??0)<0?"var(--bad)":"inherit"}">${eur(c.marge(p))}</td><td class="small muted">${lbl(p)}</td></tr>`).join("")}</table>
@@ -377,6 +387,13 @@ function lotDetail(l){
   </section>`;
 }
 
+function pm2Block(l){
+  const ps=pm2Sources(l);
+  if(!ps.rows.length)return `<div class="small muted">Prix au m² : ${num(l.prixM2)?eur(+l.prixM2)+" (source unique, à comparer)":"non renseigné"}. Renseigne MeilleursAgents et DVF dans « Modifier » pour comparer.</div>`;
+  const need=l.type==="local"?3:2;
+  return `<div class="tbl"><h3>Prix au m² : comparaison des sources</h3><table><tr><th>Source</th><th class="num">€/m²</th><th class="num">Écart vs retenu</th></tr>${ps.rows.map(r=>`<tr><td>${esc(r.n)}${r.v===ps.retenu?' <span class="pill p-info">retenu</span>':""}</td><td class="num">${eur(r.v)}</td><td class="num">${r.v===ps.retenu?"":"+"+pct(r.v/ps.retenu-1)}</td></tr>`).join("")}</table>
+  <p class="small muted">Retenu : la source la plus basse (prudence). ${ps.n<need?`<span class="pill p-warn">${ps.n}/${need} sources</span> ${l.type==="local"?"Pour un local, comparer au moins 3 sources.":"Ajouter une deuxième source."}`:`<span class="pill p-ok">${ps.n} sources</span>`}${ps.rows.length>1?" Écart max entre sources : "+pct(Math.max(...ps.rows.map(r=>r.v))/ps.retenu-1)+".":""}</p></div>`;
+}
 function vResultats(){
   const rows=S.resultats.map(r=>({...r,ratio:num(r.map)&&num(r.adjuge)?+r.adjuge/+r.map:null,m2:num(r.surface)&&num(r.adjuge)?+r.adjuge/+r.surface:null})).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
   const rs=rows.map(r=>r.ratio).filter(v=>v);
@@ -425,7 +442,7 @@ function vParams(){
 
 /* ---------- formulaires ---------- */
 const FIELDS={
-  lots:[["titre","Bien"],["ref","Référence"],["commune","Commune"],["type","Type","select",["maison","appartement","studio","local","immeuble","terrain","autre"]],["tribunal","Tribunal","select",TRIBUNAUX],["audience","Audience","datetime-local"],["visite","Visite","datetime-local"],["statut","Statut","select",Object.keys(STATUTS)],["map","Mise à prix (€)","number"],["surface","Surface (m²)","number"],["prixM2","Prix m² bas (€)","number"],["prixM2Sources","Sources du prix m² (nombre)","number"],["decote","Décote état et sortie (0,3 = 30 %)","number"],["travaux","Travaux (€)","number"],["autresFrais","Serrurier, diag, portage (€)","number"],["occupation","Occupation","select",["libre","occupé","bail","inconnu"]],["plafondDecide","Plafond décidé (€)","number"],["predit","Prix prédit (€)","number"],["adjuge","Prix adjugé (€)","number"],["poursuivant","Avocat poursuivant"],["lien","Lien de la fiche"],["notes","Notes","textarea"],["postmortem","Post-mortem","textarea"]],
+  lots:[["titre","Bien"],["ref","Référence"],["commune","Commune"],["type","Type","select",["maison","appartement","studio","local","immeuble","terrain","autre"]],["tribunal","Tribunal","select",TRIBUNAUX],["audience","Audience","datetime-local"],["visite","Visite","datetime-local"],["statut","Statut","select",Object.keys(STATUTS)],["map","Mise à prix (€)","number"],["surface","Surface (m²)","number"],["prixM2MA","Prix m² MeilleursAgents, bas (€)","number"],["prixM2DVF","Prix m² DVF médiane (€)","number"],["prixM2Annonces","Prix m² annonces comparables (€)","number"],["prixM2Autre","Prix m² autre source (€)","number"],["prixM2AutreSource","Nom de l'autre source"],["prixM2","Prix m² manuel si aucune source (€)","number"],["decote","Décote état et sortie (0,3 = 30 %)","number"],["travaux","Travaux (€)","number"],["autresFrais","Serrurier, diag, portage (€)","number"],["occupation","Occupation","select",["libre","occupé","bail","inconnu"]],["plafondDecide","Plafond décidé (€)","number"],["predit","Prix prédit (€)","number"],["adjuge","Prix adjugé (€)","number"],["poursuivant","Avocat poursuivant"],["lien","Lien de la fiche"],["notes","Notes","textarea"],["postmortem","Post-mortem","textarea"]],
   resultats:[["date","Date","date"],["tribunal","Tribunal","select",TRIBUNAUX],["commune","Commune"],["type","Type","select",["maison","appartement","studio","local","immeuble","terrain","autre"]],["surface","Surface (m²)","number"],["map","Mise à prix (€)","number"],["adjuge","Prix adjugé (€)","number"],["occupation","Occupation","select",["libre","occupé","bail","inconnu"]],["baisse","Baisse d'un quart","select",["non","oui"]],["surenchere","Surenchère","select",["non","oui"]],["source","Source"],["lien","Lien"],["verifie","Vérifié","select",["non","oui"]],["notes","Notes","textarea"]],
   contacts:[["nom","Nom"],["structure","Cabinet ou étude"],["role","Rôle","select",["avocat","commissaire de justice","avocat poursuivant","banque","comptable","courtier","autre"]],["barreau","Barreau ou ressort"],["tribunaux","Enchérit au TJ (liste, virgules)"],["aConfirmer","TJ à confirmer (liste, virgules)"],["telephone","Téléphone"],["email","Email"],["site","Site"],["adresse","Adresse"],["statut","Statut","select",["mandaté","contact","candidat","repli","écarté","référence"]],["forfaitTentative","Forfait tentative"],["forfaitAdjudication","Forfait adjudication"],["notes","Notes","textarea"]],
   actions:[["titre","Action"],["echeance","Échéance","date"],["qui","Qui"],["lotRef","Lot lié"]]
