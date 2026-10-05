@@ -1,2 +1,3 @@
 veille/cache/
 __pycache__/
+radar-domaine/data/com_*.json
