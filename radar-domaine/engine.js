@@ -13,7 +13,7 @@
     pretHonneur: 0,                // quasi-fonds propres (Initiative / Réseau Entreprendre), 0 par défaut
     investisseursMax: 150000,      // fonds propres mobilisables via minoritaires (stratégie E)
     apportMinPct: 0.20,            // apport exigé par les banques sur un projet pro
-    taux: 0.040,                   // prêt professionnel 15-20 ans
+    taux: 0.040,                   // prêt pro 20 ans ~3,5 % (BdF, 2026) + prime de risque activité événementielle
     assurancePct: 0.0030,          // assurance emprunteur annuelle sur capital initial
     duree: 20,
     negociation: 0.08,
@@ -27,8 +27,8 @@
     dscrCible: 1.30,
     // exploitation
     mariages: { prudent: 12, base: 20, ambitieux: 30 },
-    prixHaute: 6500,               // location week-end mai à septembre (benchmark)
-    prixBasse: 3500,               // location week-end hors saison
+    prixHaute: 6000,               // location week-end mai à septembre ; benchmark : médiane « dès » 3 950 €, châteaux 37 en moyenne 5 808 €, haut 13 500 €
+    prixBasse: 3000,               // location week-end hors saison (hypothèse)
     partHaute: 0.75,
     extrasParMariage: 1500,        // marge nette extras (hébergement, brunch, mobilier, coordination)
     autresEvenements: 8000,        // séminaires, tournages, privatisations hors mariage (marge annuelle)
@@ -42,7 +42,7 @@
     partTravauxValorisee: 0.6,
     // délais
     moisAutorisations: 8,
-    moisTravauxParTranche: 4,      // par tranche de 100 k€ de travaux
+    moisTravauxParTranche: 2,      // par tranche de 100 k€ de travaux (3 à 12 mois)
     // filtres
     trajetMax: 45,
     voirAussi55: false,
@@ -51,19 +51,19 @@
     malusMax: 15,
     // postes de travaux (€ HT) : bas / moyen / haut
     travaux: {
-      rafraichissement_m2:  { bas: 250,  moyen: 450,  haut: 700,  conf: 'estimé' },
-      rehabilitation_m2:    { bas: 1000, moyen: 1500, haut: 2200, conf: 'estimé' },
-      toiture_m2:           { bas: 120,  moyen: 200,  haut: 320,  conf: 'estimé' },
-      erp:                  { bas: 25000, moyen: 50000, haut: 100000, conf: 'hypothèse' },
-      accessibilite:        { bas: 10000, moyen: 25000, haut: 50000, conf: 'estimé' },
-      assainissement:       { bas: 25000, moyen: 45000, haut: 80000, conf: 'estimé' },
-      cuisine:              { bas: 15000, moyen: 35000, haut: 60000, conf: 'estimé' },
-      sanitaires:           { bas: 20000, moyen: 35000, haut: 60000, conf: 'estimé' },
-      chauffage:            { bas: 10000, moyen: 25000, haut: 50000, conf: 'hypothèse' },
-      parking_place:        { bas: 250,  moyen: 500,  haut: 1000, conf: 'estimé' },
-      acoustique:           { bas: 5000, moyen: 15000, haut: 35000, conf: 'hypothèse' },
-      sono:                 { bas: 5000, moyen: 12000, haut: 25000, conf: 'estimé' },
-      mobilier:             { bas: 15000, moyen: 30000, haut: 50000, conf: 'estimé' },
+      rafraichissement_m2:  { bas: 200,  moyen: 350,  haut: 500,  conf: 'estimé' },
+      rehabilitation_m2:    { bas: 600,  moyen: 1000, haut: 1600, conf: 'estimé' }, // clos-couvert hors toiture, second œuvre simple
+      toiture_m2:           { bas: 80,   moyen: 150,  haut: 260,  conf: 'estimé' },
+      erp:                  { bas: 25000, moyen: 50000, haut: 120000, conf: 'hypothèse' },
+      accessibilite:        { bas: 5000, moyen: 20000, haut: 40000, conf: 'estimé' },
+      assainissement:       { bas: 40000, moyen: 80000, haut: 150000, conf: 'hypothèse' },
+      cuisine:              { bas: 20000, moyen: 45000, haut: 90000, conf: 'estimé' },
+      sanitaires:           { bas: 15000, moyen: 40000, haut: 80000, conf: 'hypothèse' },
+      chauffage:            { bas: 15000, moyen: 40000, haut: 90000, conf: 'hypothèse' },
+      parking_place:        { bas: 300,  moyen: 600,  haut: 1500, conf: 'estimé' },
+      acoustique:           { bas: 5000, moyen: 20000, haut: 60000, conf: 'estimé' },
+      sono:                 { bas: 8000, moyen: 20000, haut: 50000, conf: 'hypothèse' },
+      mobilier:             { bas: 20000, moyen: 40000, haut: 80000, conf: 'hypothèse' },
       structure_m2:         { bas: 900,  moyen: 1400, haut: 2000, conf: 'hypothèse' } // salle neuve / extension
     }
   };
@@ -147,11 +147,12 @@
       add('Mise à jour sécurité ERP', T.erp, 0.3, 'hypothèse', 'Avis de la commission de sécurité à demander');
       add('Mobilier et matériel complémentaire', T.mobilier, 0.4, 'hypothèse');
     } else {
-      if (salle && salle >= 200) surfaceProjet = Math.min(salle + 120, 600);
-      else if (bati && bati >= 250) surfaceProjet = Math.min(Math.max(bati * 0.6, 350), 550);
+      if (salle && salle >= 200) surfaceProjet = Math.min(salle + 100, 450);
+      else if (bati && bati >= 250) surfaceProjet = clamp(bati * 0.6, 300, 450);
       else surfaceProjet = null;
       if (surfaceProjet) {
-        var base = (etat === 'bon') ? T.rafraichissement_m2 : (etat === 'rafraichir') ? { bas: T.rafraichissement_m2.moyen, moyen: (T.rafraichissement_m2.haut + T.rehabilitation_m2.bas) / 2, haut: T.rehabilitation_m2.moyen, conf: 'estimé' } : T.rehabilitation_m2;
+        var R = T.rafraichissement_m2;
+        var base = (etat === 'bon') ? { bas: R.bas * 0.3, moyen: R.moyen * 0.3, haut: R.haut * 0.3, conf: R.conf } : (etat === 'rafraichir') ? R : T.rehabilitation_m2;
         if (!etat) hyp.push('état inconnu, réhabilitation lourde supposée');
         add(etat === 'bon' ? 'Rafraîchissement salle et annexes' : 'Réhabilitation salle et annexes', base, surfaceProjet, etat ? base.conf : 'hypothèse', Math.round(surfaceProjet) + ' m² traités');
       } else {
@@ -161,16 +162,16 @@
         add('Salle à créer (extension ou structure)', T.structure_m2, ext, 'hypothèse', Math.round(ext) + ' m² à créer ; une tente de réception (location 8 à 15 k€ par saison) peut remplacer cette ligne');
         hyp.push('surface de salle insuffisante ou inconnue');
       }
-      if (etat === 'a_renover' || etat === 'ruine' || b.type === 'grange' || b.type === 'ferme' || b.type === 'longere') {
-        var toit = Math.min(bati || 400, 600);
+      if (etat === 'a_renover' || etat === 'ruine' || (b.risques && b.risques.structure)) {
+        var toit = Math.min(bati || 400, 500);
         add('Toiture et charpente', T.toiture_m2, toit, 'hypothèse', 'Diagnostic charpente indispensable');
       }
       add('Mise aux normes ERP (sécurité incendie, désenfumage, issues)', T.erp, TYPES_ERP[b.type] ? 0.5 : 1);
-      add('Accessibilité PMR', T.accessibilite, 1);
-      add('Assainissement 200 personnes', T.assainissement, 1, null, 'Raccordement ou filière autonome à dimensionner');
-      add('Office traiteur / cuisine professionnelle', T.cuisine, 1);
+      add('Accessibilité PMR', T.accessibilite, TYPES_ERP[b.type] ? 0.5 : 1);
+      add('Assainissement 200 personnes', T.assainissement, TYPES_ERP[b.type] ? 0.3 : 1, null, 'Raccordement ou filière autonome à dimensionner');
+      add('Office traiteur (réchauffe, plonge, chambre froide)', T.cuisine, 1);
       add('Sanitaires réception', T.sanitaires, TYPES_ERP[b.type] ? 0.5 : 1);
-      add('Chauffage et ventilation salle', T.chauffage, 1);
+      add('Chauffage et ventilation salle', T.chauffage, TYPES_ERP[b.type] ? 0.5 : 1);
       add('Acoustique et limiteur de bruit', T.acoustique, 1);
       add('Sono et éclairage', T.sono, 1);
       add('Mobilier et décoration (200 couverts)', T.mobilier, 1);
@@ -207,12 +208,13 @@
     var frais = Math.round(prixCible * fraisPct + honoraires);
     var trav = estimerTravaux(b, p);
     var travaux = trav.total.moyen;
-    var moisTravaux = Math.max(3, Math.round(travaux / 100000 * p.moisTravauxParTranche));
+    var moisTravaux = clamp(Math.round(travaux / 100000 * p.moisTravauxParTranche), 3, 12);
     var moisAvantRecettes = (b.activite_reception_existante ? 1 : p.moisAutorisations) + (b.activite_reception_existante ? 1 : moisTravaux);
     // différé : intérêts seuls pendant la période sans recettes, financés par la trésorerie de démarrage
     var coutHorsTreso = prixCible + frais + travaux;
     var apportTotal = p.apport + (p.pretHonneur || 0);
-    var interetsDiffere = Math.max(0, coutHorsTreso - apportTotal) * p.taux * moisAvantRecettes / 12;
+    // déblocage progressif : la moitié du prêt en moyenne pendant le différé
+    var interetsDiffere = Math.max(0, coutHorsTreso - apportTotal) * 0.5 * p.taux * moisAvantRecettes / 12;
     var chargesPendant = (p.chargesFixes + p.energieFixe) * 0.5 * moisAvantRecettes / 12;
     var treso = Math.round(p.tresorerieDemarrage + interetsDiffere + chargesPendant);
     var coutTotal = Math.round(coutHorsTreso + treso);
@@ -229,7 +231,7 @@
     var scen = {};
     ['prudent', 'base', 'ambitieux'].forEach(function (k) {
       var n = p.mariages[k];
-      var ca = Math.round(n * (prixMoyen + p.extrasParMariage / 0.5 * 0.5) + p.autresEvenements);
+      var ca = Math.round(n * (prixMoyen + p.extrasParMariage / 0.5) + p.autresEvenements / 0.6); // extras et événements en chiffre d'affaires brut (marge supposée 50 % et 60 %)
       var ebe = Math.round(n * margeMariage + p.autresEvenements - fixes);
       scen[k] = { mariages: n, ca: ca, ebe: ebe, dscr: annuite > 0 ? ebe / annuite : null, cashflow: ebe - annuite };
     });
@@ -237,7 +239,7 @@
     // 10 ans
     var valeurRevente = Math.round((prixCible + travaux * p.partTravauxValorisee) * Math.pow(1 + p.revalorisation, 10));
     var crd10 = Math.round(capitalRestant(emprunt, p.taux, p.duree, 120));
-    var cumulCF = scen.base.cashflow * 10 - treso * 0; // la trésorerie de démarrage est déjà dans le coût
+    var cumulCF = scen.base.cashflow * 10; // la trésorerie de démarrage est déjà dans le coût
     var gain10 = cumulCF + valeurRevente - crd10 - apportTotal;
     var multiple = apportTotal > 0 ? (cumulCF + valeurRevente - crd10) / apportTotal : null;
 

@@ -1,0 +1,58 @@
+{
+ "sources_interrogees": [
+  {
+   "site": "ma-propriete.fr",
+   "statut": "ok",
+   "detail": "Listing Centre-Val de Loire ouvert; fiche Sainte-Maure ouverte. Autres biens = châteaux/domaines non orientés cession d'activité (Saumur hors zone), non retenus.",
+   "nb_biens": 1
+  },
+  {
+   "site": "BureauxLocaux",
+   "statut": "ok",
+   "detail": "Liste Indre-et-Loire + 5 annonces ouvertes (Azay-sur-Cher, Montlouis x2, Athée, Sonzay).",
+   "nb_biens": 5
+  },
+  {
+   "site": "Arthur Loyd Tours",
+   "statut": "ok",
+   "detail": "Liste Tours + 4 annonces ouvertes (Chançay, Saint-Cyr, Rochecorbon, Sorigny).",
+   "nb_biens": 4
+  },
+  {
+   "site": "Bpifrance Transmission / Bourse des locaux",
+   "statut": "bloque",
+   "detail": "HTTP 403 sur liste locaux et sur annonce hôtel-restaurant Amboise; fiche issue d'un extrait de recherche, non vérifiée.",
+   "nb_biens": 1
+  },
+  {
+   "site": "Michel Simond",
+   "statut": "bloque",
+   "detail": "HTTP 503 sur 3 pages (salle de réception/gîtes 37, salons de réception, hôtel-restaurant 37). Une annonce salle de réception+gîtes 200 pers. (~2,04 M€) 37 signalée en recherche mais non ouverte: à vérifier manuellement.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Geolocaux",
+   "statut": "vide",
+   "detail": "Page de liste renvoie 'aucun résultat' à l'extraction.",
+   "nb_biens": 0
+  },
+  {
+   "site": "lesannoncesducommerce.fr",
+   "statut": "partiel",
+   "detail": "Liste hôtels 37 lue (hôtels-bureau, sans mention de salle); non retenus.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Transentreprise",
+   "statut": "vide",
+   "detail": "URL de recherche testée en 404.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Cession-PME, Fusacq, Fonds-de-commerce.com, Commerce-immo, Leboncoin, mandataires, CCI Touraine",
+   "statut": "vide",
+   "detail": "Non interrogés directement (budget); recherches web génériques sans annonce exploitable.",
+   "nb_biens": 0
+  }
+ ]
+}

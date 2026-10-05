@@ -1,0 +1,2814 @@
+{
+ "biens": [
+  {
+   "titre": "Ferme du 17e restaurée avec gîtes et grange de réception, 4,2 ha",
+   "type": "ferme",
+   "commune": "Sainte-Maure-de-Touraine",
+   "code_postal": "37800",
+   "lat": 47.11,
+   "lon": 0.62,
+   "precision_gps": "commune",
+   "prix": 1999000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": 0,
+   "surface_bati_m2": 561,
+   "surface_salle_m2": null,
+   "terrain_m2": 42000,
+   "chambres": 20,
+   "etat": "bon",
+   "dpe": "D (234 kWh/m2/an)",
+   "taxe_fonciere": null,
+   "description": "Ferme du XVIIe restaurée avec gîtes indépendants, cuisine professionnelle et grange rénovée (réception 150 personnes annoncée). Bois, étang, grand parking, autonomie solaire photovoltaïque. Activité événementielle en cours, reprise possible des parts de la société exploitante.",
+   "cachet": [
+    "dependances",
+    "parc",
+    "piece_eau"
+   ],
+   "capacite_annoncee": 150,
+   "activite_reception_existante": true,
+   "ca_annonce": null,
+   "logement_exploitant": true,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": "Alexandre Geoffroy d'Assy",
+    "telephone": "06 20 45 61 61",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/touristique/gites/indre-et-loire/ferme-du-17eme-sur-4-2ha-a-sainte-maure-de-touraine-mariage-evenementiel-opportunite-dinvestissement-unique"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/touristique/gites/indre-et-loire/ferme-du-17eme-sur-4-2ha-a-sainte-maure-de-touraine-mariage-evenementiel-opportunite-dinvestissement-unique",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "340933004490"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "CA",
+    "capacité 200 (annoncé 150)",
+    "date parution",
+    "surface_salle_m2",
+    "taxe_fonciere"
+   ],
+   "trajet_min": 35,
+   "distance_route_km": 39.9,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 31.6,
+   "id": "ferme-sainte-maure-de-36ad6b",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1999000
+    }
+   ]
+  },
+  {
+   "titre": "Domaine 32 pièces à Amboise : manoir, 2 gîtes, cabanes, anciennes écuries en studios",
+   "type": "manoir",
+   "commune": "Amboise",
+   "code_postal": "37400",
+   "lat": 47.413,
+   "lon": 0.983,
+   "precision_gps": "commune",
+   "prix": 2490000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_bati_m2": 1000,
+   "surface_salle_m2": null,
+   "terrain_m2": 7000,
+   "chambres": 22,
+   "etat": null,
+   "dpe": "C (160 kWh/m2/an)",
+   "taxe_fonciere": null,
+   "description": "Domaine de 1850 : manoir d'environ 300 m2, 2 gîtes, 4 cabanes et anciennes écuries en 6 studios, piscine chauffée 12x6, spa, 16 places de parking. Parc de seulement 0,7 ha, ce qui limite la tente de 200 invités.",
+   "cachet": [
+    "dependances",
+    "piece_eau"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": true,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": "Sylvain Delmas",
+    "telephone": "07 69 70 38 40",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-32-pieces-amboise-37-2"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-32-pieces-amboise-37-2",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "340934388434"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "adresse exacte",
+    "capacité",
+    "surface_salle_m2",
+    "taxe_fonciere"
+   ],
+   "trajet_min": 33,
+   "distance_route_km": 23.7,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 19.8,
+   "id": "manoir-amboise-f9d63e",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 2490000
+    }
+   ]
+  },
+  {
+   "titre": "Château Renaissance restauré, 26 ha, ancien hôtel-restaurant, proche Amboise",
+   "type": "chateau",
+   "commune": "Amboise",
+   "code_postal": "37400",
+   "lat": 47.413,
+   "lon": 0.983,
+   "precision_gps": "commune",
+   "prix": 4600000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_bati_m2": 2000,
+   "surface_salle_m2": null,
+   "terrain_m2": 260000,
+   "chambres": 33,
+   "etat": "bon",
+   "dpe": "A",
+   "taxe_fonciere": null,
+   "description": "Château Renaissance entièrement restauré, ancien hôtel-restaurant : cuisine professionnelle, salles de séminaire, 33 chambres (17 au château), pigeonnier converti, douves sèches, étang, piscine, tennis, arbres centenaires. Potentiel d'extension (combles, cottage 180 m2).",
+   "cachet": [
+    "parc",
+    "douves",
+    "pigeonnier",
+    "dependances",
+    "patrimoine",
+    "piece_eau"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": true,
+   "ca_annonce": null,
+   "logement_exploitant": true,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": "Sylvain Delmas",
+    "telephone": "07 69 70 38 40",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-50-pieces-proche-de-amboise-37-2"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-50-pieces-proche-de-amboise-37-2",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "959814"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "capacité",
+    "commune exacte (proche Amboise)",
+    "surface_salle_m2",
+    "taxe_fonciere"
+   ],
+   "trajet_min": 33,
+   "distance_route_km": 23.7,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 19.8,
+   "id": "chateau-amboise-1dc49b",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 4600000
+    }
+   ]
+  },
+  {
+   "titre": "Ancienne ferme du 19e convertie en hébergements, 2,8 ha, 35 km au sud de Tours",
+   "type": "ferme",
+   "commune": "Sud Tours (commune non publiée)",
+   "code_postal": null,
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 1050000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_bati_m2": 800,
+   "surface_salle_m2": null,
+   "terrain_m2": 28000,
+   "chambres": 29,
+   "etat": null,
+   "dpe": "C (156 kWh/m2/an)",
+   "taxe_fonciere": null,
+   "description": "Ferme du XIXe restaurée : bâtiment principal 800 m2, dépendances 400 m2, gîte 90 m2, 2 cottages, 10 mobil-homes, piscine chauffée, jacuzzi, étang 3000 m2. Situé à environ 35 km au sud de Tours.",
+   "cachet": [
+    "dependances",
+    "piece_eau"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": true,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": "Sylvain Delmas",
+    "telephone": "07 69 70 38 40",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/touristique/gites/indre-et-loire/propriete-a-vendre-45-pieces-proche-de-tours-37-1"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/touristique/gites/indre-et-loire/propriete-a-vendre-45-pieces-proche-de-tours-37-1",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "962162"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "GPS",
+    "capacité",
+    "commune",
+    "localisation",
+    "surface_salle_m2",
+    "temps de trajet"
+   ],
+   "id": "ferme-sud-tours-commune-a059b9",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1050000
+    }
+   ]
+  },
+  {
+   "titre": "Château napoléonien avec activités touristiques et salle de 200 m², sud Touraine",
+   "type": "chateau",
+   "commune": "Sud Touraine (annonce indique Tours 37000 ; commune à confirmer)",
+   "code_postal": null,
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 2968000,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": 6.0,
+   "surface_bati_m2": 1400,
+   "surface_salle_m2": 200,
+   "terrain_m2": 40000,
+   "chambres": 32,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "description": "Château napoléonien fin XIXe exploité en activité touristique : 18 chambres au château, grand gîte 10 chambres, petit gîte, mobil-homes, camping 25 emplacements, salle de réception 200 m2 avec bar et cuisine, piscine chauffée, minigolf. Parc paysager 4 ha.",
+   "cachet": [
+    "parc",
+    "patrimoine",
+    "dependances",
+    "piece_eau"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": true,
+   "ca_annonce": null,
+   "logement_exploitant": true,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Connecta Immobilier",
+    "nom": "Damien Jacquot",
+    "telephone": "06.80.27.48.55",
+    "email": "damien.jacquot@connecta-immobilier.fr",
+    "url": "https://www.connecta-immobilier.fr/vente/37-indre-et-loire/3-tours/28-chateau/t40/15567-chateau-avec-activites-touristiques-dans-le-sud-touraine/"
+   },
+   "sources": [
+    {
+     "url": "https://www.connecta-immobilier.fr/vente/37-indre-et-loire/3-tours/28-chateau/t40/15567-chateau-avec-activites-touristiques-dans-le-sud-touraine/",
+     "site": "connecta-immobilier.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "JD 3287"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "CA",
+    "GPS",
+    "capacité",
+    "commune réelle et temps de trajet (possible Trogues, limite zone)",
+    "localisation"
+   ],
+   "id": "chateau-sud-touraine-annonce-815106",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 2968000
+    }
+   ]
+  },
+  {
+   "titre": "Propriété d'hôtes d'exception avec espace de réception semi-ouvert, 3,5 ha sur la Brenne",
+   "type": "lieu_reception_activite",
+   "commune": "Chançay",
+   "code_postal": "37210",
+   "lat": 47.443,
+   "lon": 0.87,
+   "precision_gps": "commune",
+   "prix": 1473000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_bati_m2": 720,
+   "surface_salle_m2": 150,
+   "terrain_m2": 34692,
+   "chambres": 11,
+   "etat": null,
+   "dpe": "B",
+   "taxe_fonciere": null,
+   "description": "Propriété historique de 3,5 ha traversée par la Brenne : 5 chambres d'hôtes, suite familiale, cottage, salle de séminaire, piscine couverte et vaste espace de réception semi-ouvert avec bar (150 m2+, extensible avec garages). CA annoncé 100 000 EUR HT.",
+   "cachet": [
+    "parc",
+    "piece_eau",
+    "dependances"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": true,
+   "ca_annonce": 100000,
+   "logement_exploitant": true,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "ImmoTourisme",
+    "nom": "Dorothée Altemir",
+    "telephone": "0672337599",
+    "email": "dorothee.altemir@immotourisme.com",
+    "url": "https://www.immotourisme.com/annonces/propriete-dhotes-dexception-a-20min-damboise-et-de-tours/"
+   },
+   "sources": [
+    {
+     "url": "https://www.immotourisme.com/annonces/propriete-dhotes-dexception-a-20min-damboise-et-de-tours/",
+     "site": "immotourisme.com",
+     "collecte_le": "2026-10-04",
+     "ref": "VM513"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "GPS commune approx",
+    "capacité 200",
+    "taxe_fonciere",
+    "zone inondable Brenne"
+   ],
+   "trajet_min": 33,
+   "distance_route_km": 16.9,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 12.7,
+   "id": "lieu-reception-activite-chancay-e48830",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1473000
+    }
+   ]
+  },
+  {
+   "titre": "Moulin du XVIe sur la Brenne, 3,5 ha, grange de moulin et boxes (Vouvray)",
+   "type": "moulin",
+   "commune": "Vouvray (secteur, commune exacte non publiée)",
+   "code_postal": "37210",
+   "lat": 47.409,
+   "lon": 0.803,
+   "precision_gps": "commune",
+   "prix": 1470000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_bati_m2": 720,
+   "surface_salle_m2": null,
+   "terrain_m2": 35000,
+   "chambres": 11,
+   "etat": null,
+   "dpe": "A (105 kWh/m2/an)",
+   "taxe_fonciere": null,
+   "description": "Moulin XVIe sur la Brenne : bâti principal 720 m2, ancienne grange du moulin 179 m2 (salle 74 m2), dépendances 237 m2, maison d'amis 100 m2, piscine couverte chauffée, paddocks et boxes. Réceptions rénovées.",
+   "cachet": [
+    "moulin",
+    "piece_eau",
+    "dependances",
+    "patrimoine",
+    "parc"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": true,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": "Alexandre Geoffroy d'Assy",
+    "telephone": "06 20 45 61 61",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/equestre/proprietes-equestres/indre-et-loire/entre-tours-et-amboise-decouvrez-un-moulin-du-xvie-siecle-au-cadre-exceptionnel-sur-3-4ha"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/equestre/proprietes-equestres/indre-et-loire/entre-tours-et-amboise-decouvrez-un-moulin-du-xvie-siecle-au-cadre-exceptionnel-sur-3-4ha",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "340937799272"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "capacité 200 (grange 179 m2 : limite)",
+    "commune exacte",
+    "taxe_fonciere",
+    "zone inondable (moulin sur rivière)"
+   ],
+   "trajet_min": 21,
+   "distance_route_km": 9.9,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 6.5,
+   "id": "moulin-vouvray-secteur-commune-c4b673",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1470000
+    }
+   ]
+  },
+  {
+   "titre": "Propriété équestre aux portes d'Amboise, 2,6 ha, manège couvert et grange 125 m2",
+   "type": "haras",
+   "commune": "Amboise",
+   "code_postal": "37400",
+   "lat": 47.413,
+   "lon": 0.983,
+   "precision_gps": "commune",
+   "prix": 966000,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": 5.0,
+   "surface_bati_m2": 216,
+   "surface_salle_m2": null,
+   "terrain_m2": 26000,
+   "chambres": null,
+   "etat": null,
+   "dpe": "B (102 kWh/m2/an)",
+   "taxe_fonciere": null,
+   "description": "Maison 180 m2, gîte 37 m2, grange 125 m2, écuries bois 13 boxes (2020), manège couvert 20x30, carrière 26x60, tunnel de stockage 15x20, cave, piscine. Terrain 2,6 ha : tente de réception plausible.",
+   "cachet": [
+    "dependances",
+    "cave"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": true,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Equestrian Immobilier",
+    "nom": "Stéphane Bonamy",
+    "telephone": "06 13 03 26 17",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/equestre/proprietes-equestres/indre-et-loire/propriete-equestre-dexception-aux-portes-damboise-plus"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/equestre/proprietes-equestres/indre-et-loire/propriete-equestre-dexception-aux-portes-damboise-plus",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "911-EQUESTRIAN"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "adresse",
+    "capacité",
+    "nuisances voisinage"
+   ],
+   "trajet_min": 33,
+   "distance_route_km": 23.7,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 19.8,
+   "id": "haras-amboise-537579",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 966000
+    }
+   ]
+  },
+  {
+   "titre": "Château XIXe restauré avec dépendances aménageables en salles de réception, 3 ha, proche Tours",
+   "type": "chateau",
+   "commune": "Proche Tours (commune non publiée)",
+   "code_postal": null,
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 2500000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_bati_m2": 2500,
+   "surface_salle_m2": null,
+   "terrain_m2": 30000,
+   "chambres": null,
+   "etat": "bon",
+   "dpe": "vierge",
+   "taxe_fonciere": null,
+   "description": "Château XIXe, 650 m2 habitables restaurés, dépendances spacieuses en très bon état aménageables en salles de réception. 30 pièces, piscine. Vente confidentielle : lettre d'intention requise.",
+   "cachet": [
+    "dependances",
+    "parc",
+    "patrimoine"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": "Sylvain Delmas",
+    "telephone": "07 69 70 38 40",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-28-pieces-proche-de-tours-37"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-28-pieces-proche-de-tours-37",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "340930882883"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "GPS",
+    "commune",
+    "localisation",
+    "surface des dépendances",
+    "trajet"
+   ],
+   "id": "chateau-proche-tours-commune-a8230c",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 2500000
+    }
+   ]
+  },
+  {
+   "titre": "Château XV-XIXe restauré, 10 ha, caves 1000 m2, à 25 km de Tours",
+   "type": "chateau",
+   "commune": "Proche Tours, 25 km (commune non publiée)",
+   "code_postal": null,
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 1890000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_bati_m2": 1000,
+   "surface_salle_m2": null,
+   "terrain_m2": 100000,
+   "chambres": 9,
+   "etat": "bon",
+   "dpe": "B (147 kWh/m2/an)",
+   "taxe_fonciere": null,
+   "description": "Château XV-XIXe restauré, 18 pièces, caves souterraines d'environ 1000 m2, maison d'amis 100 m2, loge de gardien, tour à rénover, piscine, parc boisé de 10 ha. À 25 km de Tours, 20 min de la gare TGV.",
+   "cachet": [
+    "cave",
+    "parc",
+    "patrimoine",
+    "dependances",
+    "pigeonnier"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": "Sylvain Delmas",
+    "telephone": "07 69 70 38 40",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-18-pieces-proche-de-tours-37"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-18-pieces-proche-de-tours-37",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "959520"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "GPS",
+    "capacité 200 (pas de grande dépendance publiée)",
+    "commune",
+    "localisation"
+   ],
+   "id": "chateau-proche-tours-25-f6dbf4",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1890000
+    }
+   ]
+  },
+  {
+   "titre": "Ancien orphelinat 1900, 4000 m2 sur 20 ha, à restaurer, 30 min de Tours TGV",
+   "type": "autre",
+   "commune": "Proche Tours (commune non publiée)",
+   "code_postal": null,
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 1400000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_bati_m2": 4000,
+   "surface_salle_m2": null,
+   "terrain_m2": 200000,
+   "chambres": null,
+   "etat": "ruine",
+   "dpe": "vierge",
+   "taxe_fonciere": null,
+   "description": "Ancien orphelinat (1900) puis maison de retraite, abandonné depuis 30 ans, 100 pièces sur 2 niveaux, restauration complète nécessaire. 20 ha, position dominante, 2 km de l'autoroute.",
+   "cachet": [
+    "parc",
+    "vue",
+    "patrimoine"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Restauration lourde ; annonce évoque un monument classé : statut à confirmer.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": "Sylvain Delmas",
+    "telephone": "07 69 70 38 40",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-100-pieces-proche-de-tours-37"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-100-pieces-proche-de-tours-37",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "964962"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "GPS",
+    "commune",
+    "coût travaux",
+    "localisation",
+    "statut MH"
+   ],
+   "id": "autre-proche-tours-commune-54782c",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1400000
+    }
+   ]
+  },
+  {
+   "titre": "Château de 1880 restauré, 24 ha de parc paysager, près de Loches",
+   "type": "chateau",
+   "commune": "Près de Loches (commune non publiée)",
+   "code_postal": null,
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 1600000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_bati_m2": 350,
+   "surface_salle_m2": null,
+   "terrain_m2": 240000,
+   "chambres": 6,
+   "etat": "bon",
+   "dpe": "vierge",
+   "taxe_fonciere": null,
+   "description": "Château 1880 entièrement restauré, 350 m2, 6 chambres, 24 ha de parc paysager sans vis-à-vis, bâtiment agricole de stockage et carport. Parc idéal pour tente de 200 invités.",
+   "cachet": [
+    "parc",
+    "vue",
+    "patrimoine"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": "Sylvain Delmas",
+    "telephone": "07 69 70 38 40",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-8-pieces-proche-de-loches-37"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-8-pieces-proche-de-loches-37",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "969543"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "GPS",
+    "commune",
+    "localisation",
+    "surface bâtiment agricole",
+    "trajet"
+   ],
+   "id": "chateau-pres-de-loches-a69f9d",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1600000
+    }
+   ]
+  },
+  {
+   "titre": "Château XVIe remanié XIXe dominant la Loire, caves troglodytiques 670 m2, Amboise",
+   "type": "chateau",
+   "commune": "Amboise",
+   "code_postal": "37400",
+   "lat": 47.413,
+   "lon": 0.983,
+   "precision_gps": "commune",
+   "prix": 1300000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_bati_m2": 670,
+   "surface_salle_m2": null,
+   "terrain_m2": 10000,
+   "chambres": 12,
+   "etat": "rafraichir",
+   "dpe": "G (417 kWh/m2/an)",
+   "taxe_fonciere": null,
+   "description": "Château XVIe remanié au XIXe, vue sur Loire, enclos de murs, 16 pièces, 12 chambres, dépendances et caves troglodytiques d'environ 670 m2, 1 ha. Annonce indique 3 ventes échouées.",
+   "cachet": [
+    "tuffeau",
+    "cave",
+    "vue",
+    "loire",
+    "mh",
+    "parc"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "DPE G ; trois ventes échouées selon l'annonce ; surface habitable 500-1000 m2 imprécise.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": "Sylvain Delmas",
+    "telephone": "07 69 70 38 40",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-16-pieces-proche-de-amboise-37-1"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-16-pieces-proche-de-amboise-37-1",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "340930279572"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "adresse",
+    "motifs ventes échouées",
+    "statut MH",
+    "surface habitable"
+   ],
+   "trajet_min": 33,
+   "distance_route_km": 23.7,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 19.8,
+   "id": "chateau-amboise-1772b0",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1300000
+    }
+   ]
+  },
+  {
+   "titre": "Prieuré (ISMH) sur domaine de 34,6 ha avec grange dîmière MH 43x14 m, aux portes de Tours",
+   "type": "prieure",
+   "commune": "Aux portes de Tours (commune non publiée)",
+   "code_postal": null,
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 2310000,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": null,
+   "surface_bati_m2": 320,
+   "surface_salle_m2": 600,
+   "terrain_m2": 345800,
+   "chambres": 3,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "description": "Ancien prieuré agricole fondé vers 1100 : logis restauré 320 m2, grange dîmière classée 43x14 m, tour du XIIIe, fuye XVIe, dépendance 80 m2 en espace événementiel. Annonce mentionne une capacité de réception de 200 personnes. Domaine de 34,6 ha.",
+   "cachet": [
+    "mh",
+    "pierre",
+    "charpente",
+    "pigeonnier",
+    "dependances",
+    "parc",
+    "patrimoine"
+   ],
+   "capacite_annoncee": 200,
+   "activite_reception_existante": true,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Patrice Besse",
+    "nom": "Stéphanie Lecomte",
+    "telephone": "+33 1 42 84 80 85",
+    "email": null,
+    "url": "https://www.patrice-besse.com/annonces/ismh-Aux-portes-de-Tours--pb551729"
+   },
+   "sources": [
+    {
+     "url": "https://www.patrice-besse.com/annonces/ismh-Aux-portes-de-Tours--pb551729",
+     "site": "patrice-besse.com",
+     "collecte_le": "2026-10-04",
+     "ref": "551729"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "GPS",
+    "commune",
+    "contraintes MH / travaux ABF",
+    "date parution (page non datée)",
+    "localisation",
+    "trajet gare",
+    "état de la grange MH"
+   ],
+   "id": "prieure-aux-portes-de-a21b8f",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 2310000
+    }
+   ]
+  },
+  {
+   "titre": "Manoir XVIIe avec pavillon, caves et parc de 2,5 ha aux portes d'Amboise",
+   "type": "manoir",
+   "commune": "Amboise",
+   "code_postal": "37400",
+   "lat": 47.413,
+   "lon": 0.983,
+   "precision_gps": "commune",
+   "prix": 1850000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_bati_m2": 540,
+   "surface_salle_m2": null,
+   "terrain_m2": 25399,
+   "chambres": 8,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "description": "Manoir XVIIe de 450 m2 avec pavillon de plaisance, maison de gardien, atelier à parties troglodytiques et vastes caves. Parc en terrasses, jardin à la française, vergers. Pas de grande dépendance : réception sous tente sur 2,5 ha.",
+   "cachet": [
+    "parc",
+    "cave",
+    "dependances",
+    "patrimoine"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Patrice Besse",
+    "nom": "Pascal Evain",
+    "telephone": "+33 1 42 84 80 85",
+    "email": null,
+    "url": "https://www.patrice-besse.com/annonces/immobilier-prestige-Aux-portes-d-Amboise--pb449376"
+   },
+   "sources": [
+    {
+     "url": "https://www.patrice-besse.com/annonces/immobilier-prestige-Aux-portes-d-Amboise--pb449376",
+     "site": "patrice-besse.com",
+     "collecte_le": "2026-10-04",
+     "ref": "449376"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "DPE",
+    "adresse",
+    "grande salle absente"
+   ],
+   "trajet_min": 33,
+   "distance_route_km": 23.7,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 19.8,
+   "id": "manoir-amboise-10975d",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1850000
+    }
+   ]
+  },
+  {
+   "titre": "Manoir XIXe, 2,7 ha, 3 logements, piscine et tennis, à 5 km de Tours",
+   "type": "manoir",
+   "commune": "Aux portes de Tours (commune non publiée)",
+   "code_postal": null,
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 2750000,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": 4.0,
+   "surface_bati_m2": 892,
+   "surface_salle_m2": null,
+   "terrain_m2": 27200,
+   "chambres": 9,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "description": "Manoir XIXe 530 m2 (9 chambres, cinéma, cave), dépendances 362 m2 dont grange transformée en logement, appartement locatif, loge de gardien, piscine chauffée, tennis, parc arboré. Annonce non datée.",
+   "cachet": [
+    "parc",
+    "cave",
+    "dependances"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Patrice Besse",
+    "nom": "Stéphanie Lecomte",
+    "telephone": "+33 1 42 84 80 85",
+    "email": null,
+    "url": "https://www.patrice-besse.com/annonces/manoirs-a-vendre-Aux-portes-de-Tours--pb383130"
+   },
+   "sources": [
+    {
+     "url": "https://www.patrice-besse.com/annonces/manoirs-a-vendre-Aux-portes-de-Tours--pb383130",
+     "site": "patrice-besse.com",
+     "collecte_le": "2026-10-04",
+     "ref": "383130"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "DPE",
+    "GPS",
+    "capacité 200 (parc 2,7 ha, pas de salle)",
+    "commune",
+    "localisation"
+   ],
+   "id": "manoir-aux-portes-de-82053d",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 2750000
+    }
+   ]
+  },
+  {
+   "titre": "Longère XVIIIe, grange 160 m2+, 4,8 ha de prairies et bois, 20 min de la gare TGV de Tours",
+   "type": "longere",
+   "commune": "Secteur Azay-le-Rideau / Langeais / Villandry (commune non publiée)",
+   "code_postal": null,
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 737000,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": 5.0,
+   "surface_bati_m2": 440,
+   "surface_salle_m2": null,
+   "terrain_m2": 48043,
+   "chambres": 4,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "description": "Longère tuffeau XVIIIe 218 m2, maison d'amis, grange de 160 m2+ en deux volumes, 4,8 ha de prairies et bois, à l'abri des regards. Budget d'entrée bas ; salle 200 invités à créer ou tente sur prairie.",
+   "cachet": [
+    "tuffeau",
+    "dependances",
+    "piece_eau"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Patrice Besse",
+    "nom": "Stéphanie Lecomte",
+    "telephone": "+33 1 42 84 80 85",
+    "email": null,
+    "url": "https://www.patrice-besse.com/annonces/maisons-de-caractere-a-vendre-a-20-min-de-Tours--pb253919"
+   },
+   "sources": [
+    {
+     "url": "https://www.patrice-besse.com/annonces/maisons-de-caractere-a-vendre-a-20-min-de-Tours--pb253919",
+     "site": "patrice-besse.com",
+     "collecte_le": "2026-10-04",
+     "ref": "253919"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "DPE",
+    "GPS",
+    "capacité",
+    "commune",
+    "localisation",
+    "état grange"
+   ],
+   "id": "longere-secteur-azay-le-e1aa61",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 737000
+    }
+   ]
+  },
+  {
+   "titre": "Château fin XIXe à Veuzain-sur-Loire, parc de 4 ha, maison de gardien 160 m2",
+   "type": "chateau",
+   "commune": "Veuzain-sur-Loire (Onzain)",
+   "code_postal": "41150",
+   "lat": 47.495,
+   "lon": 1.175,
+   "precision_gps": "commune",
+   "prix": 1450000,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": null,
+   "surface_bati_m2": 614,
+   "surface_salle_m2": null,
+   "terrain_m2": 41955,
+   "chambres": 16,
+   "etat": null,
+   "dpe": "B (132 kWh/m2/an)",
+   "taxe_fonciere": 4107,
+   "description": "Château Belle Epoque ancien hôtel, 614 m2, 19 pièces, 16 chambres, maison de jardinier 160 m2 et appartement privé, parc de 4 ha d'arbres centenaires. À 15 min de Blois et d'Amboise.",
+   "cachet": [
+    "parc",
+    "patrimoine"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": true,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Espaces Atypiques Tours",
+    "nom": "Julie Riviere",
+    "telephone": "06 31 35 22 95",
+    "email": null,
+    "url": "https://www.espaces-atypiques.com/ventes/41150-veuzain-sur-loire-chateau-et-dependance-dans-son-magnifique-parc-eat5367/"
+   },
+   "sources": [
+    {
+     "url": "https://www.espaces-atypiques.com/ventes/41150-veuzain-sur-loire-chateau-et-dependance-dans-son-magnifique-parc-eat5367/",
+     "site": "espaces-atypiques.com",
+     "collecte_le": "2026-10-04",
+     "ref": "EAT5367"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "GPS commune",
+    "pas de grande dépendance : tente",
+    "trajet gare (marge zone)"
+   ],
+   "trajet_min": 55,
+   "distance_route_km": 43.2,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 36.1,
+   "id": "chateau-veuzain-sur-loire-9bf844",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1450000
+    }
+   ]
+  },
+  {
+   "titre": "Château XVe, 12 ha de parc, chapelle, douves, 900 m2 de dépendances à rénover (confins Anjou-Touraine)",
+   "type": "chateau",
+   "commune": "Confins Anjou-Touraine (commune non publiée)",
+   "code_postal": null,
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 1490000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_bati_m2": 750,
+   "surface_salle_m2": null,
+   "terrain_m2": 120000,
+   "chambres": 12,
+   "etat": null,
+   "dpe": "vierge",
+   "taxe_fonciere": null,
+   "description": "Château XVe remanié XIXe, 750 m2, 20 pièces, 12 chambres, 900 m2 de dépendances à rénover, chapelle, fuie, douves, tours d'angle, parc de 12 ha. Toiture récemment refaite. Annonce le dit adapté au tourisme et aux événements.",
+   "cachet": [
+    "parc",
+    "chapelle",
+    "douves",
+    "pigeonnier",
+    "dependances",
+    "patrimoine"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Localisation possiblement hors zone (Anjou-Touraine, proche Saumur/Chinon) ; dépendances à rénover.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": "Alexandre Geoffroy d'Assy",
+    "telephone": "06 20 45 61 61",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/rare-chateau-du-xv-eme-un-havre-de-paix"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/rare-chateau-du-xv-eme-un-havre-de-paix",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "951936"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "GPS",
+    "budget travaux dépendances",
+    "commune et appartenance à la zone 55 min",
+    "localisation"
+   ],
+   "id": "chateau-confins-anjou-touraine-60a992",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1490000
+    }
+   ]
+  },
+  {
+   "titre": "Château XVe restauré, domaine forestier clos de 96 ha, orangerie et salle 200 m2",
+   "type": "chateau",
+   "commune": "Proche Tours (commune non publiée)",
+   "code_postal": null,
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 7200000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 2000,
+   "surface_salle_m2": 200,
+   "terrain_m2": 960000,
+   "chambres": 28,
+   "etat": "bon",
+   "dpe": "A",
+   "taxe_fonciere": null,
+   "description": "Château de 1475 restauré, ancien hôtel-restaurant, orangerie restaurée (15 chambres), salle de réception 200 m2 avec cuisine professionnelle, chapelle, équipements équestres, domaine forestier clos de 96 ha.",
+   "cachet": [
+    "chapelle",
+    "parc",
+    "dependances",
+    "patrimoine"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": true,
+   "ca_annonce": null,
+   "logement_exploitant": true,
+   "risques_notes": "Prix 7,2 M EUR au-dessus de la fourchette 5 M EUR.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": "Sylvain Delmas",
+    "telephone": "07 69 70 38 40",
+    "email": null,
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-50-pieces-proche-de-tours-37-4"
+   },
+   "sources": [
+    {
+     "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-50-pieces-proche-de-tours-37-4",
+     "site": "ma-propriete.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "967355"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "GPS",
+    "commune",
+    "hors budget",
+    "localisation"
+   ],
+   "id": "chateau-proche-tours-commune-d45913",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 7200000
+    }
+   ]
+  },
+  {
+   "titre": "Domaine viticole bio d'environ 11 ha à Montlouis/Vouvray (réf. 333)",
+   "type": "domaine_viticole",
+   "commune": "Montlouis-sur-Loire / Vouvray (non précisé)",
+   "code_postal": null,
+   "lat": 47.39,
+   "lon": 0.83,
+   "precision_gps": "commune",
+   "prix": null,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": null,
+   "surface_salle_m2": null,
+   "terrain_m2": 110000,
+   "chambres": null,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "description": "Domaine viticole en agriculture biologique, 11 ha dont 1 ha de vignes exploité, bâtiment d'exploitation et bâtiment d'habitation, potentiel agritourisme. Fourchette 800 000 à 1 500 000 EUR. Caractéristiques de réception non précisées.",
+   "cachet": [
+    "cave"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Ampelio",
+    "nom": null,
+    "telephone": "02 41 09 17 51",
+    "email": "contact@ampelio.fr",
+    "url": "https://ampelio.fr/proprietes-a-la-vente/montlouis-sur-loire-vouvray/domaine-viticole-charmant-dune-dizaine-dhectares/"
+   },
+   "sources": [
+    {
+     "url": "https://ampelio.fr/proprietes-a-la-vente/montlouis-sur-loire-vouvray/domaine-viticole-charmant-dune-dizaine-dhectares/",
+     "site": "ampelio.fr",
+     "collecte_le": "2026-10-04",
+     "ref": "333"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "capacité 200",
+    "caves",
+    "prix exact (fourchette 800k-1,5M)",
+    "surface bâtiments"
+   ],
+   "trajet_min": 18,
+   "distance_route_km": 10.6,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 8.0,
+   "id": "domaine-viticole-montlouis-sur-loire-e9fce4",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0
+  },
+  {
+   "titre": "Local d'activités 1 420 m² avec pont roulant - Azay-sur-Cher",
+   "type": "entrepot",
+   "commune": "Azay-sur-Cher",
+   "code_postal": "37270",
+   "lat": 47.334277,
+   "lon": 0.838561,
+   "precision_gps": "commune",
+   "prix": 850000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 1420,
+   "surface_salle_m2": null,
+   "terrain_m2": 2500,
+   "chambres": null,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "description": "Bâtiment d'activité de plain-pied de 1 420 m² sur 2 500 m², hauteur 9-12 m, pont roulant 5 t, dalle béton, porte sectionnelle, en zone d'activités à environ 20 min de Tours et Amboise, accès A85.",
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Conversion en lieu de réception à étudier (changement de destination ERP type L/N, commission de sécurité, PLU, accès, assainissement, parking). Environnement ZA, peu de cachet.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "BNP Paribas Real Estate Tours",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": null
+   },
+   "sources": [
+    {
+     "url": "https://www.bureauxlocaux.com/annonce/vente-local-dactivites-azay-sur-cher-37270--42213783",
+     "site": "BureauxLocaux",
+     "collecte_le": "2026-10-04",
+     "ref": "OVACT2644783"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "PLU_destination",
+    "dpe",
+    "etat",
+    "faisabilite_ERP",
+    "gps",
+    "localisation_precise",
+    "temps_trajet"
+   ],
+   "code_insee": "37015",
+   "trajet_min": 25,
+   "distance_route_km": 16.2,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 10.4,
+   "id": "entrepot-azay-sur-cher-94ac30",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 850000
+    }
+   ]
+  },
+  {
+   "titre": "Local d'activités 1 012 m² sur 9 000 m² - Montlouis-sur-Loire",
+   "type": "entrepot",
+   "commune": "Montlouis-sur-Loire",
+   "code_postal": "37270",
+   "lat": 47.382915,
+   "lon": 0.841776,
+   "precision_gps": "commune",
+   "prix": 840000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 1012,
+   "surface_salle_m2": null,
+   "terrain_m2": 9000,
+   "chambres": null,
+   "etat": null,
+   "dpe": "A",
+   "taxe_fonciere": null,
+   "description": "Entrepôt 900 m² (hauteur 6-7 m, dalle béton) + bureaux 112 m², terrain clos d'environ 9 000 m², à 15 min de Tours et 9 km de l'A10. DPE A.",
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Conversion en lieu de réception à étudier (changement de destination ERP type L/N, commission de sécurité, PLU, accès, assainissement, parking). Grand terrain utile pour parking.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Advenis Tours",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": null
+   },
+   "sources": [
+    {
+     "url": "https://www.bureauxlocaux.com/annonce/local-dactivites-a-vendre--41379725",
+     "site": "BureauxLocaux",
+     "collecte_le": "2026-10-04",
+     "ref": "BL-V17440"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "PLU_destination",
+    "etat",
+    "faisabilite_ERP",
+    "gps",
+    "localisation_precise",
+    "temps_trajet"
+   ],
+   "code_insee": "37156",
+   "trajet_min": 23,
+   "distance_route_km": 11.7,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 8.9,
+   "id": "entrepot-montlouis-sur-loire-c5d073",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 840000
+    }
+   ]
+  },
+  {
+   "titre": "Ensemble de locaux d'activités 792 m² (4 lots) - Montlouis-sur-Loire",
+   "type": "entrepot",
+   "commune": "Montlouis-sur-Loire",
+   "code_postal": "37270",
+   "lat": 47.382915,
+   "lon": 0.841776,
+   "precision_gps": "commune",
+   "prix": 420000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 792,
+   "surface_salle_m2": null,
+   "terrain_m2": null,
+   "chambres": null,
+   "etat": null,
+   "dpe": "A",
+   "taxe_fonciere": null,
+   "description": "Ensemble immobilier de 4 lots (bureaux + stockage, 197/200/105/290 m²) en zone d'activités, dont deux lots loués. Surface unitaire modeste pour 200 invités.",
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Conversion en lieu de réception à étudier (changement de destination ERP type L/N, commission de sécurité, PLU, accès, assainissement, parking). Lots loués, divisé: peu adapté.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "BNP Paribas Real Estate Tours",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": null
+   },
+   "sources": [
+    {
+     "url": "https://www.bureauxlocaux.com/annonce/vente-local-dactivites-montlouis-sur-loire-37270--42426529",
+     "site": "BureauxLocaux",
+     "collecte_le": "2026-10-04",
+     "ref": "OVACT2643676"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "PLU_destination",
+    "etat",
+    "faisabilite_ERP",
+    "gps",
+    "localisation_precise",
+    "temps_trajet",
+    "terrain"
+   ],
+   "code_insee": "37156",
+   "trajet_min": 23,
+   "distance_route_km": 11.7,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 8.9,
+   "id": "entrepot-montlouis-sur-loire-5fdd44",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 420000
+    }
+   ]
+  },
+  {
+   "titre": "Local d'activité 635 m² - Athée-sur-Cher",
+   "type": "entrepot",
+   "commune": "Athée-sur-Cher",
+   "code_postal": "37270",
+   "lat": 47.307494,
+   "lon": 0.909151,
+   "precision_gps": "commune",
+   "prix": 450000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": 5.0,
+   "surface_bati_m2": 635,
+   "surface_salle_m2": 275,
+   "terrain_m2": 2800,
+   "chambres": null,
+   "etat": null,
+   "dpe": "A",
+   "taxe_fonciere": null,
+   "description": "Bâtiment avec showroom/bureaux (360 m² sur 2 niveaux) et atelier/stockage 275 m², terrain d'environ 2 800 m² avec portail. 6 min de Bléré, 15 min d'Amboise, 25 min de Tours. Commission acquéreur 5% HT.",
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Conversion en lieu de réception à étudier (changement de destination ERP type L/N, commission de sécurité, PLU, accès, assainissement, parking). Salle de 275 m² seulement.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Advenis Tours",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": null
+   },
+   "sources": [
+    {
+     "url": "https://www.bureauxlocaux.com/annonce/local-dactivite-a-vendre--42055035",
+     "site": "BureauxLocaux",
+     "collecte_le": "2026-10-04",
+     "ref": "BL-V58666"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "PLU_destination",
+    "etat",
+    "faisabilite_ERP",
+    "gps",
+    "localisation_precise",
+    "prix_inclut_honoraires",
+    "temps_trajet"
+   ],
+   "code_insee": "37008",
+   "trajet_min": 30,
+   "distance_route_km": 22.1,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 16.5,
+   "id": "entrepot-athee-sur-cher-26481f",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 450000
+    }
+   ]
+  },
+  {
+   "titre": "Bâtiment industriel 1 786 m² - Sonzay",
+   "type": "usine",
+   "commune": "Sonzay",
+   "code_postal": "37360",
+   "lat": 47.523356,
+   "lon": 0.471236,
+   "precision_gps": "commune",
+   "prix": 1166000,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": 6.0,
+   "surface_bati_m2": 1786,
+   "surface_salle_m2": null,
+   "terrain_m2": 5313,
+   "chambres": null,
+   "etat": "bon",
+   "dpe": null,
+   "taxe_fonciere": null,
+   "description": "Bâtiment industriel de qualité, bon état, 1 786 m² sur 5 313 m² (bureaux RDC 476 m², étage 293 m², expédition/stockage 247 m²), clim, bardage métal. Prix 1 100 000 € + 6% honoraires acquéreur (1 166 000 € FAI). Sonzay en limite nord de la zone (temps de trajet à contrôler).",
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Conversion en lieu de réception à étudier (changement de destination ERP type L/N, commission de sécurité, PLU, accès, assainissement, parking). Surtout bureaux, peu de grand volume.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "DADICE SASU - IN-CESSIO",
+    "nom": "Jean Pierre Fabre",
+    "telephone": null,
+    "email": null,
+    "url": null
+   },
+   "sources": [
+    {
+     "url": "https://www.bureauxlocaux.com/annonce/batiment-industriel-de-qualite-nord-touraine-oppor--40801458",
+     "site": "BureauxLocaux",
+     "collecte_le": "2026-10-04",
+     "ref": "VP067-DADICE"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "PLU_destination",
+    "dpe",
+    "etat",
+    "faisabilite_ERP",
+    "gps",
+    "localisation_precise",
+    "temps_trajet",
+    "temps_trajet_55min"
+   ],
+   "code_insee": "37249",
+   "trajet_min": 42,
+   "distance_route_km": 42.4,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 24.4,
+   "id": "usine-sonzay-37af4f",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1166000
+    }
+   ]
+  },
+  {
+   "titre": "Entrepôt 5 500 m² sur 25 500 m² clos - Chançay",
+   "type": "entrepot",
+   "commune": "Chançay",
+   "code_postal": "37210",
+   "lat": 47.449184,
+   "lon": 0.876913,
+   "precision_gps": "commune",
+   "prix": 600000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 5500,
+   "surface_salle_m2": null,
+   "terrain_m2": 25513,
+   "chambres": null,
+   "etat": null,
+   "dpe": "E (272 kWh) / GES B",
+   "taxe_fonciere": null,
+   "description": "Trois bâtiments (stockage/transformation, hauteurs 5-9 m) sur terrain clos de 25 513 m², bureaux R+1, vestiaires/sociaux, parking VL/PL, assainissement autonome, construits 1970-2011. 600 000 € net vendeur. DPE E.",
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Conversion en lieu de réception à étudier (changement de destination ERP type L/N, commission de sécurité, PLU, accès, assainissement, parking). Très grand terrain, prix bas; bâtiments industriels sans cachet.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Arthur Loyd Tours",
+    "nom": "Romain Vaucelle",
+    "telephone": "02 47 750 750",
+    "email": null,
+    "url": null
+   },
+   "sources": [
+    {
+     "url": "https://www.arthur-loyd.com/locaux-activite-entrepots-vente/centre-val-de-loire/indre-et-loire/rochecorbon/chan-199-ay-entrepot-a-vendre-5-500-m-178-terrain-clos-et-bureaux-ref-45773537",
+     "site": "Arthur Loyd Tours",
+     "collecte_le": "2026-10-04",
+     "ref": "1800-25"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "PLU_destination",
+    "etat",
+    "faisabilite_ERP",
+    "gps",
+    "localisation_precise",
+    "temps_trajet"
+   ],
+   "code_insee": "37052",
+   "trajet_min": 28,
+   "distance_route_km": 17.9,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 13.5,
+   "id": "entrepot-chancay-61e05b",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 600000
+    }
+   ]
+  },
+  {
+   "titre": "Local d'activité 1 800 m² sur 6 100 m² clos - Saint-Cyr-sur-Loire",
+   "type": "entrepot",
+   "commune": "Saint-Cyr-sur-Loire",
+   "code_postal": "37540",
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 1500000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 1800,
+   "surface_salle_m2": null,
+   "terrain_m2": 6100,
+   "chambres": null,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "description": "Bâtiment indépendant 1 800 m² (activité ~1 550 m², bureaux ~250 m²), structure métal, 6 100 m² clos, zone nord de Tours, 10 min A10.",
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Conversion en lieu de réception à étudier (changement de destination ERP type L/N, commission de sécurité, PLU, accès, assainissement, parking). Zone d'activités urbaine, voisinage.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Arthur Loyd Tours",
+    "nom": "Romain Vaucelle",
+    "telephone": "02 47 750 750",
+    "email": null,
+    "url": null
+   },
+   "sources": [
+    {
+     "url": "https://www.arthur-loyd.com/locaux-activite-entrepots-vente/centre-val-de-loire/indre-et-loire/saint-cyr-sur-loire/saint-cyr-sur-loire-local-d-activite-a-vendre-1800-m-178-terrain-clos-6100-m-178-ref-45774206",
+     "site": "Arthur Loyd Tours",
+     "collecte_le": "2026-10-04",
+     "ref": "2553-26"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "PLU_destination",
+    "dpe",
+    "etat",
+    "faisabilite_ERP",
+    "gps",
+    "localisation",
+    "localisation_precise",
+    "temps_trajet"
+   ],
+   "id": "entrepot-saint-cyr-sur-c990ea",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1500000
+    }
+   ]
+  },
+  {
+   "titre": "Local 566 m² sur axe - Rochecorbon (Tours Métropole Nord)",
+   "type": "entrepot",
+   "commune": "Rochecorbon",
+   "code_postal": "37210",
+   "lat": 47.430262,
+   "lon": 0.754938,
+   "precision_gps": "commune",
+   "prix": 620000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 566,
+   "surface_salle_m2": null,
+   "terrain_m2": 2463,
+   "chambres": null,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "description": "Showroom/bureaux 330 m² + stockage 238 m² (dont 79 m² mezzanine), terrain ~2 463 m², parking, portail. Annonce d'avril 2026. Surface insuffisante pour 200 invités sans extension.",
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Conversion en lieu de réception à étudier (changement de destination ERP type L/N, commission de sécurité, PLU, accès, assainissement, parking).",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Arthur Loyd Tours",
+    "nom": "Romain Vaucelle",
+    "telephone": "02 47 750 750",
+    "email": null,
+    "url": null
+   },
+   "sources": [
+    {
+     "url": "https://www.arthur-loyd.com/locaux-activite-entrepots-vente/centre-val-de-loire/indre-et-loire/rochecorbon/metropole-nord-local-a-vendre-566-m-178-sur-axe-ref-45774123",
+     "site": "Arthur Loyd Tours",
+     "collecte_le": "2026-10-04",
+     "ref": "2487-26"
+    }
+   ],
+   "date_premiere_parution": "2026-04-07",
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "PLU_destination",
+    "dpe",
+    "etat",
+    "faisabilite_ERP",
+    "gps",
+    "localisation_precise",
+    "temps_trajet"
+   ],
+   "code_insee": "37203",
+   "trajet_min": 21,
+   "distance_route_km": 10.7,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 5.5,
+   "id": "entrepot-rochecorbon-f04d82",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 620000
+    }
+   ]
+  },
+  {
+   "titre": "Bâtiment d'activités 750 m² - Sorigny",
+   "type": "entrepot",
+   "commune": "Sorigny",
+   "code_postal": "37250",
+   "lat": 47.236007,
+   "lon": 0.690238,
+   "precision_gps": "commune",
+   "prix": 610000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 750,
+   "surface_salle_m2": 400,
+   "terrain_m2": 1739,
+   "chambres": null,
+   "etat": "bon",
+   "dpe": null,
+   "taxe_fonciere": null,
+   "description": "Entrepôt d'environ 750 m² (bureaux 242 m², atelier/stockage 400 m², mezzanine 108 m²) sur terrain clos 1 739 m², construit 1985 et rénové 2014, bon état général.",
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Conversion en lieu de réception à étudier (changement de destination ERP type L/N, commission de sécurité, PLU, accès, assainissement, parking). Terrain petit (parking).",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": "Arthur Loyd Tours",
+    "nom": "Anibal Pires",
+    "telephone": "02 47 750 750",
+    "email": null,
+    "url": null
+   },
+   "sources": [
+    {
+     "url": "https://www.arthur-loyd.com/locaux-activite-entrepots-vente/centre-val-de-loire/indre-et-loire/veigne/sorigny-la-grange-barbier-batiment-d-activites-a-vendre-de-750-m-178-terrain-de-1-739-m-178-ref-45774059",
+     "site": "Arthur Loyd Tours",
+     "collecte_le": "2026-10-04",
+     "ref": "3-26V"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "a_verifier": [
+    "PLU_destination",
+    "dpe",
+    "etat",
+    "faisabilite_ERP",
+    "gps",
+    "localisation_precise",
+    "temps_trajet"
+   ],
+   "code_insee": "37250",
+   "trajet_min": 26,
+   "distance_route_km": 22.9,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 16.8,
+   "id": "entrepot-sorigny-df1353",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 610000
+    }
+   ]
+  },
+  {
+   "titre": "Hôtel-restaurant de charme, secteur Amboise (parc paysager)",
+   "type": "hotel_restaurant",
+   "commune": "Amboise (secteur, localisation exacte non publiée)",
+   "code_postal": null,
+   "lat": 47.397272,
+   "lon": 0.987649,
+   "precision_gps": "commune",
+   "prix": 300000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": null,
+   "surface_salle_m2": null,
+   "terrain_m2": null,
+   "chambres": null,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "description": "Annonce BPI Transmission d'après extrait de recherche : hôtel-restaurant de charme avec parc paysager, prix 300 000 €, CA environ 545 k€. Page non ouverte (403): surface, salle et capacité inconnues. À contacter pour savoir si réception de 200 invités possible.",
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": true,
+   "ca_annonce": 545000,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "cession_fonds",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "contact": {
+    "organisme": null,
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": null
+   },
+   "sources": [
+    {
+     "url": "https://reprise-entreprise.bpifrance.fr/annonce/hotel-restaurant-de-charme-secteur-amboise-530591",
+     "site": "Bpifrance Transmission",
+     "collecte_le": "2026-10-04",
+     "ref": "530591"
+    }
+   ],
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": false,
+   "a_verifier": [
+    "CA exact",
+    "capacite",
+    "chambres",
+    "commune",
+    "murs inclus ?",
+    "salle",
+    "tout: page bloquée (403)"
+   ],
+   "code_insee": "37003",
+   "trajet_min": 39,
+   "distance_route_km": 29.9,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 19.9,
+   "id": "hotel-restaurant-amboise-secteur-localisa-f22d80",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 300000
+    }
+   ]
+  },
+  {
+   "lat": 47.180462,
+   "lon": 1.115145,
+   "precision_gps": "commune",
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": 6,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Pas de salle de réception ; 200 invités nécessitent salle/structure à créer. Genillé en marge sud (Loches) : temps de trajet à vérifier. Honoraires 60 000 EUR (env. 3,9 %) inclus.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "code_postal": "37460",
+   "terrain_m2": 239512,
+   "surface_bati_m2": 323,
+   "prix": 1600000,
+   "vendeur_public": false,
+   "titre": "Château néogothique de Genillé (parc 24 ha, piscine)",
+   "type": "chateau",
+   "commune": "Genillé",
+   "description": "Château néogothique fin XIXe, environ 300 m2 habitables, parc boisé de 24 ha, piscine chauffée 15x5 m, caves. Annonce notariale ; usage possible tourisme haut de gamme.",
+   "cachet": [
+    "parc",
+    "patrimoine",
+    "cave",
+    "pierre"
+   ],
+   "contact": {
+    "organisme": "SELARL Tiercelin-Brunet-Duvivier (Montrichard Val de Cher)",
+    "nom": "Clara Frigo",
+    "telephone": null,
+    "email": null,
+    "url": "https://www.immonot.com/immobilier-notaire/detail/0000012101__w17860242392404440/achat-propriete-a-vendre-37460-genille-indre-et-loire.html"
+   },
+   "sources": [
+    {
+     "url": "https://www.immonot.com/immobilier-notaire/detail/0000012101__w17860242392404440/achat-propriete-a-vendre-37460-genille-indre-et-loire.html",
+     "site": "immonot",
+     "collecte_le": "2026-10-05",
+     "ref": "12101/1358"
+    }
+   ],
+   "a_verifier": [
+    "dependances",
+    "etat",
+    "lat_lon",
+    "salle",
+    "taxe_fonciere",
+    "temps_trajet"
+   ],
+   "code_insee": "37111",
+   "trajet_min": 54,
+   "distance_route_km": 55.5,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 37.3,
+   "id": "chateau-genille-ffe4ce",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1600000
+    }
+   ]
+  },
+  {
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": 4.0,
+   "surface_salle_m2": null,
+   "chambres": 8,
+   "etat": "a_renover",
+   "dpe": "G (338 kWh/m2/an, publié oct. 2025)",
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Contexte urbain : voisinage/nuisances sonores pour mariages et PLU à vérifier ; parc 0,57 ha limité pour 200 invités. DPE : classe déduite de la consommation, à confirmer.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "code_postal": "37000",
+   "terrain_m2": 5684,
+   "surface_bati_m2": 640,
+   "prix": 1976000,
+   "vendeur_public": false,
+   "titre": "Château XIXe proche centre de Tours (parc, piscine intérieure)",
+   "type": "chateau",
+   "commune": "Tours",
+   "description": "Château XIXe de 19 pièces près du centre de Tours, parc, salle de billard, piscine intérieure. Travaux à prévoir (chauffage fioul, assainissement, simple vitrage, isolation).",
+   "cachet": [
+    "parc",
+    "patrimoine"
+   ],
+   "contact": {
+    "organisme": "SELARL Arca Loire Notaires (Montlouis-sur-Loire)",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.immonot.com/immobilier-notaire/detail/l800239689/achat-propriete-a-vendre-37000-tours-indre-et-loire.html"
+   },
+   "sources": [
+    {
+     "url": "https://www.immonot.com/immobilier-notaire/detail/l800239689/achat-propriete-a-vendre-37000-tours-indre-et-loire.html",
+     "site": "immonot",
+     "collecte_le": "2026-10-05",
+     "ref": null
+    }
+   ],
+   "a_verifier": [
+    "dependances",
+    "dpe_classe",
+    "lat_lon",
+    "localisation",
+    "salle",
+    "zonage_PLU"
+   ],
+   "id": "chateau-tours-9f57a5",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1976000
+    }
+   ]
+  },
+  {
+   "lat": 47.395476,
+   "lon": 0.695848,
+   "precision_gps": "commune",
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": 5,
+   "etat": null,
+   "dpe": "E (276 kWh/m2/an)",
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Honoraires à la charge du vendeur d'après l'annonce. Zonage urbain et voisinage à vérifier.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "code_postal": "37000",
+   "terrain_m2": 21900,
+   "surface_bati_m2": 459,
+   "prix": 1749000,
+   "vendeur_public": false,
+   "titre": "Maison de maître XVIIe avec maison d'amis et parc, Tours",
+   "type": "maison_maitre",
+   "commune": "Tours",
+   "description": "Maison de maître XVIIe, vastes pièces de réception avec cheminées, caves voûtées, maison d'amis d'environ 95 m2 avec grande salle de réception, sur plus de 2 ha dominant la ville.",
+   "cachet": [
+    "parc",
+    "vue",
+    "cave",
+    "patrimoine"
+   ],
+   "contact": {
+    "organisme": "SAS Signature & Conseils Notaires, 40 rue Emile Zola, 37000 Tours",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.immonot.com/immobilier-notaire/detail/4000000370032871/achat-propriete-a-vendre-37000-tours-indre-et-loire.html"
+   },
+   "sources": [
+    {
+     "url": "https://www.immonot.com/immobilier-notaire/detail/4000000370032871/achat-propriete-a-vendre-37000-tours-indre-et-loire.html",
+     "site": "immonot",
+     "collecte_le": "2026-10-05",
+     "ref": "003/2573"
+    }
+   ],
+   "a_verifier": [
+    "lat_lon",
+    "salle_m2",
+    "zonage_PLU"
+   ],
+   "code_insee": "37261",
+   "trajet_min": 14,
+   "distance_route_km": 3.9,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 2.3,
+   "id": "maison-maitre-tours-560281",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 1749000
+    }
+   ]
+  },
+  {
+   "lat": 47.250107,
+   "lon": 0.43074,
+   "precision_gps": "commune",
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": 6,
+   "etat": null,
+   "dpe": "E (206 kWh/m2/an)",
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Pas de grande salle ; réception 200 invités par structure/dépendances. Annonce : frais de négociation à la charge du vendeur (ambiguïté prix_inclut_honoraires).",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "code_postal": "37190",
+   "terrain_m2": 19000,
+   "surface_bati_m2": 443,
+   "prix": 795000,
+   "vendeur_public": false,
+   "titre": "Manoir XVe-XVIIIe de Cheillé (parc 2 ha, caves tuffeau)",
+   "type": "manoir",
+   "commune": "Cheillé",
+   "description": "Manoir partiellement XVe, 18 pièces, salon 40 m2, parc boisé de 2 ha, trois dépendances et deux caves en tuffeau, près d'Azay-le-Rideau.",
+   "cachet": [
+    "tuffeau",
+    "parc",
+    "cave",
+    "dependances",
+    "patrimoine"
+   ],
+   "contact": {
+    "organisme": "SAS Signature & Conseils Notaires, Tours",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.immonot.com/immobilier-notaire/detail/4000000370032856/achat-propriete-a-vendre-37190-cheille-indre-et-loire.html"
+   },
+   "sources": [
+    {
+     "url": "https://www.immonot.com/immobilier-notaire/detail/4000000370032856/achat-propriete-a-vendre-37190-cheille-indre-et-loire.html",
+     "site": "immonot",
+     "collecte_le": "2026-10-05",
+     "ref": "003/2558"
+    }
+   ],
+   "a_verifier": [
+    "dependances_surfaces",
+    "lat_lon",
+    "prix_inclut_honoraires",
+    "temps_trajet"
+   ],
+   "code_insee": "37067",
+   "trajet_min": 40,
+   "distance_route_km": 36.8,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 26.7,
+   "id": "manoir-cheille-1d1bfc",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 795000
+    }
+   ]
+  },
+  {
+   "lat": 47.354107,
+   "lon": 0.733919,
+   "precision_gps": "commune",
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": 3.0,
+   "surface_salle_m2": null,
+   "chambres": null,
+   "etat": "a_renover",
+   "dpe": null,
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Usage antérieur apparemment tertiaire (bureaux) ; périmètre urbain, voisinage à vérifier. Dispensé de DPE.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "code_postal": "37550",
+   "terrain_m2": 8546,
+   "surface_bati_m2": 730,
+   "prix": 927000,
+   "vendeur_public": false,
+   "titre": "Propriété à rénover de 730 m2, Saint-Avertin (caves, 8 500 m2)",
+   "type": "maison_maitre",
+   "commune": "Saint-Avertin",
+   "description": "Grand bâtiment de 23 pièces sur 4 niveaux avec ascenseur, environ 200 m2 de dépendances, cour centrale, réseau de caves, parcelles boisées. Cour et dépendances en zone UB (réhabilitation/extension possibles), bois et caves en Nd.",
+   "cachet": [
+    "cave",
+    "dependances",
+    "parc"
+   ],
+   "contact": {
+    "organisme": "SELARL Brocas-Bezault & Beuzelin, Rouziers-de-Touraine",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.immonot.com/immobilier-notaire/detail/4000000370371435/achat-propriete-a-vendre-37550-saint-avertin-indre-et-loire.html"
+   },
+   "sources": [
+    {
+     "url": "https://www.immonot.com/immobilier-notaire/detail/4000000370371435/achat-propriete-a-vendre-37550-saint-avertin-indre-et-loire.html",
+     "site": "immonot",
+     "collecte_le": "2026-10-05",
+     "ref": "37037/287B"
+    }
+   ],
+   "a_verifier": [
+    "ERP_conformite",
+    "lat_lon",
+    "usage_actuel"
+   ],
+   "code_insee": "37208",
+   "trajet_min": 17,
+   "distance_route_km": 5.6,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 3.6,
+   "id": "maison-maitre-saint-avertin-a03680",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 927000
+    }
+   ]
+  },
+  {
+   "lat": 47.33829,
+   "lon": 1.07131,
+   "precision_gps": "commune",
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": 4.0,
+   "surface_salle_m2": null,
+   "chambres": 8,
+   "etat": null,
+   "dpe": "C",
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Chenonceaux possiblement en limite de 55 min ; secteur protégé (ABF).",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "code_postal": "37150",
+   "terrain_m2": 8762,
+   "surface_bati_m2": 550,
+   "prix": 832000,
+   "vendeur_public": false,
+   "titre": "Grande propriété historique à Chenonceaux (parc 8 762 m2)",
+   "type": "maison_maitre",
+   "commune": "Chenonceaux",
+   "description": "Propriété de 16 pièces sur parc protégé d'arbres centenaires, maison principale de plus de 400 m2, appartements indépendants et bâtiment de 4 chambres à restaurer, à 5 minutes à pied du château de Chenonceau.",
+   "cachet": [
+    "parc",
+    "patrimoine",
+    "dependances"
+   ],
+   "contact": {
+    "organisme": "SELARL Office Notarial de la Croix en Touraine",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.immonot.com/immobilier-notaire/detail/4000000370212066/achat-propriete-a-vendre-37150-chenonceaux-indre-et-loire.html"
+   },
+   "sources": [
+    {
+     "url": "https://www.immonot.com/immobilier-notaire/detail/4000000370212066/achat-propriete-a-vendre-37150-chenonceaux-indre-et-loire.html",
+     "site": "immonot",
+     "collecte_le": "2026-10-05",
+     "ref": "021/MA0795"
+    }
+   ],
+   "a_verifier": [
+    "etat",
+    "lat_lon",
+    "salle",
+    "temps_trajet"
+   ],
+   "code_insee": "37070",
+   "trajet_min": 42,
+   "distance_route_km": 29.5,
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 26.7,
+   "id": "maison-maitre-chenonceaux-1770cf",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 832000
+    }
+   ]
+  },
+  {
+   "lat": 47.329278,
+   "lon": 0.991637,
+   "precision_gps": "adresse",
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": null,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": true,
+   "risques_notes": "Probablement trop petit pour 200 invités (surface salle non précisée) : signal marginal. Bien occupé. Enchère le 13/10/2026 : urgent.",
+   "mode_vente": "encheres",
+   "date_vente_encheres": "2026-10-13",
+   "mise_a_prix": 112000,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": true,
+   "code_postal": "37150",
+   "terrain_m2": null,
+   "surface_bati_m2": null,
+   "prix": 112000,
+   "vendeur_public": false,
+   "titre": "Ensemble restaurant + maison, 17 rue du Pont, Bléré (vente judiciaire)",
+   "type": "hotel_restaurant",
+   "commune": "Bléré",
+   "description": "Ensemble mixte : aile commerciale avec salle de restaurant, cuisine, sanitaires, combles ; maison d'habitation (2 chambres), cave et cour. Bien occupé. Vente au TJ Tours le 13/10/2026 à 14h30, mise à prix 112 000 EUR.",
+   "cachet": [
+    "cave"
+   ],
+   "contact": {
+    "organisme": "SCP Vaillant Avocats, 21 rue Edouard Vaillant, 37000 Tours",
+    "nom": null,
+    "telephone": "02 47 20 10 06",
+    "email": null,
+    "url": "https://www.licitor.com/annonce/10/97/50/vente-aux-encheres/un-ensemble-immobilier/blere/indre-et-loire/109750.html"
+   },
+   "sources": [
+    {
+     "url": "https://www.licitor.com/annonce/10/97/50/vente-aux-encheres/un-ensemble-immobilier/blere/indre-et-loire/109750.html",
+     "site": "Licitor",
+     "collecte_le": "2026-10-05",
+     "ref": "109750"
+    }
+   ],
+   "a_verifier": [
+    "lat_lon",
+    "occupation",
+    "surface_bati",
+    "surface_salle",
+    "terrain"
+   ],
+   "adresse": "17 rue du Pont",
+   "code_insee": "37027",
+   "trajet_min": 31,
+   "distance_route_km": 23.6,
+   "trajet_source": "Valhalla OSM, samedi 10 h",
+   "plu": {
+    "zone": "UC",
+    "libelle": "UC : Centre des communes pôles",
+    "source": "API Carto IGN, Géoportail de l'Urbanisme",
+    "date": "2026-10-05"
+   },
+   "dist_gare_km": 21.2,
+   "id": "hotel-restaurant-blere-67e6e1",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 112000
+    }
+   ]
+  },
+  {
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": 22,
+   "etat": "a_renover",
+   "dpe": null,
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "VENTE PASSEE (juin 2025) : seulement un signal. Adjudicataire et statut actuel (vendu / revente / invendu) non trouvés. Page cessions État en 503. Terrain 36 ha dont 31 ha forêt, surface 2 473 m2 (presse) vs 2 252 m2 (autre source). Hors zone-proche : Ballan-Miré est dans l'agglo de Tours.",
+   "mode_vente": "encheres",
+   "date_vente_encheres": "2025-06-17",
+   "mise_a_prix": 910000,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "verifie": false,
+   "code_postal": "37510",
+   "terrain_m2": 360000,
+   "surface_bati_m2": 2473,
+   "prix": 910000,
+   "vendeur_public": true,
+   "titre": "Château de la Carte, Ballan-Miré (cession État, vente 2025 : signal)",
+   "type": "chateau",
+   "commune": "Ballan-Miré",
+   "description": "Château MH du XVe (Jacques de Beaune) avec chapelle, annexes, salle d'animation, parc et 31 ha de forêt privée ; ancien hôtel 3 étoiles / résidence de tourisme EPAF. Mise en vente par l'État aux enchères en ligne (Agorastore / cessions État) du 17 au 19 juin 2025, mise à prix 910 000 EUR, rénovation de qualité à prévoir. Cloche MH exclue.",
+   "cachet": [
+    "mh",
+    "patrimoine",
+    "parc",
+    "chapelle"
+   ],
+   "contact": {
+    "organisme": "Direction de l'immobilier de l'État / Agorastore",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://cessions.immobilier-etat.gouv.fr/biens/chateau-de-la-carte-ballan-mire-37?filter=photo"
+   },
+   "sources": [
+    {
+     "url": "https://www.ici.fr/culture/patrimoine/22-chambres-2473-m2-36-hectares-de-terrain-en-touraine-l-etat-met-en-vente-un-chateau-du-xve-siecle-5882195",
+     "site": "ICI (France Bleu)",
+     "collecte_le": "2026-10-05",
+     "ref": "5882195"
+    },
+    {
+     "url": "https://cessions.immobilier-etat.gouv.fr/biens/chateau-de-la-carte-ballan-mire-37?filter=photo",
+     "site": "cessions.immobilier-etat.gouv.fr",
+     "collecte_le": "2026-10-05",
+     "ref": null
+    }
+   ],
+   "a_verifier": [
+    "adjudicataire",
+    "lat_lon",
+    "localisation",
+    "statut_vente",
+    "surface_bati",
+    "terrain_m2"
+   ],
+   "id": "chateau-ballan-mire-abd896",
+   "premiere_apparition": "2026-10-05",
+   "derniere_vue": "2026-10-05",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-05",
+     "prix": 910000
+    }
+   ]
+  }
+ ],
+ "log": [
+  "géocodage douteux pour Près de Loches : Chanceaux-près-Loches",
+  "https://api-adresse.data.gouv.fr/search/?q=Saint-Cyr-sur-Loire&limit=1&type=muni : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Tours&limit=1&type=municipality : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Ballan-Mir%C3%A9&limit=1&type=municip : <urlopen error [Errno 104] Connection reset by peer>"
+ ],
+ "nb_bruts": 40
+}

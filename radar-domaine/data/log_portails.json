@@ -1,0 +1,14 @@
+{"sources_interrogees":[
+{"site":"ma-propriete.fr (réseau Capifrance, Equestrian Immobilier)","statut":"ok","detail":"Pages de liste et annonces ouvertes. Source principale. Exclu : château-vignoble 'Saumur' (hors zone).","nb_biens":13},
+{"site":"patrice-besse.com","statut":"ok","detail":"Liste Indre-et-Loire (29 fiches) puis 4 annonces ouvertes. Prix absents de la liste. Le .co.uk renvoie 410. Autres fiches du site non ouvertes (budget d'appels).","nb_biens":4},
+{"site":"immotourisme.com","statut":"ok","detail":"Liste + 1 annonce ouverte (Chançay).","nb_biens":1},
+{"site":"connecta-immobilier.fr","statut":"ok","detail":"1 annonce ouverte ; commune ambiguë (Tours 37000 vs sud Touraine).","nb_biens":1},
+{"site":"espaces-atypiques.com","statut":"ok","detail":"1 annonce ouverte (Veuzain-sur-Loire).","nb_biens":1},
+{"site":"ampelio.fr","statut":"partiel","detail":"Fiche 333 ouverte. Fiches 334 (20 ha, 2,5-5 M EUR) et 320 non ouvertes.","nb_biens":1},
+{"site":"Belles Demeures","statut":"bloque","detail":"403 sur les pages de liste et d'annonce. Rien contourné.","nb_biens":0},
+{"site":"ParuVendu","statut":"bloque","detail":"403.","nb_biens":0},
+{"site":"Logic-Immo","statut":"bloque","detail":"403.","nb_biens":0},
+{"site":"Leggett Immobilier","statut":"bloque","detail":"403 sur WebFetch. Annonces vues seulement en snippet de recherche (Trogues 2,955 M EUR, Tournon-Saint-Pierre, Saint-Hippolyte, Loches 30 ha), non retenues faute de page ouverte.","nb_biens":0},
+{"site":"immobilier-et-maisons.com","statut":"vide","detail":"Annonces ouvertes mais retirées par l'agence (Bourgueil 532 k, Tours 44 ha 3,78 M). Non retenues.","nb_biens":0},
+{"site":"SeLoger, Bien'ici, Leboncoin, Figaro, Pap, Green-Acres, Barnes, Daniel Féau, Knight Frank, Sotheby's, Mercure, Forbes, Châteaux et Demeures de Tradition, Propriétés de France","statut":"vide","detail":"Non interrogés directement (budget d'appels, portails généralistes connus pour bloquer). Seulement vus dans les résultats de recherche : SeLoger, Leboncoin (haras longère 530 k), equirodi/equidomain.","nb_biens":0}
+]}

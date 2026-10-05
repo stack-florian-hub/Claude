@@ -1,0 +1,24 @@
+Amboise|{"insee": "37003", "type": "Maison", "annees": ["2023", "2024", "2025"], "n": 337, "p25": 2064, "mediane": 2439, "p75": 3023, "derniere": "2025-12-23"}
+Amboise|{"insee": "37003", "type": "Local", "annees": ["2023", "2024", "2025"], "n": 22, "p25": 536, "mediane": 1138, "p75": 1911, "derniere": "2025-12-10"}
+Vouvray|{"insee": "37281", "type": "Maison", "annees": ["2023", "2024", "2025"], "n": 108, "p25": 2124, "mediane": 2698, "p75": 3150, "derniere": "2025-12-17"}
+Vouvray|{"insee": "37281", "type": "Local", "annees": ["2023", "2024", "2025"], "n": 8, "p25": 645, "mediane": 860, "p75": 1782, "derniere": "2025-05-28"}
+Montlouis-sur-Loire|{"insee": "37156", "type": "Maison", "annees": ["2023", "2024", "2025"], "n": 309, "p25": 2102, "mediane": 2500, "p75": 2838, "derniere": "2025-12-31"}
+Montlouis-sur-Loire|{"insee": "37156", "type": "Local", "annees": ["2023", "2024", "2025"], "n": 28, "p25": 654, "mediane": 1302, "p75": 6610, "derniere": "2025-12-30"}
+Chançay|{"insee": "37052", "type": "Maison", "annees": ["2023", "2024", "2025"], "n": 29, "p25": 1686, "mediane": 2152, "p75": 2875, "derniere": "2025-12-15"}
+Chançay|{"insee": "37052", "type": "Local", "annees": ["2023", "2024", "2025"], "n": 0}
+Azay-le-Rideau|{"insee": "37014", "type": "Maison", "annees": ["2023", "2024", "2025"], "n": 93, "p25": 1718, "mediane": 2102, "p75": 2563, "derniere": "2025-12-10"}
+Azay-le-Rideau|{"insee": "37014", "type": "Local", "annees": ["2023", "2024", "2025"], "n": 18, "p25": 580, "mediane": 658, "p75": 877, "derniere": "2025-10-03"}
+Sainte-Maure-de-Touraine|{"insee": "37226", "type": "Maison", "annees": ["2023", "2024", "2025"], "n": 141, "p25": 1214, "mediane": 1694, "p75": 2122, "derniere": "2025-12-12"}
+Sainte-Maure-de-Touraine|{"insee": "37226", "type": "Local", "annees": ["2023", "2024", "2025"], "n": 0}
+Bléré|{"insee": "37027", "type": "Maison", "annees": ["2023", "2024", "2025"], "n": 102, "p25": 1712, "mediane": 2176, "p75": 2767, "derniere": "2024-12-30"}
+Bléré|{"insee": "37027", "type": "Local", "annees": ["2023", "2024", "2025"], "n": 8, "p25": 462, "mediane": 596, "p75": 1214, "derniere": "2025-07-07"}
+Tours|{"insee": "37261", "type": "Maison", "annees": ["2023", "2024", "2025"], "n": 1398, "p25": 2681, "mediane": 3288, "p75": 4176, "derniere": "2025-12-30"}
+Tours|{"insee": "37261", "type": "Local", "annees": ["2023", "2024", "2025"], "n": 229, "p25": 1333, "mediane": 2250, "p75": 3198, "derniere": "2025-12-31"}
+Chenonceaux|{"insee": "37070", "type": "Maison", "annees": ["2023", "2024", "2025"], "n": 15, "p25": 1882, "mediane": 2289, "p75": 2644, "derniere": "2025-11-10"}
+Chenonceaux|{"insee": "37070", "type": "Local", "annees": ["2023", "2024", "2025"], "n": 0}
+Cheillé|{"insee": "37067", "type": "Maison", "annees": ["2023", "2024", "2025"], "n": 45, "p25": 1702, "mediane": 2211, "p75": 2621, "derniere": "2025-12-30"}
+Cheillé|{"insee": "37067", "type": "Local", "annees": ["2023", "2024", "2025"], "n": 1, "p25": 1027, "mediane": 1027, "p75": 1027, "derniere": "2023-11-24"}
+Loches|{"insee": "37132", "type": "Maison", "annees": ["2023", "2024", "2025"], "n": 211, "p25": 1398, "mediane": 1774, "p75": 2230, "derniere": "2025-12-29"}
+Loches|{"insee": "37132", "type": "Local", "annees": ["2023", "2024", "2025"], "n": 19, "p25": 332, "mediane": 913, "p75": 1846, "derniere": "2025-12-30"}
+Genillé|{"insee": "37111", "type": "Maison", "annees": ["2023", "2024", "2025"], "n": 48, "p25": 1108, "mediane": 1511, "p75": 1780, "derniere": "2025-12-05"}
+Genillé|{"insee": "37111", "type": "Local", "annees": ["2023", "2024", "2025"], "n": 0}

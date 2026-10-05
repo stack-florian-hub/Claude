@@ -1,0 +1,1212 @@
+[
+ {
+  "titre": "Ferme du 17e restaurée avec gîtes et grange de réception, 4,2 ha",
+  "type": "ferme",
+  "commune": "Sainte-Maure-de-Touraine",
+  "code_postal": "37800",
+  "lat": 47.11,
+  "lon": 0.62,
+  "precision_gps": "commune",
+  "prix": 1999000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 561,
+  "surface_salle_m2": null,
+  "terrain_m2": 42000,
+  "chambres": 20,
+  "etat": null,
+  "dpe": "D (234 kWh/m2/an)",
+  "taxe_fonciere": null,
+  "description": "Ferme du XVIIe restaurée avec gîtes indépendants, cuisine professionnelle et grange rénovée (réception 150 personnes annoncée). Bois, étang, grand parking, autonomie solaire photovoltaïque. Activité événementielle en cours, reprise possible des parts de la société exploitante.",
+  "cachet": [
+   "dependances",
+   "parc",
+   "piece_eau"
+  ],
+  "capacite_annoncee": 150,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": true,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Alexandre Geoffroy d'Assy",
+   "telephone": "06 20 45 61 61",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/touristique/gites/indre-et-loire/ferme-du-17eme-sur-4-2ha-a-sainte-maure-de-touraine-mariage-evenementiel-opportunite-dinvestissement-unique"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/touristique/gites/indre-et-loire/ferme-du-17eme-sur-4-2ha-a-sainte-maure-de-touraine-mariage-evenementiel-opportunite-dinvestissement-unique",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "340933004490"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "surface_salle_m2",
+   "taxe_fonciere",
+   "CA",
+   "capacité 200 (annoncé 150)",
+   "date parution"
+  ]
+ },
+ {
+  "titre": "Domaine 32 pièces à Amboise : manoir, 2 gîtes, cabanes, anciennes écuries en studios",
+  "type": "manoir",
+  "commune": "Amboise",
+  "code_postal": "37400",
+  "lat": 47.413,
+  "lon": 0.983,
+  "precision_gps": "commune",
+  "prix": 2490000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 1000,
+  "surface_salle_m2": null,
+  "terrain_m2": 7000,
+  "chambres": 22,
+  "etat": null,
+  "dpe": "C (160 kWh/m2/an)",
+  "taxe_fonciere": null,
+  "description": "Domaine de 1850 : manoir d'environ 300 m2, 2 gîtes, 4 cabanes et anciennes écuries en 6 studios, piscine chauffée 12x6, spa, 16 places de parking. Parc de seulement 0,7 ha, ce qui limite la tente de 200 invités.",
+  "cachet": [
+   "dependances",
+   "piece_eau"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": true,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Sylvain Delmas",
+   "telephone": "07 69 70 38 40",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-32-pieces-amboise-37-2"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-32-pieces-amboise-37-2",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "340934388434"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "surface_salle_m2",
+   "capacité",
+   "adresse exacte",
+   "taxe_fonciere"
+  ]
+ },
+ {
+  "titre": "Château Renaissance restauré, 26 ha, ancien hôtel-restaurant, proche Amboise",
+  "type": "chateau",
+  "commune": "Amboise",
+  "code_postal": "37400",
+  "lat": 47.413,
+  "lon": 0.983,
+  "precision_gps": "commune",
+  "prix": 4600000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 2000,
+  "surface_salle_m2": null,
+  "terrain_m2": 260000,
+  "chambres": 33,
+  "etat": "bon",
+  "dpe": "A",
+  "taxe_fonciere": null,
+  "description": "Château Renaissance entièrement restauré, ancien hôtel-restaurant : cuisine professionnelle, salles de séminaire, 33 chambres (17 au château), pigeonnier converti, douves sèches, étang, piscine, tennis, arbres centenaires. Potentiel d'extension (combles, cottage 180 m2).",
+  "cachet": [
+   "parc",
+   "douves",
+   "pigeonnier",
+   "dependances",
+   "patrimoine",
+   "piece_eau"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": true,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Sylvain Delmas",
+   "telephone": "07 69 70 38 40",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-50-pieces-proche-de-amboise-37-2"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-50-pieces-proche-de-amboise-37-2",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "959814"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune exacte (proche Amboise)",
+   "surface_salle_m2",
+   "capacité",
+   "taxe_fonciere"
+  ]
+ },
+ {
+  "titre": "Ancienne ferme du 19e convertie en hébergements, 2,8 ha, 35 km au sud de Tours",
+  "type": "ferme",
+  "commune": "Sud Tours (commune non publiée)",
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 1050000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 800,
+  "surface_salle_m2": null,
+  "terrain_m2": 28000,
+  "chambres": 29,
+  "etat": null,
+  "dpe": "C (156 kWh/m2/an)",
+  "taxe_fonciere": null,
+  "description": "Ferme du XIXe restaurée : bâtiment principal 800 m2, dépendances 400 m2, gîte 90 m2, 2 cottages, 10 mobil-homes, piscine chauffée, jacuzzi, étang 3000 m2. Situé à environ 35 km au sud de Tours.",
+  "cachet": [
+   "dependances",
+   "piece_eau"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": true,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Sylvain Delmas",
+   "telephone": "07 69 70 38 40",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/touristique/gites/indre-et-loire/propriete-a-vendre-45-pieces-proche-de-tours-37-1"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/touristique/gites/indre-et-loire/propriete-a-vendre-45-pieces-proche-de-tours-37-1",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "962162"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune",
+   "GPS",
+   "temps de trajet",
+   "surface_salle_m2",
+   "capacité"
+  ]
+ },
+ {
+  "titre": "Château napoléonien avec activités touristiques et salle de 200 m², sud Touraine",
+  "type": "chateau",
+  "commune": "Sud Touraine (annonce indique Tours 37000 ; commune à confirmer)",
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 2968000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 6.0,
+  "surface_bati_m2": 1400,
+  "surface_salle_m2": 200,
+  "terrain_m2": 40000,
+  "chambres": 32,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "description": "Château napoléonien fin XIXe exploité en activité touristique : 18 chambres au château, grand gîte 10 chambres, petit gîte, mobil-homes, camping 25 emplacements, salle de réception 200 m2 avec bar et cuisine, piscine chauffée, minigolf. Parc paysager 4 ha.",
+  "cachet": [
+   "parc",
+   "patrimoine",
+   "dependances",
+   "piece_eau"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": true,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Connecta Immobilier",
+   "nom": "Damien Jacquot",
+   "telephone": "06.80.27.48.55",
+   "email": "damien.jacquot@connecta-immobilier.fr",
+   "url": "https://www.connecta-immobilier.fr/vente/37-indre-et-loire/3-tours/28-chateau/t40/15567-chateau-avec-activites-touristiques-dans-le-sud-touraine/"
+  },
+  "sources": [
+   {
+    "url": "https://www.connecta-immobilier.fr/vente/37-indre-et-loire/3-tours/28-chateau/t40/15567-chateau-avec-activites-touristiques-dans-le-sud-touraine/",
+    "site": "connecta-immobilier.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "JD 3287"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune réelle et temps de trajet (possible Trogues, limite zone)",
+   "GPS",
+   "CA",
+   "capacité"
+  ]
+ },
+ {
+  "titre": "Propriété d'hôtes d'exception avec espace de réception semi-ouvert, 3,5 ha sur la Brenne",
+  "type": "lieu_reception_activite",
+  "commune": "Chançay",
+  "code_postal": "37210",
+  "lat": 47.443,
+  "lon": 0.87,
+  "precision_gps": "commune",
+  "prix": 1473000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 720,
+  "surface_salle_m2": 150,
+  "terrain_m2": 34692,
+  "chambres": 11,
+  "etat": null,
+  "dpe": "B",
+  "taxe_fonciere": null,
+  "description": "Propriété historique de 3,5 ha traversée par la Brenne : 5 chambres d'hôtes, suite familiale, cottage, salle de séminaire, piscine couverte et vaste espace de réception semi-ouvert avec bar (150 m2+, extensible avec garages). CA annoncé 100 000 EUR HT.",
+  "cachet": [
+   "parc",
+   "piece_eau",
+   "dependances"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": true,
+  "ca_annonce": 100000,
+  "logement_exploitant": true,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "ImmoTourisme",
+   "nom": "Dorothée Altemir",
+   "telephone": "0672337599",
+   "email": "dorothee.altemir@immotourisme.com",
+   "url": "https://www.immotourisme.com/annonces/propriete-dhotes-dexception-a-20min-damboise-et-de-tours/"
+  },
+  "sources": [
+   {
+    "url": "https://www.immotourisme.com/annonces/propriete-dhotes-dexception-a-20min-damboise-et-de-tours/",
+    "site": "immotourisme.com",
+    "collecte_le": "2026-10-04",
+    "ref": "VM513"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "capacité 200",
+   "zone inondable Brenne",
+   "GPS commune approx",
+   "taxe_fonciere"
+  ]
+ },
+ {
+  "titre": "Moulin du XVIe sur la Brenne, 3,5 ha, grange de moulin et boxes (Vouvray)",
+  "type": "moulin",
+  "commune": "Vouvray (secteur, commune exacte non publiée)",
+  "code_postal": "37210",
+  "lat": 47.409,
+  "lon": 0.803,
+  "precision_gps": "commune",
+  "prix": 1470000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 720,
+  "surface_salle_m2": null,
+  "terrain_m2": 35000,
+  "chambres": 11,
+  "etat": null,
+  "dpe": "A (105 kWh/m2/an)",
+  "taxe_fonciere": null,
+  "description": "Moulin XVIe sur la Brenne : bâti principal 720 m2, ancienne grange du moulin 179 m2 (salle 74 m2), dépendances 237 m2, maison d'amis 100 m2, piscine couverte chauffée, paddocks et boxes. Réceptions rénovées.",
+  "cachet": [
+   "moulin",
+   "piece_eau",
+   "dependances",
+   "patrimoine",
+   "parc"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": true,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Alexandre Geoffroy d'Assy",
+   "telephone": "06 20 45 61 61",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/equestre/proprietes-equestres/indre-et-loire/entre-tours-et-amboise-decouvrez-un-moulin-du-xvie-siecle-au-cadre-exceptionnel-sur-3-4ha"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/equestre/proprietes-equestres/indre-et-loire/entre-tours-et-amboise-decouvrez-un-moulin-du-xvie-siecle-au-cadre-exceptionnel-sur-3-4ha",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "340937799272"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune exacte",
+   "zone inondable (moulin sur rivière)",
+   "capacité 200 (grange 179 m2 : limite)",
+   "taxe_fonciere"
+  ]
+ },
+ {
+  "titre": "Propriété équestre aux portes d'Amboise, 2,6 ha, manège couvert et grange 125 m2",
+  "type": "haras",
+  "commune": "Amboise",
+  "code_postal": "37400",
+  "lat": 47.413,
+  "lon": 0.983,
+  "precision_gps": "commune",
+  "prix": 966000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 5.0,
+  "surface_bati_m2": 216,
+  "surface_salle_m2": null,
+  "terrain_m2": 26000,
+  "chambres": null,
+  "etat": null,
+  "dpe": "B (102 kWh/m2/an)",
+  "taxe_fonciere": null,
+  "description": "Maison 180 m2, gîte 37 m2, grange 125 m2, écuries bois 13 boxes (2020), manège couvert 20x30, carrière 26x60, tunnel de stockage 15x20, cave, piscine. Terrain 2,6 ha : tente de réception plausible.",
+  "cachet": [
+   "dependances",
+   "cave"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": true,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Equestrian Immobilier",
+   "nom": "Stéphane Bonamy",
+   "telephone": "06 13 03 26 17",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/equestre/proprietes-equestres/indre-et-loire/propriete-equestre-dexception-aux-portes-damboise-plus"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/equestre/proprietes-equestres/indre-et-loire/propriete-equestre-dexception-aux-portes-damboise-plus",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "911-EQUESTRIAN"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "adresse",
+   "nuisances voisinage",
+   "capacité"
+  ]
+ },
+ {
+  "titre": "Château XIXe restauré avec dépendances aménageables en salles de réception, 3 ha, proche Tours",
+  "type": "chateau",
+  "commune": "Proche Tours (commune non publiée)",
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 2500000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 2500,
+  "surface_salle_m2": null,
+  "terrain_m2": 30000,
+  "chambres": null,
+  "etat": "bon",
+  "dpe": "vierge",
+  "taxe_fonciere": null,
+  "description": "Château XIXe, 650 m2 habitables restaurés, dépendances spacieuses en très bon état aménageables en salles de réception. 30 pièces, piscine. Vente confidentielle : lettre d'intention requise.",
+  "cachet": [
+   "dependances",
+   "parc",
+   "patrimoine"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Sylvain Delmas",
+   "telephone": "07 69 70 38 40",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-28-pieces-proche-de-tours-37"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-28-pieces-proche-de-tours-37",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "340930882883"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune",
+   "GPS",
+   "surface des dépendances",
+   "trajet"
+  ]
+ },
+ {
+  "titre": "Château XV-XIXe restauré, 10 ha, caves 1000 m2, à 25 km de Tours",
+  "type": "chateau",
+  "commune": "Proche Tours, 25 km (commune non publiée)",
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 1890000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 1000,
+  "surface_salle_m2": null,
+  "terrain_m2": 100000,
+  "chambres": 9,
+  "etat": "bon",
+  "dpe": "B (147 kWh/m2/an)",
+  "taxe_fonciere": null,
+  "description": "Château XV-XIXe restauré, 18 pièces, caves souterraines d'environ 1000 m2, maison d'amis 100 m2, loge de gardien, tour à rénover, piscine, parc boisé de 10 ha. À 25 km de Tours, 20 min de la gare TGV.",
+  "cachet": [
+   "cave",
+   "parc",
+   "patrimoine",
+   "dependances",
+   "pigeonnier"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Sylvain Delmas",
+   "telephone": "07 69 70 38 40",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-18-pieces-proche-de-tours-37"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-18-pieces-proche-de-tours-37",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "959520"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune",
+   "GPS",
+   "capacité 200 (pas de grande dépendance publiée)"
+  ]
+ },
+ {
+  "titre": "Ancien orphelinat 1900, 4000 m2 sur 20 ha, à restaurer, 30 min de Tours TGV",
+  "type": "autre",
+  "commune": "Proche Tours (commune non publiée)",
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 1400000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 4000,
+  "surface_salle_m2": null,
+  "terrain_m2": 200000,
+  "chambres": null,
+  "etat": "ruine",
+  "dpe": "vierge",
+  "taxe_fonciere": null,
+  "description": "Ancien orphelinat (1900) puis maison de retraite, abandonné depuis 30 ans, 100 pièces sur 2 niveaux, restauration complète nécessaire. 20 ha, position dominante, 2 km de l'autoroute.",
+  "cachet": [
+   "parc",
+   "vue",
+   "patrimoine"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Restauration lourde ; annonce évoque un monument classé : statut à confirmer.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Sylvain Delmas",
+   "telephone": "07 69 70 38 40",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-100-pieces-proche-de-tours-37"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-100-pieces-proche-de-tours-37",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "964962"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune",
+   "statut MH",
+   "coût travaux",
+   "GPS"
+  ]
+ },
+ {
+  "titre": "Château de 1880 restauré, 24 ha de parc paysager, près de Loches",
+  "type": "chateau",
+  "commune": "Près de Loches (commune non publiée)",
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 1600000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 350,
+  "surface_salle_m2": null,
+  "terrain_m2": 240000,
+  "chambres": 6,
+  "etat": "bon",
+  "dpe": "vierge",
+  "taxe_fonciere": null,
+  "description": "Château 1880 entièrement restauré, 350 m2, 6 chambres, 24 ha de parc paysager sans vis-à-vis, bâtiment agricole de stockage et carport. Parc idéal pour tente de 200 invités.",
+  "cachet": [
+   "parc",
+   "vue",
+   "patrimoine"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Sylvain Delmas",
+   "telephone": "07 69 70 38 40",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-8-pieces-proche-de-loches-37"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-8-pieces-proche-de-loches-37",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "969543"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune",
+   "GPS",
+   "surface bâtiment agricole",
+   "trajet"
+  ]
+ },
+ {
+  "titre": "Château XVIe remanié XIXe dominant la Loire, caves troglodytiques 670 m2, Amboise",
+  "type": "chateau",
+  "commune": "Amboise",
+  "code_postal": "37400",
+  "lat": 47.413,
+  "lon": 0.983,
+  "precision_gps": "commune",
+  "prix": 1300000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 670,
+  "surface_salle_m2": null,
+  "terrain_m2": 10000,
+  "chambres": 12,
+  "etat": "rafraichir",
+  "dpe": "G (417 kWh/m2/an)",
+  "taxe_fonciere": null,
+  "description": "Château XVIe remanié au XIXe, vue sur Loire, enclos de murs, 16 pièces, 12 chambres, dépendances et caves troglodytiques d'environ 670 m2, 1 ha. Annonce indique 3 ventes échouées.",
+  "cachet": [
+   "tuffeau",
+   "cave",
+   "vue",
+   "loire",
+   "mh",
+   "parc"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "DPE G ; trois ventes échouées selon l'annonce ; surface habitable 500-1000 m2 imprécise.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Sylvain Delmas",
+   "telephone": "07 69 70 38 40",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-16-pieces-proche-de-amboise-37-1"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-16-pieces-proche-de-amboise-37-1",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "340930279572"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "surface habitable",
+   "adresse",
+   "statut MH",
+   "motifs ventes échouées"
+  ]
+ },
+ {
+  "titre": "Prieuré (ISMH) sur domaine de 34,6 ha avec grange dîmière MH 43x14 m, aux portes de Tours",
+  "type": "prieure",
+  "commune": "Aux portes de Tours (commune non publiée)",
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 2310000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": null,
+  "surface_bati_m2": 320,
+  "surface_salle_m2": 600,
+  "terrain_m2": 345800,
+  "chambres": 3,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "description": "Ancien prieuré agricole fondé vers 1100 : logis restauré 320 m2, grange dîmière classée 43x14 m, tour du XIIIe, fuye XVIe, dépendance 80 m2 en espace événementiel. Annonce mentionne une capacité de réception de 200 personnes. Domaine de 34,6 ha.",
+  "cachet": [
+   "mh",
+   "pierre",
+   "charpente",
+   "pigeonnier",
+   "dependances",
+   "parc",
+   "patrimoine"
+  ],
+  "capacite_annoncee": 200,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Patrice Besse",
+   "nom": "Stéphanie Lecomte",
+   "telephone": "+33 1 42 84 80 85",
+   "email": null,
+   "url": "https://www.patrice-besse.com/annonces/ismh-Aux-portes-de-Tours--pb551729"
+  },
+  "sources": [
+   {
+    "url": "https://www.patrice-besse.com/annonces/ismh-Aux-portes-de-Tours--pb551729",
+    "site": "patrice-besse.com",
+    "collecte_le": "2026-10-04",
+    "ref": "551729"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune",
+   "GPS",
+   "trajet gare",
+   "date parution (page non datée)",
+   "état de la grange MH",
+   "contraintes MH / travaux ABF"
+  ]
+ },
+ {
+  "titre": "Manoir XVIIe avec pavillon, caves et parc de 2,5 ha aux portes d'Amboise",
+  "type": "manoir",
+  "commune": "Amboise",
+  "code_postal": "37400",
+  "lat": 47.413,
+  "lon": 0.983,
+  "precision_gps": "commune",
+  "prix": 1850000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 540,
+  "surface_salle_m2": null,
+  "terrain_m2": 25399,
+  "chambres": 8,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "description": "Manoir XVIIe de 450 m2 avec pavillon de plaisance, maison de gardien, atelier à parties troglodytiques et vastes caves. Parc en terrasses, jardin à la française, vergers. Pas de grande dépendance : réception sous tente sur 2,5 ha.",
+  "cachet": [
+   "parc",
+   "cave",
+   "dependances",
+   "patrimoine"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Patrice Besse",
+   "nom": "Pascal Evain",
+   "telephone": "+33 1 42 84 80 85",
+   "email": null,
+   "url": "https://www.patrice-besse.com/annonces/immobilier-prestige-Aux-portes-d-Amboise--pb449376"
+  },
+  "sources": [
+   {
+    "url": "https://www.patrice-besse.com/annonces/immobilier-prestige-Aux-portes-d-Amboise--pb449376",
+    "site": "patrice-besse.com",
+    "collecte_le": "2026-10-04",
+    "ref": "449376"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "adresse",
+   "DPE",
+   "grande salle absente"
+  ]
+ },
+ {
+  "titre": "Manoir XIXe, 2,7 ha, 3 logements, piscine et tennis, à 5 km de Tours",
+  "type": "manoir",
+  "commune": "Aux portes de Tours (commune non publiée)",
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 2750000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 4.0,
+  "surface_bati_m2": 892,
+  "surface_salle_m2": null,
+  "terrain_m2": 27200,
+  "chambres": 9,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "description": "Manoir XIXe 530 m2 (9 chambres, cinéma, cave), dépendances 362 m2 dont grange transformée en logement, appartement locatif, loge de gardien, piscine chauffée, tennis, parc arboré. Annonce non datée.",
+  "cachet": [
+   "parc",
+   "cave",
+   "dependances"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Patrice Besse",
+   "nom": "Stéphanie Lecomte",
+   "telephone": "+33 1 42 84 80 85",
+   "email": null,
+   "url": "https://www.patrice-besse.com/annonces/manoirs-a-vendre-Aux-portes-de-Tours--pb383130"
+  },
+  "sources": [
+   {
+    "url": "https://www.patrice-besse.com/annonces/manoirs-a-vendre-Aux-portes-de-Tours--pb383130",
+    "site": "patrice-besse.com",
+    "collecte_le": "2026-10-04",
+    "ref": "383130"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune",
+   "GPS",
+   "DPE",
+   "capacité 200 (parc 2,7 ha, pas de salle)"
+  ]
+ },
+ {
+  "titre": "Longère XVIIIe, grange 160 m2+, 4,8 ha de prairies et bois, 20 min de la gare TGV de Tours",
+  "type": "longere",
+  "commune": "Secteur Azay-le-Rideau / Langeais / Villandry (commune non publiée)",
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 737000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 5.0,
+  "surface_bati_m2": 440,
+  "surface_salle_m2": null,
+  "terrain_m2": 48043,
+  "chambres": 4,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "description": "Longère tuffeau XVIIIe 218 m2, maison d'amis, grange de 160 m2+ en deux volumes, 4,8 ha de prairies et bois, à l'abri des regards. Budget d'entrée bas ; salle 200 invités à créer ou tente sur prairie.",
+  "cachet": [
+   "tuffeau",
+   "dependances",
+   "piece_eau"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Patrice Besse",
+   "nom": "Stéphanie Lecomte",
+   "telephone": "+33 1 42 84 80 85",
+   "email": null,
+   "url": "https://www.patrice-besse.com/annonces/maisons-de-caractere-a-vendre-a-20-min-de-Tours--pb253919"
+  },
+  "sources": [
+   {
+    "url": "https://www.patrice-besse.com/annonces/maisons-de-caractere-a-vendre-a-20-min-de-Tours--pb253919",
+    "site": "patrice-besse.com",
+    "collecte_le": "2026-10-04",
+    "ref": "253919"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune",
+   "GPS",
+   "DPE",
+   "état grange",
+   "capacité"
+  ]
+ },
+ {
+  "titre": "Château fin XIXe à Veuzain-sur-Loire, parc de 4 ha, maison de gardien 160 m2",
+  "type": "chateau",
+  "commune": "Veuzain-sur-Loire (Onzain)",
+  "code_postal": "41150",
+  "lat": 47.495,
+  "lon": 1.175,
+  "precision_gps": "commune",
+  "prix": 1450000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": null,
+  "surface_bati_m2": 614,
+  "surface_salle_m2": null,
+  "terrain_m2": 41955,
+  "chambres": 16,
+  "etat": null,
+  "dpe": "B (132 kWh/m2/an)",
+  "taxe_fonciere": 4107,
+  "description": "Château Belle Epoque ancien hôtel, 614 m2, 19 pièces, 16 chambres, maison de jardinier 160 m2 et appartement privé, parc de 4 ha d'arbres centenaires. À 15 min de Blois et d'Amboise.",
+  "cachet": [
+   "parc",
+   "patrimoine"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": true,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Espaces Atypiques Tours",
+   "nom": "Julie Riviere",
+   "telephone": "06 31 35 22 95",
+   "email": null,
+   "url": "https://www.espaces-atypiques.com/ventes/41150-veuzain-sur-loire-chateau-et-dependance-dans-son-magnifique-parc-eat5367/"
+  },
+  "sources": [
+   {
+    "url": "https://www.espaces-atypiques.com/ventes/41150-veuzain-sur-loire-chateau-et-dependance-dans-son-magnifique-parc-eat5367/",
+    "site": "espaces-atypiques.com",
+    "collecte_le": "2026-10-04",
+    "ref": "EAT5367"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "trajet gare (marge zone)",
+   "GPS commune",
+   "pas de grande dépendance : tente"
+  ]
+ },
+ {
+  "titre": "Château XVe, 12 ha de parc, chapelle, douves, 900 m2 de dépendances à rénover (confins Anjou-Touraine)",
+  "type": "chateau",
+  "commune": "Confins Anjou-Touraine (commune non publiée)",
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 1490000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 750,
+  "surface_salle_m2": null,
+  "terrain_m2": 120000,
+  "chambres": 12,
+  "etat": null,
+  "dpe": "vierge",
+  "taxe_fonciere": null,
+  "description": "Château XVe remanié XIXe, 750 m2, 20 pièces, 12 chambres, 900 m2 de dépendances à rénover, chapelle, fuie, douves, tours d'angle, parc de 12 ha. Toiture récemment refaite. Annonce le dit adapté au tourisme et aux événements.",
+  "cachet": [
+   "parc",
+   "chapelle",
+   "douves",
+   "pigeonnier",
+   "dependances",
+   "patrimoine"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Localisation possiblement hors zone (Anjou-Touraine, proche Saumur/Chinon) ; dépendances à rénover.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Alexandre Geoffroy d'Assy",
+   "telephone": "06 20 45 61 61",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/rare-chateau-du-xv-eme-un-havre-de-paix"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/rare-chateau-du-xv-eme-un-havre-de-paix",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "951936"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune et appartenance à la zone 55 min",
+   "GPS",
+   "budget travaux dépendances"
+  ]
+ },
+ {
+  "titre": "Château XVe restauré, domaine forestier clos de 96 ha, orangerie et salle 200 m2",
+  "type": "chateau",
+  "commune": "Proche Tours (commune non publiée)",
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 7200000,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 2000,
+  "surface_salle_m2": 200,
+  "terrain_m2": 960000,
+  "chambres": 28,
+  "etat": "bon",
+  "dpe": "A",
+  "taxe_fonciere": null,
+  "description": "Château de 1475 restauré, ancien hôtel-restaurant, orangerie restaurée (15 chambres), salle de réception 200 m2 avec cuisine professionnelle, chapelle, équipements équestres, domaine forestier clos de 96 ha.",
+  "cachet": [
+   "chapelle",
+   "parc",
+   "dependances",
+   "patrimoine"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": true,
+  "risques_notes": "Prix 7,2 M EUR au-dessus de la fourchette 5 M EUR.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Sylvain Delmas",
+   "telephone": "07 69 70 38 40",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-50-pieces-proche-de-tours-37-4"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-50-pieces-proche-de-tours-37-4",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "967355"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune",
+   "GPS",
+   "hors budget"
+  ]
+ },
+ {
+  "titre": "Domaine viticole bio d'environ 11 ha à Montlouis/Vouvray (réf. 333)",
+  "type": "domaine_viticole",
+  "commune": "Montlouis-sur-Loire / Vouvray (non précisé)",
+  "code_postal": null,
+  "lat": 47.39,
+  "lon": 0.83,
+  "precision_gps": "commune",
+  "prix": null,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": null,
+  "surface_salle_m2": null,
+  "terrain_m2": 110000,
+  "chambres": null,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "description": "Domaine viticole en agriculture biologique, 11 ha dont 1 ha de vignes exploité, bâtiment d'exploitation et bâtiment d'habitation, potentiel agritourisme. Fourchette 800 000 à 1 500 000 EUR. Caractéristiques de réception non précisées.",
+  "cachet": [
+   "cave"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "contact": {
+   "organisme": "Ampelio",
+   "nom": null,
+   "telephone": "02 41 09 17 51",
+   "email": "contact@ampelio.fr",
+   "url": "https://ampelio.fr/proprietes-a-la-vente/montlouis-sur-loire-vouvray/domaine-viticole-charmant-dune-dizaine-dhectares/"
+  },
+  "sources": [
+   {
+    "url": "https://ampelio.fr/proprietes-a-la-vente/montlouis-sur-loire-vouvray/domaine-viticole-charmant-dune-dizaine-dhectares/",
+    "site": "ampelio.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "333"
+   }
+  ],
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "prix exact (fourchette 800k-1,5M)",
+   "surface bâtiments",
+   "caves",
+   "capacité 200"
+  ]
+ }
+]

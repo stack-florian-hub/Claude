@@ -1,0 +1,766 @@
+<title>Radar Domaine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : en-tête ardoise fin, onglets défilants, contenu en grille fluide ; fiche bien en panneau latéral (plein écran sur mobile). */
+:root {
+  --bg: #F1F2EE; --surface: #FFFFFF; --sunk: #E8EAE5; --ink: #1F2A33; --muted: #5B6770; --line: #D6DAD4;
+  --accent: #2C5E58; --accent-ink: #FFFFFF; --accent-soft: #DCE9E5; --gold: #9A7631; --gold-soft: #F1E8D6;
+  --lvA: #2E7A4E; --lvB: #2B6688; --lvC: #A86E12; --lvD: #848C92;
+  --ok: #2E7A4E; --warn: #B8730B; --bad: #B03838; --grey: #848C92;
+  --iso45: rgba(44,94,88,.16); --iso55: rgba(44,94,88,.05); --commune: #C9CEC8; --map-bg: #F7F8F5;
+  --f-display: "Marcellus", "Cormorant", Georgia, serif;
+  --f-body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --r: 6px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11171C; --surface: #182027; --sunk: #0D1216; --ink: #E4E8EA; --muted: #98A3AB; --line: #2A353E;
+  --accent: #74B5AA; --accent-ink: #0D1A18; --accent-soft: #1C302D; --gold: #D4AF66; --gold-soft: #2E2817;
+  --lvA: #5FC08B; --lvB: #6BAFD8; --lvC: #E1A64B; --lvD: #8C969C;
+  --ok: #5FC08B; --warn: #E1A64B; --bad: #E57373; --grey: #8C969C;
+  --iso45: rgba(116,181,170,.18); --iso55: rgba(116,181,170,.06); --commune: #2B363F; --map-bg: #141B21;
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #11171C; --surface: #182027; --sunk: #0D1216; --ink: #E4E8EA; --muted: #98A3AB; --line: #2A353E;
+  --accent: #74B5AA; --accent-ink: #0D1A18; --accent-soft: #1C302D; --gold: #D4AF66; --gold-soft: #2E2817;
+  --lvA: #5FC08B; --lvB: #6BAFD8; --lvC: #E1A64B; --lvD: #8C969C;
+  --ok: #5FC08B; --warn: #E1A64B; --bad: #E57373; --grey: #8C969C;
+  --iso45: rgba(116,181,170,.18); --iso55: rgba(116,181,170,.06); --commune: #2B363F; --map-bg: #141B21;
+  color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--f-body); }
+a { color: var(--accent); }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.num, td.n { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h2 { font: 400 1.5rem/1.2 var(--f-display); letter-spacing: .01em; }
+h3 { font-size: .95rem; font-weight: 600; }
+.eyebrow { font-size: .72rem; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
+
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); }
+.top-inner { max-width: 1280px; margin: 0 auto; padding: 12px 16px 0; display: grid; gap: 8px; }
+.brand { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; justify-content: space-between; }
+.brand h1 { font: 400 1.6rem/1 var(--f-display); letter-spacing: .02em; }
+.brand .sub { color: var(--muted); font-size: .85rem; }
+.status { font-size: .8rem; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; background: var(--grey); }
+.dot.on { background: var(--ok); }
+nav.tabs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 0 16px; }
+nav.tabs::-webkit-scrollbar { display: none; }
+nav.tabs button { border: 0; background: none; padding: 10px 12px; white-space: nowrap; color: var(--muted); border-bottom: 2px solid transparent; cursor: pointer; font-weight: 500; }
+nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.simbar { background: var(--gold-soft); color: var(--ink); border-bottom: 1px solid var(--line); }
+.simbar .in { max-width: 1280px; margin: 0 auto; padding: 8px 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; font-size: .9rem; }
+
+main { max-width: 1280px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 60px; display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
+section.view { display: grid; gap: 20px; min-width: 0; grid-template-columns: minmax(0, 1fr); }
+main > * { min-width: 0; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.between { justify-content: space-between; }
+.grid-cards { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; min-width: 0; }
+.kpis { display: grid; gap: 1px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.kpi { background: var(--surface); padding: 12px 14px; display: grid; gap: 2px; }
+.kpi b { font: 500 1.6rem/1.1 var(--f-mono); font-variant-numeric: tabular-nums; }
+.kpi span { font-size: .8rem; color: var(--muted); }
+
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 7px 12px; border-radius: var(--r); cursor: pointer; text-decoration: none; display: inline-flex; gap: 6px; align-items: center; font-size: .88rem; color: var(--ink); }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.ghost { border-color: transparent; background: none; color: var(--accent); padding-inline: 4px; }
+.btn[disabled] { opacity: .5; cursor: default; }
+
+/* cartes bien */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; min-width: 0; }
+.card .photo { aspect-ratio: 16/7; max-width: 100%; background: var(--sunk); display: flex; align-items: flex-end; justify-content: space-between; padding: 10px 12px; text-decoration: none; color: var(--muted); position: relative; }
+.card .photo .type { font: 400 1.05rem var(--f-display); color: var(--ink); }
+.card .photo .lien { font-size: .75rem; }
+.card .body { padding: 12px; display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: start; min-width: 0; }
+.card .titre { font-weight: 600; line-height: 1.3; cursor: pointer; background: none; border: 0; padding: 0; text-align: left; }
+.card .titre:hover { color: var(--accent); }
+.card .meta { color: var(--muted); font-size: .85rem; }
+.card .prix { font: 500 1.05rem var(--f-mono); font-variant-numeric: tabular-nums; }
+.card .foot { padding: 10px 12px; border-top: 1px solid var(--line); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.ring { width: 54px; height: 54px; display: block; }
+.ring text { font: 500 15px var(--f-mono); fill: var(--ink); }
+.pill { display: inline-flex; align-items: center; gap: 5px; font-size: .75rem; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--line); white-space: nowrap; }
+.pill.lv-A { color: var(--lvA); border-color: var(--lvA); } .pill.lv-B { color: var(--lvB); border-color: var(--lvB); }
+.pill.lv-C { color: var(--lvC); border-color: var(--lvC); } .pill.lv-D { color: var(--lvD); border-color: var(--lvD); }
+.voy { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
+.voy.vert { background: var(--ok); } .voy.orange { background: var(--warn); } .voy.rouge { background: var(--bad); } .voy.gris { background: var(--grey); }
+.tag { font-size: .72rem; padding: 1px 7px; border-radius: 3px; background: var(--sunk); color: var(--muted); white-space: nowrap; }
+.tag.gold { background: var(--gold-soft); color: var(--gold); }
+.tag.warn { background: transparent; border: 1px dashed var(--warn); color: var(--warn); }
+.tel { font-family: var(--f-mono); font-size: .85rem; user-select: all; }
+
+/* tableaux */
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; white-space: nowrap; background: var(--surface); position: sticky; top: 0; }
+th button { all: unset; cursor: pointer; }
+td.n, th.n { text-align: right; white-space: nowrap; }
+tr.click { cursor: pointer; } tr.click:hover td { background: var(--accent-soft); }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.filters > * { max-width: 100%; }
+.filters select, .filters input[type=search] { min-width: 0; border: 1px solid var(--line); background: var(--surface); padding: 6px 8px; border-radius: var(--r); max-width: 100%; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; flex-wrap: wrap; }
+.seg button { white-space: normal; text-align: left; border: 0; background: var(--surface); padding: 6px 10px; cursor: pointer; font-size: .85rem; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+label.chk { display: inline-flex; gap: 6px; align-items: center; font-size: .85rem; cursor: pointer; }
+
+/* carte */
+.mapwrap { position: relative; background: var(--map-bg); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; touch-action: none; }
+.mapwrap svg { display: block; width: 100%; height: min(72vh, 720px); cursor: grab; }
+.mapctl { position: absolute; right: 10px; top: 10px; display: grid; gap: 4px; }
+.mapctl button { width: 34px; height: 34px; border: 1px solid var(--line); background: var(--surface); border-radius: var(--r); cursor: pointer; font-size: 1.1rem; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: .8rem; color: var(--muted); align-items: center; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; }
+.maptip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); padding: 6px 8px; border-radius: var(--r); font-size: .8rem; max-width: 240px; box-shadow: 0 4px 14px rgba(0,0,0,.12); }
+
+/* fiche */
+.sheet-bg { position: fixed; inset: 0; background: rgba(10,15,20,.4); z-index: 40; }
+.sheet { position: fixed; z-index: 41; top: 0; right: 0; bottom: 0; width: min(860px, 100%); background: var(--bg); border-left: 1px solid var(--line); overflow-y: auto; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.sheet-head { position: sticky; top: 0; background: var(--surface); border-bottom: 1px solid var(--line); padding: 12px 16px; display: flex; gap: 12px; align-items: center; z-index: 2; }
+.sheet-head h2 { font-size: 1.25rem; flex: 1; min-width: 0; }
+.sheet-body { padding: 16px; display: grid; gap: 16px; }
+.cols2 { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+dl.kv { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 0; font-size: .9rem; }
+dl.kv dt { color: var(--muted); } dl.kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.bar { height: 6px; background: var(--sunk); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.subscores { display: grid; gap: 10px; }
+.subscores .s { display: grid; grid-template-columns: 170px 1fr 52px; gap: 10px; align-items: center; font-size: .85rem; }
+.subscores .s p { grid-column: 1 / -1; margin: -6px 0 0; color: var(--muted); font-size: .8rem; }
+@media (max-width: 520px) { .subscores .s { grid-template-columns: 1fr 52px; } .subscores .s .bar { grid-column: 1 / -1; grid-row: 2; } }
+.conf { font-size: .68rem; padding: 0 5px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+.conf.fiable { color: var(--ok); border-color: var(--ok); } .conf.estime { color: var(--lvB); border-color: var(--lvB); } .conf.hypothese { color: var(--warn); border-color: var(--warn); }
+.formula { font: .78rem var(--f-mono); color: var(--muted); }
+.checklist { display: grid; gap: 6px; }
+.checklist label { display: flex; gap: 8px; align-items: flex-start; font-size: .9rem; }
+pre.draft { white-space: pre-wrap; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 12px; font: .85rem/1.5 var(--f-body); margin: 0; max-height: 360px; overflow: auto; }
+textarea, input[type=text], input[type=date], input[type=number] { border: 1px solid var(--line); background: var(--surface); border-radius: var(--r); padding: 6px 8px; max-width: 100%; }
+textarea { width: 100%; min-height: 90px; }
+.disclaimer { font-size: .8rem; color: var(--muted); border-left: 2px solid var(--gold); padding-left: 10px; }
+
+/* kanban */
+.kanban { display: grid; gap: 12px; grid-template-columns: repeat(5, minmax(220px, 1fr)); overflow-x: auto; padding-bottom: 6px; }
+.kcol { background: var(--sunk); border-radius: var(--r); padding: 10px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.kcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 10px; display: grid; gap: 6px; font-size: .85rem; }
+.kcard.late { border-color: var(--warn); }
+
+/* simulateur */
+.sliders { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.slider { display: grid; gap: 4px; }
+.slider .lab { display: flex; justify-content: space-between; font-size: .88rem; }
+.slider input[type=range] { width: 100%; accent-color: var(--accent); }
+.params { display: grid; gap: 10px 18px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+.params label { display: grid; gap: 3px; font-size: .85rem; }
+.params label span { color: var(--muted); }
+.params input { width: 100%; }
+.empty { padding: 28px; text-align: center; color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-radius: var(--r); }
+.toast { position: fixed; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 8px 14px; border-radius: var(--r); font-size: .88rem; z-index: 60; }
+.spark { width: 70px; height: 22px; }
+@media (prefers-reduced-motion: no-preference) { .card { transition: border-color .15s; } .card:hover { border-color: var(--accent); } }
+</style>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <div class="row" style="gap:12px;align-items:baseline">
+        <h1>Radar Domaine</h1>
+        <span class="sub">Lieux de réception 200 invités · 45 min de la gare de Saint-Pierre-des-Corps</span>
+      </div>
+      <div class="status"><span class="dot" id="dbdot"></span><span id="dbstatus">Connexion à la base…</span></div>
+    </div>
+    <nav class="tabs" role="tablist" id="tabs"></nav>
+  </div>
+  <div class="simbar" id="simbar" hidden>
+    <div class="in"><b>Simulation en cours.</b><span id="simsummary" class="small"></span>
+      <button class="btn" id="simsave">Enregistrer comme paramètres</button>
+      <button class="btn ghost" id="simreset">Annuler la simulation</button></div>
+  </div>
+</header>
+
+<main id="main"></main>
+<div id="sheetroot"></div>
+
+<script src="engine.js"></script>
+<script>
+(function () {
+'use strict';
+var E = window.RadarEngine;
+var TABS = [
+  ['tableau', 'Tableau de bord'], ['carte', 'Carte'], ['comparatif', 'Comparatif'], ['simulateur', 'Simulateur'],
+  ['suivi', 'Suivi'], ['strategies', 'Stratégies'], ['marche', 'Veille marché'], ['parametres', 'Paramètres'], ['journal', 'Journal']
+];
+var TYPES = { chateau: 'Château', manoir: 'Manoir', gentilhommiere: 'Gentilhommière', maison_maitre: 'Maison de maître', prieure: 'Prieuré', abbaye: 'Abbaye', grange: 'Grange', ferme: 'Ferme', longere: 'Longère', haras: 'Haras', domaine_viticole: 'Domaine viticole', troglodyte: 'Troglodyte', moulin: 'Moulin', salle: 'Salle', ecole: 'Ancienne école', colonie: 'Centre de vacances', hotel_restaurant: 'Hôtel-restaurant', guinguette: 'Guinguette', golf: 'Golf', camping: 'Camping', entrepot: 'Entrepôt', usine: 'Ancienne usine', gare: 'Ancienne gare', chapelle: 'Chapelle', serres: 'Serres', terrain: 'Terrain', lieu_reception_activite: 'Lieu de réception en activité', autre: 'Autre' };
+var STATUTS = [['a_contacter', 'À contacter'], ['contacte', 'Contacté'], ['visite', 'Visite'], ['offre', 'Offre'], ['abandonne', 'Abandonné']];
+var CACHET_LIB = { pierre: 'Pierre', tuffeau: 'Tuffeau', charpente: 'Charpente apparente', parc: 'Parc', vue: 'Vue', loire: 'Loire', patrimoine: 'Patrimoine', mh: 'Monument historique', cave: 'Caves', chapelle: 'Chapelle', douves: 'Douves', pigeonnier: 'Pigeonnier', dependances: 'Dépendances', piece_eau: 'Pièce d’eau' };
+var SOUS_LIB = { cachet: 'Cachet et attractivité', capacite: 'Capacité 200 et configuration', reglementaire: 'Faisabilité réglementaire', financabilite: 'Finançabilité', rentabilite: 'Rentabilité potentielle', localisation: 'Localisation et accès', hebergement: 'Hébergement sur place', negociabilite: 'Négociabilité et timing', upside: 'Potentiel d’upside' };
+
+var S = {
+  db: null, biens: {}, suivi: {}, journal: [], marche: {}, paramsSaved: null, sim: null, geo: null,
+  tab: 'tableau', fiche: null, loaded: { biens: false },
+  comp: { vue: 'radar', q: '', type: '', strat: '', statut: '', tri: 'score', dir: -1, f: { trajet: true, capacite: true, ppri: true, enclave: true, portee: true } },
+  map: { vb: null, montrer55: false, concurrents: true }
+};
+try { var t = localStorage.getItem('rd_tab'); if (t && TABS.some(function (x) { return x[0] === t; })) S.tab = t; } catch (e) {}
+if (location.hash && TABS.some(function (x) { return x[0] === location.hash.slice(1); })) S.tab = location.hash.slice(1);
+
+// ---------- utilitaires ----------
+function h(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function eur(x) { return x == null || isNaN(x) ? '<span class="muted">à vérifier</span>' : Math.round(x).toLocaleString('fr-FR') + ' €'; }
+function k(x) { return x == null || isNaN(x) ? '—' : (Math.round(x / 1000)).toLocaleString('fr-FR') + ' k€'; }
+function pct(x, d) { return x == null ? '—' : (x * 100).toFixed(d == null ? 1 : d).replace('.', ',') + ' %'; }
+function m2(x) { return x == null ? '<span class="muted">à vérifier</span>' : Math.round(x).toLocaleString('fr-FR') + ' m²'; }
+function fdate(d) { if (!d) return '—'; var t = new Date(d); return isNaN(t) ? h(d) : t.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }); }
+function confCls(c) { return c === 'fiable' ? 'fiable' : c === 'estimé' ? 'estime' : 'hypothese'; }
+function conf(c) { return '<span class="conf ' + confCls(c) + '">' + h(c) + '</span>'; }
+function toast(msg) { var d = document.createElement('div'); d.className = 'toast'; d.textContent = msg; document.body.appendChild(d); setTimeout(function () { d.remove(); }, 2600); }
+function copy(text, btn) {
+  try { navigator.clipboard.writeText(text).then(function () { toast('Copié'); }, function () { fallback(); }); } catch (e) { fallback(); }
+  function fallback() { var pre = btn && btn.parentNode && btn.parentNode.parentNode.querySelector('pre'); if (pre) { var r = document.createRange(); r.selectNodeContents(pre); var s = getSelection(); s.removeAllRanges(); s.addRange(r); toast('Texte sélectionné, copiez-le avec Ctrl+C'); } }
+}
+function params() { var base = E.merge(E.DEFAULTS, S.paramsSaved || {}); return S.sim ? E.merge(base, S.sim) : base; }
+
+// ---------- calcul ----------
+var cache = { key: null, list: [] };
+function analyses() {
+  var p = params();
+  var key = JSON.stringify(p) + '|' + Object.keys(S.biens).length + '|' + S.version;
+  if (cache.key === key) return cache.list;
+  var list = Object.keys(S.biens).map(function (id) {
+    var b = S.biens[id]; var a;
+    try { a = E.analyser(b, p); } catch (e) { a = { fin: { ok: false, voyant: { couleur: 'gris', raison: 'Erreur de calcul' } }, score: { total: 0, niveau: 'D', sous: {}, explications: {} }, strat: { scores: {}, recommandee: '—' }, filtres: [] }; }
+    return { id: id, b: b, a: a, s: S.suivi[id] || {} };
+  });
+  cache = { key: key, list: list };
+  return list;
+}
+S.version = 0;
+function actifs(x) { return x.b.statut_annonce !== 'vendu' && x.b.statut_annonce !== 'retire'; }
+function filtresActifs(x) { return x.a.filtres.filter(function (f) { return S.comp.f[f.code]; }); }
+function dansRadar(x) { return actifs(x) && filtresActifs(x).length === 0; }
+function horsPortee(x) { return actifs(x) && x.a.filtres.some(function (f) { return f.code === 'portee'; }) && !x.a.filtres.some(function (f) { return f.code === 'trajet'; }); }
+
+// ---------- rendu commun ----------
+function ring(score, niveau, size) {
+  size = size || 54; var r = size / 2 - 5, c = 2 * Math.PI * r, v = Math.max(0, Math.min(100, score || 0));
+  var col = 'var(--lv' + (niveau || 'D') + ')';
+  return '<svg class="ring" viewBox="0 0 ' + size + ' ' + size + '" style="width:' + size + 'px;height:' + size + 'px" role="img" aria-label="Score ' + v + ' sur 100, niveau ' + niveau + '">' +
+    '<circle cx="' + size / 2 + '" cy="' + size / 2 + '" r="' + r + '" fill="none" stroke="var(--sunk)" stroke-width="5"/>' +
+    '<circle cx="' + size / 2 + '" cy="' + size / 2 + '" r="' + r + '" fill="none" stroke="' + col + '" stroke-width="5" stroke-linecap="round" stroke-dasharray="' + (c * v / 100).toFixed(1) + ' ' + c.toFixed(1) + '" transform="rotate(-90 ' + size / 2 + ' ' + size / 2 + ')"/>' +
+    '<text x="50%" y="50%" text-anchor="middle" dominant-baseline="central">' + v + '</text></svg>';
+}
+function sourceUrl(b) { return (b.sources && b.sources[0] && b.sources[0].url) || null; }
+function voyant(fin) { var v = fin.voyant || { couleur: 'gris', raison: '' }; return '<span class="voy ' + v.couleur + '" title="' + h(v.raison) + '"></span>'; }
+function trajet(b) { return b.trajet_min != null ? b.trajet_min + ' min' : '<span class="muted">trajet à calculer</span>'; }
+function telLink(c) {
+  if (!c || !c.telephone) return '';
+  var t = c.telephone.replace(/[^\d+]/g, '');
+  return '<a class="btn" href="tel:' + h(t) + '" title="Appeler ' + h(c.organisme || '') + '">Appeler</a><span class="tel">' + h(c.telephone) + '</span>';
+}
+function card(x) {
+  var b = x.b, a = x.a, url = sourceUrl(b);
+  var badges = [];
+  if (b.statut_annonce === 'baisse_prix' || b.baisse_prix) badges.push('<span class="tag gold">Baisse de prix</span>');
+  if (isNew(b)) badges.push('<span class="tag gold">Nouveau</span>');
+  if (a.score.etiquette) badges.push('<span class="tag warn">' + h(a.score.etiquette) + '</span>');
+  if (b.mode_vente === 'encheres') badges.push('<span class="tag">Enchères ' + fdate(b.date_vente_encheres) + '</span>');
+  if (!b.verifie) badges.push('<span class="tag warn">Annonce non ouverte</span>');
+  return '<article class="card">' +
+    (url ? '<a class="photo" href="' + h(url) + '" target="_blank" rel="noopener">' : '<div class="photo">') +
+    '<span class="type">' + h(TYPES[b.type] || b.type || 'Bien') + '</span><span class="lien">' + (url ? 'Photos sur l’annonce ↗' : 'Pas de lien') + '</span>' + (url ? '</a>' : '</div>') +
+    '<div class="body"><div style="display:grid;gap:4px;min-width:0">' +
+    '<button class="titre" data-fiche="' + h(x.id) + '">' + h(b.titre) + '</button>' +
+    '<div class="meta">' + h(b.commune || '—') + ' · ' + trajet(b) + '</div>' +
+    '<div class="row" style="gap:8px"><span class="prix">' + (b.prix != null ? k(b.prix) : '<span class="muted small">prix à vérifier</span>') + '</span>' + voyant(a.fin) + '<span class="pill lv-' + a.score.niveau + '">Niveau ' + a.score.niveau + '</span></div>' +
+    '<div class="row" style="gap:4px">' + badges.join('') + '</div>' +
+    '</div>' + ring(a.score.total, a.score.niveau) + '</div>' +
+    '<div class="foot">' + (url ? '<a class="btn primary" href="' + h(url) + '" target="_blank" rel="noopener">Voir l’annonce</a>' : '') +
+    telLink(b.contact) + '<button class="btn ghost" data-fiche="' + h(x.id) + '">Fiche</button></div></article>';
+}
+function isNew(b) { var d = b.premiere_apparition; if (!d) return false; return (Date.now() - Date.parse(d)) < 8 * 864e5; }
+function empty(msg) { return '<div class="empty">' + msg + '</div>'; }
+
+// ---------- onglets ----------
+function renderTabs() {
+  document.getElementById('tabs').innerHTML = TABS.map(function (t) { return '<button role="tab" aria-selected="' + (S.tab === t[0]) + '" data-tab="' + t[0] + '">' + t[1] + '</button>'; }).join('');
+}
+function render() {
+  renderTabs();
+  var m = document.getElementById('main'), fn = VIEWS[S.tab] || VIEWS.tableau;
+  m.innerHTML = '<section class="view">' + fn() + '</section>';
+  if (S.tab === 'carte') drawMap();
+  document.getElementById('simbar').hidden = !S.sim;
+  if (S.sim) document.getElementById('simsummary').textContent = 'Apport ' + k(params().apport) + ', taux ' + pct(params().taux, 2) + ', ' + params().mariages.base + ' mariages par an (scénario base).';
+  if (S.fiche) renderFiche();
+}
+
+var VIEWS = {};
+VIEWS.tableau = function () {
+  var L = analyses();
+  if (!L.length) return '<h2>Tableau de bord</h2>' + empty(S.db === false ? 'La base n’est pas disponible dans cette vue. Ouvrez l’Artifact connecté à votre compte pour voir les biens.' : S.loaded.biens ? 'Aucun bien dans la base pour l’instant. La collecte du lundi matin les ajoutera ; vous pouvez aussi demander à Claude d’ajouter une annonce.' : 'Chargement des biens…');
+  var radar = L.filter(dansRadar).sort(function (a, b) { return b.a.score.total - a.a.score.total; });
+  var niv = { A: 0, B: 0, C: 0, D: 0 }; radar.forEach(function (x) { niv[x.a.score.niveau]++; });
+  var nouveaux = L.filter(function (x) { return isNew(x.b); });
+  var baisses = L.filter(function (x) { return x.b.statut_annonce === 'baisse_prix' || x.b.baisse_prix; });
+  var retires = L.filter(function (x) { return x.b.statut_annonce === 'retire' || x.b.statut_annonce === 'vendu'; });
+  var hp = L.filter(horsPortee);
+  var last = S.journal[0];
+  var top = radar.slice(0, 6);
+  var evol = radar.filter(function (x) { return (x.b.historique_scores || []).length > 1; }).slice(0, 8);
+  var relances = L.filter(function (x) { return x.s.relance && x.s.statut !== 'abandonne' && Date.parse(x.s.relance) <= Date.now() + 3 * 864e5; });
+  return '<div class="row between"><div><div class="eyebrow">Semaine du ' + fdate(last ? last.date : new Date()) + '</div><h2>Tableau de bord</h2></div>' +
+    '<div class="small muted">' + (last ? 'Dernière collecte : ' + fdate(last.date) + ' · ' + (last.nb_biens_vus || 0) + ' annonces vues' : '') + '</div></div>' +
+    '<div class="kpis">' +
+    '<div class="kpi"><b style="color:var(--lvA)">' + niv.A + '</b><span>Niveau A, à appeler cette semaine</span></div>' +
+    '<div class="kpi"><b style="color:var(--lvB)">' + niv.B + '</b><span>Niveau B, à surveiller ou visiter</span></div>' +
+    '<div class="kpi"><b>' + (niv.C + niv.D) + '</b><span>Niveaux C et D</span></div>' +
+    '<div class="kpi"><b>' + hp.length + '</b><span>Hors de portée mais à connaître</span></div>' +
+    '<div class="kpi"><b>' + nouveaux.length + '</b><span>Nouveautés de la semaine</span></div>' +
+    '<div class="kpi"><b>' + baisses.length + '</b><span>Baisses de prix</span></div>' +
+    '<div class="kpi"><b>' + retires.length + '</b><span>Retirés ou vendus</span></div>' +
+    '</div>' +
+    (relances.length ? '<div class="panel"><h3>Relances à faire</h3><ul>' + relances.map(function (x) { return '<li><button class="btn ghost" data-fiche="' + h(x.id) + '">' + h(x.b.titre) + '</button> · ' + fdate(x.s.relance) + '</li>'; }).join('') + '</ul></div>' : '') +
+    (last && last.digest ? '<div class="panel"><div class="eyebrow">Digest hebdomadaire</div><div style="white-space:pre-wrap;margin-top:6px">' + h(last.digest) + '</div></div>' : '') +
+    '<div class="row between"><h3>Meilleures opportunités dans le radar</h3><button class="btn ghost" data-tab="comparatif">Tout le comparatif</button></div>' +
+    (top.length ? '<div class="grid-cards">' + top.map(card).join('') + '</div>' : empty('Aucun bien ne passe les filtres actuels. Assouplissez-les dans le comparatif ou consultez l’onglet hors de portée.')) +
+    (nouveaux.length ? '<h3>Nouveautés</h3><div class="grid-cards">' + nouveaux.slice(0, 6).map(card).join('') + '</div>' : '') +
+    (baisses.length ? '<h3>Baisses de prix</h3><div class="grid-cards">' + baisses.map(card).join('') + '</div>' : '') +
+    (retires.length ? '<h3>Retirés ou vendus</h3><div class="tablewrap"><table><tbody>' + retires.map(function (x) { return '<tr class="click" data-fiche="' + h(x.id) + '"><td>' + h(x.b.titre) + '</td><td>' + h(x.b.commune) + '</td><td>' + h(x.b.statut_annonce) + '</td></tr>'; }).join('') + '</tbody></table></div>' : '') +
+    (evol.length ? '<h3>Évolution des scores</h3><div class="tablewrap"><table><thead><tr><th>Bien</th><th class="n">Score</th><th>Tendance</th></tr></thead><tbody>' + evol.map(function (x) { return '<tr class="click" data-fiche="' + h(x.id) + '"><td>' + h(x.b.titre) + '</td><td class="n">' + x.a.score.total + '</td><td>' + spark(x.b.historique_scores) + '</td></tr>'; }).join('') + '</tbody></table></div>' : '') +
+    '<p class="disclaimer">Chiffres indicatifs, calculés à partir des annonces et d’hypothèses modifiables. À valider avec notaire, architecte, banque et expert-comptable.</p>';
+};
+function spark(hist) {
+  hist = (hist || []).slice(-10); if (hist.length < 2) return '';
+  var w = 70, hh = 22, xs = hist.map(function (_, i) { return i * w / (hist.length - 1); }), vs = hist.map(function (p) { return p.score; });
+  var mn = Math.min.apply(null, vs) - 2, mx = Math.max.apply(null, vs) + 2;
+  var pts = xs.map(function (x, i) { return x.toFixed(1) + ',' + (hh - (vs[i] - mn) / (mx - mn) * hh).toFixed(1); });
+  return '<svg class="spark" viewBox="0 0 ' + w + ' ' + hh + '"><polyline points="' + pts.join(' ') + '" fill="none" stroke="var(--accent)" stroke-width="1.5"/><circle cx="' + pts[pts.length - 1].split(',')[0] + '" cy="' + pts[pts.length - 1].split(',')[1] + '" r="2.5" fill="var(--accent)"/></svg>';
+}
+
+// ---------- comparatif ----------
+VIEWS.comparatif = function () {
+  var L = analyses(), C = S.comp;
+  var base = C.vue === 'radar' ? L.filter(dansRadar) : C.vue === 'portee' ? L.filter(horsPortee) : C.vue === 'exclus' ? L.filter(function (x) { return !dansRadar(x) && !horsPortee(x); }) : L;
+  var rows = base.filter(function (x) {
+    if (C.q && (x.b.titre + ' ' + x.b.commune + ' ' + (x.b.description || '')).toLowerCase().indexOf(C.q.toLowerCase()) < 0) return false;
+    if (C.type && x.b.type !== C.type) return false;
+    if (C.strat && x.a.strat.recommandee !== C.strat) return false;
+    if (C.statut && (x.s.statut || '') !== C.statut) return false;
+    return true;
+  });
+  var key = { score: function (x) { return x.a.score.total; }, prix: function (x) { return x.b.prix == null ? 1e12 : x.b.prix; }, trajet: function (x) { return x.b.trajet_min == null ? 999 : x.b.trajet_min; }, cout: function (x) { return x.a.fin.coutTotal || 1e12; }, pm: function (x) { return x.a.fin.pointMortMariages == null ? 999 : x.a.fin.pointMortMariages; }, titre: function (x) { return x.b.titre; } }[C.tri];
+  rows.sort(function (a, b) { var va = key(a), vb = key(b); return (va > vb ? 1 : va < vb ? -1 : 0) * C.dir; });
+  var types = {}; L.forEach(function (x) { types[x.b.type] = 1; });
+  function th(id, lab, n) { return '<th' + (n ? ' class="n"' : '') + '><button data-sort="' + id + '">' + lab + (C.tri === id ? (C.dir > 0 ? ' ↑' : ' ↓') : '') + '</button></th>'; }
+  var counts = { radar: L.filter(dansRadar).length, portee: L.filter(horsPortee).length, exclus: L.filter(function (x) { return !dansRadar(x) && !horsPortee(x); }).length, tous: L.length };
+  return '<h2>Comparatif</h2>' +
+    '<div class="seg" role="group">' + [['radar', 'Dans le radar'], ['portee', 'Hors de portée mais à connaître'], ['exclus', 'Exclus par un filtre'], ['tous', 'Tous']].map(function (v) { return '<button data-vue="' + v[0] + '" aria-pressed="' + (C.vue === v[0]) + '">' + v[1] + ' (' + counts[v[0]] + ')</button>'; }).join('') + '</div>' +
+    '<div class="filters"><input type="search" id="q" placeholder="Rechercher un bien, une commune" value="' + h(C.q) + '">' +
+    '<select id="ftype"><option value="">Tous les types</option>' + Object.keys(types).sort().map(function (t) { return '<option value="' + h(t) + '"' + (C.type === t ? ' selected' : '') + '>' + h(TYPES[t] || t) + '</option>'; }).join('') + '</select>' +
+    '<select id="fstrat"><option value="">Toutes les stratégies</option>' + Object.keys(E.STRATEGIES).map(function (s) { return '<option value="' + s + '"' + (C.strat === s ? ' selected' : '') + '>' + s + ' · ' + h(E.STRATEGIES[s]) + '</option>'; }).join('') + '</select>' +
+    '<select id="fstatut"><option value="">Tous les statuts</option>' + STATUTS.map(function (s) { return '<option value="' + s[0] + '"' + (C.statut === s[0] ? ' selected' : '') + '>' + s[1] + '</option>'; }).join('') + '</select></div>' +
+    '<div class="filters small"><span class="muted">Filtres éliminatoires :</span>' +
+    [['trajet', 'Trajet > ' + (params().voirAussi55 ? 55 : 45) + ' min'], ['capacite', '200 invités impossibles'], ['ppri', 'Zone rouge PPRI'], ['enclave', 'Enclave sans parking'], ['portee', 'Hors de portée']].map(function (f) { return '<label class="chk"><input type="checkbox" data-filtre="' + f[0] + '"' + (C.f[f[0]] ? ' checked' : '') + '> ' + f[1] + '</label>'; }).join('') +
+    '<label class="chk"><input type="checkbox" id="voir55"' + (params().voirAussi55 ? ' checked' : '') + '> Voir aussi 45 à 55 min</label></div>' +
+    (rows.length ? '<div class="tablewrap"><table><thead><tr>' + th('score', 'Score', true) + th('titre', 'Bien') + '<th>Type</th>' + th('prix', 'Prix', true) + th('trajet', 'Trajet', true) + th('cout', 'Coût total', true) + th('pm', 'Point mort', true) + '<th>Banque</th><th>Stratégie</th><th>Suivi</th><th></th></tr></thead><tbody>' +
+      rows.map(function (x) {
+        var b = x.b, a = x.a, url = sourceUrl(b);
+        return '<tr class="click" data-fiche="' + h(x.id) + '"><td class="n"><span class="pill lv-' + a.score.niveau + '">' + a.score.total + ' · ' + a.score.niveau + '</span></td>' +
+          '<td style="min-width:200px"><b>' + h(b.titre) + '</b><div class="small muted">' + h(b.commune || '') + (a.filtres.length ? ' · ' + h(a.filtres.map(function (f) { return f.libelle; }).join(', ')) : '') + '</div></td>' +
+          '<td>' + h(TYPES[b.type] || b.type) + '</td><td class="n">' + k(b.prix) + '</td><td class="n">' + (b.trajet_min != null ? b.trajet_min + ' min' : '—') + '</td>' +
+          '<td class="n">' + k(a.fin.coutTotal) + '</td><td class="n">' + (a.fin.pointMortMariages != null ? Math.ceil(a.fin.pointMortMariages) + ' mar.' : '—') + '</td>' +
+          '<td>' + voyant(a.fin) + '</td><td>' + h(a.strat.recommandee) + '</td><td class="small">' + h((STATUTS.find(function (s) { return s[0] === x.s.statut; }) || ['', '—'])[1]) + '</td>' +
+          '<td>' + (url ? '<a href="' + h(url) + '" target="_blank" rel="noopener" class="small" data-stop="1">Annonce ↗</a>' : '') + '</td></tr>';
+      }).join('') + '</tbody></table></div>' : empty('Aucun bien ne correspond à ces critères.'));
+};
+
+// ---------- carte ----------
+VIEWS.carte = function () {
+  return '<div class="row between"><h2>Carte</h2><div class="legend">' +
+    '<span><i style="background:var(--lvA)"></i>A</span><span><i style="background:var(--lvB)"></i>B</span><span><i style="background:var(--lvC)"></i>C</span><span><i style="background:var(--lvD)"></i>D</span>' +
+    '<span><i style="background:none;border:1.5px solid var(--gold);border-radius:1px;transform:rotate(45deg)"></i>Lieu de mariage existant</span>' +
+    '<span><i style="background:var(--iso45);border-radius:2px"></i>45 min</span></div></div>' +
+    '<div class="filters small"><label class="chk"><input type="checkbox" id="m55"' + (S.map.montrer55 ? ' checked' : '') + '> Afficher l’isochrone 55 min</label>' +
+    '<label class="chk"><input type="checkbox" id="mconc"' + (S.map.concurrents ? ' checked' : '') + '> Afficher les concurrents</label>' +
+    '<span class="muted">Isochrone calculé par moteur de routage (Valhalla, données OpenStreetMap), départ samedi 10 h. Les biens localisés à la commune sont placés au centre de celle-ci.</span></div>' +
+    '<div class="mapwrap" id="mapwrap">' + (S.geo ? '' : '<div class="empty">Chargement du fond de carte…</div>') + '</div>';
+};
+function drawMap() {
+  var wrap = document.getElementById('mapwrap'); if (!wrap || !S.geo) return;
+  var G = S.geo, lat0 = 47.3, kx = Math.cos(lat0 * Math.PI / 180) * 1000, ky = 1000;
+  function px(lon) { return (lon - 0.72) * kx; } function py(lat) { return (47.39 - lat) * ky; }
+  function path(r) { return 'M' + r.map(function (p) { return px(p[0]).toFixed(1) + ',' + py(p[1]).toFixed(1); }).join('L') + 'Z'; }
+  var vb = S.map.vb || [-560, -420, 1120, 840];
+  var s = '<svg id="mapsvg" viewBox="' + vb.join(' ') + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Carte des biens et de l’isochrone de 45 minutes">';
+  s += '<g fill="none" stroke="var(--commune)" stroke-width="0.6">' + G.communes.map(function (c) { return '<path d="' + path(c.r) + '"><title>' + h(c.n) + '</title></path>'; }).join('') + '</g>';
+  if (S.map.montrer55) s += '<path d="' + path(G.isochrones['55']) + '" fill="var(--iso55)" stroke="var(--accent)" stroke-width="1" stroke-dasharray="4 3"/>';
+  s += '<path d="' + path(G.isochrones['45']) + '" fill="var(--iso45)" stroke="var(--accent)" stroke-width="1.4"/>';
+  var labels = [['Tours', 0.688, 47.394], ['Amboise', 0.982, 47.413], ['Loches', 0.995, 47.128], ['Chinon', 0.242, 47.167], ['Blois', 1.335, 47.586], ['Saumur', -0.077, 47.26], ['Château-Renault', 0.912, 47.594], ['Azay-le-Rideau', 0.465, 47.26], ['Sainte-Maure', 0.613, 47.111], ['Montrichard', 1.186, 47.343], ['Langeais', 0.405, 47.325], ['Vendôme', 1.066, 47.793]];
+  s += '<g font-size="11" fill="var(--muted)" font-family="var(--f-body)">' + labels.map(function (l) { return '<text x="' + px(l[1]).toFixed(1) + '" y="' + (py(l[2]) - 6).toFixed(1) + '" text-anchor="middle">' + l[0] + '</text>'; }).join('') + '</g>';
+  if (S.map.concurrents && S.marche.benchmark) s += '<g>' + (S.marche.benchmark.lieux || []).filter(function (c) { return c.lat && c.lon; }).map(function (c) { var x = px(c.lon), y = py(c.lat); return '<rect class="mpt" data-tip="' + h('Concurrent : ' + c.nom + ' (' + c.commune + ')' + (c.capacite_max ? ', ' + c.capacite_max + ' pers.' : '') + (c.prix_location_weekend_min ? ', dès ' + c.prix_location_weekend_min + ' €' : '')) + '" x="' + (x - 4) + '" y="' + (y - 4) + '" width="8" height="8" transform="rotate(45 ' + x + ' ' + y + ')" fill="var(--surface)" stroke="var(--gold)" stroke-width="1.5"/>'; }).join('') + '</g>';
+  var L = analyses().filter(function (x) { return x.b.lat && x.b.lon && actifs(x); }).sort(function (a, b) { return a.a.score.total - b.a.score.total; });
+  s += '<g>' + L.map(function (x) { return '<circle class="mpt" data-fiche="' + h(x.id) + '" data-tip="' + h(x.b.titre + ' · ' + (x.b.commune || '') + ' · ' + x.a.score.total + '/100 · ' + (x.b.prix ? k(x.b.prix) : 'prix ?')) + '" cx="' + px(x.b.lon).toFixed(1) + '" cy="' + py(x.b.lat).toFixed(1) + '" r="6" fill="var(--lv' + x.a.score.niveau + ')" stroke="var(--surface)" stroke-width="1.5" style="cursor:pointer"/>'; }).join('') + '</g>';
+  var g = G.gare; s += '<g><circle cx="' + px(g.lon) + '" cy="' + py(g.lat) + '" r="7" fill="var(--ink)"/><circle cx="' + px(g.lon) + '" cy="' + py(g.lat) + '" r="3" fill="var(--surface)"/><text x="' + (px(g.lon) + 10) + '" y="' + (py(g.lat) + 16) + '" font-size="12" font-weight="600" fill="var(--ink)">Gare TGV Saint-Pierre-des-Corps</text></g>';
+  s += '</svg><div class="mapctl"><button id="zin" aria-label="Zoomer">+</button><button id="zout" aria-label="Dézoomer">−</button><button id="zreset" aria-label="Recentrer">⌂</button></div><div class="maptip" id="maptip" hidden></div>';
+  wrap.innerHTML = s;
+  var svg = document.getElementById('mapsvg'), tip = document.getElementById('maptip');
+  function setVb(v) { S.map.vb = v; svg.setAttribute('viewBox', v.join(' ')); }
+  function zoom(f, cx, cy) { var v = (S.map.vb || vb).slice(); if (cx == null) { cx = v[0] + v[2] / 2; cy = v[1] + v[3] / 2; } var nw = Math.max(80, Math.min(2400, v[2] * f)), nh = nw * v[3] / v[2]; setVb([cx - (cx - v[0]) * nw / v[2], cy - (cy - v[1]) * nh / v[3], nw, nh]); }
+  document.getElementById('zin').onclick = function () { zoom(0.7); };
+  document.getElementById('zout').onclick = function () { zoom(1.4); };
+  document.getElementById('zreset').onclick = function () { setVb([-560, -420, 1120, 840]); };
+  svg.addEventListener('wheel', function (e) { e.preventDefault(); var r = svg.getBoundingClientRect(), v = S.map.vb || vb; zoom(e.deltaY > 0 ? 1.15 : 0.87, v[0] + (e.clientX - r.left) / r.width * v[2], v[1] + (e.clientY - r.top) / r.height * v[3]); }, { passive: false });
+  var drag = null;
+  svg.addEventListener('pointerdown', function (e) { if (e.target.classList.contains('mpt')) return; drag = { x: e.clientX, y: e.clientY, v: (S.map.vb || vb).slice() }; svg.setPointerCapture(e.pointerId); });
+  svg.addEventListener('pointermove', function (e) {
+    if (drag) { var r = svg.getBoundingClientRect(), sc = drag.v[2] / r.width; setVb([drag.v[0] - (e.clientX - drag.x) * sc, drag.v[1] - (e.clientY - drag.y) * sc, drag.v[2], drag.v[3]]); return; }
+    var t = e.target.getAttribute && e.target.getAttribute('data-tip');
+    if (t) { var wr = wrap.getBoundingClientRect(); tip.hidden = false; tip.textContent = t; tip.style.left = Math.min(e.clientX - wr.left + 12, wr.width - 250) + 'px'; tip.style.top = (e.clientY - wr.top + 12) + 'px'; } else tip.hidden = true;
+  });
+  svg.addEventListener('pointerup', function () { drag = null; });
+}
+
+// ---------- simulateur ----------
+VIEWS.simulateur = function () {
+  var p = params();
+  var sl = [
+    ['apport', 'Apport personnel', 50000, 100000, 5000, p.apport, function (v) { return k(v); }],
+    ['taux', 'Taux du prêt', 0.025, 0.06, 0.001, p.taux, function (v) { return pct(v, 2); }],
+    ['duree', 'Durée du prêt', 10, 25, 1, p.duree, function (v) { return v + ' ans'; }],
+    ['mariages.base', 'Mariages par an (base)', 6, 40, 1, p.mariages.base, function (v) { return v; }],
+    ['prixHaute', 'Location week-end haute saison', 2500, 14000, 250, p.prixHaute, function (v) { return eur(v); }],
+    ['prixBasse', 'Location week-end basse saison', 1000, 8000, 250, p.prixBasse, function (v) { return eur(v); }],
+    ['negociation', 'Négociation sur le prix', 0, 0.2, 0.01, p.negociation, function (v) { return pct(v, 0); }],
+    ['investisseursMax', 'Fonds propres d’investisseurs (stratégie E)', 0, 500000, 10000, p.investisseursMax, function (v) { return k(v); }]
+  ];
+  var L = analyses().filter(function (x) { return actifs(x) && !x.a.filtres.some(function (f) { return f.code === 'trajet'; }); }).sort(function (a, b) { return b.a.score.total - a.a.score.total; });
+  var cnt = { vert: 0, orange: 0, rouge: 0, gris: 0 }; L.forEach(function (x) { cnt[(x.a.fin.voyant || {}).couleur || 'gris']++; });
+  return '<div><h2>Simulateur</h2><p class="muted small">Chaque curseur recalcule en direct les scores, les voyants bancaires et les points morts de tous les biens. La simulation reste locale tant que vous ne l’enregistrez pas.</p></div>' +
+    '<div class="panel"><div class="sliders">' + sl.map(function (s) { return '<div class="slider"><div class="lab"><label for="sl-' + s[0] + '">' + s[1] + '</label><b class="num" id="v-' + s[0].replace('.', '-') + '">' + s[6](s[5]) + '</b></div><input type="range" id="sl-' + s[0] + '" data-sim="' + s[0] + '" min="' + s[2] + '" max="' + s[3] + '" step="' + s[4] + '" value="' + s[5] + '"></div>'; }).join('') + '</div></div>' +
+    '<div class="kpis"><div class="kpi"><b style="color:var(--ok)">' + cnt.vert + '</b><span>Voyant vert</span></div><div class="kpi"><b style="color:var(--warn)">' + cnt.orange + '</b><span>Orange, avec montage</span></div><div class="kpi"><b style="color:var(--bad)">' + cnt.rouge + '</b><span>Rouge, hors de portée</span></div><div class="kpi"><b>' + cnt.gris + '</b><span>Prix inconnu</span></div></div>' +
+    '<div class="tablewrap"><table><thead><tr><th class="n">Score</th><th>Bien</th><th class="n">Coût total</th><th class="n">Emprunt</th><th class="n">Annuité</th><th class="n">DSCR base</th><th class="n">Point mort</th><th class="n">Apport mini</th><th class="n">Prix max compatible</th><th>Banque</th></tr></thead><tbody>' +
+    L.map(function (x) { var f = x.a.fin; return '<tr class="click" data-fiche="' + h(x.id) + '"><td class="n"><span class="pill lv-' + x.a.score.niveau + '">' + x.a.score.total + '</span></td><td>' + h(x.b.titre) + '<div class="small muted">' + h(x.b.commune || '') + '</div></td><td class="n">' + k(f.coutTotal) + '</td><td class="n">' + k(f.emprunt) + '</td><td class="n">' + k(f.annuite) + '</td><td class="n">' + (f.dscr != null ? f.dscr.toFixed(2).replace('.', ',') : '—') + '</td><td class="n">' + (f.pointMortMariages != null ? Math.ceil(f.pointMortMariages) : '—') + '</td><td class="n">' + k(f.apportMinimum) + '</td><td class="n">' + (f.prixMaxCompatible ? k(f.prixMaxCompatible) : f.ok ? 'aucun' : '—') + '</td><td>' + voyant(f) + '</td></tr>'; }).join('') + '</tbody></table></div>';
+};
+
+// ---------- suivi (kanban) ----------
+VIEWS.suivi = function () {
+  var L = analyses();
+  var cols = STATUTS.map(function (st) {
+    var items = L.filter(function (x) { return x.s.statut === st[0]; });
+    return '<div class="kcol"><div class="row between"><b>' + st[1] + '</b><span class="small muted">' + items.length + '</span></div>' +
+      items.map(function (x) {
+        var late = x.s.relance && Date.parse(x.s.relance) < Date.now();
+        return '<div class="kcard' + (late ? ' late' : '') + '"><button class="titre btn ghost" style="padding:0;text-align:left" data-fiche="' + h(x.id) + '">' + h(x.b.titre) + '</button>' +
+          '<div class="small muted">' + h(x.b.commune || '') + ' · ' + x.a.score.total + '/100 · ' + k(x.b.prix) + '</div>' +
+          (x.s.notes ? '<div class="small">' + h(x.s.notes.slice(0, 140)) + (x.s.notes.length > 140 ? '…' : '') + '</div>' : '') +
+          '<div class="row small" style="gap:6px"><select data-statut="' + h(x.id) + '" aria-label="Statut">' + STATUTS.map(function (s) { return '<option value="' + s[0] + '"' + (s[0] === x.s.statut ? ' selected' : '') + '>' + s[1] + '</option>'; }).join('') + '<option value="">Retirer du suivi</option></select>' +
+          '<span class="' + (late ? '' : 'muted') + '" style="' + (late ? 'color:var(--warn)' : '') + '">Relance ' + (x.s.relance ? fdate(x.s.relance) : '—') + '</span></div></div>';
+      }).join('') + '</div>';
+  }).join('');
+  var tous = L.filter(function (x) { return x.s.statut; }).length;
+  return '<div><h2>Suivi</h2><p class="muted small">Ajoutez un bien au suivi depuis sa fiche. Les notes, dates de relance et la checklist sont enregistrées dans la base.</p></div>' +
+    (tous ? '<div class="kanban">' + cols + '</div>' : empty('Aucun bien suivi pour l’instant. Ouvrez une fiche et choisissez « À contacter ».'));
+};
+
+// ---------- stratégies ----------
+VIEWS.strategies = function () {
+  var L = analyses().filter(function (x) { return actifs(x) && !x.a.filtres.some(function (f) { return f.code === 'trajet' && S.comp.f.trajet; }); });
+  var txt = {
+    A: 'Le chiffre d’affaires existant rassure la banque et réduit le délai avant recettes. Chercher les cessions murs et fonds, vérifier les comptes sur 3 ans et les autorisations ERP.',
+    B: 'Prix d’entrée bas et forte création de valeur, au prix d’un chantier long. Points critiques : changement de destination, assainissement, ERP.',
+    C: 'Pas d’achat : bail emphytéotique, AOT ou appel à projets sur un bien communal, avec option d’achat à négocier. Peu d’apport, mais dépendance à la collectivité.',
+    D: 'Exploiter le château d’un propriétaire (exclusivité, loyer fixe faible et part variable). Aucun achat immobilier ; contrat long et clauses de sortie à soigner.',
+    E: 'Faire entrer des minoritaires (SCI ou SAS), ou recourir au crédit-bail immobilier ou au crédit vendeur pour combler l’écart d’apport.'
+  };
+  return '<div><h2>Stratégies</h2><p class="muted small">Chaque bien reçoit un score par stratégie ; la plus pertinente est recommandée dans sa fiche.</p></div>' +
+    Object.keys(E.STRATEGIES).map(function (s) {
+      var top = L.slice().sort(function (a, b) { return (b.a.strat.scores[s] || 0) - (a.a.strat.scores[s] || 0); }).filter(function (x) { return (x.a.strat.scores[s] || 0) >= 40; }).slice(0, 6);
+      return '<div class="panel" style="display:grid;gap:10px"><div><div class="eyebrow">Stratégie ' + s + '</div><h3 style="font:400 1.2rem var(--f-display)">' + h(E.STRATEGIES[s]) + '</h3><p class="small muted" style="margin:4px 0 0;max-width:70ch">' + txt[s] + '</p></div>' +
+        (top.length ? '<div class="tablewrap"><table><tbody>' + top.map(function (x) { return '<tr class="click" data-fiche="' + h(x.id) + '"><td class="n" style="width:70px"><b>' + x.a.strat.scores[s] + '</b></td><td>' + h(x.b.titre) + '<div class="small muted">' + h(x.b.commune || '') + ' · ' + k(x.b.prix) + '</div></td><td class="n"><span class="pill lv-' + x.a.score.niveau + '">' + x.a.score.total + '</span></td><td>' + voyant(x.a.fin) + '</td></tr>'; }).join('') + '</tbody></table></div>' : '<div class="small muted">Aucun candidat pour l’instant.</div>') + '</div>';
+    }).join('');
+};
+
+// ---------- veille marché ----------
+VIEWS.marche = function () {
+  var B = S.marche.benchmark, F = S.marche.financement, D = S.marche.dvf;
+  var out = '<h2>Veille marché</h2>';
+  if (!B && !F && !D) return out + empty('Les données de marché n’ont pas encore été chargées dans la base.');
+  if (B) {
+    var sy = B.synthese || {};
+    out += '<div class="panel" style="display:grid;gap:12px"><div class="eyebrow">Lieux de mariage existants autour de Tours</div>' +
+      '<div class="kpis"><div class="kpi"><b>' + (sy.nb_lieux || (B.lieux || []).length) + '</b><span>Lieux relevés</span></div><div class="kpi"><b>' + (sy.nb_200_plus != null ? sy.nb_200_plus : '—') + '</b><span>Annoncent 200 invités ou plus</span></div><div class="kpi"><b>' + (sy.prix_weekend_median ? k(sy.prix_weekend_median) : '—') + '</b><span>Prix « à partir de » médian</span></div><div class="kpi"><b>' + (sy.prix_weekend_haut ? k(sy.prix_weekend_haut) : '—') + '</b><span>Prix le plus haut relevé</span></div></div>' +
+      (sy.texte ? '<p style="max-width:75ch;margin:0">' + h(sy.texte) + '</p>' : '') +
+      '<div class="tablewrap"><table><thead><tr><th>Lieu</th><th>Commune</th><th class="n">Capacité</th><th class="n">Dès (week-end)</th><th class="n">Couchages</th><th>Source</th></tr></thead><tbody>' +
+      (B.lieux || []).slice().sort(function (a, b) { return (b.capacite_max || 0) - (a.capacite_max || 0); }).map(function (l) { return '<tr><td>' + (l.url ? '<a href="' + h(l.url) + '" target="_blank" rel="noopener">' + h(l.nom) + '</a>' : h(l.nom)) + '</td><td>' + h(l.commune) + '</td><td class="n">' + (l.capacite_assis ? l.capacite_assis + ' assis' : l.capacite_max ? 'jusqu’à ' + l.capacite_max : '—') + '</td><td class="n">' + (l.prix_location_weekend_min ? eur(l.prix_location_weekend_min) : '—') + '</td><td class="n">' + (l.hebergement_sur_place_couchages || '—') + '</td><td class="small">' + (l.source_url ? '<a href="' + h(l.source_url) + '" target="_blank" rel="noopener">source</a>' : '') + ' ' + h(l.collecte_le || '') + '</td></tr>'; }).join('') + '</tbody></table></div></div>';
+  }
+  if (D && D.communes) {
+    out += '<div class="panel" style="display:grid;gap:10px"><div class="eyebrow">Prix réels DVF (ventes 2023 à 2025)</div><p class="small muted" style="margin:0">' + h(D.note || '') + '</p><div class="tablewrap"><table><thead><tr><th>Commune</th><th>Type</th><th class="n">Ventes</th><th class="n">Quartile bas</th><th class="n">Médiane €/m²</th><th class="n">Quartile haut</th></tr></thead><tbody>' +
+      D.communes.map(function (c) { return '<tr><td>' + h(c.commune) + '</td><td>' + h(c.type) + '</td><td class="n">' + c.n + '</td><td class="n">' + (c.p25 || '—') + '</td><td class="n"><b>' + (c.mediane || '—') + '</b></td><td class="n">' + (c.p75 || '—') + '</td></tr>'; }).join('') + '</tbody></table></div></div>';
+  }
+  if (F) {
+    var T = F.taux || {};
+    out += '<div class="panel" style="display:grid;gap:10px"><div class="eyebrow">Taux et dispositifs de financement</div>' +
+      '<dl class="kv"><dt>Prêt pro 15 ans</dt><dd>' + h(T.pro_15ans_txt || T.pro_15ans || '—') + '</dd><dt>Prêt pro 20 ans</dt><dd>' + h(T.pro_20ans_txt || T.pro_20ans || '—') + '</dd><dt>Particulier 20 ans</dt><dd>' + h(T.immo_particulier_20ans_txt || T.immo_particulier_20ans || '—') + '</dd><dt>Date des sources</dt><dd>' + h(T.date_source || '—') + '</dd></dl>' +
+      '<div class="tablewrap"><table><thead><tr><th>Dispositif</th><th>Existe</th><th>Montant</th><th>Conditions</th><th>Pour ce projet</th></tr></thead><tbody>' +
+      (F.dispositifs || []).map(function (d) { return '<tr><td>' + (d.url ? '<a href="' + h(d.url) + '" target="_blank" rel="noopener">' + h(d.nom) + '</a>' : h(d.nom)) + '</td><td>' + h(d.existe === true ? 'oui' : d.existe === false ? 'non' : d.existe) + '</td><td class="small">' + h(d.montant || '') + '</td><td class="small" style="min-width:220px">' + h(d.conditions || '') + '</td><td class="small" style="min-width:200px"><b>' + h(d.applicable_projet || '') + '</b> ' + h(d.raison || '') + '</td></tr>'; }).join('') + '</tbody></table></div>' +
+      (F.montages ? '<div class="eyebrow" style="margin-top:6px">Montages juridiques, points à valider avec l’expert-comptable</div><div class="tablewrap"><table><tbody>' + (Array.isArray(F.montages) ? F.montages : Object.keys(F.montages).map(function (k2) { var v = F.montages[k2]; return typeof v === 'object' ? Object.assign({ nom: k2 }, v) : { nom: k2, description: v }; })).map(function (m) { return '<tr><td style="min-width:140px"><b>' + h(m.nom || m.montage || '') + '</b></td><td class="small">' + h(m.description || '') + (m.avantages ? '<div><b>Pour :</b> ' + h([].concat(m.avantages).join(' ; ')) + '</div>' : '') + (m.inconvenients ? '<div><b>Contre :</b> ' + h([].concat(m.inconvenients).join(' ; ')) + '</div>' : '') + '</td></tr>'; }).join('') + '</tbody></table></div>' : '') +
+      '</div>';
+  }
+  return out;
+};
+
+// ---------- paramètres ----------
+var PFIELDS = [
+  ['Financement', [['apport', 'Apport personnel (€)'], ['pretHonneur', 'Prêt d’honneur (€)'], ['investisseursMax', 'Fonds propres investisseurs max (€)'], ['apportMinPct', 'Apport minimum exigé (ratio)'], ['taux', 'Taux du prêt (ratio)'], ['assurancePct', 'Assurance emprunteur (ratio par an)'], ['duree', 'Durée (années)'], ['dscrCible', 'DSCR cible']]],
+  ['Acquisition', [['negociation', 'Négociation par défaut (ratio)'], ['notaireAncien', 'Frais de notaire ancien (ratio)'], ['fraisEncheres', 'Frais d’enchères (ratio)'], ['fraisCession', 'Frais de cession de fonds (ratio)'], ['honorairesAgenceSiNonInclus', 'Honoraires si non inclus (ratio)'], ['aleas', 'Aléas travaux (ratio)'], ['moe', 'Maîtrise d’œuvre (ratio)'], ['tresorerieDemarrage', 'Trésorerie de démarrage (€)'], ['moisAutorisations', 'Délai autorisations (mois)'], ['moisTravauxParTranche', 'Mois de travaux par 100 k€']]],
+  ['Exploitation', [['mariages.prudent', 'Mariages par an, prudent'], ['mariages.base', 'Mariages par an, base'], ['mariages.ambitieux', 'Mariages par an, ambitieux'], ['prixHaute', 'Location week-end haute saison (€)'], ['prixBasse', 'Location week-end basse saison (€)'], ['partHaute', 'Part des mariages en haute saison'], ['extrasParMariage', 'Marge extras par mariage (€)'], ['autresEvenements', 'Marge autres événements par an (€)'], ['chargesVariablesParMariage', 'Charges variables par mariage (€)'], ['commissionPct', 'Commissions (ratio du prix)'], ['chargesFixes', 'Charges fixes (€ par an)'], ['energieFixe', 'Énergie fixe (€ par an)'], ['assurancesPct', 'Assurances (ratio de la valeur)'], ['taxeFonciereDefaut', 'Taxe foncière si inconnue (€)'], ['revalorisation', 'Revalorisation annuelle du bien'], ['partTravauxValorisee', 'Part des travaux retrouvée à la revente']]],
+  ['Filtres', [['trajetMax', 'Trajet maximum (min)']]]
+];
+function getPath(o, p) { return p.split('.').reduce(function (a, k2) { return a == null ? a : a[k2]; }, o); }
+function setPath(o, p, v) { var ks = p.split('.'), last = ks.pop(), t = o; ks.forEach(function (k2) { if (!t[k2] || typeof t[k2] !== 'object') t[k2] = {}; t = t[k2]; }); t[last] = v; }
+VIEWS.parametres = function () {
+  var p = E.merge(E.DEFAULTS, S.paramsSaved || {});
+  var poidsSum = Object.keys(p.poids).reduce(function (s, k2) { return s + p.poids[k2]; }, 0);
+  return '<div class="row between"><div><h2>Paramètres et hypothèses</h2><p class="muted small" style="margin:4px 0 0">Tout est enregistré dans la base et utilisé par la collecte du lundi. Les ratios s’écrivent en décimal (0,08 pour 8 %).</p></div>' +
+    '<div class="row"><button class="btn" id="preset">Revenir aux valeurs par défaut</button><button class="btn primary" id="psave">Enregistrer</button></div></div>' +
+    PFIELDS.map(function (g) { return '<div class="panel"><h3 style="margin-bottom:10px">' + g[0] + '</h3><div class="params">' + g[1].map(function (f) { return '<label for="p-' + f[0] + '"><span>' + f[1] + '</span><input type="number" step="any" id="p-' + f[0] + '" data-param="' + f[0] + '" value="' + getPath(p, f[0]) + '"></label>'; }).join('') + '</div></div>'; }).join('') +
+    '<div class="panel"><h3 style="margin-bottom:4px">Pondérations du score</h3><p class="small muted" style="margin:0 0 10px">Total actuel : ' + poidsSum + ' points (le score est ramené sur 100). Malus maximum : <input type="number" id="p-malusMax" data-param="malusMax" value="' + p.malusMax + '" style="width:70px"></p><div class="params">' +
+    Object.keys(p.poids).map(function (k2) { return '<label for="p-poids-' + k2 + '"><span>' + SOUS_LIB[k2] + '</span><input type="number" step="1" id="p-poids-' + k2 + '" data-param="poids.' + k2 + '" value="' + p.poids[k2] + '"></label>'; }).join('') + '</div></div>' +
+    '<div class="panel"><h3 style="margin-bottom:10px">Coûts de travaux (€ HT)</h3><div class="tablewrap"><table><thead><tr><th>Poste</th><th class="n">Bas</th><th class="n">Moyen</th><th class="n">Haut</th><th>Confiance</th></tr></thead><tbody>' +
+    Object.keys(p.travaux).map(function (k2) { var t = p.travaux[k2]; return '<tr><td>' + h(k2.replace(/_/g, ' ').replace(' m2', ' (€/m²)').replace(' place', ' (€/place)')) + '</td>' + ['bas', 'moyen', 'haut'].map(function (n) { return '<td class="n"><input type="number" id="p-tr-' + k2 + '-' + n + '" data-param="travaux.' + k2 + '.' + n + '" value="' + t[n] + '" style="width:100px"></td>'; }).join('') + '<td>' + conf(t.conf) + '</td></tr>'; }).join('') + '</tbody></table></div></div>';
+};
+
+// ---------- journal ----------
+VIEWS.journal = function () {
+  if (!S.journal.length) return '<h2>Journal des mises à jour</h2>' + empty('Aucune collecte enregistrée pour l’instant.');
+  return '<h2>Journal des mises à jour</h2>' + S.journal.map(function (j) {
+    return '<div class="panel" style="display:grid;gap:10px"><div class="row between"><h3>' + fdate(j.date) + ' · ' + h(j.type || 'collecte') + '</h3><span class="small muted">' + (j.nb_biens_vus || 0) + ' annonces vues · ' + (j.nouveaux || 0) + ' nouveaux · ' + (j.baisses || 0) + ' baisses · ' + (j.retires || 0) + ' retirés</span></div>' +
+      (j.resume ? '<p style="margin:0;max-width:80ch">' + h(j.resume) + '</p>' : '') +
+      (j.sources && j.sources.length ? '<div class="tablewrap"><table><thead><tr><th>Source</th><th>Statut</th><th class="n">Biens</th><th>Détail</th></tr></thead><tbody>' + j.sources.map(function (s) { var col = s.statut === 'ok' ? 'var(--ok)' : s.statut === 'bloque' ? 'var(--bad)' : 'var(--warn)'; return '<tr><td>' + h(s.site) + '</td><td style="color:' + col + '">' + h(s.statut) + '</td><td class="n">' + (s.nb_biens != null ? s.nb_biens : '—') + '</td><td class="small">' + h(s.detail || '') + '</td></tr>'; }).join('') + '</tbody></table></div>' : '') +
+      (j.anomalies && j.anomalies.length ? '<div class="small"><b>Anomalies :</b> ' + h(j.anomalies.join(' ; ')) + '</div>' : '') +
+      (j.digest ? '<details><summary class="small">Digest</summary><div style="white-space:pre-wrap" class="small">' + h(j.digest) + '</div></details>' : '') + '</div>';
+  }).join('');
+};
+
+// ---------- fiche ----------
+var DD = [
+  ['plu', 'PLU / PLUi : zonage, changement de destination autorisé, bâtiment repéré en zone A ou N'],
+  ['erp', 'ERP : catégorie probable (4e, 200 personnes), passage en commission de sécurité, issues de secours'],
+  ['pmr', 'Accessibilité PMR : cheminements, sanitaires adaptés, dérogations possibles'],
+  ['assainissement', 'Assainissement : raccordement ou filière autonome dimensionnée pour 200 personnes (SPANC)'],
+  ['voisinage', 'Voisinage : distance aux habitations, historique de plaintes, arrêtés municipaux sur le bruit'],
+  ['inondation', 'Inondation et risques : PPRI, argiles, radon, cavités (Géorisques, état des risques)'],
+  ['abf', 'Monuments historiques et ABF : périmètre de protection, contraintes sur les travaux'],
+  ['servitudes', 'Servitudes, droits de passage, indivision ou copropriété'],
+  ['diagnostics', 'Diagnostics : amiante, plomb, termites, électricité, DPE, état de la charpente et de la toiture'],
+  ['reseaux', 'Réseaux : puissance électrique disponible, eau, fibre et 4G'],
+  ['acces', 'Accès : voirie pour cars et traiteurs, parking de 70 à 100 véhicules'],
+  ['fiscalite', 'Taxe foncière, TVA éventuelle, régime fiscal du montage']
+];
+function questions(b) {
+  var q = [];
+  var miss = b.a_verifier || [];
+  if (b.prix == null) q.push('Quel est le prix demandé, et le vendeur est-il pressé ?');
+  if (b.surface_bati_m2 == null || miss.indexOf('surface_bati_m2') >= 0) q.push('Quelle est la surface bâtie exacte, bâtiment par bâtiment ?');
+  q.push('Quelle est la plus grande pièce ou dépendance d’un seul tenant (surface et hauteur sous plafond) ?');
+  q.push('Le bien est-il raccordé au tout-à-l’égout ? Sinon, quel est le système d’assainissement et son dernier contrôle SPANC ?');
+  q.push('Quel est le zonage au PLU, et un changement de destination a-t-il déjà été évoqué avec la mairie ?');
+  q.push('À quelle distance se trouvent les premières habitations ?');
+  if (b.taxe_fonciere == null) q.push('Quel est le montant de la taxe foncière ?');
+  if (b.dpe == null) q.push('Pouvez-vous transmettre le DPE et les diagnostics ?');
+  if (b.activite_reception_existante) q.push('Pouvez-vous transmettre les trois derniers bilans, le carnet de réservations et le PV de la commission de sécurité ?');
+  q.push('Depuis quand le bien est-il en vente, et y a-t-il déjà eu des offres ?');
+  q.push('Le vendeur accepterait-il un crédit vendeur partiel ou une période d’exploitation avant la vente ?');
+  return q;
+}
+function emailDraft(b) {
+  var c = b.contact || {};
+  return 'Objet : ' + (b.titre || 'Votre annonce') + (b.sources && b.sources[0] && b.sources[0].ref ? ' (réf. ' + b.sources[0].ref + ')' : '') + '\n\n' +
+    'Bonjour' + (c.nom ? ' ' + c.nom : '') + ',\n\n' +
+    'Je m’appelle Florian Tué. Je recherche un lieu en Touraine pour créer et exploiter un domaine de réception (mariages jusqu’à 200 invités, séminaires). Votre annonce' + (b.commune ? ' à ' + b.commune : '') + ' a retenu mon attention.\n\n' +
+    'Pourriez-vous me transmettre les éléments suivants :\n' + questions(b).slice(0, 6).map(function (q) { return '- ' + q; }).join('\n') + '\n\n' +
+    'Je finance l’opération via ma holding (Financière Tué et Fils) et un prêt bancaire. Je suis disponible pour une visite dans les prochaines semaines.\n\n' +
+    'Bien cordialement,\nFlorian Tué\nflorian.tue@gmail.com';
+}
+function callScript(b) {
+  return '1. Présentation : « Bonjour, Florian Tué. J’appelle au sujet de votre annonce ' + (b.titre || '') + '. Le bien est-il toujours disponible ? »\n' +
+    '2. Projet : lieu de réception pour mariages de 200 invités, exploité par moi-même, financement bancaire avec apport et holding.\n' +
+    '3. Questions clés :\n' + questions(b).slice(0, 7).map(function (q) { return '   - ' + q; }).join('\n') + '\n' +
+    '4. Motivation du vendeur : délai souhaité, raison de la vente, souplesse sur le prix.\n' +
+    '5. Conclure : proposer deux créneaux de visite et demander l’envoi des diagnostics par e-mail.';
+}
+function renderFiche() {
+  var root = document.getElementById('sheetroot');
+  var x = analyses().find(function (y) { return y.id === S.fiche; });
+  if (!x) { root.innerHTML = ''; return; }
+  var b = x.b, a = x.a, f = a.fin, s = x.s, p = params();
+  var url = sourceUrl(b), c = b.contact || {};
+  var finHtml;
+  if (!f.ok) finHtml = '<p class="muted">Prix non publié : l’analyse financière sera calculée dès que le prix sera connu.</p>';
+  else {
+    var sc = f.scenarios;
+    finHtml = '<div class="tablewrap"><table><tbody>' +
+      '<tr><td>Prix affiché</td><td class="n">' + eur(f.prixAffiche) + '</td><td>' + conf(b.verifie ? 'fiable' : 'estimé') + '</td><td class="formula">source annonce</td></tr>' +
+      '<tr><td>Prix cible</td><td class="n">' + eur(f.prixCible) + '</td><td>' + conf(f.negociation.conf) + '</td><td class="formula">prix × (1 − ' + pct(f.negociation.taux, 0) + ')</td></tr>' +
+      '<tr><td>Frais d’acquisition</td><td class="n">' + eur(f.frais) + '</td><td>' + conf('estimé') + '</td><td class="formula">prix cible × ' + pct(f.fraisPct, 1) + (b.prix_inclut_honoraires === false ? ' + honoraires' : '') + '</td></tr>' +
+      '<tr><td>Travaux (scénario moyen)</td><td class="n">' + eur(f.travauxRetenus) + '</td><td>' + conf('hypothèse') + '</td><td class="formula">postes × (1 + ' + pct(f.travaux.aleasPct, 0) + ' aléas) × (1 + ' + pct(f.travaux.moePct, 0) + ' MOE)</td></tr>' +
+      '<tr><td>Trésorerie et différé</td><td class="n">' + eur(f.tresorerie) + '</td><td>' + conf('hypothèse') + '</td><td class="formula">' + k(p.tresorerieDemarrage) + ' + intérêts et charges sur ' + f.moisAvantRecettes + ' mois sans recettes</td></tr>' +
+      '<tr><td><b>Coût total du projet</b></td><td class="n"><b>' + eur(f.coutTotal) + '</b></td><td></td><td></td></tr>' +
+      '<tr><td>Apport</td><td class="n">' + eur(f.apport) + '</td><td></td><td class="formula">apport + prêt d’honneur</td></tr>' +
+      '<tr><td>Emprunt</td><td class="n">' + eur(f.emprunt) + '</td><td></td><td class="formula">' + p.duree + ' ans à ' + pct(p.taux, 2) + '</td></tr>' +
+      '<tr><td>Mensualité (hors assurance)</td><td class="n">' + eur(f.mensualite) + '</td><td></td><td class="formula">C × r / (1 − (1 + r)^−n)</td></tr>' +
+      '<tr><td>Annuité avec assurance</td><td class="n">' + eur(f.annuite) + '</td><td></td><td class="formula">12 × mensualité + ' + pct(p.assurancePct, 2) + ' × C</td></tr>' +
+      '</tbody></table></div>' +
+      '<div class="tablewrap"><table><thead><tr><th>Exploitation</th><th class="n">Prudent</th><th class="n">Base</th><th class="n">Ambitieux</th></tr></thead><tbody>' +
+      '<tr><td>Mariages par an</td><td class="n">' + sc.prudent.mariages + '</td><td class="n">' + sc.base.mariages + '</td><td class="n">' + sc.ambitieux.mariages + '</td></tr>' +
+      '<tr><td>Chiffre d’affaires</td><td class="n">' + k(sc.prudent.ca) + '</td><td class="n">' + k(sc.base.ca) + '</td><td class="n">' + k(sc.ambitieux.ca) + '</td></tr>' +
+      '<tr><td>EBE</td><td class="n">' + k(sc.prudent.ebe) + '</td><td class="n">' + k(sc.base.ebe) + '</td><td class="n">' + k(sc.ambitieux.ebe) + '</td></tr>' +
+      '<tr><td>DSCR (cible ' + p.dscrCible + ')</td>' + ['prudent', 'base', 'ambitieux'].map(function (n) { var d = sc[n].dscr; return '<td class="n" style="color:' + (d == null ? '' : d >= p.dscrCible ? 'var(--ok)' : d >= 1 ? 'var(--warn)' : 'var(--bad)') + '">' + (d != null ? d.toFixed(2).replace('.', ',') : '—') + '</td>'; }).join('') + '</tr>' +
+      '<tr><td>Trésorerie après annuité</td><td class="n">' + k(sc.prudent.cashflow) + '</td><td class="n">' + k(sc.base.cashflow) + '</td><td class="n">' + k(sc.ambitieux.cashflow) + '</td></tr>' +
+      '</tbody></table></div>' +
+      '<p class="formula">Marge par mariage = prix moyen ' + eur(f.prixMoyenWeekend) + ' × (1 − commissions) + extras ' + eur(p.extrasParMariage) + ' − charges variables ' + eur(p.chargesVariablesParMariage) + ' = ' + eur(f.margeParMariage) + '. Charges fixes ' + eur(f.chargesFixes) + ' par an (entretien, énergie, taxe foncière, assurances).</p>' +
+      '<dl class="kv"><dt>Point mort</dt><dd><b>' + (f.pointMortMariages != null ? Math.ceil(f.pointMortMariages) + ' mariages par an' : '—') + '</b> pour couvrir charges et annuités</dd>' +
+      '<dt>Valeur de revente à 10 ans</dt><dd>' + k(f.valeurRevente) + ' ' + conf('hypothèse') + '</dd>' +
+      '<dt>Capital restant dû à 10 ans</dt><dd>' + k(f.crd10) + '</dd>' +
+      '<dt>Gain net sur 10 ans</dt><dd>' + k(f.gain10) + (f.multiple10 != null ? ' (multiple de l’apport ' + f.multiple10.toFixed(1).replace('.', ',') + ')' : '') + '</dd>' +
+      '<dt>Prix max compatible</dt><dd>' + (f.prixMaxCompatible ? k(f.prixMaxCompatible) + ' affiché, avec vos paramètres' : 'aucun prix ne passe au vert avec ces paramètres') + '</dd>' +
+      '<dt>Apport minimum</dt><dd>' + k(f.apportMinimum) + '</dd>' +
+      '<dt>Délai avant recettes</dt><dd>' + f.moisAvantRecettes + ' mois (autorisations et travaux)</dd></dl>' +
+      (f.alertes.length ? '<ul class="small">' + f.alertes.map(function (t) { return '<li>' + h(t) + '</li>'; }).join('') + '</ul>' : '');
+  }
+  var tr = f.ok ? f.travaux : E.estimerTravaux(b, p);
+  var risques = [];
+  var r = b.risques || {};
+  if (r.notes) risques.push(r.notes);
+  if (b.risques_notes) risques.push(b.risques_notes);
+  (a.score.malusDetail || []).forEach(function (m) { risques.push('Malus : ' + m); });
+  if (r.commune_ppri) risques.push('Commune couverte par un plan de prévention des risques d’inondation : vérifier la parcelle.');
+  if (b.precision_gps !== 'adresse') risques.push('Adresse exacte non publiée : risques et zonage à vérifier sur la parcelle.');
+  var chk = s.checklist || {};
+  root.innerHTML = '<div class="sheet-bg" data-close="1"></div><aside class="sheet" role="dialog" aria-modal="true" aria-label="Fiche du bien">' +
+    '<div class="sheet-head">' + ring(a.score.total, a.score.niveau, 48) + '<h2>' + h(b.titre) + '</h2><button class="btn" data-close="1" aria-label="Fermer">Fermer</button></div>' +
+    '<div class="sheet-body">' +
+    '<div class="row" style="gap:8px">' + (url ? '<a class="btn primary" href="' + h(url) + '" target="_blank" rel="noopener">Voir l’annonce</a>' : '') + telLink(c) +
+    (c.email ? '<span class="tel">' + h(c.email) + '</span>' : '') + '<span class="pill lv-' + a.score.niveau + '">Niveau ' + a.score.niveau + '</span>' + voyant(f) + '<span class="small">' + h((f.voyant || {}).raison || '') + '</span></div>' +
+    (a.score.etiquette ? '<div class="tag warn" style="justify-self:start">' + h(a.score.etiquette) + '</div>' : '') +
+    '<div class="cols2"><div class="panel"><div class="eyebrow">Synthèse</div><p style="margin:6px 0 10px">' + h(b.description || '') + '</p><dl class="kv">' +
+    '<dt>Type</dt><dd>' + h(TYPES[b.type] || b.type) + '</dd><dt>Commune</dt><dd>' + h(b.commune || '—') + ' ' + h(b.code_postal || '') + '</dd>' +
+    '<dt>Trajet</dt><dd>' + trajet(b) + (b.distance_route_km ? ' · ' + b.distance_route_km + ' km par la route' : '') + (b.trajet_source ? ' <span class="small muted">(' + h(b.trajet_source) + ')</span>' : '') + '</dd>' +
+    '<dt>Autoroute</dt><dd>' + h(b.acces_autoroute || '—') + '</dd>' +
+    '<dt>Prix</dt><dd>' + eur(b.prix) + (b.prix_inclut_honoraires === true ? ' honoraires inclus' : b.prix_inclut_honoraires === false ? ' hors honoraires' : '') + '</dd>' +
+    (b.historique_prix && b.historique_prix.length > 1 ? '<dt>Historique</dt><dd>' + b.historique_prix.map(function (hp) { return fdate(hp.date) + ' : ' + k(hp.prix); }).join(' → ') + '</dd>' : '') +
+    '<dt>Bâti</dt><dd>' + m2(b.surface_bati_m2) + '</dd><dt>Salle</dt><dd>' + m2(b.surface_salle_m2) + '</dd><dt>Terrain</dt><dd>' + m2(b.terrain_m2) + '</dd>' +
+    '<dt>Chambres</dt><dd>' + (b.chambres != null ? b.chambres : '<span class="muted">à vérifier</span>') + (b.logement_exploitant ? ' · logement exploitant' : '') + '</dd>' +
+    '<dt>Capacité annoncée</dt><dd>' + (b.capacite_annoncee ? b.capacite_annoncee + ' personnes' : '<span class="muted">à vérifier</span>') + '</dd>' +
+    '<dt>État</dt><dd>' + h(b.etat || 'à vérifier') + '</dd><dt>DPE</dt><dd>' + h(b.dpe || 'à vérifier') + '</dd><dt>Taxe foncière</dt><dd>' + eur(b.taxe_fonciere) + '</dd>' +
+    '<dt>Mode de vente</dt><dd>' + h(b.mode_vente || '—') + (b.date_vente_encheres ? ' · audience le ' + fdate(b.date_vente_encheres) : '') + '</dd>' +
+    '<dt>En ligne depuis</dt><dd>' + fdate(b.date_premiere_parution || b.premiere_apparition) + '</dd><dt>Statut annonce</dt><dd>' + h(b.statut_annonce || 'active') + '</dd>' +
+    '<dt>Contact</dt><dd>' + h([c.organisme, c.nom].filter(Boolean).join(', ') || '—') + (c.url ? ' · <a href="' + h(c.url) + '" target="_blank" rel="noopener">site</a>' : '') + '</dd>' +
+    '<dt>Sources</dt><dd>' + (b.sources || []).map(function (so) { return '<a href="' + h(so.url) + '" target="_blank" rel="noopener">' + h(so.site || 'source') + '</a> <span class="small muted">' + h(so.collecte_le || '') + '</span>'; }).join('<br>') + '</dd>' +
+    '</dl>' + ((b.cachet || []).length ? '<div class="row" style="gap:4px;margin-top:10px">' + b.cachet.map(function (ct) { return '<span class="tag gold">' + h(CACHET_LIB[ct] || ct) + '</span>'; }).join('') + '</div>' : '') +
+    ((b.a_verifier || []).length ? '<p class="small" style="margin:10px 0 0"><b>À vérifier :</b> ' + h(b.a_verifier.join(', ')) + '</p>' : '') + '</div>' +
+    '<div class="panel"><div class="eyebrow" style="margin-bottom:8px">Score ' + a.score.total + '/100' + (a.score.malus ? ' (malus −' + a.score.malus + ')' : '') + '</div><div class="subscores">' +
+    Object.keys(a.score.poids).map(function (kk) { var v = a.score.sous[kk] || 0, w = a.score.poids[kk]; return '<div class="s"><span>' + SOUS_LIB[kk] + '</span><div class="bar"><i style="width:' + Math.round(v * 100) + '%"></i></div><span class="num small">' + (v * w).toFixed(1).replace('.', ',') + '/' + w + '</span><p>' + h(a.score.explications[kk] || '') + '</p></div>'; }).join('') +
+    '</div>' + (a.score.plafonne ? '<p class="small" style="color:var(--warn)">Score plafonné à 59 : reste à financer supérieur à la capacité, même avec montage.</p>' : '') +
+    '<div class="eyebrow" style="margin:14px 0 6px">Stratégie recommandée</div><p style="margin:0"><b>' + h(a.strat.recommandee) + ' · ' + h(a.strat.libelle || '') + '</b></p><div class="row small" style="gap:10px;margin-top:6px">' + Object.keys(a.strat.scores).map(function (st) { return '<span>' + st + ' ' + a.strat.scores[st] + '</span>'; }).join('') + '</div></div></div>' +
+    '<div class="panel" style="display:grid;gap:10px"><div class="eyebrow">Analyse financière</div>' + finHtml + '</div>' +
+    '<div class="panel" style="display:grid;gap:10px"><div class="eyebrow">Budget travaux</div><div class="tablewrap"><table><thead><tr><th>Poste</th><th class="n">Bas</th><th class="n">Moyen</th><th class="n">Haut</th><th>Confiance</th></tr></thead><tbody>' +
+    tr.lignes.map(function (l) { return '<tr><td>' + h(l.poste) + (l.note ? '<div class="small muted">' + h(l.note) + '</div>' : '') + '</td><td class="n">' + k(l.bas) + '</td><td class="n">' + k(l.moyen) + '</td><td class="n">' + k(l.haut) + '</td><td>' + conf(l.conf) + '</td></tr>'; }).join('') +
+    '<tr><td><b>Total avec aléas et maîtrise d’œuvre</b></td><td class="n"><b>' + k(tr.total.bas) + '</b></td><td class="n"><b>' + k(tr.total.moyen) + '</b></td><td class="n"><b>' + k(tr.total.haut) + '</b></td><td></td></tr></tbody></table></div><p class="disclaimer">' + h(tr.avertissement) + '</p></div>' +
+    '<div class="cols2"><div class="panel"><div class="eyebrow">Risques</div>' + (risques.length ? '<ul class="small">' + risques.map(function (t) { return '<li>' + h(t) + '</li>'; }).join('') + '</ul>' : '<p class="small muted">Aucun risque relevé à ce stade ; à confirmer par l’état des risques.</p>') +
+    (b.plu && b.plu.zone ? '<p class="small">Zonage PLU au point GPS : <b>' + h(b.plu.zone) + '</b> ' + h(b.plu.libelle || '') + ' <span class="muted">(' + h(b.plu.source || 'Géoportail de l’Urbanisme') + ')</span></p>' : '') + '</div>' +
+    '<div class="panel"><div class="eyebrow">Checklist de due diligence</div><div class="checklist">' + DD.map(function (d) { return '<label><input type="checkbox" data-chk="' + d[0] + '"' + (chk[d[0]] ? ' checked' : '') + '> <span>' + h(d[1]) + '</span></label>'; }).join('') + '</div></div></div>' +
+    '<div class="panel"><div class="eyebrow">Questions à poser</div><ol class="small">' + questions(b).map(function (q) { return '<li>' + h(q) + '</li>'; }).join('') + '</ol></div>' +
+    '<div class="cols2"><div class="panel" style="display:grid;gap:8px"><div class="row between"><div class="eyebrow">Brouillon d’e-mail</div><button class="btn" data-copy="email">Copier</button></div><pre class="draft" id="d-email">' + h(emailDraft(b)) + '</pre></div>' +
+    '<div class="panel" style="display:grid;gap:8px"><div class="row between"><div class="eyebrow">Script d’appel</div><button class="btn" data-copy="call">Copier</button></div><pre class="draft" id="d-call">' + h(callScript(b)) + '</pre></div></div>' +
+    '<div class="panel" style="display:grid;gap:10px"><div class="eyebrow">Mon suivi</div><div class="row"><label class="small" for="f-statut">Statut</label><select id="f-statut"><option value="">Non suivi</option>' + STATUTS.map(function (st) { return '<option value="' + st[0] + '"' + (s.statut === st[0] ? ' selected' : '') + '>' + st[1] + '</option>'; }).join('') + '</select>' +
+    '<label class="small" for="f-relance">Relance</label><input type="date" id="f-relance" value="' + h(s.relance || '') + '"></div>' +
+    '<label class="small" for="f-notes">Notes personnelles</label><textarea id="f-notes">' + h(s.notes || '') + '</textarea><div class="row"><button class="btn primary" id="f-save">Enregistrer le suivi</button><span class="small muted">' + (s.maj ? 'Mis à jour le ' + fdate(s.maj) : '') + '</span></div></div>' +
+    '<p class="disclaimer">Estimations indicatives, jamais présentées comme des faits. À valider avec notaire, architecte, banque et expert-comptable.</p>' +
+    '</div></aside>';
+}
+
+// ---------- écritures ----------
+function saveSuivi(id, patch) {
+  var cur = Object.assign({}, S.suivi[id] || {}, patch, { maj: new Date().toISOString() });
+  S.suivi[id] = cur; cache.key = null;
+  if (!S.db) { toast('Base indisponible : modification non enregistrée'); return Promise.resolve(); }
+  return S.db.collection('suivi').doc(id).set(cur).then(function () { toast('Suivi enregistré'); }, function (e) { toast('Enregistrement refusé : ' + (e && e.code || 'erreur')); });
+}
+function saveParams(obj) {
+  S.paramsSaved = obj; cache.key = null;
+  if (!S.db) { toast('Base indisponible : paramètres non enregistrés'); return; }
+  S.db.doc('config/params').set(obj).then(function () { toast('Paramètres enregistrés'); render(); }, function (e) { toast('Enregistrement refusé : ' + (e && e.code || 'erreur')); });
+}
+
+// ---------- événements ----------
+document.addEventListener('click', function (e) {
+  var t = e.target.closest('[data-tab],[data-fiche],[data-close],[data-sort],[data-vue],[data-copy],#f-save,#psave,#preset,#simsave,#simreset,[data-stop]');
+  if (!t) return;
+  if (t.hasAttribute('data-stop')) return;
+  if (t.hasAttribute('data-tab')) { S.tab = t.getAttribute('data-tab'); try { localStorage.setItem('rd_tab', S.tab); } catch (er) {} render(); window.scrollTo(0, 0); return; }
+  if (t.hasAttribute('data-fiche')) { S.fiche = t.getAttribute('data-fiche'); renderFiche(); return; }
+  if (t.hasAttribute('data-close')) { S.fiche = null; document.getElementById('sheetroot').innerHTML = ''; return; }
+  if (t.hasAttribute('data-sort')) { var so = t.getAttribute('data-sort'); if (S.comp.tri === so) S.comp.dir *= -1; else { S.comp.tri = so; S.comp.dir = so === 'score' ? -1 : 1; } render(); return; }
+  if (t.hasAttribute('data-vue')) { S.comp.vue = t.getAttribute('data-vue'); render(); return; }
+  if (t.hasAttribute('data-copy')) { var id = t.getAttribute('data-copy') === 'email' ? 'd-email' : 'd-call'; copy(document.getElementById(id).textContent, t); return; }
+  if (t.id === 'f-save') { saveSuivi(S.fiche, { statut: document.getElementById('f-statut').value || null, relance: document.getElementById('f-relance').value || null, notes: document.getElementById('f-notes').value }).then(function () { render(); }); return; }
+  if (t.id === 'psave') {
+    var obj = JSON.parse(JSON.stringify(S.paramsSaved || {}));
+    document.querySelectorAll('[data-param]').forEach(function (inp) { var v = parseFloat(String(inp.value).replace(',', '.')); if (!isNaN(v)) setPath(obj, inp.getAttribute('data-param'), v); });
+    saveParams(obj); return;
+  }
+  if (t.id === 'preset') { if (t.dataset.armed) { saveParams({}); } else { t.dataset.armed = '1'; t.textContent = 'Confirmer la remise à zéro'; } return; }
+  if (t.id === 'simsave') { var o2 = E.merge(S.paramsSaved || {}, S.sim); S.sim = null; saveParams(o2); return; }
+  if (t.id === 'simreset') { S.sim = null; cache.key = null; render(); return; }
+});
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && S.fiche) { S.fiche = null; document.getElementById('sheetroot').innerHTML = ''; } });
+var simTimer = null;
+document.addEventListener('input', function (e) {
+  var t = e.target;
+  if (t.id === 'q') { S.comp.q = t.value; clearTimeout(simTimer); simTimer = setTimeout(function () { render(); var q = document.getElementById('q'); if (q) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); } }, 250); return; }
+  if (t.hasAttribute('data-sim')) {
+    S.sim = S.sim || {}; setPath(S.sim, t.getAttribute('data-sim'), parseFloat(t.value)); cache.key = null;
+    clearTimeout(simTimer); simTimer = setTimeout(function () { var y = window.scrollY, id = t.id; render(); window.scrollTo(0, y); var el = document.getElementById(id); if (el) el.focus(); }, 120);
+  }
+});
+document.addEventListener('change', function (e) {
+  var t = e.target;
+  if (t.id === 'ftype') { S.comp.type = t.value; render(); }
+  else if (t.id === 'fstrat') { S.comp.strat = t.value; render(); }
+  else if (t.id === 'fstatut') { S.comp.statut = t.value; render(); }
+  else if (t.hasAttribute('data-filtre')) { S.comp.f[t.getAttribute('data-filtre')] = t.checked; render(); }
+  else if (t.id === 'voir55') { S.sim = S.sim || {}; S.sim.voirAussi55 = t.checked; cache.key = null; render(); }
+  else if (t.id === 'm55') { S.map.montrer55 = t.checked; drawMap(); }
+  else if (t.id === 'mconc') { S.map.concurrents = t.checked; drawMap(); }
+  else if (t.hasAttribute('data-statut')) { saveSuivi(t.getAttribute('data-statut'), { statut: t.value || null }).then(render); }
+  else if (t.hasAttribute('data-chk')) { var c = Object.assign({}, (S.suivi[S.fiche] || {}).checklist || {}); c[t.getAttribute('data-chk')] = t.checked; saveSuivi(S.fiche, { checklist: c }); }
+});
+
+// ---------- données ----------
+fetch('geo.json').then(function (r) { return r.json(); }).then(function (g) { S.geo = g; if (S.tab === 'carte') render(); }).catch(function () {});
+function setStatus(on, txt) { document.getElementById('dbdot').className = 'dot' + (on ? ' on' : ''); document.getElementById('dbstatus').textContent = txt; }
+var renderTimer = null;
+function schedule() { S.version++; cache.key = null; clearTimeout(renderTimer); renderTimer = setTimeout(function () { var y = window.scrollY; if (document.activeElement && /TEXTAREA|INPUT|SELECT/.test(document.activeElement.tagName) && S.fiche) return; render(); window.scrollTo(0, y); }, 80); }
+render();
+(window.claude && window.claude.use ? window.claude.use('db') : Promise.resolve(null)).then(function (db) {
+  if (!db) { S.db = false; setStatus(false, 'Base indisponible dans cette vue'); render(); return; }
+  S.db = db; setStatus(true, 'Base connectée');
+  function onErr(e) { setStatus(false, 'Base : ' + (e && e.code || 'erreur')); }
+  db.collection('biens').limit(1000).onSnapshot(function (snap) { var o = {}; snap.docs.forEach(function (d) { o[d.id] = d.data(); }); S.biens = o; S.loaded.biens = true; setStatus(true, Object.keys(o).length + ' biens dans la base'); schedule(); }, onErr);
+  db.collection('suivi').limit(1000).onSnapshot(function (snap) { var o = {}; snap.docs.forEach(function (d) { o[d.id] = d.data(); }); S.suivi = o; schedule(); }, onErr);
+  db.doc('config/params').onSnapshot(function (d) { S.paramsSaved = d.exists ? d.data() : null; schedule(); }, onErr);
+  db.collection('journal').limit(200).onSnapshot(function (snap) { S.journal = snap.docs.map(function (d) { return d.data(); }).sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); }); schedule(); }, onErr);
+  db.collection('marche').limit(50).onSnapshot(function (snap) { var o = {}; snap.docs.forEach(function (d) { o[d.id] = d.data(); }); S.marche = o; schedule(); }, onErr);
+});
+})();
+</script>

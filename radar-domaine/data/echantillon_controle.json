@@ -1,0 +1,302 @@
+[
+ {
+  "id": "domaine-viticole-montlouis-sur-loire-e9fce4",
+  "titre": "Domaine viticole bio d'environ 11 ha à Montlouis/Vouvray (réf. 333)",
+  "commune": "Montlouis-sur-Loire / Vouvray (non précisé)",
+  "prix": null,
+  "surface_bati_m2": null,
+  "surface_salle_m2": null,
+  "terrain_m2": 110000,
+  "chambres": null,
+  "capacite_annoncee": null,
+  "etat": null,
+  "dpe": null,
+  "contact": {
+   "organisme": "Ampelio",
+   "nom": null,
+   "telephone": "02 41 09 17 51",
+   "email": "contact@ampelio.fr",
+   "url": "https://ampelio.fr/proprietes-a-la-vente/montlouis-sur-loire-vouvray/domaine-viticole-charmant-dune-dizaine-dhectares/"
+  },
+  "sources": [
+   {
+    "url": "https://ampelio.fr/proprietes-a-la-vente/montlouis-sur-loire-vouvray/domaine-viticole-charmant-dune-dizaine-dhectares/",
+    "site": "ampelio.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "333",
+    "http": 200,
+    "controle_le": "2026-10-05"
+   }
+  ]
+ },
+ {
+  "id": "chateau-proche-tours-25-f6dbf4",
+  "titre": "Château XV-XIXe restauré, 10 ha, caves 1000 m2, à 25 km de Tours",
+  "commune": "Proche Tours, 25 km (commune non publiée)",
+  "prix": 1890000,
+  "surface_bati_m2": 1000,
+  "surface_salle_m2": null,
+  "terrain_m2": 100000,
+  "chambres": 9,
+  "capacite_annoncee": null,
+  "etat": "bon",
+  "dpe": "B (147 kWh/m2/an)",
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Sylvain Delmas",
+   "telephone": "07 69 70 38 40",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-18-pieces-proche-de-tours-37"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-18-pieces-proche-de-tours-37",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "959520",
+    "http": 200,
+    "controle_le": "2026-10-05"
+   }
+  ]
+ },
+ {
+  "id": "usine-sonzay-37af4f",
+  "titre": "Bâtiment industriel 1 786 m² - Sonzay",
+  "commune": "Sonzay",
+  "prix": 1166000,
+  "surface_bati_m2": 1786,
+  "surface_salle_m2": null,
+  "terrain_m2": 5313,
+  "chambres": null,
+  "capacite_annoncee": null,
+  "etat": "bon",
+  "dpe": null,
+  "contact": {
+   "organisme": "DADICE SASU - IN-CESSIO",
+   "nom": "Jean Pierre Fabre",
+   "telephone": null,
+   "email": null,
+   "url": null
+  },
+  "sources": [
+   {
+    "url": "https://www.bureauxlocaux.com/annonce/batiment-industriel-de-qualite-nord-touraine-oppor--40801458",
+    "site": "BureauxLocaux",
+    "collecte_le": "2026-10-04",
+    "ref": "VP067-DADICE",
+    "http": 200,
+    "controle_le": "2026-10-05"
+   }
+  ]
+ },
+ {
+  "id": "longere-tauxigny-saint-bauld-ac7029",
+  "titre": "Longère avec hangar de plus de 250 m² sur 6 274 m²",
+  "commune": "Tauxigny-Saint-Bauld",
+  "prix": 239000,
+  "surface_bati_m2": 89,
+  "surface_salle_m2": null,
+  "terrain_m2": 6274,
+  "chambres": 2,
+  "capacite_annoncee": null,
+  "etat": "a_renover",
+  "dpe": "D",
+  "contact": {
+   "organisme": "iad France",
+   "nom": "Erika Duchesne (agent indépendant)",
+   "telephone": null,
+   "email": null,
+   "url": "https://www.iadfrance.fr/annonce/maison-vente-4-pieces-tauxigny-89m2/r2095148"
+  },
+  "sources": [
+   {
+    "url": "https://www.iadfrance.fr/annonce/maison-vente-4-pieces-tauxigny-89m2/r2095148",
+    "site": "iadfrance.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "2095148",
+    "http": 200,
+    "controle_le": "2026-10-05"
+   }
+  ]
+ },
+ {
+  "id": "ferme-sud-tours-commune-a059b9",
+  "titre": "Ancienne ferme du 19e convertie en hébergements, 2,8 ha, 35 km au sud de Tours",
+  "commune": "Sud Tours (commune non publiée)",
+  "prix": 1050000,
+  "surface_bati_m2": 800,
+  "surface_salle_m2": null,
+  "terrain_m2": 28000,
+  "chambres": 29,
+  "capacite_annoncee": null,
+  "etat": null,
+  "dpe": "C (156 kWh/m2/an)",
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Sylvain Delmas",
+   "telephone": "07 69 70 38 40",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/touristique/gites/indre-et-loire/propriete-a-vendre-45-pieces-proche-de-tours-37-1"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/touristique/gites/indre-et-loire/propriete-a-vendre-45-pieces-proche-de-tours-37-1",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "962162",
+    "http": 200,
+    "controle_le": "2026-10-05"
+   }
+  ]
+ },
+ {
+  "id": "chateau-sud-touraine-annonce-815106",
+  "titre": "Château napoléonien avec activités touristiques et salle de 200 m², sud Touraine",
+  "commune": "Sud Touraine (annonce indique Tours 37000 ; commune à confirmer)",
+  "prix": 2968000,
+  "surface_bati_m2": 1400,
+  "surface_salle_m2": 200,
+  "terrain_m2": 40000,
+  "chambres": 32,
+  "capacite_annoncee": null,
+  "etat": null,
+  "dpe": null,
+  "contact": {
+   "organisme": "Connecta Immobilier",
+   "nom": "Damien Jacquot",
+   "telephone": "06.80.27.48.55",
+   "email": "damien.jacquot@connecta-immobilier.fr",
+   "url": "https://www.connecta-immobilier.fr/vente/37-indre-et-loire/3-tours/28-chateau/t40/15567-chateau-avec-activites-touristiques-dans-le-sud-touraine/"
+  },
+  "sources": [
+   {
+    "url": "https://www.connecta-immobilier.fr/vente/37-indre-et-loire/3-tours/28-chateau/t40/15567-chateau-avec-activites-touristiques-dans-le-sud-touraine/",
+    "site": "connecta-immobilier.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "JD 3287",
+    "http": 200,
+    "controle_le": "2026-10-05"
+   }
+  ]
+ },
+ {
+  "id": "manoir-cheille-1d1bfc",
+  "titre": "Manoir XVe-XVIIIe de Cheillé (parc 2 ha, caves tuffeau)",
+  "commune": "Cheillé",
+  "prix": 795000,
+  "surface_bati_m2": 443,
+  "surface_salle_m2": null,
+  "terrain_m2": 19000,
+  "chambres": 6,
+  "capacite_annoncee": null,
+  "etat": null,
+  "dpe": "E (206 kWh/m2/an)",
+  "contact": {
+   "organisme": "SAS Signature & Conseils Notaires, Tours",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.immonot.com/immobilier-notaire/detail/4000000370032856/achat-propriete-a-vendre-37190-cheille-indre-et-loire.html"
+  },
+  "sources": [
+   {
+    "url": "https://www.immonot.com/immobilier-notaire/detail/4000000370032856/achat-propriete-a-vendre-37190-cheille-indre-et-loire.html",
+    "site": "immonot",
+    "collecte_le": "2026-10-05",
+    "ref": "003/2558",
+    "http": 200,
+    "controle_le": "2026-10-05"
+   }
+  ]
+ },
+ {
+  "id": "moulin-vouvray-secteur-commune-c4b673",
+  "titre": "Moulin du XVIe sur la Brenne, 3,5 ha, grange de moulin et boxes (Vouvray)",
+  "commune": "Vouvray (secteur, commune exacte non publiée)",
+  "prix": 1470000,
+  "surface_bati_m2": 720,
+  "surface_salle_m2": null,
+  "terrain_m2": 35000,
+  "chambres": 11,
+  "capacite_annoncee": null,
+  "etat": null,
+  "dpe": "A (105 kWh/m2/an)",
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": "Alexandre Geoffroy d'Assy",
+   "telephone": "06 20 45 61 61",
+   "email": null,
+   "url": "https://www.ma-propriete.fr/fr/equestre/proprietes-equestres/indre-et-loire/entre-tours-et-amboise-decouvrez-un-moulin-du-xvie-siecle-au-cadre-exceptionnel-sur-3-4ha"
+  },
+  "sources": [
+   {
+    "url": "https://www.ma-propriete.fr/fr/equestre/proprietes-equestres/indre-et-loire/entre-tours-et-amboise-decouvrez-un-moulin-du-xvie-siecle-au-cadre-exceptionnel-sur-3-4ha",
+    "site": "ma-propriete.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "340937799272",
+    "http": 200,
+    "controle_le": "2026-10-05"
+   }
+  ]
+ },
+ {
+  "id": "entrepot-montlouis-sur-loire-5fdd44",
+  "titre": "Ensemble de locaux d'activités 792 m² (4 lots) - Montlouis-sur-Loire",
+  "commune": "Montlouis-sur-Loire",
+  "prix": 420000,
+  "surface_bati_m2": 792,
+  "surface_salle_m2": null,
+  "terrain_m2": null,
+  "chambres": null,
+  "capacite_annoncee": null,
+  "etat": null,
+  "dpe": "A",
+  "contact": {
+   "organisme": "BNP Paribas Real Estate Tours",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": null
+  },
+  "sources": [
+   {
+    "url": "https://www.bureauxlocaux.com/annonce/vente-local-dactivites-montlouis-sur-loire-37270--42426529",
+    "site": "BureauxLocaux",
+    "collecte_le": "2026-10-04",
+    "ref": "OVACT2643676",
+    "http": 200,
+    "controle_le": "2026-10-05"
+   }
+  ]
+ },
+ {
+  "id": "hotel-restaurant-blere-67e6e1",
+  "titre": "Ensemble restaurant + maison, 17 rue du Pont, Bléré (vente judiciaire)",
+  "commune": "Bléré",
+  "prix": 112000,
+  "surface_bati_m2": null,
+  "surface_salle_m2": null,
+  "terrain_m2": null,
+  "chambres": null,
+  "capacite_annoncee": null,
+  "etat": null,
+  "dpe": null,
+  "contact": {
+   "organisme": "SCP Vaillant Avocats, 21 rue Edouard Vaillant, 37000 Tours",
+   "nom": null,
+   "telephone": "02 47 20 10 06",
+   "email": null,
+   "url": "https://www.licitor.com/annonce/10/97/50/vente-aux-encheres/un-ensemble-immobilier/blere/indre-et-loire/109750.html"
+  },
+  "sources": [
+   {
+    "url": "https://www.licitor.com/annonce/10/97/50/vente-aux-encheres/un-ensemble-immobilier/blere/indre-et-loire/109750.html",
+    "site": "Licitor",
+    "collecte_le": "2026-10-05",
+    "ref": "109750",
+    "http": 200,
+    "controle_le": "2026-10-05"
+   }
+  ]
+ }
+]

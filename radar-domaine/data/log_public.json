@@ -1,0 +1,88 @@
+{
+ "sources_interrogees": [
+  {
+   "site": "Licitor",
+   "statut": "partiel",
+   "detail": "Liste TJ Tours 13/10/2026 lue (5 lots affichés sur 9) ; seul Bléré (restaurant) pertinent ; autres résultats Licitor 2021-2024 (château Véretz, Courcelles) passés, non retenus.",
+   "nb_biens": 1
+  },
+  {
+   "site": "Immonot (ventes notariales)",
+   "statut": "ok",
+   "detail": "Liste 12 propriétés 37 ; 6 retenues avec fiche ouverte.",
+   "nb_biens": 6
+  },
+  {
+   "site": "36h-immo / 36heures.immo",
+   "statut": "partiel",
+   "detail": "Redirection ; page d'accueil sans liste par département, non exploité.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Immo-Interactif",
+   "statut": "vide",
+   "detail": "Non interrogé en détail.",
+   "nb_biens": 0
+  },
+  {
+   "site": "immobilier.notaires.fr",
+   "statut": "vide",
+   "detail": "Non interrogé (Immonot utilisé à la place).",
+   "nb_biens": 0
+  },
+  {
+   "site": "Interenchères",
+   "statut": "bloque",
+   "detail": "HTTP 403.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Encheres-publiques.com",
+   "statut": "bloque",
+   "detail": "HTTP 403.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Avoventes",
+   "statut": "vide",
+   "detail": "Page d'accueil sans liste exploitable.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Vench",
+   "statut": "vide",
+   "detail": "Accueil sans liste 37 accessible via WebFetch (rendu dynamique).",
+   "nb_biens": 0
+  },
+  {
+   "site": "Agorastore",
+   "statut": "partiel",
+   "detail": "Page Centre charge dynamiquement ; aucun bien extrait. Article presse sur le château de la Carte.",
+   "nb_biens": 1
+  },
+  {
+   "site": "cessions.immobilier-etat.gouv.fr",
+   "statut": "bloque",
+   "detail": "HTTP 503 sur accueil, recherche et fiche ; signal Château de la Carte via presse seulement.",
+   "nb_biens": 1
+  },
+  {
+   "site": "Communes / Département 37 / Tours Métropole (AMI, AAP, biens communaux)",
+   "statut": "vide",
+   "detail": "Recherches web sans résultat pertinent ; aucun AMI/AAP trouvé.",
+   "nb_biens": 0
+  },
+  {
+   "site": "SAFER Centre-Val de Loire",
+   "statut": "partiel",
+   "detail": "Annonces légales existent (saferducentre.fr/la-safer-du-centre/annonces-legales) mais non ouvertes ; rural agricole peu pertinent.",
+   "nb_biens": 0
+  },
+  {
+   "site": "SNCF Immobilier / centres de vacances / chapelles",
+   "statut": "vide",
+   "detail": "Recherches web sans résultat.",
+   "nb_biens": 0
+  }
+ ]
+}

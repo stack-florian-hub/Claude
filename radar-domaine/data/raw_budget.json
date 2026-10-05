@@ -1,0 +1,731 @@
+[
+ {
+  "code_postal": "37530",
+  "lat": null,
+  "lon": null,
+  "precision_gps": "commune",
+  "prix": 780000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": null,
+  "surface_bati_m2": 1400,
+  "surface_salle_m2": null,
+  "terrain_m2": 20000,
+  "chambres": null,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "dependances",
+   "piece_eau"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Activité nocturne (bruit/ICPE) ; vendu sans clientèle ; commune Cangey déduite d'une source secondaire, annonce place des commerces indique 'proche d'Amboise (37530)'.",
+  "mode_vente": "murs_fonds",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune",
+   "capacite",
+   "etat",
+   "dpe",
+   "taxe_fonciere",
+   "terrain_m2 (2 ha / 2,4 ha selon sources)",
+   "nom agence/telephone",
+   "bpifrance reprise-entreprise 403"
+  ],
+  "titre": "Bar, discothèque, organisation de réception près d'Amboise (longère réhabilitée, domaine 2 ha)",
+  "type": "lieu_reception_activite",
+  "commune": "Cangey",
+  "description": "Ensemble d'environ 1 400 m² entre Amboise et Blois, exploité en discothèque et événementiel : plusieurs espaces de réception et bien-être (piscine, spa, sauna), bars, pistes de danse, locaux techniques, bureaux, terrasses, grand parking, grange attenante. Vendu sans fonds à reprendre (licence 4 possible) ; honoraires à la charge du vendeur. Domaine de plus de 2 hectares.",
+  "contact": {
+   "organisme": "Place des Commerces (réf. C1356580)",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://placedescommerces.com/vente-bar-discotheque-organisation-de-reception-proche-damboise-37530,c1356580_fr_"
+  },
+  "sources": [
+   {
+    "url": "https://placedescommerces.com/vente-bar-discotheque-organisation-de-reception-proche-damboise-37530,c1356580_fr_",
+    "site": "placedescommerces.com",
+    "collecte_le": "2026-10-04",
+    "ref": "C1356580"
+   }
+  ]
+ },
+ {
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 2038400,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": null,
+  "surface_salle_m2": null,
+  "terrain_m2": 18000,
+  "chambres": null,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "dependances"
+  ],
+  "capacite_annoncee": 200,
+  "activite_reception_existante": true,
+  "ca_annonce": 472000,
+  "logement_exploitant": null,
+  "risques_notes": "Hors budget (2 M€), à garder pour référence/benchmark. EBE annoncé 163 000 euros.",
+  "mode_vente": "murs_fonds",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": false,
+  "a_verifier": [
+   "commune",
+   "code_postal",
+   "surface_bati",
+   "etat",
+   "distance gare",
+   "capacite 200 vs 400",
+   "contact"
+  ],
+  "titre": "Salle de réception + gîtes + chambres d'hôtes, 200 personnes (3 salles, 1,8 ha)",
+  "type": "lieu_reception_activite",
+  "commune": "Indre-et-Loire (commune non publiée)",
+  "description": "Annonce Michel Simond ANG006986 : activité événementielle (réceptions, mariages, séminaires), 3 salles jusqu'à 400 pers., 2 cuisines équipées, 2 terrasses, dortoir 15 pers., gîtes et chambres d'hôtes, environ 1,8 ha. Prix 2 038 400 euros (murs + fonds), murs 1 840 400 euros ; possibilité de créer une résidence privée. Données issues des extraits de recherche, page en erreur 503 (2 essais).",
+  "contact": {
+   "organisme": "Michel Simond (cabinet Angers)",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.msimond.fr/acheter/commerce/vente-salle-de-reception-gites-chambres-d-hotes-indre-et-loire"
+  },
+  "sources": [
+   {
+    "url": "https://www.msimond.fr/acheter/commerce/vente-salle-de-reception-gites-chambres-d-hotes-indre-et-loire",
+    "site": "msimond.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "ANG006986"
+   }
+  ]
+ },
+ {
+  "code_postal": "37310",
+  "lat": null,
+  "lon": null,
+  "precision_gps": "commune",
+  "prix": 239000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 0,
+  "surface_bati_m2": 89,
+  "surface_salle_m2": null,
+  "terrain_m2": 6274,
+  "chambres": 2,
+  "etat": "a_renover",
+  "dpe": "D",
+  "taxe_fonciere": null,
+  "cachet": [
+   "pierre",
+   "dependances"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Hangar : nature/état/hauteur et constructibilité à confirmer ; accueil public (ERP) à étudier.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "surface exacte hangar",
+   "terrain 6274 vs 4628 m²",
+   "telephone",
+   "taxe_fonciere",
+   "zonage PLU"
+  ],
+  "titre": "Longère avec hangar de plus de 250 m² sur 6 274 m²",
+  "type": "longere",
+  "commune": "Tauxigny-Saint-Bauld",
+  "description": "Longère d'avant 1900 de 89 m² (4 pièces, 2 chambres, cave, garage-atelier, remise) avec un hangar de plus de 250 m² sur environ 6 274 m² de terrain en partie constructible. A rénover, à 20 min de Chambray-lès-Tours. Honoraires à la charge du vendeur.",
+  "contact": {
+   "organisme": "iad France",
+   "nom": "Erika Duchesne (agent indépendant)",
+   "telephone": null,
+   "email": null,
+   "url": "https://www.iadfrance.fr/annonce/maison-vente-4-pieces-tauxigny-89m2/r2095148"
+  },
+  "sources": [
+   {
+    "url": "https://www.iadfrance.fr/annonce/maison-vente-4-pieces-tauxigny-89m2/r2095148",
+    "site": "iadfrance.fr",
+    "collecte_le": "2026-10-04",
+    "ref": "2095148"
+   }
+  ]
+ },
+ {
+  "code_postal": "37380",
+  "lat": null,
+  "lon": null,
+  "precision_gps": "commune",
+  "prix": 257250,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 5.0,
+  "surface_bati_m2": 75,
+  "surface_salle_m2": null,
+  "terrain_m2": 1910,
+  "chambres": 1,
+  "etat": "rafraichir",
+  "dpe": "E",
+  "taxe_fonciere": null,
+  "cachet": [
+   "dependances",
+   "cave"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Prix 245 000 hors honoraires. Taille des dépendances inconnue, probablement insuffisante pour 200 invités.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "surface grange et hangar (probablement < 250 m²)",
+   "telephone",
+   "taxe_fonciere"
+  ],
+  "titre": "Maison + grange, hangar, cave et terrain constructible de 1 910 m²",
+  "type": "ferme",
+  "commune": "Monnaie",
+  "description": "Maison de plain-pied de 75 m² avec grange, hangar et cave (surfaces non indiquées) sur 1 910 m² entièrement constructibles, présentée comme idéale investisseur. Travaux de rafraîchissement et contrôle électricité/chauffage à prévoir.",
+  "contact": {
+   "organisme": "Notaire Touraine Reugny (SELARL)",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.immonot.com/immobilier-notaire/detail/l800241623/achat-maison-a-vendre-37380-monnaie-indre-et-loire.html"
+  },
+  "sources": [
+   {
+    "url": "https://www.immonot.com/immobilier-notaire/detail/l800241623/achat-maison-a-vendre-37380-monnaie-indre-et-loire.html",
+    "site": "immonot.com",
+    "collecte_le": "2026-10-04",
+    "ref": "9552"
+   }
+  ]
+ },
+ {
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 245000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": null,
+  "surface_bati_m2": 138,
+  "surface_salle_m2": null,
+  "terrain_m2": 115280,
+  "chambres": null,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "dependances",
+   "pierre"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Mutation sous contrôle Safer ; surface agricole ; distance gare environ 55 min ou plus (limite de zone) ; zonage à vérifier pour accueil du public.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune exacte",
+   "etat",
+   "dpe",
+   "distance gare"
+  ],
+  "titre": "Corps de ferme : grange 136 m², dépendance 236 m², hangar 831 m², 11,5 ha",
+  "type": "ferme",
+  "commune": "Ligueil (secteur, 10 km de Loches)",
+  "description": "Ancien corps de ferme typique : maison de 138 m² (5 pièces, 2 chambres), dépendance de 236 m², grange de 136 m² et hangar de 831 m² de bonne hauteur, sur 11 ha 52 a en 2 parcelles avec point d'eau. Vocations citées : équestre, tourisme rural, habitation. Prix hors frais Safer.",
+  "contact": {
+   "organisme": "Safer du Centre",
+   "nom": null,
+   "telephone": "0234033234",
+   "email": "s2pr@saferducentre.fr",
+   "url": "https://www.proprietes-rurales.com/immobilier/vente-propriete-agricole-activites-equestres-indre-et-loire-fr_VN31238.htm"
+  },
+  "sources": [
+   {
+    "url": "https://www.proprietes-rurales.com/immobilier/vente-propriete-agricole-activites-equestres-indre-et-loire-fr_VN31238.htm",
+    "site": "proprietes-rurales.com",
+    "collecte_le": "2026-10-04",
+    "ref": "3726GT04"
+   }
+  ]
+ },
+ {
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 475000,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": null,
+  "surface_salle_m2": null,
+  "terrain_m2": 18000,
+  "chambres": 3,
+  "etat": "rafraichir",
+  "dpe": "D",
+  "taxe_fonciere": null,
+  "cachet": [
+   "dependances",
+   "piece_eau",
+   "parc"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "commune",
+   "surface_bati",
+   "taille grange",
+   "distance gare",
+   "telephone"
+  ],
+  "titre": "Ancien moulin avec grange à colombage, parc 3 000 m² et 1,5 ha de prairies",
+  "type": "moulin",
+  "commune": "Indre-et-Loire (commune non publiée)",
+  "description": "Maison de meunier à rénover, grange à colombage, terrasse couverte, parc entretenu d'environ 3 000 m² et environ 1,5 ha de prairies de l'autre côté du cours d'eau (passerelle). Pompe à chaleur récente, bon état structurel.",
+  "contact": {
+   "organisme": "Moulins et Etangs à vendre",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://immomoulinsetangs.fr/?product=ancien-moulin-indre-et-loire"
+  },
+  "sources": [
+   {
+    "url": "https://immomoulinsetangs.fr/?product=ancien-moulin-indre-et-loire",
+    "site": "immomoulinsetangs.fr",
+    "collecte_le": "2026-10-04",
+    "ref": null
+   }
+  ]
+ },
+ {
+  "code_postal": "37150",
+  "lat": null,
+  "lon": null,
+  "precision_gps": "commune",
+  "prix": 562950,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 265,
+  "surface_salle_m2": null,
+  "terrain_m2": 3000,
+  "chambres": 5,
+  "etat": "bon",
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "dependances"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": false,
+  "a_verifier": [
+   "surfaces dépendances",
+   "dpe",
+   "agence",
+   "telephone",
+   "prix honoraires"
+  ],
+  "titre": "Longère rénovée de 265 m² avec ancienne étable et remise sur 3 000 m²",
+  "type": "longere",
+  "commune": "Bléré",
+  "description": "Longère rénovée de 11 pièces avec dépendance comprenant garage, ancienne étable et remise-préau, sur environ 3 000 m². Données issues d'un extrait de liste (lesiteimmo), annonce non ouverte.",
+  "contact": {
+   "organisme": null,
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.lesiteimmo.com/acheter/maison-11pieces/blere-37150/33465346"
+  },
+  "sources": [
+   {
+    "url": "https://www.lesiteimmo.com/acheter/maison-11pieces/blere-37150/33465346",
+    "site": "lesiteimmo.com",
+    "collecte_le": "2026-10-04",
+    "ref": "33465346"
+   }
+  ]
+ },
+ {
+  "code_postal": "37380",
+  "lat": null,
+  "lon": null,
+  "precision_gps": "commune",
+  "prix": 275000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 4.0,
+  "surface_bati_m2": 209,
+  "surface_salle_m2": null,
+  "terrain_m2": 14640,
+  "chambres": 7,
+  "etat": "rafraichir",
+  "dpe": "E",
+  "taxe_fonciere": 1358,
+  "cachet": [
+   "dependances",
+   "piece_eau"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Pas de grange identifiée ; zonage A/N : tente/accueil public difficile ; intérêt limité (terrain pour tente + gîte).",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "telephone"
+  ],
+  "titre": "Propriété 209 m² avec atelier, étang et bois sur 1,46 ha",
+  "type": "autre",
+  "commune": "Neuillé-le-Lierre",
+  "description": "Maison de 209 m² (11 pièces, 7 chambres) avec garage, atelier, cave, cuisine d'été, jardin avec étang (6 400 m²) et bois (6 080 m²). Zonage A et N, assainissement non conforme.",
+  "contact": {
+   "organisme": "Notaire Touraine Reugny (SELARL)",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.immonot.com/immobilier-notaire/detail/l800241947/achat-propriete-a-vendre-37380-neuille-le-lierre-indre-et-loire.html"
+  },
+  "sources": [
+   {
+    "url": "https://www.immonot.com/immobilier-notaire/detail/l800241947/achat-propriete-a-vendre-37380-neuille-le-lierre-indre-et-loire.html",
+    "site": "immonot.com",
+    "collecte_le": "2026-10-04",
+    "ref": "95-45"
+   }
+  ]
+ },
+ {
+  "code_postal": "37230",
+  "lat": null,
+  "lon": null,
+  "precision_gps": "commune",
+  "prix": 630700,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 355,
+  "surface_salle_m2": 120,
+  "terrain_m2": 5000,
+  "chambres": 13,
+  "etat": "bon",
+  "dpe": "A",
+  "taxe_fonciere": null,
+  "cachet": [
+   "dependances"
+  ],
+  "capacite_annoncee": 15,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": true,
+  "risques_notes": "Salle de 120 m² donc insuffisante pour 200 invités sans tente ; terrain 5 000 m² ; voisinage à étudier.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "honoraires",
+   "ca_annonce",
+   "taxe_fonciere",
+   "capacite d'hébergement 15 vs 13 chambres"
+  ],
+  "titre": "Gîte et chambres d'hôtes avec salle de réception de 120 m² (13 chambres)",
+  "type": "lieu_reception_activite",
+  "commune": "Pernay",
+  "description": "Construction de 2002 : 13 chambres, 8 salles de bains, 2 cuisines, salle de réception de 120 m² plus sous-sol avec salle et cheminée, ascenseur, panneaux solaires, pompe à chaleur. Terrain clos de 5 000 m², à 18 km de Tours. Honoraires non précisés.",
+  "contact": {
+   "organisme": "Equatio (via ImmoTourisme)",
+   "nom": null,
+   "telephone": "0247205580",
+   "email": "accueil@equatio.immo",
+   "url": "https://www.immotourisme.com/annonces/gite-et-chambres-d-hotes-en-val-de-loire/"
+  },
+  "sources": [
+   {
+    "url": "https://www.immotourisme.com/annonces/gite-et-chambres-d-hotes-en-val-de-loire/",
+    "site": "immotourisme.com",
+    "collecte_le": "2026-10-04",
+    "ref": "12202"
+   }
+  ]
+ },
+ {
+  "code_postal": "37320",
+  "lat": null,
+  "lon": null,
+  "precision_gps": "commune",
+  "prix": 840000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 0,
+  "surface_bati_m2": 491,
+  "surface_salle_m2": 70,
+  "terrain_m2": 8880,
+  "chambres": 12,
+  "etat": null,
+  "dpe": "B",
+  "taxe_fonciere": null,
+  "cachet": [
+   "dependances",
+   "piece_eau",
+   "pierre"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": true,
+  "risques_notes": "Au-dessus de 650 k€ mais activité de réception existante ; grange de 250 m² potentiellement exploitable pour 200 invités (usage/ERP à vérifier).",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "etat grange",
+   "ca_annonce",
+   "taxe_fonciere",
+   "autorisation ERP"
+  ],
+  "titre": "Ensemble hameau : habitation, gîtes, salle de réception 70 m² et grange 250 m²",
+  "type": "lieu_reception_activite",
+  "commune": "Saint-Branchs",
+  "description": "Hameau avec habitation (171 m² Carrez), gîtes rénovés en matériaux écologiques (environ 25 couchages, 12 chambres au total), salle de réception d'environ 70 m² avec cuisine semi-professionnelle, grange de 250 m², piscine chauffée semi-enterrée et bois. A 30 min de Tours et de la gare TGV. Honoraires à la charge du vendeur.",
+  "contact": {
+   "organisme": "Espaces Atypiques Tours",
+   "nom": "Magali Boudry",
+   "telephone": "0786270799",
+   "email": "tours@espaces-atypiques.com",
+   "url": "https://www.espaces-atypiques.com/ventes/37320-saint-branchs-ensemble-immobilier-avec-habitation-gites-et-salle-de-reception-eat5592/"
+  },
+  "sources": [
+   {
+    "url": "https://www.espaces-atypiques.com/ventes/37320-saint-branchs-ensemble-immobilier-avec-habitation-gites-et-salle-de-reception-eat5592/",
+    "site": "espaces-atypiques.com",
+    "collecte_le": "2026-10-04",
+    "ref": "EAT5592"
+   }
+  ]
+ },
+ {
+  "code_postal": null,
+  "lat": null,
+  "lon": null,
+  "precision_gps": "commune",
+  "prix": 770000,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 215,
+  "surface_salle_m2": null,
+  "terrain_m2": 170000,
+  "chambres": null,
+  "etat": null,
+  "dpe": "E",
+  "taxe_fonciere": null,
+  "cachet": [
+   "dependances",
+   "pierre"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": 56000,
+  "logement_exploitant": null,
+  "risques_notes": "Au-dessus de 650 k€ ; grand terrain (tentes) mais zonage forestier à vérifier.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "honoraires",
+   "zonage PLU",
+   "etat"
+  ],
+  "titre": "Propriété de 17 ha avec aire de camping-cars, gîtes, longère à restaurer et bâtiment de 254 m²",
+  "type": "terrain",
+  "commune": "Sainte-Maure-de-Touraine",
+  "description": "17 ha de bois avec étang, aire d'accueil d'environ 40 camping-cars (depuis 2008) dans un bâtiment de 254 m², pavillon de chasse/gîte 65 m², habitation double 150 m², longère à restaurer 120 m², ancien pressoir 55 m². CA annoncé 56 000 euros (camping-cars 30 k, gîtes 20 k, bois 6 k).",
+  "contact": {
+   "organisme": "ImmoTourisme",
+   "nom": "Dorothée Altemir",
+   "telephone": "0672337599",
+   "email": "dorothee.altemir@immotourisme.com",
+   "url": "https://www.immotourisme.com/annonces/propriete-sur-17ha-avec-aire-de-camping-cars-et-gites/"
+  },
+  "sources": [
+   {
+    "url": "https://www.immotourisme.com/annonces/propriete-sur-17ha-avec-aire-de-camping-cars-et-gites/",
+    "site": "immotourisme.com",
+    "collecte_le": "2026-10-04",
+    "ref": "18362"
+   }
+  ]
+ },
+ {
+  "code_postal": "37530",
+  "lat": null,
+  "lon": null,
+  "precision_gps": "commune",
+  "prix": 390000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 0,
+  "surface_bati_m2": 175,
+  "surface_salle_m2": null,
+  "terrain_m2": 150,
+  "chambres": 4,
+  "etat": "bon",
+  "dpe": "C",
+  "taxe_fonciere": null,
+  "cachet": [
+   "tuffeau",
+   "cave",
+   "dependances"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Terrain minuscule : ne convient pas pour 200 invités, intérêt limité.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": true,
+  "a_verifier": [
+   "surface caves"
+  ],
+  "titre": "Maison de maître avec deux caves troglodytiques aux portes d'Amboise",
+  "type": "troglodyte",
+  "commune": "Limeray",
+  "description": "Maison de maître de 175 m² (4 chambres, grenier aménageable 80 m²), cave à vin, cour intérieure ; deux caves troglodytiques de l'autre côté de la rue sur un parking séparé. Terrain très réduit (150 m²). Honoraires à la charge du vendeur.",
+  "contact": {
+   "organisme": "Espaces Atypiques Tours",
+   "nom": "Kinnie Gueguen",
+   "telephone": "0612854158",
+   "email": "tours@espaces-atypiques.com",
+   "url": "https://www.espaces-atypiques.com/ventes/37530-limeray-maison-de-maitre-aux-portes-damboise-eat5710/"
+  },
+  "sources": [
+   {
+    "url": "https://www.espaces-atypiques.com/ventes/37530-limeray-maison-de-maitre-aux-portes-damboise-eat5710/",
+    "site": "espaces-atypiques.com",
+    "collecte_le": "2026-10-04",
+    "ref": "EAT5710"
+   }
+  ]
+ },
+ {
+  "code_postal": "37460",
+  "lat": null,
+  "lon": null,
+  "precision_gps": "commune",
+  "prix": 158250,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 5.5,
+  "surface_bati_m2": 120,
+  "surface_salle_m2": null,
+  "terrain_m2": 7256,
+  "chambres": null,
+  "etat": "a_renover",
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "dependances"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Grange trop petite pour 200 invités ; distance gare à confirmer (limite de zone).",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "verifie": false,
+  "a_verifier": [
+   "tout (page 404)",
+   "telephone",
+   "dpe",
+   "annonce encore en ligne"
+  ],
+  "titre": "Ensemble immobilier à restaurer : maison 120 m², grange 90 m², 2e maison 55 m², bois 7 256 m²",
+  "type": "ferme",
+  "commune": "Genillé",
+  "description": "Entre Loches et Beauval : première maison d'environ 120 m² en cours de rénovation, grange attenante d'environ 90 m², seconde maison d'environ 55 m² à restaurer entièrement, garage, environ 7 256 m² de terrain boisé. Prix 150 000 hors honoraires. Données issues d'un extrait de recherche ; page non ouverte (404 à l'ouverture).",
+  "contact": {
+   "organisme": "Détours Immobilier",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://detours-immobilier.fr/bien-immobilier/corps-de-ferme-a-renover/"
+  },
+  "sources": [
+   {
+    "url": "https://detours-immobilier.fr/bien-immobilier/corps-de-ferme-a-renover/",
+    "site": "detours-immobilier.fr",
+    "collecte_le": "2026-10-04",
+    "ref": null
+   }
+  ]
+ }
+]

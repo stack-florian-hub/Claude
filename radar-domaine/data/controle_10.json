@@ -1,0 +1,270 @@
+[
+ {
+  "id": "domaine-viticole-montlouis-sur-loire-e9fce4",
+  "url": "https://ampelio.fr/proprietes-a-la-vente/montlouis-sur-loire-vouvray/domaine-viticole-charmant-dune-dizaine-dhectares/",
+  "page": "ok",
+  "champs_conformes": [
+   "titre",
+   "commune",
+   "surface_bati_m2",
+   "surface_salle_m2",
+   "chambres",
+   "etat",
+   "dpe",
+   "contact"
+  ],
+  "ecarts": [
+   {
+    "champ": "prix",
+    "fiche": null,
+    "source": "fourchette 800 000 - 1 500 000 EUR"
+   },
+   {
+    "champ": "terrain_m2",
+    "fiche": 110000,
+    "source": "12 ha (dont 11 ha propriété, 1 ha exploité) - ambigu"
+   },
+   {
+    "champ": "capacite_annoncee",
+    "fiche": null,
+    "source": "pas de capacité d'accueil ; production moyenne 413 HL (non pertinent)"
+   }
+  ],
+  "verdict": "ecart_mineur"
+ },
+ {
+  "id": "chateau-proche-tours-25-f6dbf4",
+  "url": "https://www.ma-propriete.fr/fr/prestige/chateaux/indre-et-loire/propriete-a-vendre-18-pieces-proche-de-tours-37",
+  "page": "ok",
+  "champs_conformes": [
+   "titre",
+   "commune",
+   "prix",
+   "surface_bati_m2",
+   "surface_salle_m2",
+   "terrain_m2",
+   "chambres",
+   "capacite_annoncee",
+   "etat",
+   "contact"
+  ],
+  "ecarts": [
+   {
+    "champ": "ref (hors liste)",
+    "fiche": "959520",
+    "source": "340938328704"
+   },
+   {
+    "champ": "dpe",
+    "fiche": "B (147 kWh/m2/an)",
+    "source": "147 kWh/m2/an ; lettre de classe non visible dans la page : non vérifiable"
+   }
+  ],
+  "verdict": "ecart_mineur"
+ },
+ {
+  "id": "usine-sonzay-37af4f",
+  "url": "https://www.bureauxlocaux.com/annonce/batiment-industriel-de-qualite-nord-touraine-oppor--40801458",
+  "page": "ok",
+  "champs_conformes": [
+   "titre",
+   "commune",
+   "prix",
+   "surface_bati_m2",
+   "surface_salle_m2",
+   "terrain_m2",
+   "chambres",
+   "capacite_annoncee",
+   "etat",
+   "dpe",
+   "contact"
+  ],
+  "ecarts": [],
+  "verdict": "conforme"
+ },
+ {
+  "id": "longere-tauxigny-saint-bauld-ac7029",
+  "url": "https://www.iadfrance.fr/annonce/maison-vente-4-pieces-tauxigny-89m2/r2095148",
+  "page": "ok",
+  "champs_conformes": [
+   "titre",
+   "commune",
+   "prix",
+   "surface_bati_m2",
+   "surface_salle_m2",
+   "terrain_m2",
+   "chambres",
+   "capacite_annoncee",
+   "etat",
+   "dpe",
+   "contact"
+  ],
+  "ecarts": [],
+  "verdict": "conforme"
+ },
+ {
+  "id": "ferme-sud-tours-commune-a059b9",
+  "url": "https://www.ma-propriete.fr/fr/touristique/gites/indre-et-loire/propriete-a-vendre-45-pieces-proche-de-tours-37-1",
+  "page": "ok",
+  "champs_conformes": [
+   "titre",
+   "commune",
+   "prix",
+   "surface_bati_m2",
+   "surface_salle_m2",
+   "terrain_m2",
+   "chambres",
+   "contact"
+  ],
+  "ecarts": [
+   {
+    "champ": "capacite_annoncee",
+    "fiche": null,
+    "source": "1 gîte 5-6 pers., 2 cottages 4 pers. chacun, 10 mobil-homes 2-4 pers."
+   },
+   {
+    "champ": "etat",
+    "fiche": null,
+    "source": "très bon état, entièrement restaurée"
+   },
+   {
+    "champ": "dpe",
+    "fiche": "C (156 kWh/m2/an)",
+    "source": "156 kWh/m2/an ; lettre non visible"
+   }
+  ],
+  "verdict": "ecart_mineur"
+ },
+ {
+  "id": "chateau-sud-touraine-annonce-815106",
+  "url": "https://www.connecta-immobilier.fr/vente/37-indre-et-loire/3-tours/28-chateau/t40/15567-chateau-avec-activites-touristiques-dans-le-sud-touraine/",
+  "page": "ok",
+  "champs_conformes": [
+   "titre",
+   "commune",
+   "prix",
+   "surface_bati_m2",
+   "surface_salle_m2",
+   "terrain_m2",
+   "chambres",
+   "dpe",
+   "contact"
+  ],
+  "ecarts": [
+   {
+    "champ": "capacite_annoncee",
+    "fiche": null,
+    "source": "128+ personnes (36 château, 20 grand gîte, 6 petit gîte, 2 maison du parc, 30 mobil-homes/chalets, 25 emplacements camping)"
+   },
+   {
+    "champ": "etat",
+    "fiche": null,
+    "source": "rénovation récente importante"
+   }
+  ],
+  "verdict": "ecart_mineur"
+ },
+ {
+  "id": "manoir-cheille-1d1bfc",
+  "url": "https://www.immonot.com/immobilier-notaire/detail/4000000370032856/achat-propriete-a-vendre-37190-cheille-indre-et-loire.html",
+  "page": "ok",
+  "champs_conformes": [
+   "titre",
+   "commune",
+   "prix",
+   "surface_bati_m2",
+   "surface_salle_m2",
+   "terrain_m2",
+   "chambres",
+   "capacite_annoncee",
+   "etat",
+   "contact"
+  ],
+  "ecarts": [
+   {
+    "champ": "dpe",
+    "fiche": "E (206 kWh/m2/an)",
+    "source": "classe E ; valeur 206 kWh non visible dans la page"
+   }
+  ],
+  "verdict": "conforme"
+ },
+ {
+  "id": "moulin-vouvray-secteur-commune-c4b673",
+  "url": "https://www.ma-propriete.fr/fr/equestre/proprietes-equestres/indre-et-loire/entre-tours-et-amboise-decouvrez-un-moulin-du-xvie-siecle-au-cadre-exceptionnel-sur-3-4ha",
+  "page": "ok",
+  "champs_conformes": [
+   "titre",
+   "prix",
+   "surface_bati_m2",
+   "surface_salle_m2",
+   "terrain_m2",
+   "chambres",
+   "dpe",
+   "contact"
+  ],
+  "ecarts": [
+   {
+    "champ": "ref (hors liste)",
+    "fiche": "340937799272",
+    "source": "970886"
+   },
+   {
+    "champ": "commune",
+    "fiche": "Vouvray (secteur)",
+    "source": "entre Tours et Amboise ; Vouvray non mentionné"
+   },
+   {
+    "champ": "capacite_annoncee",
+    "fiche": null,
+    "source": "20+ pièces (30 pièces) ; pas de capacité d'accueil chiffrée"
+   },
+   {
+    "champ": "etat",
+    "fiche": null,
+    "source": "rénové"
+   }
+  ],
+  "verdict": "ecart_mineur"
+ },
+ {
+  "id": "entrepot-montlouis-sur-loire-5fdd44",
+  "url": "https://www.bureauxlocaux.com/annonce/vente-local-dactivites-montlouis-sur-loire-37270--42426529",
+  "page": "ok",
+  "champs_conformes": [
+   "titre",
+   "commune",
+   "prix",
+   "surface_bati_m2",
+   "surface_salle_m2",
+   "terrain_m2",
+   "chambres",
+   "capacite_annoncee",
+   "etat",
+   "dpe",
+   "contact"
+  ],
+  "ecarts": [],
+  "verdict": "conforme"
+ },
+ {
+  "id": "hotel-restaurant-blere-67e6e1",
+  "url": "https://www.licitor.com/annonce/10/97/50/vente-aux-encheres/un-ensemble-immobilier/blere/indre-et-loire/109750.html",
+  "page": "ok",
+  "champs_conformes": [
+   "titre",
+   "commune",
+   "prix",
+   "surface_bati_m2",
+   "surface_salle_m2",
+   "terrain_m2",
+   "chambres",
+   "capacite_annoncee",
+   "etat",
+   "dpe",
+   "contact"
+  ],
+  "ecarts": [],
+  "verdict": "conforme"
+ }
+]

@@ -1,0 +1,17 @@
+{"sources_interrogees":[
+{"site":"msimond.fr (Michel Simond)","statut":"partiel","detail":"Page annonce ANG006986 en 503 sur 2 essais ; données (2 038 400 euros murs+fonds, murs 1 840 400, CA 472 k, EBE 163 k, 3 salles, 1,8 ha) tirées des extraits de recherche. Pas de commune publiée dans les extraits.","nb_biens":1},
+{"site":"placedescommerces.com","statut":"ok","detail":"Discothèque/réception près d'Amboise C1356580 ouverte. Version bpifrance reprise-entreprise en 403 (non contourné).","nb_biens":1},
+{"site":"immonot.com","statut":"ok","detail":"Listes propriétés/biens agricoles 37 et 3 fiches ouvertes (Monnaie, Neuillé-le-Lierre, Luynes x2 non retenues car sans grange). Chenonceaux/Genillé/Tours etc. déjà collectés.","nb_biens":2},
+{"site":"iadfrance.fr","statut":"ok","detail":"Longère Tauxigny-Saint-Bauld avec hangar >250 m² ouverte.","nb_biens":1},
+{"site":"proprietes-rurales.com (Safer du Centre)","statut":"ok","detail":"Corps de ferme Ligueil ouvert ; autres annonces agricoles pures hors cible. saferducentre.fr en 503.","nb_biens":1},
+{"site":"immomoulinsetangs.fr","statut":"ok","detail":"Moulin 475 k ouvert (commune non publiée) ; moulin de Tours vendu, ignoré.","nb_biens":1},
+{"site":"immotourisme.com","statut":"ok","detail":"Liste 37 + fiches Pernay et Sainte-Maure ouvertes.","nb_biens":2},
+{"site":"espaces-atypiques.com","statut":"ok","detail":"Liste 37 + fiches Saint-Branchs et Limeray.","nb_biens":2},
+{"site":"ma-propriete.fr","statut":"partiel","detail":"Listes réceptions/fermes ouvertes : seuls biens déjà collectés ou hors zone (Loché-sur-Indrois, >1,9 M€).","nb_biens":0},
+{"site":"lesiteimmo.com","statut":"partiel","detail":"Liste Bléré : longère rénovée 562 950 euros (non ouverte).","nb_biens":1},
+{"site":"Leggett","statut":"bloque","detail":"403 sur la fiche moulin Perrusson (A34456MED37, 670 k, vu seulement en extrait de recherche, non retenu).","nb_biens":0},
+{"site":"zilek.com / zimo.fr / seloger.com / paruvendu.fr / mitula / trovit / bpifrance","statut":"bloque","detail":"403 ou 401, non contourné.","nb_biens":0},
+{"site":"green-acres.fr","statut":"partiel","detail":"Liste ouverte, sans URL de fiches exploitables ; biens vus (Saint-Jean-Saint-Germain 790 k, Loches 298 k) hors zone ou hors cible.","nb_biens":0},
+{"site":"detours-immobilier.fr","statut":"partiel","detail":"Fiche Genillé en 404 à l'ouverture, données d'extrait de recherche.","nb_biens":1},
+{"site":"Leboncoin, Bien'ici, Safti, Optimhome, Capifrance, Fusacq, Cession-PME","statut":"vide","detail":"Non atteints par recherche directe ; aucune annonce exploitable remontée par WebSearch.","nb_biens":0}
+]}
