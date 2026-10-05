@@ -12,7 +12,10 @@
     apport: 75000,                 // curseur 50 000 à 100 000
     pretHonneur: 0,                // quasi-fonds propres (Initiative / Réseau Entreprendre), 0 par défaut
     investisseursMax: 150000,      // fonds propres mobilisables via minoritaires (stratégie E)
-    apportMinPct: 0.20,            // apport exigé par les banques sur un projet pro
+    apportMinPct: 0.15,            // apport exigé par la banque, scénario central (10 à 20 % du montant à lever)
+    apportMax: 80000,              // apport maximal mobilisable par Florian (70 à 80 k€)
+    apportPctBas: 0.10,            // apport le plus faible qu'une banque puisse accepter
+    apportPctHaut: 0.20,           // apport le plus exigeant
     taux: 0.040,                   // prêt pro 20 ans ~3,5 % (BdF, 2026) + prime de risque activité événementielle
     assurancePct: 0.0030,          // assurance emprunteur annuelle sur capital initial
     duree: 20,
@@ -212,6 +215,11 @@
     var moisAvantRecettes = (b.activite_reception_existante ? 1 : p.moisAutorisations) + (b.activite_reception_existante ? 1 : moisTravaux);
     // différé : intérêts seuls pendant la période sans recettes, financés par la trésorerie de démarrage
     var coutHorsTreso = prixCible + frais + travaux;
+    // Montant à lever tout compris (bien + travaux + notaire), comparé à l'apport maximal :
+    // exclu si même une banque à 10 % d'apport demanderait plus que l'apport maximal.
+    var budgetMaxBas = Math.round(p.apportMax / p.apportPctHaut);
+    var budgetMaxHaut = Math.round(p.apportMax / p.apportPctBas);
+    var exclu = coutHorsTreso > budgetMaxHaut;
     var apportTotal = p.apport + (p.pretHonneur || 0);
     // déblocage progressif : la moitié du prêt en moyenne pendant le différé
     var interetsDiffere = Math.max(0, coutHorsTreso - apportTotal) * 0.5 * p.taux * moisAvantRecettes / 12;
@@ -271,6 +279,9 @@
     res.scenarios = scen; res.dscr = dscr; res.pointMortMariages = pointMort;
     res.valeurRevente = valeurRevente; res.crd10 = crd10; res.gain10 = Math.round(gain10); res.multiple10 = multiple;
     res.capaciteStandard = Math.round(capaStandard); res.capaciteMontage = Math.round(capaMontage);
+    res.montantALever = Math.round(coutHorsTreso); res.budgetMaxBas = budgetMaxBas; res.budgetMaxHaut = budgetMaxHaut;
+    res.apportRequisBas = Math.round(coutHorsTreso * p.apportPctBas); res.apportRequisHaut = Math.round(coutHorsTreso * p.apportPctHaut);
+    res.exclu = exclu; res.budgetStatut = exclu ? 'exclu' : coutHorsTreso <= budgetMaxBas ? 'ok' : 'selon_banque';
     res.apportMinimum = apportMin; res.horsPortee = horsPortee; res.montageRequis = montageRequis; res.voyant = voyant;
     if (!opts.sansInverse) res.prixMaxCompatible = prixMaxCompatible(b, p);
     if (b.mode_vente === 'encheres') res.alertes.push('Vente aux enchères : la mise à prix n’est pas le prix final, frais d’environ ' + Math.round(p.fraisEncheres * 100) + ' %, consignation à prévoir.');
@@ -432,6 +443,7 @@
     if (!b.activite_reception_existante && cap === null && bati !== null && bati < 150 && (terrain === null || terrain < 5000)) f.push({ code: 'capacite', libelle: '200 invités impossibles sans extension plausible' });
     if (b.risques && b.risques.ppri === 'rouge' && !b.risques.solution) f.push({ code: 'ppri', libelle: 'Zone rouge PPRI' });
     if (b.risques && b.risques.enclave) f.push({ code: 'enclave', libelle: 'Enclave dense sans parking' });
+    if (fin && fin.ok && fin.exclu) f.push({ code: 'exclu', libelle: 'Montant à lever supérieur à ' + Math.round(fin.budgetMaxHaut / 1000) + ' k€ (apport max à 10 %)', onglet: true });
     if (fin && fin.ok && fin.horsPortee) f.push({ code: 'portee', libelle: 'Hors de portée, même avec montage', onglet: true });
     return f;
   }

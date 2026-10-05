@@ -27,7 +27,7 @@ const srv = http.createServer((req, res) => {
     const page = await ctx.newPage(); page.on('pageerror', e => errors.push(name + ': ' + e.message)); page.on('console', m => { if (m.type() === 'error') errors.push(name + ' console: ' + m.text()); });
     await page.addInitScript(init);
     await page.goto(`http://localhost:${port}/`); await page.waitForTimeout(900);
-    const tabs = empty ? ['tableau'] : ['tableau', 'comparatif', 'carte', 'simulateur', 'strategies', 'marche', 'parametres', 'journal'];
+    const tabs = empty ? ['tableau'] : ['tableau', 'exclus', 'comparatif', 'carte', 'simulateur', 'strategies', 'marche', 'parametres', 'journal'];
     for (const t of tabs) {
       await page.click(`[data-tab="${t}"]`); await page.waitForTimeout(400);
       const ow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);

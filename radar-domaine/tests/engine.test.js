@@ -109,6 +109,21 @@ test('dédoublonnage : même grange sur deux portails fusionnée', () => {
   assert.strictEqual(d[0].sources.length, 2);
 });
 
+test('exclusion par apport : montant à lever comparé à apport max / 10 %', () => {
+  const p = E.merge(E.DEFAULTS, { apportMax: 80000, apportPctBas: 0.10, apportPctHaut: 0.20 });
+  const petit = E.analyser({ ...base, type: 'lieu_reception_activite', activite_reception_existante: true, prix: 300000 }, p);
+  assert.strictEqual(petit.fin.budgetMaxHaut, 800000);
+  assert.strictEqual(petit.fin.budgetMaxBas, 400000);
+  assert.strictEqual(petit.fin.exclu, false);
+  assert.strictEqual(petit.fin.montantALever, petit.fin.prixCible + petit.fin.frais + petit.fin.travauxRetenus);
+  const gros = E.analyser({ ...base, type: 'chateau', prix: 2000000 }, p);
+  assert.strictEqual(gros.fin.exclu, true);
+  assert.ok(gros.filtres.some(f => f.code === 'exclu'));
+  assert.ok(gros.fin.apportRequisBas > 80000);
+  const sansPrix = E.analyser({ ...base, prix: null }, p);
+  assert.ok(!sansPrix.filtres.some(f => f.code === 'exclu'));
+});
+
 test('base vide : aucune erreur', () => {
   assert.deepStrictEqual(E.dedoublonner([]), []);
 });

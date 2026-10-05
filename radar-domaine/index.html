@@ -197,7 +197,7 @@ textarea { width: 100%; min-height: 90px; }
 var E = window.RadarEngine;
 var TABS = [
   ['tableau', 'Tableau de bord'], ['carte', 'Carte'], ['comparatif', 'Comparatif'], ['simulateur', 'Simulateur'],
-  ['suivi', 'Suivi'], ['strategies', 'Stratégies'], ['marche', 'Veille marché'], ['parametres', 'Paramètres'], ['journal', 'Journal']
+  ['exclus', 'Exclus'], ['suivi', 'Suivi'], ['strategies', 'Stratégies'], ['marche', 'Veille marché'], ['parametres', 'Paramètres'], ['journal', 'Journal']
 ];
 var TYPES = { chateau: 'Château', manoir: 'Manoir', gentilhommiere: 'Gentilhommière', maison_maitre: 'Maison de maître', prieure: 'Prieuré', abbaye: 'Abbaye', grange: 'Grange', ferme: 'Ferme', longere: 'Longère', haras: 'Haras', domaine_viticole: 'Domaine viticole', troglodyte: 'Troglodyte', moulin: 'Moulin', salle: 'Salle', ecole: 'Ancienne école', colonie: 'Centre de vacances', hotel_restaurant: 'Hôtel-restaurant', guinguette: 'Guinguette', golf: 'Golf', camping: 'Camping', entrepot: 'Entrepôt', usine: 'Ancienne usine', gare: 'Ancienne gare', chapelle: 'Chapelle', serres: 'Serres', terrain: 'Terrain', lieu_reception_activite: 'Lieu de réception en activité', autre: 'Autre' };
 var STATUTS = [['a_contacter', 'À contacter'], ['contacte', 'Contacté'], ['visite', 'Visite'], ['offre', 'Offre'], ['abandonne', 'Abandonné']];
@@ -207,7 +207,7 @@ var SOUS_LIB = { cachet: 'Cachet et attractivité', capacite: 'Capacité 200 et 
 var S = {
   db: null, biens: {}, suivi: {}, journal: [], marche: {}, paramsSaved: null, sim: null, geo: null,
   tab: 'tableau', fiche: null, loaded: { biens: false },
-  comp: { vue: 'radar', q: '', type: '', strat: '', statut: '', tri: 'score', dir: -1, f: { trajet: true, capacite: true, ppri: true, enclave: true, portee: true } },
+  comp: { vue: 'radar', q: '', type: '', strat: '', statut: '', tri: 'score', dir: -1, f: { trajet: true, capacite: true, ppri: true, enclave: true, exclu: true, portee: true } },
   map: { vb: null, montrer55: false, concurrents: true }
 };
 try { var t = localStorage.getItem('rd_tab'); if (t && TABS.some(function (x) { return x[0] === t; })) S.tab = t; } catch (e) {}
@@ -271,7 +271,8 @@ function card(x) {
   var badges = [];
   if (b.statut_annonce === 'baisse_prix' || b.baisse_prix) badges.push('<span class="tag gold">Baisse de prix</span>');
   if (isNew(b)) badges.push('<span class="tag gold">Nouveau</span>');
-  if (a.score.etiquette) badges.push('<span class="tag warn">' + h(a.score.etiquette) + '</span>');
+  if (a.fin.exclu) badges.push('<span class="tag warn">Au-delà de mon apport</span>');
+  else if (a.score.etiquette) badges.push('<span class="tag warn">' + h(a.score.etiquette) + '</span>');
   if (b.mode_vente === 'encheres') badges.push('<span class="tag">Enchères ' + fdate(b.date_vente_encheres) + '</span>');
   if (!b.verifie) badges.push('<span class="tag warn">Annonce non ouverte</span>');
   return '<article class="card">' +
@@ -323,7 +324,7 @@ VIEWS.tableau = function () {
     '<div class="kpi"><b style="color:var(--lvA)">' + niv.A + '</b><span>Niveau A, à appeler cette semaine</span></div>' +
     '<div class="kpi"><b style="color:var(--lvB)">' + niv.B + '</b><span>Niveau B, à surveiller ou visiter</span></div>' +
     '<div class="kpi"><b>' + (niv.C + niv.D) + '</b><span>Niveaux C et D</span></div>' +
-    '<div class="kpi"><b>' + hp.length + '</b><span>Hors de portée mais à connaître</span></div>' +
+    '<div class="kpi"><b>' + L.filter(function (x) { return actifs(x) && x.a.fin.exclu; }).length + '</b><span>Exclus, au-delà de mon apport</span></div>' +
     '<div class="kpi"><b>' + nouveaux.length + '</b><span>Nouveautés de la semaine</span></div>' +
     '<div class="kpi"><b>' + baisses.length + '</b><span>Baisses de prix</span></div>' +
     '<div class="kpi"><b>' + retires.length + '</b><span>Retirés ou vendus</span></div>' +
@@ -363,13 +364,13 @@ VIEWS.comparatif = function () {
   function th(id, lab, n) { return '<th' + (n ? ' class="n"' : '') + '><button data-sort="' + id + '">' + lab + (C.tri === id ? (C.dir > 0 ? ' ↑' : ' ↓') : '') + '</button></th>'; }
   var counts = { radar: L.filter(dansRadar).length, portee: L.filter(horsPortee).length, exclus: L.filter(function (x) { return !dansRadar(x) && !horsPortee(x); }).length, tous: L.length };
   return '<h2>Comparatif</h2>' +
-    '<div class="seg" role="group">' + [['radar', 'Dans le radar'], ['portee', 'Hors de portée mais à connaître'], ['exclus', 'Exclus par un filtre'], ['tous', 'Tous']].map(function (v) { return '<button data-vue="' + v[0] + '" aria-pressed="' + (C.vue === v[0]) + '">' + v[1] + ' (' + counts[v[0]] + ')</button>'; }).join('') + '</div>' +
+    '<div class="seg" role="group">' + [['radar', 'Dans le radar'], ['portee', 'Hors de portée mais à connaître'], ['exclus', 'Écartés par un filtre'], ['tous', 'Tous']].map(function (v) { return '<button data-vue="' + v[0] + '" aria-pressed="' + (C.vue === v[0]) + '">' + v[1] + ' (' + counts[v[0]] + ')</button>'; }).join('') + '</div>' +
     '<div class="filters"><input type="search" id="q" placeholder="Rechercher un bien, une commune" value="' + h(C.q) + '">' +
     '<select id="ftype"><option value="">Tous les types</option>' + Object.keys(types).sort().map(function (t) { return '<option value="' + h(t) + '"' + (C.type === t ? ' selected' : '') + '>' + h(TYPES[t] || t) + '</option>'; }).join('') + '</select>' +
     '<select id="fstrat"><option value="">Toutes les stratégies</option>' + Object.keys(E.STRATEGIES).map(function (s) { return '<option value="' + s + '"' + (C.strat === s ? ' selected' : '') + '>' + s + ' · ' + h(E.STRATEGIES[s]) + '</option>'; }).join('') + '</select>' +
     '<select id="fstatut"><option value="">Tous les statuts</option>' + STATUTS.map(function (s) { return '<option value="' + s[0] + '"' + (C.statut === s[0] ? ' selected' : '') + '>' + s[1] + '</option>'; }).join('') + '</select></div>' +
     '<div class="filters small"><span class="muted">Filtres éliminatoires :</span>' +
-    [['trajet', 'Trajet > ' + (params().voirAussi55 ? 55 : 45) + ' min'], ['capacite', '200 invités impossibles'], ['ppri', 'Zone rouge PPRI'], ['enclave', 'Enclave sans parking'], ['portee', 'Hors de portée']].map(function (f) { return '<label class="chk"><input type="checkbox" data-filtre="' + f[0] + '"' + (C.f[f[0]] ? ' checked' : '') + '> ' + f[1] + '</label>'; }).join('') +
+    [['trajet', 'Trajet > ' + (params().voirAussi55 ? 55 : 45) + ' min'], ['exclu', 'Au-delà de mon apport'], ['capacite', '200 invités impossibles'], ['ppri', 'Zone rouge PPRI'], ['enclave', 'Enclave sans parking'], ['portee', 'Hors de portée']].map(function (f) { return '<label class="chk"><input type="checkbox" data-filtre="' + f[0] + '"' + (C.f[f[0]] ? ' checked' : '') + '> ' + f[1] + '</label>'; }).join('') +
     '<label class="chk"><input type="checkbox" id="voir55"' + (params().voirAussi55 ? ' checked' : '') + '> Voir aussi 45 à 55 min</label></div>' +
     (rows.length ? '<div class="tablewrap"><table><thead><tr>' + th('score', 'Score', true) + th('titre', 'Bien') + '<th>Type</th>' + th('prix', 'Prix', true) + th('trajet', 'Trajet', true) + th('cout', 'Coût total', true) + th('pm', 'Point mort', true) + '<th>Banque</th><th>Stratégie</th><th>Suivi</th><th></th></tr></thead><tbody>' +
       rows.map(function (x) {
@@ -451,6 +452,36 @@ VIEWS.simulateur = function () {
     L.map(function (x) { var f = x.a.fin; return '<tr class="click" data-fiche="' + h(x.id) + '"><td class="n"><span class="pill lv-' + x.a.score.niveau + '">' + x.a.score.total + '</span></td><td>' + h(x.b.titre) + '<div class="small muted">' + h(x.b.commune || '') + '</div></td><td class="n">' + k(f.coutTotal) + '</td><td class="n">' + k(f.emprunt) + '</td><td class="n">' + k(f.annuite) + '</td><td class="n">' + (f.dscr != null ? f.dscr.toFixed(2).replace('.', ',') : '—') + '</td><td class="n">' + (f.pointMortMariages != null ? Math.ceil(f.pointMortMariages) : '—') + '</td><td class="n">' + k(f.apportMinimum) + '</td><td class="n">' + (f.prixMaxCompatible ? k(f.prixMaxCompatible) : f.ok ? 'aucun' : '—') + '</td><td>' + voyant(f) + '</td></tr>'; }).join('') + '</tbody></table></div>';
 };
 
+// ---------- exclus ----------
+VIEWS.exclus = function () {
+  var p = params();
+  var L = analyses().filter(function (x) { return actifs(x) && x.a.fin.ok; });
+  var ex = L.filter(function (x) { return x.a.fin.exclu; }).sort(function (a, b) { return a.a.fin.montantALever - b.a.fin.montantALever; });
+  var limite = L.filter(function (x) { return x.a.fin.budgetStatut === 'selon_banque'; }).length;
+  var ok = L.filter(function (x) { return x.a.fin.budgetStatut === 'ok'; }).length;
+  var sansPrix = analyses().filter(function (x) { return actifs(x) && !x.a.fin.ok; }).length;
+  function prixMax(x) {
+    var f = x.a.fin, reste = f.budgetMaxHaut - f.travauxRetenus;
+    if (reste <= 0) return 'aucun : les travaux seuls dépassent';
+    return k(reste / (1 + f.fraisPct) / (1 - f.negociation.taux));
+  }
+  return '<div><h2>Exclus</h2><p class="muted small" style="max-width:75ch;margin:4px 0 0">Biens que je ne peux pas financer. Règle : le montant à lever tout compris (prix négocié, travaux en scénario moyen, frais de notaire) dépasse ce qu\u2019un apport de ' + k(p.apportMax) + ' permet, même si la banque n\u2019exige que ' + pct(p.apportPctBas, 0) + ' d\u2019apport, soit <b>' + k(p.apportMax / p.apportPctBas) + '</b>. Si la banque exige ' + pct(p.apportPctHaut, 0) + ', la limite tombe à ' + k(p.apportMax / p.apportPctHaut) + '. Ces seuils se règlent dans Paramètres.</p></div>' +
+    '<div class="kpis"><div class="kpi"><b style="color:var(--bad)">' + ex.length + '</b><span>Exclus, au-delà de ' + k(p.apportMax / p.apportPctBas) + '</span></div>' +
+    '<div class="kpi"><b style="color:var(--warn)">' + limite + '</b><span>Possibles selon la banque, entre ' + k(p.apportMax / p.apportPctHaut) + ' et ' + k(p.apportMax / p.apportPctBas) + '</span></div>' +
+    '<div class="kpi"><b style="color:var(--ok)">' + ok + '</b><span>Dans le budget même à ' + pct(p.apportPctHaut, 0) + ' d\u2019apport</span></div>' +
+    '<div class="kpi"><b>' + sansPrix + '</b><span>Prix inconnu, non classés</span></div></div>' +
+    (ex.length ? '<div class="tablewrap"><table><thead><tr><th>Bien</th><th class="n">Prix affiché</th><th class="n">Travaux (moyen)</th><th class="n">Montant à lever</th><th class="n">Dépassement</th><th class="n">Apport nécessaire</th><th class="n">Prix max pour passer</th><th class="n">Score</th><th></th></tr></thead><tbody>' +
+      ex.map(function (x) { var f = x.a.fin, url = sourceUrl(x.b);
+        return '<tr class="click" data-fiche="' + h(x.id) + '"><td style="min-width:200px"><b>' + h(x.b.titre) + '</b><div class="small muted">' + h(x.b.commune || '') + (x.b.trajet_min != null ? ' · ' + x.b.trajet_min + ' min' : '') + '</div></td>' +
+          '<td class="n">' + k(x.b.prix) + '</td><td class="n">' + k(f.travauxRetenus) + '</td><td class="n"><b>' + k(f.montantALever) + '</b></td>' +
+          '<td class="n" style="color:var(--bad)">+' + k(f.montantALever - f.budgetMaxHaut) + '</td>' +
+          '<td class="n">' + k(f.apportRequisBas) + ' à ' + k(f.apportRequisHaut) + '</td><td class="n small">' + prixMax(x) + '</td>' +
+          '<td class="n"><span class="pill lv-' + x.a.score.niveau + '">' + x.a.score.total + '</span></td>' +
+          '<td>' + (url ? '<a href="' + h(url) + '" target="_blank" rel="noopener" class="small" data-stop="1">Annonce ↗</a>' : '') + '</td></tr>'; }).join('') +
+      '</tbody></table></div>' : empty('Aucun bien exclu avec ces paramètres.')) +
+    '<p class="disclaimer">Travaux estimés en scénario moyen, hors trésorerie de démarrage. Un bien exclu peut redevenir accessible avec un associé, un crédit vendeur, un bail ou un partenariat (voir Stratégies).</p>';
+};
+
 // ---------- suivi (kanban) ----------
 VIEWS.suivi = function () {
   var L = analyses();
@@ -520,7 +551,7 @@ VIEWS.marche = function () {
 
 // ---------- paramètres ----------
 var PFIELDS = [
-  ['Financement', [['apport', 'Apport personnel (€)'], ['pretHonneur', 'Prêt d’honneur (€)'], ['investisseursMax', 'Fonds propres investisseurs max (€)'], ['apportMinPct', 'Apport minimum exigé (ratio)'], ['taux', 'Taux du prêt (ratio)'], ['assurancePct', 'Assurance emprunteur (ratio par an)'], ['duree', 'Durée (années)'], ['dscrCible', 'DSCR cible']]],
+  ['Financement', [['apportMax', 'Apport maximal mobilisable (€)'], ['apportPctBas', 'Apport exigé, cas favorable (ratio)'], ['apportPctHaut', 'Apport exigé, cas exigeant (ratio)'], ['apport', 'Apport personnel utilisé dans les calculs (€)'], ['pretHonneur', 'Prêt d’honneur (€)'], ['investisseursMax', 'Fonds propres investisseurs max (€)'], ['apportMinPct', 'Apport exigé, scénario central (ratio)'], ['taux', 'Taux du prêt (ratio)'], ['assurancePct', 'Assurance emprunteur (ratio par an)'], ['duree', 'Durée (années)'], ['dscrCible', 'DSCR cible']]],
   ['Acquisition', [['negociation', 'Négociation par défaut (ratio)'], ['notaireAncien', 'Frais de notaire ancien (ratio)'], ['fraisEncheres', 'Frais d’enchères (ratio)'], ['fraisCession', 'Frais de cession de fonds (ratio)'], ['honorairesAgenceSiNonInclus', 'Honoraires si non inclus (ratio)'], ['aleas', 'Aléas travaux (ratio)'], ['moe', 'Maîtrise d’œuvre (ratio)'], ['tresorerieDemarrage', 'Trésorerie de démarrage (€)'], ['moisAutorisations', 'Délai autorisations (mois)'], ['moisTravauxParTranche', 'Mois de travaux par 100 k€']]],
   ['Exploitation', [['mariages.prudent', 'Mariages par an, prudent'], ['mariages.base', 'Mariages par an, base'], ['mariages.ambitieux', 'Mariages par an, ambitieux'], ['prixHaute', 'Location week-end haute saison (€)'], ['prixBasse', 'Location week-end basse saison (€)'], ['partHaute', 'Part des mariages en haute saison'], ['extrasParMariage', 'Marge extras par mariage (€)'], ['autresEvenements', 'Marge autres événements par an (€)'], ['chargesVariablesParMariage', 'Charges variables par mariage (€)'], ['commissionPct', 'Commissions (ratio du prix)'], ['chargesFixes', 'Charges fixes (€ par an)'], ['energieFixe', 'Énergie fixe (€ par an)'], ['assurancesPct', 'Assurances (ratio de la valeur)'], ['taxeFonciereDefaut', 'Taxe foncière si inconnue (€)'], ['revalorisation', 'Revalorisation annuelle du bien'], ['partTravauxValorisee', 'Part des travaux retrouvée à la revente']]],
   ['Filtres', [['trajetMax', 'Trajet maximum (min)']]]
@@ -614,6 +645,7 @@ function renderFiche() {
       '<tr><td>Frais d’acquisition</td><td class="n">' + eur(f.frais) + '</td><td>' + conf('estimé') + '</td><td class="formula">prix cible × ' + pct(f.fraisPct, 1) + (b.prix_inclut_honoraires === false ? ' + honoraires' : '') + '</td></tr>' +
       '<tr><td>Travaux (scénario moyen)</td><td class="n">' + eur(f.travauxRetenus) + '</td><td>' + conf('hypothèse') + '</td><td class="formula">postes × (1 + ' + pct(f.travaux.aleasPct, 0) + ' aléas) × (1 + ' + pct(f.travaux.moePct, 0) + ' MOE)</td></tr>' +
       '<tr><td>Trésorerie et différé</td><td class="n">' + eur(f.tresorerie) + '</td><td>' + conf('hypothèse') + '</td><td class="formula">' + k(p.tresorerieDemarrage) + ' + intérêts et charges sur ' + f.moisAvantRecettes + ' mois sans recettes</td></tr>' +
+      '<tr><td>Montant à lever (bien + travaux + notaire)</td><td class="n">' + eur(f.montantALever) + '</td><td></td><td class="formula">apport nécessaire ' + k(f.apportRequisBas) + ' à ' + k(f.apportRequisHaut) + ' (' + pct(p.apportPctBas, 0) + ' à ' + pct(p.apportPctHaut, 0) + ')' + (f.exclu ? ' : au-delà de mon apport max de ' + k(p.apportMax) : '') + '</td></tr>' +
       '<tr><td><b>Coût total du projet</b></td><td class="n"><b>' + eur(f.coutTotal) + '</b></td><td></td><td></td></tr>' +
       '<tr><td>Apport</td><td class="n">' + eur(f.apport) + '</td><td></td><td class="formula">apport + prêt d’honneur</td></tr>' +
       '<tr><td>Emprunt</td><td class="n">' + eur(f.emprunt) + '</td><td></td><td class="formula">' + p.duree + ' ans à ' + pct(p.taux, 2) + '</td></tr>' +
