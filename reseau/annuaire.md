@@ -8,13 +8,13 @@ Règle : on enchérit uniquement par un avocat inscrit au **barreau du tribunal*
 | Tribunal | Avocat pour enchérir | Statut | Lots concernés |
 |---|---|---|---|
 | TJ Nantes | Me Guillotin (Lexar) ; Me Marquer, Me Luciano en second | OK | Sautron 16/10 |
-| TJ La Roche-sur-Yon | Me Pannozzo ; Me Lacaze ; Me Cufi (poursuivant de Pineaux : préférer un autre avocat pour ce lot) | OK | Pineaux 12/10, West Campus 02/11 |
+| TJ La Roche-sur-Yon | Me Lacaze (à appeler) ; Me Cufi (poursuivant de Pineaux : préférer un autre avocat pour ce lot) | OK | Pineaux 12/10, West Campus 02/11 |
 | TJ Les Sables-d'Olonne | Me Pannozzo, Me Billaud (Sables uniquement), Me Yarroudh-Feurion, Me Potier | À appeler | aucun lot suivi |
 | TJ Angers | Me Mérillon-Gourgues (candidate) | À mandater | Contigné 12/10 |
 | TJ Tours | Me Jolly, Me Le Coz (candidats) | À mandater | lots du 13/10 et 10/11 |
 | TJ Blois, Le Mans | aucun | À chercher | Blois 15/10, Le Mans 06/10 |
 
-**Pineaux (12/10, TJ La Roche-sur-Yon)** : Me Pannozzo plaide déjà pour Florian à La Roche-sur-Yon (audience du 05/10). Lui confier l'enchère : mandat, plafond écrit, ordre du chèque, forfaits.
+**Pineaux (12/10, TJ La Roche-sur-Yon)** : appeler Me Lacaze (forfaits, pratique des enchères). Repli : Me Cufi, 130 € HT, mais avocat du Crédit Agricole. Me Pannozzo n'a jamais porté d'enchères.
 
 ## Nantes
 - **Me Stéphanie Guillotin**, Cabinet Lexar. 06 11 19 77 74 / 02 40 16 81 60. contact@guillotin-avocat.fr. www.guillotin-avocat.fr. Avocate de Florian. Forfait confirmé par écrit : 240 € TTC pour porter les enchères, 1 800 € TTC en cas d'adjudication.
@@ -26,7 +26,7 @@ Règle : on enchérit uniquement par un avocat inscrit au **barreau du tribunal*
 ## Vendée
 | Avocat | Tribunaux | Contact | Frais de représentation | Frais d'adjudication | Notes |
 |---|---|---|---|---|---|
-| Me Enzo Pannozzo (Quartz Avocats) | Sables, La Roche | 06 13 41 59 09, enzo.pannozzo@quartzavocats.fr | à demander | à demander | Plaide déjà pour Florian à La Roche. Pressenti pour Pineaux |
+| Me Enzo Pannozzo (Quartz Avocats) | Sables, La Roche | 06 13 41 59 09, enzo.pannozzo@quartzavocats.fr | relativement cher | relativement cher | N'a jamais porté d'enchères : pas prioritaire |
 | Me François Cufi (DGCD Avocats) | La Roche | Patricia Mandin (assistante) 02 51 37 17 37, fc@dgcd-avocats.fr | 130 € HT | à demander | Avocat poursuivant de Pineaux (Crédit Agricole). Son cabinet propose quand même de représenter les enchérisseurs : préférer un avocat indépendant du créancier pour Pineaux |
 | Me Guillaume Lacaze | La Roche | 07 60 13 45 39, contact@glacaze-avocat.fr | à demander | à demander | Recommandé par Me Billaud |
 | Me Luc Billaud | Sables uniquement | 07 80 34 27 32, luc.billaud.avocat@gmail.com | à demander | à demander | N'intervient pas à La Roche |
