@@ -178,7 +178,10 @@ function calc(lot,Pover){
   const k=P.fraisPct+P.droitsPct+P.csiPct;
   const revente=surface&&pm2?surface*pm2*(1-dec)*(P.reventeMult||1):null;
   const travaux=(num(L.travaux)||0)*(P.travauxMult||1);
-  const autres=P.honoraires+P.publication+travaux+(num(L.autresFrais)??P.autresDefaut)+(P.moisSup||0)*P.portageMois;
+  const lf=L.tribunal?lawyerFees(L.tribunal):null;
+  const honor=lf&&lf.adj!=null?lf.adj:P.honoraires;
+  const tentative=lf&&lf.rep!=null?lf.rep:P.coutTentative;
+  const autres=honor+P.publication+travaux+(num(L.autresFrais)??P.autresDefaut)+(P.moisSup||0)*P.portageMois;
   const tva=P.tva?0.2:0;
   const cout=p=>p*(1+k+tva)+P.fraisFixe;
   const marge=p=>revente==null?null:revente*(1-P.agence)-cout(p)-autres;
@@ -196,7 +199,7 @@ function calc(lot,Pover){
   const probable=map&&med?map*med:null;
   const pWin=(map&&eff&&rs.length)?rs.filter(r=>r*map<=eff).length/rs.length:null;
   const mEff=eff!=null?marge(eff):null;
-  const esper=(pWin!=null&&mEff!=null)?pWin*mEff-(1-pWin)*P.coutTentative:null;
+  const esper=(pWin!=null&&mEff!=null)?pWin*mEff-(1-pWin)*tentative:null;
   const caution=map?Math.max(P.cautionMin,P.cautionPct*map):P.cautionMin;
   const cov=L.tribunal?coverage(L.tribunal):{level:"bad",names:[]};
   const conf=src.n>=(L.type==="local"?3:2)?"ok":"faible";
@@ -211,7 +214,7 @@ function calc(lot,Pover){
   else if(pWin>=0.5&&mEff>0){dec2="Priorité 1";cls="p-ok";why="Plafond "+keur(eff)+", gagne dans "+pct(pWin)+" des cas observés, marge "+keur(mEff)+"."}
   else if(pWin>=0.2){dec2="Tentative plafonnée";cls="p-info";why="Gagne dans "+pct(pWin)+" des cas observés ("+R.set.length+" résultats). Se présenter avec un plafond ferme."}
   else{dec2="Veille";cls="p-mute";why="Probabilité de gagner "+pct(pWin)+" au plafond "+keur(eff)+" : l'historique adjuge plus haut."}
-  return{P,k,revente,autres,cout,marge,plafMult,plafConf,plafCash,plafMarge,equilibre,reco,eff,R,med,probable,pWin,mEff,esper,caution,cov,conf,dec:dec2,why,cls,map};
+  return{P,k,lf,honor,tentative,revente,autres,cout,marge,plafMult,plafConf,plafCash,plafMarge,equilibre,reco,eff,R,med,probable,pWin,mEff,esper,caution,cov,conf,dec:dec2,why,cls,map};
 }
 
 /* ---------- alertes et agenda ---------- */
@@ -407,7 +410,7 @@ function lotDetail(l){
   <div class="grid2">
     <div class="tbl"><h3>Scénarios de prix</h3><table><tr><th class="num">Prix</th><th class="num">Coût brut</th><th class="num">Cash total</th><th class="num">Multiple</th><th class="num">Marge</th><th>Repère</th></tr>
     ${uniq.map(p=>`<tr><td class="num">${eur(p)}</td><td class="num">${eur(c.cout(p))}</td><td class="num">${eur(c.cout(p)+c.autres)}</td><td class="num">${c.revente?x(c.revente/c.cout(p)):"n.d."}</td><td class="num" style="color:${(c.marge(p)??0)<0?"var(--bad)":"inherit"}">${eur(c.marge(p))}</td><td class="small muted">${lbl(p)}</td></tr>`).join("")}</table>
-    <p class="small muted">Coût brut = prix x (1 + ${pct(P.fraisPct)} frais + ${(P.droitsPct*100).toFixed(3).replace(".",",")} % droits + CSI) + ${eur(P.fraisFixe)}. Cash total ajoute honoraires d'enchère, publication, travaux, serrurier, diagnostics, portage. Caution : ${eur(c.caution)}.</p></div>
+    <p class="small muted">Coût brut = prix x (1 + ${pct(P.fraisPct)} frais + ${(P.droitsPct*100).toFixed(3).replace(".",",")} % droits + CSI) + ${eur(P.fraisFixe)}. Cash total ajoute les honoraires d'adjudication (${eur(c.honor)}${c.lf&&c.lf.adj!=null?", "+esc(c.lf.nom):", paramètre par défaut"}), publication, travaux, serrurier, diagnostics, portage. Caution : ${eur(c.caution)}.</p></div>
     <div class="tbl"><h3>Sensibilités au plafond ${keur(c.eff)}</h3><table><tr><th>Scénario</th><th class="num">Plafond reco.</th><th class="num">Multiple</th><th class="num">Marge</th></tr>
     ${sc.map(s=>`<tr><td>${s.n}</td><td class="num">${keur(s.reco)}</td><td class="num">${x(s.mult)}</td><td class="num" style="color:${(s.marge??0)<0?"var(--bad)":"inherit"}">${keur(s.marge)}</td></tr>`).join("")}</table>
     <p class="small muted">Adjugé probable : MAP x médiane ${x(c.med)} (${c.R.set.length} résultat${c.R.set.length>1?"s":""}, ${c.R.label}). P(gagner) : part des adjudications passées sous notre plafond.</p></div>
@@ -457,6 +460,15 @@ function vResultats(){
   </section></div>`;
 }
 
+function feeCell(n,t){
+  if(num(n)!=null)return `${eur(+n)}${t?`<div class="tag">${esc(t)}</div>`:""}`;
+  return t?`<span class="small">${esc(t)}</span>`:`<span class="tag">à demander</span>`;
+}
+function lawyerFees(trib){
+  const av=S.contacts.filter(c=>c.role==="avocat"&&list(c.tribunaux).includes(trib)&&["mandaté","contact"].includes(c.statut));
+  const pick=av.find(c=>c.statut==="mandaté"&&num(c.fraisAdjudication)!=null)||av.find(c=>num(c.fraisAdjudication)!=null)||av.find(c=>num(c.fraisRepresentation)!=null);
+  return pick?{nom:pick.nom,adj:num(pick.fraisAdjudication),rep:num(pick.fraisRepresentation)}:null;
+}
 function vReseau(){
   const trib=[...new Set([...S.lots.map(l=>l.tribunal).filter(Boolean),...S.contacts.flatMap(c=>list(c.tribunaux))])];
   const groups={};S.contacts.forEach(c=>{const k=c.barreau||"Autres";(groups[k]=groups[k]||[]).push(c)});
@@ -465,7 +477,7 @@ function vReseau(){
   <div class="tbl"><table><tr><th>Tribunal</th><th>Couverture</th><th>Avocats</th><th>Audiences à venir</th></tr>
   ${trib.map(t=>{const c=coverage(t);const up=S.lots.filter(l=>l.tribunal===t&&days(l.audience)>=0&&!["perdu","retire","horsjeu"].includes(l.statut));return `<tr><td>TJ ${esc(t)}</td><td><span class="pill ${c.level==="ok"?"p-ok":c.level==="warn"?"p-warn":"p-bad"}">${c.level==="ok"?"Couvert":c.level==="warn"?"À confirmer":"Manquant"}</span></td><td>${esc(c.names.join(", ")||"aucun")}</td><td>${up.map(l=>esc(l.titre)+" ("+fdate(l.audience)+")").join("<br>")||"<span class='muted'>aucune</span>"}</td></tr>`}).join("")}</table></div></section>
   <section class="panel"><div class="panel-head"><h2>Annuaire</h2>${S.ro?"":`<button class="btn" data-act="add-contact">Ajouter un contact</button>`}</div>
-  ${Object.keys(groups).length?Object.entries(groups).map(([g,cs])=>`<h3>${esc(g)}</h3><div class="tbl"><table><tr><th>Nom</th><th>Rôle</th><th>Téléphone</th><th>Email</th><th>Enchérit au TJ</th><th>Statut</th><th>Forfaits</th></tr>${cs.map(c=>`<tr class="click" data-contact="${esc(c.id)}"><td><b>${esc(c.nom||c.structure)}</b><div class="tag">${esc(c.nom?c.structure||"":"")}</div></td><td>${esc(c.role||"")}</td><td class="mono" style="white-space:nowrap">${esc(c.telephone||"")}</td><td class="mono small">${esc(c.email||"")}</td><td>${esc(list(c.tribunaux).join(", "))}${list(c.aConfirmer).length?`<div><span class="pill p-warn">à confirmer : ${esc(list(c.aConfirmer).join(", "))}</span></div>`:""}</td><td>${esc(c.statut||"")}</td><td class="small">${c.forfaitTentative?"tentative "+esc(c.forfaitTentative):""}${c.forfaitAdjudication?"<br>adjudication "+esc(c.forfaitAdjudication):""}</td></tr>`).join("")}</table></div>`).join(""):empty("Annuaire vide.")}
+  ${Object.keys(groups).length?Object.entries(groups).map(([g,cs])=>`<h3>${esc(g)}</h3><div class="tbl"><table><tr><th>Nom</th><th>Rôle</th><th>Téléphone</th><th>Email</th><th>Enchérit au TJ</th><th>Statut</th><th class="num">Frais de représentation</th><th class="num">Frais d'adjudication</th></tr>${cs.map(c=>`<tr class="click" data-contact="${esc(c.id)}"><td><b>${esc(c.nom||c.structure)}</b><div class="tag">${esc(c.nom?c.structure||"":"")}</div></td><td>${esc(c.role||"")}</td><td class="mono" style="white-space:nowrap">${esc(c.telephone||"")}</td><td class="mono small">${esc(c.email||"")}</td><td>${esc(list(c.tribunaux).join(", "))}${list(c.aConfirmer).length?`<div><span class="pill p-warn">à confirmer : ${esc(list(c.aConfirmer).join(", "))}</span></div>`:""}</td><td>${esc(c.statut||"")}</td><td class="num">${feeCell(c.fraisRepresentation,c.forfaitTentative)}</td><td class="num">${feeCell(c.fraisAdjudication,c.forfaitAdjudication)}</td></tr>`).join("")}</table></div>`).join(""):empty("Annuaire vide.")}
   </section></div>`;
 }
 
@@ -482,7 +494,7 @@ function vParams(){
 const FIELDS={
   lots:[["titre","Bien"],["ref","Référence"],["adresse","Adresse du bien"],["commune","Commune"],["type","Type","select",["maison","appartement","studio","local","immeuble","terrain","autre"]],["tribunal","Tribunal","select",TRIBUNAUX],["audience","Audience","datetime-local"],["visite","Prochaine visite","datetime-local"],["visitesTxt","Toutes les visites (texte)"],["statut","Statut","select",Object.keys(STATUTS)],["map","Mise à prix (€)","number"],["surface","Surface (m²)","number"],["prixM2MA","Prix m² MeilleursAgents, bas (€)","number"],["prixM2DVF","Prix m² DVF médiane (€)","number"],["prixM2Annonces","Prix m² annonces comparables (€)","number"],["prixM2Autre","Prix m² autre source (€)","number"],["prixM2AutreSource","Nom de l'autre source"],["prixM2","Prix m² manuel si aucune source (€)","number"],["decote","Décote état et sortie (0,3 = 30 %)","number"],["travaux","Travaux (€)","number"],["autresFrais","Serrurier, diag, portage (€)","number"],["occupation","Occupation","select",["libre","occupé","bail","inconnu"]],...RF.map(([k,n])=>[k,"Red flag : "+n,"select",["inconnu","oui","non"]]),["plafondDecide","Plafond décidé (€)","number"],["predit","Prix prédit (€)","number"],["adjuge","Prix adjugé (€)","number"],["poursuivant","Avocat poursuivant"],["lien","Lien de la fiche"],["notes","Notes","textarea"],["postmortem","Post-mortem","textarea"]],
   resultats:[["date","Date","date"],["tribunal","Tribunal","select",TRIBUNAUX],["commune","Commune"],["type","Type","select",["maison","appartement","studio","local","immeuble","terrain","autre"]],["surface","Surface (m²)","number"],["map","Mise à prix (€)","number"],["adjuge","Prix adjugé (€)","number"],["occupation","Occupation","select",["libre","occupé","bail","inconnu"]],["baisse","Baisse d'un quart","select",["non","oui"]],["surenchere","Surenchère","select",["non","oui"]],["source","Source"],["lien","Lien"],["verifie","Vérifié","select",["non","oui"]],["notes","Notes","textarea"]],
-  contacts:[["nom","Nom"],["structure","Cabinet ou étude"],["role","Rôle","select",["avocat","commissaire de justice","avocat poursuivant","banque","comptable","courtier","autre"]],["barreau","Barreau ou ressort"],["tribunaux","Enchérit au TJ (liste, virgules)"],["aConfirmer","TJ à confirmer (liste, virgules)"],["telephone","Téléphone"],["email","Email"],["site","Site"],["adresse","Adresse"],["statut","Statut","select",["mandaté","contact","candidat","repli","écarté","référence"]],["forfaitTentative","Forfait tentative"],["forfaitAdjudication","Forfait adjudication"],["notes","Notes","textarea"]],
+  contacts:[["nom","Nom"],["structure","Cabinet ou étude"],["role","Rôle","select",["avocat","commissaire de justice","avocat poursuivant","banque","comptable","courtier","autre"]],["barreau","Barreau ou ressort"],["tribunaux","Enchérit au TJ (liste, virgules)"],["aConfirmer","TJ à confirmer (liste, virgules)"],["telephone","Téléphone"],["email","Email"],["site","Site"],["adresse","Adresse"],["statut","Statut","select",["mandaté","contact","candidat","repli","écarté","référence"]],["fraisRepresentation","Frais de représentation, TTC (€)","number"],["forfaitTentative","Détail représentation (HT/TTC, source)"],["fraisAdjudication","Frais d'adjudication, TTC (€)","number"],["forfaitAdjudication","Détail adjudication (source)"],["notes","Notes","textarea"]],
   actions:[["titre","Action"],["echeance","Échéance","date"],["qui","Qui"],["lotRef","Lot lié"]]
 };
 function openForm(col,doc){

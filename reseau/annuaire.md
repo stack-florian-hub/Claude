@@ -8,8 +8,8 @@ Règle : on enchérit uniquement par un avocat inscrit au **barreau du tribunal*
 | Tribunal | Avocat pour enchérir | Statut | Lots concernés |
 |---|---|---|---|
 | TJ Nantes | Me Guillotin (Lexar) ; Me Marquer, Me Luciano en second | OK | Sautron 16/10 |
-| TJ La Roche-sur-Yon | Me Pannozzo (intervient déjà pour Florian à La Roche) | OK | Pineaux 12/10, West Campus 02/11 |
-| TJ Les Sables-d'Olonne | Me Pannozzo, Me Billaud, Me Yarroudh-Feurion, Me Potier | À appeler | aucun lot suivi |
+| TJ La Roche-sur-Yon | Me Pannozzo ; Me Lacaze ; Me Cufi (pas pour Pineaux, il est poursuivant) | OK | Pineaux 12/10, West Campus 02/11 |
+| TJ Les Sables-d'Olonne | Me Pannozzo, Me Billaud (Sables uniquement), Me Yarroudh-Feurion, Me Potier | À appeler | aucun lot suivi |
 | TJ Angers | Me Mérillon-Gourgues (candidate) | À mandater | Contigné 12/10 |
 | TJ Tours | Me Jolly, Me Le Coz (candidats) | À mandater | lots du 13/10 et 10/11 |
 | TJ Blois, Le Mans | aucun | À chercher | Blois 15/10, Le Mans 06/10 |
@@ -17,18 +17,23 @@ Règle : on enchérit uniquement par un avocat inscrit au **barreau du tribunal*
 **Pineaux (12/10, TJ La Roche-sur-Yon)** : Me Pannozzo plaide déjà pour Florian à La Roche-sur-Yon (audience du 05/10). Lui confier l'enchère : mandat, plafond écrit, ordre du chèque, forfaits.
 
 ## Nantes
-- **Me Stéphanie Guillotin**, Cabinet Lexar. 06 11 19 77 74 / 02 40 16 81 60. contact@guillotin-avocat.fr. www.guillotin-avocat.fr. Avocate de Florian. Forfait non retenue 180 € ou 240 € : à confirmer par écrit.
+- **Me Stéphanie Guillotin**, Cabinet Lexar. 06 11 19 77 74 / 02 40 16 81 60. contact@guillotin-avocat.fr. www.guillotin-avocat.fr. Avocate de Florian. Forfait confirmé par écrit : 240 € TTC pour porter les enchères, 1 800 € TTC en cas d'adjudication.
 - **Me Élodie Marquer**. 02 40 35 73 57.
 - **Me Alexia Luciano**. Coordonnées à compléter.
 - Commissaire : **Me Clémentine Mynard**, SCP Erwan Hamard & Clémentine Mynard, 2 av. du Recteur Pironneau, 44300 Nantes. 02 51 84 92 40. cm@justice44.com, contact@justice44.com. www.scpgh-huissiersnantes.com
 - Pour mémoire : SARL HNJURIS (PV Richebourg) ; Me Illiaquer, poursuivant Richebourg (02 51 84 99 70).
 
-## Vendée (barreau des Sables-d'Olonne)
-- **Me Enzo Pannozzo**, Quartz Avocats. 06 13 41 59 09. enzo.pannozzo@quartzavocats.fr
-- **Me Luc Billaud**. 07 80 34 27 32. luc.billaud.avocat@gmail.com
-- **Me Louis Yarroudh-Feurion**. 06 51 64 62 11.
-- **Me David Potier**. 09 51 30 55 10.
-- Commissaire : **SARL Herbette-Bouquet**, 3 rue Georges Legagneux, BP 70123, 85501 Les Herbiers Cedex. 02 51 91 01 66. contact@hb-huissiers85.fr. www.hb-huissiers85.fr
+## Vendée
+| Avocat | Tribunaux | Contact | Frais de représentation | Frais d'adjudication | Notes |
+|---|---|---|---|---|---|
+| Me Enzo Pannozzo (Quartz Avocats) | Sables, La Roche | 06 13 41 59 09, enzo.pannozzo@quartzavocats.fr | à demander | à demander | Plaide déjà pour Florian à La Roche. Pressenti pour Pineaux |
+| Me François Cufi (DGCD Avocats) | La Roche | Patricia Mandin (assistante) 02 51 37 17 37, fc@dgcd-avocats.fr | 130 € HT | à demander | **Avocat poursuivant de Pineaux** (Crédit Agricole) : ne peut pas enchérir pour Florian sur ce lot |
+| Me Guillaume Lacaze | La Roche | 07 60 13 45 39, contact@glacaze-avocat.fr | à demander | à demander | Recommandé par Me Billaud |
+| Me Luc Billaud | Sables uniquement | 07 80 34 27 32, luc.billaud.avocat@gmail.com | à demander | à demander | N'intervient pas à La Roche |
+| Me Louis Yarroudh-Feurion | Sables | 06 51 64 62 11 | à demander | à demander | |
+| Me David Potier | Sables | 09 51 30 55 10 | à demander | à demander | |
+
+Commissaire : **SARL Herbette-Bouquet**, 3 rue Georges Legagneux, BP 70123, 85501 Les Herbiers Cedex. 02 51 91 01 66. contact@hb-huissiers85.fr
 
 ## Angers
 - **Me Cécile Mérillon-Gourgues**, 37 bd Saint-Michel. 06 63 87 91 59. contact@cmgavocat.fr. Cabinet individuel, droit immobilier.
