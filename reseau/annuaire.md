@@ -8,7 +8,7 @@ Règle : on enchérit uniquement par un avocat inscrit au **barreau du tribunal*
 | Tribunal | Avocat pour enchérir | Statut | Lots concernés |
 |---|---|---|---|
 | TJ Nantes | Me Guillotin (Lexar) ; Me Marquer, Me Luciano en second | OK | Sautron 16/10 |
-| TJ La Roche-sur-Yon | Me Lacaze (à appeler) ; Me Cufi (poursuivant de Pineaux : préférer un autre avocat pour ce lot) | OK | Pineaux 12/10, West Campus 02/11 |
+| TJ La Roche-sur-Yon | Me Lacaze (à appeler) ; 13 avocats habitués des enchères (liste du barreau) ; Me Cufi (poursuivant de Pineaux : préférer un autre avocat pour ce lot) | OK | Pineaux 12/10, West Campus 02/11 |
 | TJ Les Sables-d'Olonne | Me Pannozzo, Me Billaud (Sables uniquement), Me Yarroudh-Feurion, Me Potier | À appeler | aucun lot suivi |
 | TJ Angers | Me Mérillon-Gourgues (candidate) | À mandater | Contigné 12/10 |
 | TJ Tours | Me Jolly, Me Le Coz (candidats) | À mandater | lots du 13/10 et 10/11 |
@@ -32,6 +32,26 @@ Règle : on enchérit uniquement par un avocat inscrit au **barreau du tribunal*
 | Me Luc Billaud | Sables uniquement | 07 80 34 27 32, luc.billaud.avocat@gmail.com | à demander | à demander | N'intervient pas à La Roche |
 | Me Louis Yarroudh-Feurion | Sables | 06 51 64 62 11 | à demander | à demander | |
 | Me David Potier | Sables | 09 51 30 55 10 | à demander | à demander | |
+
+**Liste du barreau de La Roche-sur-Yon : avocats intervenant habituellement pour porter des enchères** (document remis à Florian, 06/10/2026) :
+
+| Avocat | Téléphone |
+|---|---|
+| Me Abdallah | 02 51 47 97 97 |
+| Me Ba | 02 51 51 30 60 |
+| Me Chaigneau | 02 51 69 46 58 |
+| Me Chalopin | 02 51 24 09 10 |
+| Me Cirier | 02 51 46 26 79 |
+| Me Coué | 02 51 37 00 71 |
+| Me Emeriau | 02 40 44 39 00 |
+| Me Feron | 07 63 50 13 24 |
+| Me Galerneau | 02 51 37 87 31 |
+| Cabinet Gauvin-Roubert | 02 51 37 99 00 |
+| Me Legoth | 02 51 94 40 47 |
+| Me Hafi | 07 88 26 65 56 |
+| Me Massiot | 02 51 47 91 73 |
+
+Tous les avocats du barreau peuvent aussi être contactés.
 
 Commissaire : **SARL Herbette-Bouquet**, 3 rue Georges Legagneux, BP 70123, 85501 Les Herbiers Cedex. 02 51 91 01 66. contact@hb-huissiers85.fr
 
