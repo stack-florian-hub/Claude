@@ -70,7 +70,7 @@ for r in data["avenir"]:
     new_lots.append(("lots", ref, clean({
         "ref": ref, "titre": (r["titre"][:1].upper() + r["titre"][1:] + " " + r["commune"]).strip(), "commune": f"{r['commune']} ({r['dept']})",
         "type": r["type"], "tribunal": trib(r["tribunal"]), "audience": r["date"], "map": r["map"], "surface": r["surface"],
-        "occupation": r["occupation"], "poursuivant": r["poursuivant"], "lien": r["lien"], "statut": "repere", "visite": visite(r.get("visite_txt")),
+        "occupation": r["occupation"], "poursuivant": r["poursuivant"], "lien": r["lien"], "statut": "repere", "visite": visite(r.get("visite_txt")), "adresse": r.get("adresse"),
         "notes": (r["description"] + (" | " + r["visite_txt"] if r.get("visite_txt") else ""))[:500]})))
 
 seen = {key(v["data"].get("commune"), v["data"].get("map")) for v in existing.values()}
