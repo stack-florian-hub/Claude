@@ -23,6 +23,13 @@ def trib(t):
 def slug(s):
     return re.sub(r"[^a-z0-9]+", "-", ascii_(s)).strip("-")[:40]
 
+MOIS = {m: i + 1 for i, m in enumerate("janvier février mars avril mai juin juillet août septembre octobre novembre décembre".split())}
+def visite(txt):
+    m = re.search(r"(\d{1,2})(?:er)? (\w+) (\d{4})(?: (?:de|à) (\d{1,2})h(\d{2})?)?", txt or "")
+    if not m or m.group(2) not in MOIS:
+        return None
+    return f"{m.group(3)}-{MOIS[m.group(2)]:02d}-{int(m.group(1)):02d}" + (f"T{int(m.group(4)):02d}:{m.group(5) or '00'}" if m.group(4) else "")
+
 def clean(d):
     return {k: v for k, v in d.items() if v not in (None, "")}
 
@@ -63,7 +70,7 @@ for r in data["avenir"]:
     new_lots.append(("lots", ref, clean({
         "ref": ref, "titre": (r["titre"][:1].upper() + r["titre"][1:] + " " + r["commune"]).strip(), "commune": f"{r['commune']} ({r['dept']})",
         "type": r["type"], "tribunal": trib(r["tribunal"]), "audience": r["date"], "map": r["map"], "surface": r["surface"],
-        "occupation": r["occupation"], "poursuivant": r["poursuivant"], "lien": r["lien"], "statut": "repere",
+        "occupation": r["occupation"], "poursuivant": r["poursuivant"], "lien": r["lien"], "statut": "repere", "visite": visite(r.get("visite_txt")),
         "notes": (r["description"] + (" | " + r["visite_txt"] if r.get("visite_txt") else ""))[:500]})))
 
 seen = {key(v["data"].get("commune"), v["data"].get("map")) for v in existing.values()}

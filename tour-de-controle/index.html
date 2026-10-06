@@ -252,16 +252,22 @@ function render(){
   const fn={pilotage:vPilotage,lots:vLots,resultats:vResultats,reseau:vReseau,parametres:vParams}[S.tab]||vPilotage;
   v.innerHTML=fn();
 }
+function visiteCell(l){
+  if(!l.visite)return `<span class="tag">non communiquée</span>`;
+  const d=days(l.visite);
+  return `${fdate(l.visite)}<div class="tag">${d==null?"":d<0?"passée":d===0?"aujourd'hui":"J-"+d}</div>`;
+}
 function lotRow(l){
   const c=calc(l);const d=days(l.audience);
   return `<tr class="click" data-lot="${esc(l.id)}"><td><b>${esc(l.titre)}</b><div class="tag">${esc(l.ref||"")} · ${esc(l.commune||"")}</div></td>
   <td>${esc(l.tribunal||"")}<div class="tag">${l.audience?fdate(l.audience):"date n.d."}${d!=null&&d>=0?" · J-"+d:""}</div></td>
+  <td>${visiteCell(l)}</td>
   <td class="num">${keur(num(l.map))}</td><td class="num">${keur(c.reco)}${num(l.plafondDecide)?`<div class="tag">décidé ${keur(+l.plafondDecide)}</div>`:""}</td>
   <td class="num">${keur(c.probable)}</td><td class="num">${pct(c.pWin)}</td><td class="num">${keur(c.esper)}</td>
   <td><span class="pill ${c.cls}">${esc(c.dec)}</span></td>
   <td><span class="pill ${c.cov.level==="ok"?"p-ok":c.cov.level==="warn"?"p-warn":"p-bad"}">${c.cov.level==="ok"?"avocat OK":c.cov.level==="warn"?"à confirmer":"manquant"}</span></td></tr>`;
 }
-const lotHead=`<tr><th>Bien</th><th>Tribunal</th><th class="num">MAP</th><th class="num">Plafond reco.</th><th class="num">Adjugé probable</th><th class="num">P(gagner)</th><th class="num">Espérance</th><th>Décision</th><th>Avocat</th></tr>`;
+const lotHead=`<tr><th>Bien</th><th>Tribunal</th><th>Visite</th><th class="num">MAP</th><th class="num">Plafond reco.</th><th class="num">Adjugé probable</th><th class="num">P(gagner)</th><th class="num">Espérance</th><th>Décision</th><th>Avocat</th></tr>`;
 
 function vPilotage(){
   const cs=cashState();const al=alerts();const ag=agenda(14);
