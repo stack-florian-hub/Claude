@@ -25,10 +25,16 @@ def slug(s):
 
 MOIS = {m: i + 1 for i, m in enumerate("janvier février mars avril mai juin juillet août septembre octobre novembre décembre".split())}
 def visite(txt):
-    m = re.search(r"(\d{1,2})(?:er)? (\w+) (\d{4})(?: (?:de|à) (\d{1,2})h(\d{2})?)?", txt or "")
-    if not m or m.group(2) not in MOIS:
+    """Toutes les dates de visite du texte ; renvoie la prochaine à venir, sinon la dernière."""
+    import datetime
+    ds = []
+    for m in re.finditer(r"(\d{1,2})(?:er)? (\w+) (\d{4})(?: (?:de|à) (\d{1,2})h(\d{2})?)?", txt or ""):
+        if m.group(2) in MOIS:
+            ds.append(f"{m.group(3)}-{MOIS[m.group(2)]:02d}-{int(m.group(1)):02d}" + (f"T{int(m.group(4)):02d}:{m.group(5) or '00'}" if m.group(4) else ""))
+    if not ds:
         return None
-    return f"{m.group(3)}-{MOIS[m.group(2)]:02d}-{int(m.group(1)):02d}" + (f"T{int(m.group(4)):02d}:{m.group(5) or '00'}" if m.group(4) else "")
+    now = datetime.datetime.now().isoformat(timespec="minutes")
+    return next((d for d in sorted(ds) if d >= now), sorted(ds)[-1])
 
 def clean(d):
     return {k: v for k, v in d.items() if v not in (None, "")}
@@ -70,7 +76,7 @@ for r in data["avenir"]:
     new_lots.append(("lots", ref, clean({
         "ref": ref, "titre": (r["titre"][:1].upper() + r["titre"][1:] + " " + r["commune"]).strip(), "commune": f"{r['commune']} ({r['dept']})",
         "type": r["type"], "tribunal": trib(r["tribunal"]), "audience": r["date"], "map": r["map"], "surface": r["surface"],
-        "occupation": r["occupation"], "poursuivant": r["poursuivant"], "lien": r["lien"], "statut": "repere", "visite": visite(r.get("visite_txt")), "adresse": r.get("adresse"),
+        "occupation": r["occupation"], "poursuivant": r["poursuivant"], "lien": r["lien"], "statut": "repere", "visite": visite(r.get("visite_txt")), "visitesTxt": r.get("visite_txt"), "adresse": r.get("adresse"),
         "notes": (r["description"] + (" | " + r["visite_txt"] if r.get("visite_txt") else ""))[:500]})))
 
 seen = {key(v["data"].get("commune"), v["data"].get("map")) for v in existing.values()}

@@ -102,8 +102,10 @@ def detail(path):
         c, a = re.sub(r"\s*\(.*", "", L[mp + 1]).strip(), L[mp + 2]
         bad = ("Visite", "Ma", "Me ", "Afficher", "SCP", "SELARL", "Tél", "Annonce")
         d["adresse"] = c if a.startswith(bad) else f"{a}, {c}"
-    v = [l for l in L if l.lower().startswith("visite")]
-    d["visite_txt"] = " ".join(v)[:200]
+    vi = next((i for i, l in enumerate(L) if l.lower().startswith("visite")), None)
+    d["visite_txt"] = ""
+    if vi is not None:
+        d["visite_txt"] = L[vi] + (" " + L[vi + 1] if L[vi].rstrip().endswith(" et") and vi + 1 < len(L) else "")
     return d
 
 def listing(region, hist):
