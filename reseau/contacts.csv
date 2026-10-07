@@ -1,19 +1,19 @@
 barreau_ou_ressort,role,nom,structure,type_cabinet,adresse,telephone,email,site,statut,peut_encherir_devant,frais_representation,frais_adjudication,notes
 Nantes,avocat,Stéphanie Guillotin,Cabinet Lexar,à préciser,,06 11 19 77 74 / 02 40 16 81 60,contact@guillotin-avocat.fr,https://www.guillotin-avocat.fr,mandatée (avocate de Florian),TJ Nantes,240 € TTC,1 800 € TTC,Forfaits confirmés par écrit
-Nantes,avocat,Élodie Marquer,,à préciser,,02 40 35 73 57,,,contact,TJ Nantes,,,Coordonnées fournies par Florian 02/10/2026
-Nantes,avocat,Alexia Luciano,,à préciser,,,,,contact (coordonnées à compléter),TJ Nantes,,,
+Nantes,avocat,Élodie Marquer,Antigone,à préciser,"12 bis rue de l'Échappée, Nantes",02 40 35 73 57,elodie.marquer@avocat.fr,,contact,TJ Nantes,,,Coordonnées fournies par Florian 02/10/2026
+Nantes,avocat,Alexia Luciano,,à préciser,"2 bis rue Urvoy de Saint-Bedan, Nantes",02 51 79 16 83,alexia.luciano@ala-avocat.com,,contact,TJ Nantes,,,Exercice dédié au droit immobilier
 Nantes,commissaire de justice,Clémentine Mynard,SCP Erwan Hamard & Clémentine Mynard,SCP 2 associés,"2 avenue du Recteur Pironneau, 44300 Nantes",02 51 84 92 40,cm@justice44.com / contact@justice44.com,https://www.scpgh-huissiersnantes.com,contact,,,,Utile après adjudication (serrurier, constat, expulsion)
-Nantes,commissaire de justice,,SARL HNJURIS,,"8 rue des Renards, Nantes",,,,référence,,,,Auteur du PV de description Richebourg
-Nantes,avocat poursuivant,Alexandra Illiaquer,,,"5 rue Dobrée, 44100 Nantes",02 51 84 99 70,,,poursuivant Richebourg,,,,Pour mémoire
+Nantes,commissaire de justice,,SARL HNJURIS,,"8 rue des Renards, 44315 Nantes",02 40 48 46 84,etude@hnjuris.com,https://hnjuris.com,référence,,,,Auteur du PV de description Richebourg
+Nantes,avocat poursuivant,Alexandra Illiaquer,,,"5 rue Dobrée, 44100 Nantes",02 51 84 99 70,a.illiaquer@orange.fr,,poursuivant Richebourg,,,,Pour mémoire
 Les Sables-d'Olonne,avocat,Enzo Pannozzo,Quartz Avocats,à préciser,,06 13 41 59 09,enzo.pannozzo@quartzavocats.fr,,contact,"TJ Les Sables-d'Olonne, TJ La Roche-sur-Yon",,,Plaide déjà pour Florian à La Roche-sur-Yon
 Les Sables-d'Olonne,avocat,Luc Billaud,,à préciser,,07 80 34 27 32,luc.billaud.avocat@gmail.com,,contact,TJ Les Sables-d'Olonne uniquement,,,N'intervient pas à La Roche-sur-Yon. A recommandé Me Lacaze
-Les Sables-d'Olonne,avocat,Louis Yarroudh-Feurion,,à préciser,,06 51 64 62 11,,,contact,TJ Les Sables-d'Olonne,,,
-Les Sables-d'Olonne,avocat,David Potier,,à préciser,,09 51 30 55 10,,,contact,TJ Les Sables-d'Olonne,,,
+Les Sables-d'Olonne,avocat,Louis Yarroudh-Feurion,,à préciser,Les Achards,06 51 64 62 11 / 09 39 24 79 17,,,contact,TJ Les Sables-d'Olonne,,,Pas d'email public
+Les Sables-d'Olonne,avocat,David Potier,,à préciser,Saint-Gilles-Croix-de-Vie,09 51 30 55 10,cabinet.potier@free.fr,,contact,TJ Les Sables-d'Olonne,,,
 Vendée,commissaire de justice,,SARL Herbette-Bouquet,société,"3 rue Georges Legagneux, BP 70123, 85501 Les Herbiers Cedex",02 51 91 01 66,contact@hb-huissiers85.fr,https://www.hb-huissiers85.fr,contact,,,,
 Angers,avocat,Cécile Mérillon-Gourgues,CMG Avocat,individuel,"37 bd Saint-Michel, Angers",06 63 87 91 59 / 09 51 62 41 89,contact@cmgavocat.fr,https://cmgavocat.fr,candidate,TJ Angers,,,Spécialiste droit immobilier. Priorité pour Contigné 12/10
 Angers,avocat,Aurélien Goguet,Astrolabe Avocats,2 co-gérants,"1 av. Jeanne d'Arc, Angers",02 41 34 16 50,cabinet@astrolabe-avocats.fr,https://astrolabe-avocats.fr,repli,TJ Angers,,,Sûretés et mesures d'exécution
-Angers,commissaire de justice,,Selarl Tessier Penhoat,société,"29 rue Louis Gain, Angers",02 41 87 47 53,,,contact,,,,
-Angers,commissaire de justice,,SCP Cojusticia,SCP,"90 b route du Hutreau, Les Ponts-de-Cé",02 41 44 65 75,,https://cojusticia.fr,contact,,,,
+Angers,commissaire de justice,,Selarl Tessier Penhoat,société,"29 rue Louis Gain, Angers",02 41 87 47 53,contact@constat-angers.com,https://www.tessier-constat-angers.com,contact,,,,
+Angers,commissaire de justice,,SCP Cojusticia,SCP,"90 b route du Hutreau, Les Ponts-de-Cé",02 41 44 65 75,,https://cojusticia.fr,contact,,,,Pas d'email public : formulaires du site
 Tours,avocat,Karine Jolly,,individuel,"38 rue du Docteur Giraudet, Tours",07 61 54 59 39,contact@jolly-avocat.fr,https://jolly-avocat.fr,candidate,TJ Tours,,,Droit immobilier. Pratique des enchères à confirmer
 Tours,avocat,Éric Le Coz,,individuel,Montlouis-sur-Loire,02 47 45 04 66,info@lecoz-avocat.fr,https://lecoz-avocat.fr,candidat,TJ Tours,,,Généraliste
 Tours,avocat,Corinne Baylac,Envergure Avocats,3 avocats,,02 47 20 24 42,c.baylac@envergure-avocats.fr,https://envergure-avocats.fr,repli,TJ Tours,,,Immobilier et voies d'exécution
@@ -23,16 +23,16 @@ Challans,banque,Conseiller Crédit Mutuel,Crédit Mutuel Challans (85300),,85300
 Nantes,banque,Agence relais,Crédit Mutuel Boulay-Paty,,"57 bd Boulay-Paty, 44100 Nantes",,,,relais,,,,Édition du chèque de banque à Nantes
 La Roche-sur-Yon,avocat,François Cufi,DGCD Avocats,à préciser,"Le Belem, 4 rue Manuel, BP 761, 85020 La Roche-sur-Yon Cedex",02 51 37 17 37 (assistante P. Mandin),fc@dgcd-avocats.fr,,contact,TJ La Roche-sur-Yon,130 € HT,,Représentation 130 € HT. Avocat poursuivant de Pineaux : pas pour ce lot
 La Roche-sur-Yon,avocat,Guillaume Lacaze,,à préciser,,07 60 13 45 39,contact@glacaze-avocat.fr,,contact,TJ La Roche-sur-Yon,,,Recommandé par Me Billaud
-La Roche-sur-Yon,avocat,Me Abdallah,,,,02 51 47 97 97,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
-La Roche-sur-Yon,avocat,Me Ba,,,,02 51 51 30 60,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
-La Roche-sur-Yon,avocat,Me Chaigneau,,,,02 51 69 46 58,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
-La Roche-sur-Yon,avocat,Me Chalopin,,,,02 51 24 09 10,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
-La Roche-sur-Yon,avocat,Me Cirier,,,,02 51 46 26 79,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
-La Roche-sur-Yon,avocat,Me Coué,,,,02 51 37 00 71,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
-La Roche-sur-Yon,avocat,Me Emeriau,,,,02 40 44 39 00,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
-La Roche-sur-Yon,avocat,Me Feron,,,,07 63 50 13 24,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
-La Roche-sur-Yon,avocat,Me Galerneau,,,,02 51 37 87 31,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
-La Roche-sur-Yon,avocat,Cabinet Gauvin-Roubert,,,,02 51 37 99 00,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
-La Roche-sur-Yon,avocat,Me Legoth,,,,02 51 94 40 47,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
-La Roche-sur-Yon,avocat,Me Hafi,,,,07 88 26 65 56,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
-La Roche-sur-Yon,avocat,Me Massiot,,,,02 51 47 91 73,,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
+La Roche-sur-Yon,avocat,Me Abdallah,Traineau-Abdallah,,"66 rue de Verdun, La Roche-sur-Yon",02 51 47 97 97,avocats@traineau-abdallah.com,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
+La Roche-sur-Yon,avocat,Me Armand Bâ,Bâ Delisle Avocats,,"8 rue Horts, 85200 Fontenay-le-Comte",02 51 51 30 60,,https://www.ba-delisle-avocats.fr,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles. Pas d'email public
+La Roche-sur-Yon,avocat,Me Odile Chaigneau,,,"3 rue Rabelais, 85200 Fontenay-le-Comte",02 51 69 46 58,cabinet@avocatchaigneau.fr,https://avocatchaigneau.fr,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
+La Roche-sur-Yon,avocat,Me Chalopin,Atlantic-Juris,,"58 rue Molière, La Roche-sur-Yon",02 51 24 09 10,accueil@atlantic-juris.com,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
+La Roche-sur-Yon,avocat,Me François-Hugues Cirier,Cirier & Associés,,"140 bd d'Angleterre, La Roche-sur-Yon",02 51 46 26 79,fhcirier@cirieretassocies.avocat.fr,,candidat,TJ La Roche-sur-Yon,,,"Liste du barreau : enchères habituelles. Bâtonnier, droit immobilier. Cabinet à plusieurs associés"
+La Roche-sur-Yon,avocat,Me Coué,,,,02 51 37 00 71 / 02 51 44 91 92,contact@avocats-gjhc.fr,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
+La Roche-sur-Yon,avocat,Me Emeriau,Ouest Avocats Conseils,,"4 rue Manuel, La Roche-sur-Yon",02 40 44 39 00,a.emeriau@ouestavocats.com,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles. Même cabinet que Me Dubreil (poursuivant Sautron)
+La Roche-sur-Yon,avocat,Me Feron,AVOCARE,,"2 rue Paul Doumer, La Roche-sur-Yon",07 63 50 13 24 / 09 87 58 04 71,contact@avocare.fr,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles. Affiche les saisies immobilières : bon candidat
+La Roche-sur-Yon,avocat,Me Galerneau,Altalega Avocats,,,02 51 37 87 31,mgalerneau.avocat@outlook.fr / contact@altalega-avocats.com,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
+La Roche-sur-Yon,avocat,Cabinet Gauvin-Roubert,,,"79 rue Chanzy, La Roche-sur-Yon",02 51 37 99 00,thr@gauvin-roubert-avocat.com,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
+La Roche-sur-Yon,avocat,Me Legoth,Hafi & Legoth,,Aizenay,02 51 94 40 47,jlegoth.avocat@outlook.com,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
+La Roche-sur-Yon,avocat,Me Hafi,Hafi & Legoth,,Aizenay,07 88 26 65 56,shafi.avocat@outlook.com,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
+La Roche-sur-Yon,avocat,Me Massiot,,,"4 rue Manuel, La Roche-sur-Yon",02 51 47 91 73 / 06 28 54 16 98,mmassiot.avocat@gmail.com,,candidat,TJ La Roche-sur-Yon,,,Liste du barreau : enchères habituelles
