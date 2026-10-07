@@ -14,7 +14,7 @@ Règle : on enchérit uniquement par un avocat inscrit au **barreau du tribunal*
 | TJ Tours | Me Jolly, Me Le Coz (candidats) | À mandater | lots du 13/10 et 10/11 |
 | TJ Blois, Le Mans | aucun | À chercher | Blois 15/10, Le Mans 06/10 |
 
-**Pineaux (12/10, TJ La Roche-sur-Yon)** : appeler Me Lacaze (forfaits, pratique des enchères). Repli : Me Cufi, 130 € HT, mais avocat du Crédit Agricole. Me Pannozzo n'a jamais porté d'enchères.
+**Pineaux (12/10, TJ La Roche-sur-Yon)** : Me Lacaze : 250 € HT de représentation, 1 700 € HT si adjudication. Repli : Me Cufi, 130 € HT, mais avocat du Crédit Agricole. Me Pannozzo n'a jamais porté d'enchères.
 
 ## Nantes
 - **Me Stéphanie Guillotin**, Cabinet Lexar. 06 11 19 77 74 / 02 40 16 81 60. contact@guillotin-avocat.fr. www.guillotin-avocat.fr. Avocate de Florian. Forfait confirmé par écrit : 240 € TTC pour porter les enchères, 1 800 € TTC en cas d'adjudication.
@@ -29,7 +29,7 @@ Règle : on enchérit uniquement par un avocat inscrit au **barreau du tribunal*
 |---|---|---|---|---|---|
 | Me Enzo Pannozzo (Quartz Avocats) | Sables, La Roche | 06 13 41 59 09, enzo.pannozzo@quartzavocats.fr | relativement cher | relativement cher | N'a jamais porté d'enchères : pas prioritaire |
 | Me François Cufi (DGCD Avocats) | La Roche | Patricia Mandin (assistante) 02 51 37 17 37, fc@dgcd-avocats.fr | 130 € HT | à demander | Avocat poursuivant de Pineaux (Crédit Agricole). Son cabinet propose quand même de représenter les enchérisseurs : préférer un avocat indépendant du créancier pour Pineaux |
-| Me Guillaume Lacaze | La Roche | 07 60 13 45 39, contact@glacaze-avocat.fr | à demander | à demander | Recommandé par Me Billaud |
+| Me Guillaume Lacaze | La Roche | 07 60 13 45 39, contact@glacaze-avocat.fr | 250 € HT (300 € TTC) | 1 700 € HT (2 040 € TTC) | Recommandé par Me Billaud |
 | Me Luc Billaud | Sables uniquement | 07 80 34 27 32, luc.billaud.avocat@gmail.com | à demander | à demander | N'intervient pas à La Roche |
 | Me Louis Yarroudh-Feurion | Sables | 06 51 64 62 11 / 09 39 24 79 17 (Les Achards), pas d'email public | à demander | à demander | |
 | Me David Potier | Sables | 09 51 30 55 10, cabinet.potier@free.fr (Saint-Gilles-Croix-de-Vie) | à demander | à demander | |
