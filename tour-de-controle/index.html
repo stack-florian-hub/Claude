@@ -144,6 +144,8 @@ const x=v=>v==null||!isFinite(v)?"n.d.":"x"+v.toLocaleString("fr-FR",{maximumFra
 const today=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
 const pd=s=>{if(!s)return null;const d=new Date(s);return isNaN(d)?null:d};
 const days=d=>d?Math.round((new Date(d).setHours(0,0,0,0)-today())/864e5):null;
+// Audience passée sans adjudication pour Florian : masqué, le résultat arrive via la veille
+const passe=l=>{const d=days(l.audience);return d!=null&&d<0&&!["gagne","revendu"].includes(l.statut)};
 const fdate=s=>{const d=pd(s);if(!d)return "n.d.";return d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"2-digit"})+(s.length>10&&(d.getHours()||d.getMinutes())?" "+d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}):"")};
 const addDays=(s,n)=>{const d=pd(s);if(!d)return null;d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
 const addMonths=(s,n)=>{const d=pd(s);if(!d)return null;d.setMonth(d.getMonth()+n);return d.toISOString().slice(0,10)};
@@ -285,7 +287,7 @@ const lotHead=`<tr><th>Bien</th><th>Tribunal</th><th>Visite</th><th class="num">
 
 function vPilotage(){
   const cs=cashState();const al=alerts();const ag=agenda(14);
-  const actifs=S.lots.filter(l=>!["perdu","retire","revendu","horsjeu"].includes(l.statut));
+  const actifs=S.lots.filter(l=>!passe(l)&&!["perdu","retire","revendu","horsjeu"].includes(l.statut));
   const next=S.lots.filter(l=>days(l.audience)>=0&&!["perdu","retire","horsjeu"].includes(l.statut)).sort((a,b)=>pd(a.audience)-pd(b.audience))[0];
   const ranked=actifs.map(l=>({l,c:calc(l)})).sort((a,b)=>(b.c.esper??-1e9)-(a.c.esper??-1e9)||(pd(a.l.audience)||0)-(pd(b.l.audience)||0));
   const prio=ranked.filter(r=>r.c.dec==="Priorité 1").length;
@@ -353,10 +355,12 @@ const empty=t=>`<div class="empty">${esc(t)}</div>`;
 
 function vLots(){
   const sel=S.lots.find(l=>l.id===S.lotSel);
-  const ord=[...S.lots].sort((a,b)=>(pd(a.audience)||9e15)-(pd(b.audience)||9e15));
+  const nPasse=S.lots.filter(passe).length;
+  const ord=S.lots.filter(l=>!passe(l)||l.id===S.lotSel).sort((a,b)=>(pd(a.audience)||9e15)-(pd(b.audience)||9e15));
   return `<div class="wrap">${sel?lotDetail(sel):""}
   <section class="panel"><div class="panel-head"><h2>Tous les lots</h2>${S.ro?"":`<button class="btn" data-act="add-lot">Nouveau lot</button>`}</div>
-  ${ord.length?`<div class="tbl"><table>${lotHead}${ord.map(lotRow).join("")}</table></div>`:empty("Aucun lot. Clique sur Nouveau lot.")}</section></div>`;
+  ${ord.length?`<div class="tbl"><table>${lotHead}${ord.map(lotRow).join("")}</table></div>`:empty("Aucun lot à venir. Clique sur Nouveau lot.")}
+  ${nPasse?`<p class="small muted" style="margin-top:8px">${nPasse} lot${nPasse>1?"s":""} à audience passée masqué${nPasse>1?"s":""} : ${nPasse>1?"ils arriveront":"il arrivera"} dans Résultats dès publication de l'adjudication.</p>`:""}</section></div>`;
 }
 const RF=[["rf_inondable","Zone inondable (PPRI, Géorisques)"],["rf_toiture","Toiture ou façade défaillante"],["rf_structure","Structure, fissures, humidité"],["rf_amiante","Amiante ou fibrociment"],["rf_dpe","DPE F/G ou absent"],["rf_elec","Électricité ou gaz dangereux"],["rf_assainissement","Assainissement non conforme"],["rf_servitudes","Servitudes ou urbanisme bloquant"],["rf_copro","Copro en difficulté, travaux votés"],["rf_tva","TVA sur le prix"],["rf_radon","Radon, pollution, termites"]];
 function redFlags(l){
