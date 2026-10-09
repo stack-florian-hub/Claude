@@ -1,7 +1,7 @@
 """Transforme la sortie de licitor.py en documents pour la base de la tour de contrôle.
 Usage : python3 import_db.py licitor.json lots_existants.json OUT_DIR
 Écrit un fichier JSON par document et un plan de lots (batches de 50) dans OUT_DIR/plan.json."""
-import json, os, re, sys, unicodedata
+import geo, json, os, re, sys, unicodedata
 
 src, existing_path, out = sys.argv[1], sys.argv[2], sys.argv[3]
 vench = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else []
@@ -52,6 +52,14 @@ for r in data["resultats"]:
         "surenchere": "non", "source": "Licitor", "lien": r["lien"], "verifie": "oui", "notes": r["description"][:300]})))
 
 new_lots, updates = [], []
+def pos(commune, dept, tribunal):
+    """Centre de la commune pour l'onglet Carte (vide si introuvable)."""
+    try:
+        c = geo.centre(commune, dept, tribunal)
+    except Exception:
+        c = None
+    return {"lat": c[0], "lon": c[1], "geoPrecision": "commune"} if c else {}
+
 def key(commune, m):
     return (ascii_(re.sub(r"\s*\(.*", "", commune or ""))[:12], m)
 seen_ex = {key(v["data"].get("commune"), v["data"].get("map")) for v in existing.values()}
@@ -77,7 +85,7 @@ for r in data["avenir"]:
         "ref": ref, "titre": (r["titre"][:1].upper() + r["titre"][1:] + " " + r["commune"]).strip(), "commune": f"{r['commune']} ({r['dept']})",
         "type": r["type"], "tribunal": trib(r["tribunal"]), "audience": r["date"], "map": r["map"], "surface": r["surface"],
         "occupation": r["occupation"], "poursuivant": r["poursuivant"], "lien": r["lien"], "statut": "repere", "visite": visite(r.get("visite_txt")), "visitesTxt": r.get("visite_txt"), "adresse": r.get("adresse"),
-        "notes": (r["description"] + (" | " + r["visite_txt"] if r.get("visite_txt") else ""))[:500]})))
+        "notes": (r["description"] + (" | " + r["visite_txt"] if r.get("visite_txt") else ""))[:500], **pos(r["commune"], r["dept"], None)})))
 
 seen = {key(v["data"].get("commune"), v["data"].get("map")) for v in existing.values()}
 seen |= {key(b["commune"], b["map"]) for _, _, b in new_lots}
@@ -89,6 +97,7 @@ for v in vench:
     new_lots.append(("lots", v["ref"], clean({
         "ref": v["ref"], "titre": f'{v["titre"]} {v["commune"]}', "commune": v["commune"], "type": v["type"], "tribunal": v["tribunal"],
         "audience": v["audience"], "visite": v.get("visite"), "map": v["map"], "surface": v.get("surface"), "occupation": "inconnu",
+        **pos(v["commune"], None, v["tribunal"]),
         "lien": v.get("lien"), "statut": "repere", "notes": "Source vench.fr (liste publique ; détail réservé aux abonnés). Cahier des conditions de vente à demander à l'avocat poursuivant."})))
 
 os.makedirs(out, exist_ok=True)
