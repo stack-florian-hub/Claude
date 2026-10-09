@@ -47,8 +47,11 @@
     moisAutorisations: 8,
     moisTravauxParTranche: 2,      // par tranche de 100 k€ de travaux (3 à 12 mois)
     // filtres
-    trajetMax: 45,
+    trajetMax: 60,                 // filtre facultatif : trajet maximal depuis le pôle le plus proche
+    filtreTrajet: false,
     voirAussi55: false,
+    // zone de recherche : par département (Florian vit à Romorantin jusqu'en mai 2027 ; attaches en 44 et 85)
+    departements: ['37', '41', '44', '85'],
     // pondérations du score (total 100)
     poids: { cachet: 20, capacite: 15, reglementaire: 15, financabilite: 15, rentabilite: 10, localisation: 10, hebergement: 5, negociabilite: 5, upside: 5 },
     malusMax: 15,
@@ -70,6 +73,30 @@
       structure_m2:         { bas: 900,  moyen: 1400, haut: 2000, conf: 'hypothèse' } // salle neuve / extension
     }
   };
+
+  // Pôles de référence pour les temps de trajet (gares)
+  var POLES = {
+    spdc: { nom: 'gare TGV de Saint-Pierre-des-Corps', lat: 47.38575, lon: 0.72330 },
+    romorantin: { nom: 'Romorantin-Lanthenay', lat: 47.3586, lon: 1.7414 },
+    nantes: { nom: 'gare de Nantes', lat: 47.2173, lon: -1.5420 },
+    laroche: { nom: 'gare de La Roche-sur-Yon', lat: 46.6705, lon: -1.4206 }
+  };
+  var DEPARTEMENTS = { '37': 'Indre-et-Loire', '41': 'Loir-et-Cher', '44': 'Loire-Atlantique', '85': 'Vendée' };
+  function departementDe(b) {
+    if (b.departement) return String(b.departement);
+    var c = b.code_insee || b.code_postal;
+    return c ? String(c).slice(0, 2) : null;
+  }
+  // Trajet depuis le pôle le plus proche : b.trajets = {spdc: min, romorantin: min, ...} ; à défaut trajet_min (Saint-Pierre-des-Corps)
+  function trajetRef(b) {
+    var best = null;
+    if (b.trajets && typeof b.trajets === 'object') {
+      Object.keys(b.trajets).forEach(function (k) { var v = num(b.trajets[k]); if (v !== null && (best === null || v < best.min)) best = { min: v, pole: k }; });
+    }
+    if (!best && num(b.trajet_min) !== null) best = { min: b.trajet_min, pole: 'spdc' };
+    if (best) best.nom = (POLES[best.pole] || {}).nom || best.pole;
+    return best;
+  }
 
   var CACHET_POIDS = { patrimoine: 3, mh: 3, loire: 2.5, vue: 2, parc: 2, charpente: 2, tuffeau: 1.5, pierre: 1.5, cave: 1.5, chapelle: 1, douves: 1.5, pigeonnier: 1, dependances: 1, piece_eau: 1 };
   var TYPES_NOBLES = { chateau: 3, manoir: 2.5, gentilhommiere: 2, prieure: 2.5, abbaye: 3, moulin: 2, troglodyte: 2, domaine_viticole: 1.5, maison_maitre: 1.5, grange: 1, ferme: 1, chapelle: 1.5 };
@@ -354,12 +381,12 @@
     sub.rentabilite = rt;
     expl.rentabilite = fin.ok ? 'Point mort à ' + (fin.pointMortMariages != null ? Math.ceil(fin.pointMortMariages) : 'n/a') + ' mariages par an, DSCR base ' + (fin.dscr != null ? fin.dscr.toFixed(2) : 'n/a') + '.' : 'Non calculable sans prix.';
     // Localisation
-    var t = num(b.trajet_min);
-    var lc = t === null ? 0.4 : clamp(1 - Math.max(0, t - 15) / 40, 0, 1);
+    var tr = trajetRef(b), t = tr ? tr.min : null;
+    var lc = t === null ? 0.4 : clamp(1 - Math.max(0, t - 15) / 45, 0, 1);
     var dTours = num(b.dist_gare_km);
-    if (dTours !== null && dTours <= 30) lc = clamp(lc + 0.1, 0, 1); // offre hôtelière de Tours / Amboise
+    if (tr && tr.pole === 'spdc' && dTours !== null && dTours <= 30) lc = clamp(lc + 0.1, 0, 1); // TGV Paris et offre hôtelière de Tours
     sub.localisation = lc;
-    expl.localisation = t !== null ? t + ' min de la gare TGV de Saint-Pierre-des-Corps.' : 'Temps de trajet non calculé (localisation imprécise).';
+    expl.localisation = t !== null ? t + ' min de la ' + tr.nom.replace(/^gare /, 'gare ') + ' (pôle le plus proche).' : 'Temps de trajet non calculé (localisation imprécise).';
     // Hébergement
     var ch = num(b.chambres);
     var hb = ch === null ? 0.2 : clamp(ch / 15, 0, 1);
@@ -437,8 +464,10 @@
   // ---------- Filtres éliminatoires ----------
   function filtres(b, p, fin) {
     var f = [];
-    var lim = p.voirAussi55 ? 55 : p.trajetMax;
-    if (b.trajet_min != null && b.trajet_min > lim) f.push({ code: 'trajet', libelle: 'Trajet supérieur à ' + lim + ' min' });
+    var dep = departementDe(b);
+    if (dep && p.departements && p.departements.length && p.departements.indexOf(dep) < 0) f.push({ code: 'zone', libelle: 'Hors départements suivis (' + dep + ')' });
+    var tr = trajetRef(b);
+    if (p.filtreTrajet && tr && tr.min > p.trajetMax) f.push({ code: 'trajet', libelle: 'Trajet supérieur à ' + p.trajetMax + ' min du pôle le plus proche' });
     var bati = num(b.surface_bati_m2), terrain = num(b.terrain_m2), cap = num(b.capacite_annoncee);
     if (!b.activite_reception_existante && cap === null && bati !== null && bati < 150 && (terrain === null || terrain < 5000)) f.push({ code: 'capacite', libelle: '200 invités impossibles sans extension plausible' });
     if (b.risques && b.risques.ppri === 'rouge' && !b.risques.solution) f.push({ code: 'ppri', libelle: 'Zone rouge PPRI' });
@@ -510,7 +539,7 @@
   }
 
   var API = {
-    DEFAULTS: DEFAULTS, STRATEGIES: STRATEGIES, merge: merge,
+    DEFAULTS: DEFAULTS, STRATEGIES: STRATEGIES, POLES: POLES, DEPARTEMENTS: DEPARTEMENTS, departementDe: departementDe, trajetRef: trajetRef, merge: merge,
     mensualite: mensualite, capitalRestant: capitalRestant, capitalPourAnnuite: capitalPourAnnuite,
     margeNegociation: margeNegociation, estimerTravaux: estimerTravaux, financer: financer, prixMaxCompatible: prixMaxCompatible,
     scorer: scorer, niveau: niveau, strategies: strategies, filtres: filtres, analyser: analyser,

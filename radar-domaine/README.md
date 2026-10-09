@@ -1,6 +1,6 @@
 # Radar Domaine
 
-Outil de sourcing, de scoring et de suivi de biens pouvant devenir un lieu de réception de mariages (200 invités), à 45 minutes de route au plus de la gare TGV de Saint-Pierre-des-Corps.
+Outil de sourcing, de scoring et de suivi de biens pouvant devenir un lieu de réception de mariages (200 invités), recherchés par département : Indre-et-Loire (37), Loir-et-Cher (41), Loire-Atlantique (44) et Vendée (85). Les trajets sont mesurés depuis le pôle le plus proche (gares de Saint-Pierre-des-Corps, Nantes, La Roche-sur-Yon, et Romorantin).
 
 - Artifact publié : https://claude.ai/artifact/RFLLQhy5YvSaXeqeVxLW6L (privé).
 - `index.html` : la page (publiée avec `engine.js` et `geo.json`). Les données vivent dans la base `db` de l'Artifact, jamais dans la page.

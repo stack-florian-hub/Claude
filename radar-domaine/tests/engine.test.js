@@ -41,11 +41,21 @@ test('bien sans surface : capacité faible mais pas d\'erreur', () => {
   assert.ok(a.fin.travaux.lignes.some(l => /Salle à créer/.test(l.poste)));
 });
 
-test('hors zone : filtre trajet actif, désactivable par voirAussi55', () => {
-  const b = { ...base, trajet_min: 50 };
-  assert.ok(E.analyser(b, P).filtres.some(f => f.code === 'trajet'));
-  assert.ok(!E.analyser(b, { ...P, voirAussi55: true }).filtres.some(f => f.code === 'trajet'));
-  assert.ok(E.analyser({ ...b, trajet_min: 60 }, { ...P, voirAussi55: true }).filtres.some(f => f.code === 'trajet'));
+test('zone par département : 37, 41, 44, 85 suivis, les autres filtrés', () => {
+  assert.ok(!E.analyser({ ...base, code_postal: '37210' }, P).filtres.some(f => f.code === 'zone'));
+  assert.ok(!E.analyser({ ...base, code_insee: '41194' }, P).filtres.some(f => f.code === 'zone'));
+  assert.ok(!E.analyser({ ...base, departement: '85' }, P).filtres.some(f => f.code === 'zone'));
+  assert.ok(E.analyser({ ...base, code_postal: '49400' }, P).filtres.some(f => f.code === 'zone'));
+  assert.ok(!E.analyser({ ...base, code_postal: null, code_insee: null }, P).filtres.some(f => f.code === 'zone'));
+  assert.ok(E.analyser({ ...base, departement: '44' }, { ...P, departements: ['37'] }).filtres.some(f => f.code === 'zone'));
+});
+
+test('trajet : pôle le plus proche, filtre facultatif', () => {
+  const b = { ...base, trajet_min: 80, trajets: { spdc: 80, romorantin: 25 } };
+  assert.deepStrictEqual(E.trajetRef(b).pole, 'romorantin');
+  assert.ok(!E.analyser(b, P).filtres.some(f => f.code === 'trajet'));
+  assert.ok(E.analyser({ ...base, trajet_min: 80 }, { ...P, filtreTrajet: true }).filtres.some(f => f.code === 'trajet'));
+  assert.ok(E.analyser(b, P).score.sous.localisation > E.analyser({ ...base, trajet_min: 80 }, P).score.sous.localisation);
 });
 
 test('règle de réalisme : château à 3 M€ plafonné à 59 et étiqueté', () => {

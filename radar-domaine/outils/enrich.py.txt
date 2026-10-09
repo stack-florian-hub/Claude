@@ -6,6 +6,8 @@ Toutes les requêtes passent par le proxy de l'environnement (urllib lit HTTPS_P
 import hashlib, json, math, os, re, sys, time, unicodedata, urllib.parse, urllib.request
 
 GARE = (47.38575, 0.72330)
+# Pôles de référence (gares) : le trajet est calculé depuis chaque pôle à moins de 150 km à vol d'oiseau
+POLES = {'spdc': GARE, 'romorantin': (47.3586, 1.7414), 'nantes': (47.2173, -1.5420), 'laroche': (46.6705, -1.4206)}
 TODAY = time.strftime('%Y-%m-%d')
 HERE = os.path.dirname(os.path.abspath(__file__))
 LOG = []
@@ -89,7 +91,7 @@ def geocode(b):
         return
     f = r['features'][0]
     p = f['properties']
-    if p.get('score', 0) < 0.6 or str(p.get('citycode', ''))[:2] not in ('37', '41', '72', '49', '36', '86'):
+    if p.get('score', 0) < 0.6 or str(p.get('citycode', ''))[:2] not in ('37', '41', '44', '85', '72', '49', '36', '86', '18', '45', '79', '17', '35', '56', '53'):
         LOG.append(f"géocodage douteux pour {q} : {p.get('label')}")
         return
     b['lon'], b['lat'] = f['geometry']['coordinates']
@@ -101,14 +103,22 @@ def geocode(b):
 def route(b):
     if not (b.get('lat') and b.get('lon')):
         return
-    body = {'locations': [{'lat': GARE[0], 'lon': GARE[1]}, {'lat': b['lat'], 'lon': b['lon']}], 'costing': 'auto',
-            'date_time': {'type': 1, 'value': '2026-10-10T10:00'}, 'units': 'kilometers', 'directions_type': 'none'}
-    r = get('https://valhalla1.openstreetmap.de/route?json=' + urllib.parse.quote(json.dumps(body)))
-    time.sleep(1.1)  # serveur public : une requête par seconde
-    if r and 'trip' in r:
-        s = r['trip']['summary']
-        b['trajet_min'] = round(s['time'] / 60)
-        b['distance_route_km'] = round(s['length'], 1)
+    trajets = dict(b.get('trajets') or {})
+    for pole, (plat, plon) in POLES.items():
+        if pole in trajets or hav((plat, plon), (b['lat'], b['lon'])) > 150:
+            continue
+        body = {'locations': [{'lat': plat, 'lon': plon}, {'lat': b['lat'], 'lon': b['lon']}], 'costing': 'auto',
+                'date_time': {'type': 1, 'value': '2026-10-10T10:00'}, 'units': 'kilometers', 'directions_type': 'none'}
+        r = get('https://valhalla1.openstreetmap.de/route?json=' + urllib.parse.quote(json.dumps(body)))
+        time.sleep(1.1)  # serveur public : une requête par seconde
+        if r and 'trip' in r:
+            s = r['trip']['summary']
+            trajets[pole] = round(s['time'] / 60)
+            if pole == 'spdc':
+                b['trajet_min'] = trajets[pole]
+                b['distance_route_km'] = round(s['length'], 1)
+    if trajets:
+        b['trajets'] = trajets
         b['trajet_source'] = 'Valhalla OSM, samedi 10 h' + (', centre de la commune' if b.get('precision_gps') != 'adresse' else '')
 
 
@@ -162,6 +172,9 @@ def main(paths):
         plu(b)
         if b.get('lat'):
             b['dist_gare_km'] = round(hav(GARE, (b['lat'], b['lon'])), 1)
+        if not b.get('departement'):
+            c = b.get('code_insee') or b.get('code_postal')
+            if c: b['departement'] = str(c)[:2]
         b['id'] = ident(b)
         b.setdefault('premiere_apparition', TODAY)
         b['derniere_vue'] = TODAY
