@@ -3,8 +3,7 @@ Usage : python3 vench.py OUT.json"""
 import html, json, re, subprocess, sys, time
 
 TRIBS = {"nantes": "Nantes", "la-roche-sur-yon": "La Roche-sur-Yon", "les-sables-d-olonne": "Les Sables-d'Olonne", "angers": "Angers",
-         "saumur": "Saumur", "tours": "Tours", "blois": "Blois", "le-mans": "Le Mans", "laval": "Laval", "poitiers": "Poitiers",
-         "orleans": "Orléans", "chateauroux": "Châteauroux"}
+         "saumur": "Saumur", "tours": "Tours", "blois": "Blois"}
 
 def get(url):
     time.sleep(1.5)

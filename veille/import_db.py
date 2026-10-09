@@ -5,7 +5,8 @@ import geo, json, os, re, sys, unicodedata
 
 src, existing_path, out = sys.argv[1], sys.argv[2], sys.argv[3]
 vench = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else []
-ZONE = {"Nantes", "Saint-Nazaire", "La Roche-sur-Yon", "Les Sables-d'Olonne", "Angers", "Saumur", "Tours", "Blois", "Le Mans", "Laval", "Poitiers", "Orléans", "Châteauroux", "Montargis"}
+# Zone de prospection (09/10/2026 : Florian retire Laval, Le Mans, Orléans, Montargis, Châteauroux, Poitiers)
+ZONE = {"Nantes", "Saint-Nazaire", "La Roche-sur-Yon", "Les Sables-d'Olonne", "Angers", "Saumur", "Tours", "Blois"}
 data = json.load(open(src))
 existing = json.load(open(existing_path)) if os.path.exists(existing_path) else {}
 MAP_MAX = 40000
