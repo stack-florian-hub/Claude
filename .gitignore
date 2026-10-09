@@ -3,3 +3,5 @@ __pycache__/
 radar-domaine/data/com_*.json
 radar-domaine/data/deps.json
 radar-domaine/data/dep_*.json
+radar-domaine/data/newdocs/
+radar-domaine/data/seeddocs/

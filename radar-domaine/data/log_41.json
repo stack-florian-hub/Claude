@@ -1,0 +1,58 @@
+{
+ "sources_interrogees": [
+  {
+   "site": "FNAIM (Leggett, Sotheby's, Le Nail, Actif Immo)",
+   "statut": "ok",
+   "detail": "Pages d'annonces ouvertes pour Romorantin x2, Salbris x2; liste Salbris lue",
+   "nb_biens": 4
+  },
+  {
+   "site": "Cabinet Le Nail",
+   "statut": "partiel",
+   "detail": "2 annonces ouvertes (Saint-Aignan, Salbris 4843); autres URL (Vendôme 4752/4433) redirigent vers index, annonces non retrouvées",
+   "nb_biens": 2
+  },
+  {
+   "site": "Green-Acres / French-Property",
+   "statut": "partiel",
+   "detail": "1 annonce ouverte (troglodytes Montoire); moulins Vendôme/Montrichard supprimés; liste Saint-Georges-sur-Cher sans URL individuelles",
+   "nb_biens": 1
+  },
+  {
+   "site": "Capifrance / ma-propriete.fr",
+   "statut": "bloque",
+   "detail": "403 sur Gy-en-Sologne 84 ha; données issues de l'extrait de recherche, verifie=false",
+   "nb_biens": 1
+  },
+  {
+   "site": "etreproprio",
+   "statut": "bloque",
+   "detail": "403; Gy-en-Sologne 42 ha non vérifié; hôtel-restaurant Blois non ouvert",
+   "nb_biens": 1
+  },
+  {
+   "site": "frenchestateagents.com / bellesdemeures / zimo / nestoria / trovit / bellespierres",
+   "statut": "bloque",
+   "detail": "403/401/captcha, rien d'exploitable",
+   "nb_biens": 0
+  },
+  {
+   "site": "aplaceinthesun",
+   "statut": "vide",
+   "detail": "hôtel-restaurant 25 chambres Blois: annonce plus disponible",
+   "nb_biens": 0
+  },
+  {
+   "site": "Licitor / Immonot / IAD / Safti / Michel Simond / Cession-PME / Bien'ici / Leboncoin",
+   "statut": "vide",
+   "detail": "Aucun résultat exploitable via recherche web; non interrogés directement",
+   "nb_biens": 0
+  },
+  {
+   "site": "Lieux de réception en activité à vendre",
+   "statut": "vide",
+   "detail": "Aucune annonce murs+fonds de lieu de réception trouvée dans le 41",
+   "nb_biens": 0
+  }
+ ]
+}

@@ -1,0 +1,1936 @@
+{
+ "biens": [
+  {
+   "precision_gps": "commune",
+   "lat": 47.363293,
+   "lon": 1.7449,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": 3,
+   "etat": null,
+   "dpe": "G",
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "DPE G (passoire thermique).",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "41",
+   "verifie": true,
+   "titre": "Corps de ferme de 350 m² sur 25 ha, rivière et étang, Romorantin-Lanthenay",
+   "type": "ferme",
+   "commune": "Romorantin-Lanthenay",
+   "code_postal": "41200",
+   "prix": 329787,
+   "surface_bati_m2": 350,
+   "terrain_m2": 250000,
+   "description": "Corps de ferme d'environ 350 m² (175 m² habitables, 175 m² restant à aménager) sur 25 ha avec rivière et étang. Dépendances : grange ~100 m², hangar ~215 m², deux ateliers vitrés, toitures refaites en 2016. Convient chasse, équestre ou tourisme.",
+   "cachet": [
+    "parc",
+    "dependances",
+    "piece_eau"
+   ],
+   "contact": {
+    "organisme": "Leggett Immobilier",
+    "nom": "Bruno Debain",
+    "telephone": "06 31 30 32 76",
+    "email": "bruno.debain@leggett.fr",
+    "url": "https://www.fnaim.fr/annonce-immobiliere/53116973/17-acheter-maison-romorantin-lanthenay-41200.htm"
+   },
+   "sources": [
+    {
+     "url": "https://www.fnaim.fr/annonce-immobiliere/53116973/17-acheter-maison-romorantin-lanthenay-41200.htm",
+     "site": "FNAIM (Leggett)",
+     "collecte_le": "2026-10-04",
+     "ref": "A46073BDE41"
+    }
+   ],
+   "a_verifier": [
+    "adresse exacte",
+    "etat",
+    "honoraires (charge vendeur)",
+    "règles PLU/ERP pour réception",
+    "surface hangar réutilisable"
+   ],
+   "code_insee": "41194",
+   "trajet_min": 75,
+   "distance_route_km": 103.8,
+   "trajets": {
+    "spdc": 75,
+    "romorantin": 4
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 77.0,
+   "id": "ferme-romorantin-lanthenay-4f04a5",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 329787
+    }
+   ]
+  },
+  {
+   "precision_gps": "commune",
+   "lat": 47.363293,
+   "lon": 1.7449,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": 8,
+   "etat": "bon",
+   "dpe": "B",
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Au-dessus du budget cible (990 k€).",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "41",
+   "verifie": true,
+   "titre": "Propriété de 38 ha en Sologne, 3 maisons (530 m²), étang et rivière, Romorantin-Lanthenay",
+   "type": "gentilhommiere",
+   "commune": "Romorantin-Lanthenay",
+   "code_postal": "41200",
+   "prix": 990500,
+   "surface_bati_m2": 530,
+   "terrain_m2": 380000,
+   "description": "Trois maisons totalisant 530 m² (longère récente de 350 m² avec spa, pavillon de chasse 130 m², maison 50 m²) sur ~38 ha : 17 ha de bois (PSG), 11 ha de prés et équipements équestres, étang de 1 500 m², 800 m de rive. Deux dépendances dont une grange.",
+   "cachet": [
+    "parc",
+    "dependances",
+    "piece_eau"
+   ],
+   "contact": {
+    "organisme": "Val de Loire - Sologne Sotheby's International Realty",
+    "nom": null,
+    "telephone": "+33 6 84 13 57 02",
+    "email": null,
+    "url": "https://www.fnaim.fr/annonce-immobiliere/52155755/17-acheter-maison-romorantin-lanthenay-41200.htm"
+   },
+   "sources": [
+    {
+     "url": "https://www.fnaim.fr/annonce-immobiliere/52155755/17-acheter-maison-romorantin-lanthenay-41200.htm",
+     "site": "FNAIM (Sotheby's)",
+     "collecte_le": "2026-10-04",
+     "ref": "OR1-1324"
+    }
+   ],
+   "a_verifier": [
+    "capacité de réception",
+    "prix au-dessus de 700 k€",
+    "surface de la grange"
+   ],
+   "code_insee": "41194",
+   "trajet_min": 75,
+   "distance_route_km": 103.8,
+   "trajets": {
+    "spdc": 75,
+    "romorantin": 4
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 77.0,
+   "id": "gentilhommiere-romorantin-lanthenay-460971",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 990500
+    }
+   ]
+  },
+  {
+   "precision_gps": "commune",
+   "lat": 47.256358,
+   "lon": 1.356579,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": 16,
+   "etat": "bon",
+   "dpe": null,
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Prix très au-dessus de 800 k€.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "41",
+   "verifie": true,
+   "titre": "Château restauré avec gîtes, Saint-Aignan",
+   "type": "chateau",
+   "commune": "Saint-Aignan",
+   "code_postal": "41110",
+   "prix": 1595000,
+   "surface_bati_m2": 500,
+   "terrain_m2": 16100,
+   "description": "Château du XVIIe remanié au XVIIIe, 500 m², 16 chambres, deux gîtes (90 et 180 m²), garage, atelier, piscine, parc avec cèdres sur 1,61 ha. Usage commercial mentionné.",
+   "cachet": [
+    "parc",
+    "patrimoine",
+    "dependances",
+    "pierre"
+   ],
+   "contact": {
+    "organisme": "Cabinet LE NAIL",
+    "nom": "Baudouin LE GRELLE",
+    "telephone": "+33 2 43 98 20 20",
+    "email": null,
+    "url": "https://www.cabinetlenail.com/en/print-property-page/details/2497/&mobile=0"
+   },
+   "sources": [
+    {
+     "url": "https://www.cabinetlenail.com/en/print-property-page/details/2497/&mobile=0",
+     "site": "Cabinet Le Nail",
+     "collecte_le": "2026-10-04",
+     "ref": "4634"
+    }
+   ],
+   "a_verifier": [
+    "capacité réception 200 invités",
+    "dpe",
+    "prix hors budget",
+    "taxe_fonciere"
+   ],
+   "code_insee": "41198",
+   "trajet_min": 58,
+   "distance_route_km": 74.1,
+   "trajets": {
+    "spdc": 58,
+    "romorantin": 37
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 49.9,
+   "id": "chateau-saint-aignan-1e3eec",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 1595000
+    }
+   ]
+  },
+  {
+   "precision_gps": "commune",
+   "lat": 47.762834,
+   "lon": 0.848476,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": 7,
+   "etat": null,
+   "dpe": "F",
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "41",
+   "verifie": true,
+   "titre": "Ensemble de 5 gîtes troglodytiques, Montoire-sur-le-Loir",
+   "type": "troglodyte",
+   "commune": "Montoire-sur-le-Loir",
+   "code_postal": "41800",
+   "prix": 699000,
+   "surface_bati_m2": 400,
+   "terrain_m2": 1621,
+   "description": "Cinq logements troglodytiques modulables en vallée du Loir, terrasses avec vue, galerie interne, terrain au-dessus des caves inclus (1 621 m² + parcelle de 300 m² accès rivière). Activité de gîtes.",
+   "cachet": [
+    "cave",
+    "vue",
+    "pierre"
+   ],
+   "contact": {
+    "organisme": "Immotourisme (via Green-Acres / French-Property)",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.french-property.com/fr/bien-a-vendre/3772-Ayustdsmr300ap9p"
+   },
+   "sources": [
+    {
+     "url": "https://www.french-property.com/fr/bien-a-vendre/3772-Ayustdsmr300ap9p",
+     "site": "French-Property / Green-Acres",
+     "collecte_le": "2026-10-04",
+     "ref": "vm479-immotourisme"
+    }
+   ],
+   "a_verifier": [
+    "CA",
+    "capacité 200 invités improbable (terrain 1 621 m²)",
+    "contact direct",
+    "taxe_fonciere"
+   ],
+   "code_insee": "41149",
+   "trajet_min": 64,
+   "distance_route_km": 62.6,
+   "trajets": {
+    "spdc": 64,
+    "romorantin": 105
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 43.0,
+   "id": "troglodyte-montoire-sur-le-2e901c",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 699000
+    }
+   ]
+  },
+  {
+   "precision_gps": "commune",
+   "lat": 47.417467,
+   "lon": 2.047325,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": 12,
+   "etat": "bon",
+   "dpe": "D",
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Prix 899 k€ > cible.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "41",
+   "verifie": true,
+   "titre": "Manoir (ancien relais de chasse) 520 m² sur 6 ha, Salbris",
+   "type": "manoir",
+   "commune": "Salbris",
+   "code_postal": "41300",
+   "prix": 899000,
+   "surface_bati_m2": 520,
+   "terrain_m2": 60660,
+   "description": "Ancien relais de chasse vers 1850, 520 m², 12 chambres avec salles d'eau, caves. Longère annexe 110 m², maison de gardien, maison d'amis, anciennes écuries (4 boxes), hangar, 4 garages, piscine 10x5 m, cour close et arborée.",
+   "cachet": [
+    "pierre",
+    "parc",
+    "dependances",
+    "cave"
+   ],
+   "contact": {
+    "organisme": "Cabinet LE NAIL",
+    "nom": "Baudouin Le Grelle",
+    "telephone": "02 43 98 20 20",
+    "email": null,
+    "url": "https://www.fnaim.fr/annonce-immobiliere/52515551/17-acheter-maison-salbris-41300.htm"
+   },
+   "sources": [
+    {
+     "url": "https://www.fnaim.fr/annonce-immobiliere/52515551/17-acheter-maison-salbris-41300.htm",
+     "site": "FNAIM (Cabinet Le Nail)",
+     "collecte_le": "2026-10-04",
+     "ref": "NA4-1992 / 4588"
+    }
+   ],
+   "a_verifier": [
+    "prix au-dessus de 800 k€",
+    "référence incohérente",
+    "surface salle/dépendance pour 200 invités",
+    "taxe_fonciere"
+   ],
+   "code_insee": "41232",
+   "trajet_min": 94,
+   "distance_route_km": 138.3,
+   "trajets": {
+    "spdc": 94,
+    "romorantin": 34
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 99.7,
+   "id": "manoir-salbris-761a78",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 899000
+    }
+   ]
+  },
+  {
+   "precision_gps": "commune",
+   "lat": 47.417467,
+   "lon": 2.047325,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": 3,
+   "etat": "a_renover",
+   "dpe": "F",
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "DPE F; plusieurs bâtiments à rénover.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "41",
+   "verifie": true,
+   "titre": "Propriété de chasse 34 ha, tour + dépendances, Salbris",
+   "type": "gentilhommiere",
+   "commune": "Salbris",
+   "code_postal": "41300",
+   "prix": 695000,
+   "surface_bati_m2": 160,
+   "terrain_m2": 343000,
+   "description": "Maison principale 160 m² (tour enduite + bâtiment briques/colombages), 34,3 ha de bois et friches giboyeux. Dépendances : vieille ferme en L à rénover, maison de gardien, salle de chasse avec cuisine, studio, granges et hangars agricoles.",
+   "cachet": [
+    "parc",
+    "dependances"
+   ],
+   "contact": {
+    "organisme": "Cabinet LE NAIL",
+    "nom": "Baudouin Le Grelle",
+    "telephone": "02 43 98 20 20",
+    "email": null,
+    "url": "https://www.cabinetlenail.com/en/print-property-page/details/2664/&mobile=0"
+   },
+   "sources": [
+    {
+     "url": "https://www.cabinetlenail.com/en/print-property-page/details/2799/&mobile=0",
+     "site": "Cabinet Le Nail",
+     "collecte_le": "2026-10-04",
+     "ref": "4843"
+    }
+   ],
+   "a_verifier": [
+    "capacité réception",
+    "coût travaux élevé",
+    "surface granges/hangars",
+    "état dépendances"
+   ],
+   "id": "gentilhommiere-salbris-70c1f4",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 695000
+    }
+   ],
+   "code_insee": "41232",
+   "trajet_min": 94,
+   "distance_route_km": 138.3,
+   "trajets": {
+    "spdc": 94,
+    "romorantin": 34
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 99.7
+  },
+  {
+   "precision_gps": "commune",
+   "lat": 47.4275,
+   "lon": 2.0439,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": 6.8,
+   "surface_salle_m2": null,
+   "chambres": 4,
+   "etat": "rafraichir",
+   "dpe": "E",
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Trop petit pour 200 invités sans tente; parc 1 800 m².",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "41",
+   "verifie": true,
+   "titre": "Ancienne école 203 m² sur 1 800 m², Salbris",
+   "type": "ecole",
+   "commune": "Salbris",
+   "code_postal": "41300",
+   "prix": 170800,
+   "surface_bati_m2": 203,
+   "terrain_m2": 1800,
+   "description": "Ancienne école partiellement rénovée, séjour avec bar, cuisine, 4 chambres, +50 m² attenants en cours d'aménagement, terrain clos arboré.",
+   "cachet": [],
+   "contact": {
+    "organisme": "ACTIF IMMO",
+    "nom": "Alain Delory",
+    "telephone": "02 54 76 77 59",
+    "email": null,
+    "url": "https://www.fnaim.fr/annonce-immobiliere/51535863/17-acheter-maison-loir-et-cher-41.htm"
+   },
+   "sources": [
+    {
+     "url": "https://www.fnaim.fr/annonce-immobiliere/51535863/17-acheter-maison-loir-et-cher-41.htm",
+     "site": "FNAIM (Actif Immo)",
+     "collecte_le": "2026-10-04",
+     "ref": "E3113"
+    }
+   ],
+   "a_verifier": [
+    "changement de destination",
+    "salle 250 m² absente: capacité 200 invités improbable"
+   ],
+   "id": "ecole-salbris-6b013e",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 170800
+    }
+   ],
+   "code_insee": "41232",
+   "trajet_min": 90,
+   "distance_route_km": 137.4,
+   "trajets": {
+    "spdc": 90,
+    "romorantin": 30
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 99.5
+  },
+  {
+   "precision_gps": "commune",
+   "lat": 47.345384,
+   "lon": 1.591683,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": null,
+   "etat": "a_renover",
+   "dpe": null,
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Capifrance a renvoyé 403: données non vérifiées.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "41",
+   "verifie": false,
+   "titre": "Propriété de chasse de 84 ha, longère et dépendances, Gy-en-Sologne",
+   "type": "gentilhommiere",
+   "commune": "Gy-en-Sologne",
+   "code_postal": "41230",
+   "prix": 840000,
+   "surface_bati_m2": 175,
+   "terrain_m2": 840000,
+   "description": "D'après l'extrait de recherche (page non ouverte, 403) : propriété de chasse de 84 ha à 15 min de Romorantin, longère ~175 m² à rénover, maison de gardien, hangar, 3 granges, 2 dépendances aménageables en gîtes ; exploitée par un agriculteur proche de la retraite.",
+   "cachet": [
+    "dependances"
+   ],
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.capifrance.fr/fr/immobilier/vente/propriete/gy-en-sologne/propriete-de-chasse-en-sologne-s-etendant-sur-84-hectares-a-15-minutes-de-romorantin/85343"
+   },
+   "sources": [
+    {
+     "url": "https://www.capifrance.fr/fr/immobilier/vente/propriete/gy-en-sologne/propriete-de-chasse-en-sologne-s-etendant-sur-84-hectares-a-15-minutes-de-romorantin/85343",
+     "site": "Capifrance",
+     "collecte_le": "2026-10-04",
+     "ref": "85343"
+    }
+   ],
+   "a_verifier": [
+    "contact",
+    "dpe",
+    "honoraires",
+    "prix (≈840 k€ d'après extrait)",
+    "surfaces granges"
+   ],
+   "id": "gentilhommiere-gy-en-sologne-ec4efd",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 840000
+    }
+   ],
+   "code_insee": "41099",
+   "trajet_min": 68,
+   "distance_route_km": 87.8,
+   "trajets": {
+    "spdc": 68,
+    "romorantin": 18
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 65.6
+  },
+  {
+   "precision_gps": "commune",
+   "lat": 47.345384,
+   "lon": 1.591683,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_salle_m2": null,
+   "chambres": null,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "etreproprio a renvoyé 403: données non vérifiées.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "41",
+   "verifie": false,
+   "titre": "Propriété de chasse de 42 ha, bâtiments en carré, Gy-en-Sologne",
+   "type": "gentilhommiere",
+   "commune": "Gy-en-Sologne",
+   "code_postal": "41230",
+   "prix": 466000,
+   "terrain_m2": 420000,
+   "description": "D'après l'extrait de recherche (page non ouverte, 403) : habitation et plusieurs bâtiments disposés en carré, étang, 40 ha de chasse, à 10 min de Romorantin.",
+   "cachet": [
+    "dependances",
+    "piece_eau"
+   ],
+   "contact": {
+    "organisme": "Jean-Michel Richard (via etreproprio)",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.etreproprio.com/immobilier-25631343-vente-propriete-de-chasse-sologne-42-hectares-gy-en-sologne"
+   },
+   "sources": [
+    {
+     "url": "https://www.etreproprio.com/immobilier-25631343-vente-propriete-de-chasse-sologne-42-hectares-gy-en-sologne",
+     "site": "etreproprio",
+     "collecte_le": "2026-10-04",
+     "ref": "25631343"
+    }
+   ],
+   "a_verifier": [
+    "contact",
+    "dpe",
+    "prix",
+    "surface bâti",
+    "état"
+   ],
+   "surface_bati_m2": null,
+   "code_insee": "41099",
+   "trajet_min": 68,
+   "distance_route_km": 87.8,
+   "trajets": {
+    "spdc": 68,
+    "romorantin": 18
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 65.6,
+   "id": "gentilhommiere-gy-en-sologne-605ec7",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 466000
+    }
+   ]
+  },
+  {
+   "lat": 47.1294,
+   "lon": -1.2672,
+   "precision_gps": "commune",
+   "prix": 800000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": 6.0,
+   "surface_bati_m2": 287,
+   "surface_salle_m2": null,
+   "terrain_m2": 4700,
+   "chambres": 4,
+   "etat": "bon",
+   "dpe": null,
+   "taxe_fonciere": 574,
+   "cachet": [
+    "dependances"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": true,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Prix divergents selon portails : 800 000 € HT + 6 % (BureauxLocaux), 848 000 € FAI (FNAIM), 750 000 € (particulier, Leboncoin/Zimo selon recherche, non ouvert). Murs + fonds probables, à confirmer.",
+   "mode_vente": "murs_fonds",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "44",
+   "titre": "Salle de réception avec cuisine traiteur et 4 chambres (ERP 5)",
+   "type": "lieu_reception_activite",
+   "commune": "Mouzillon",
+   "code_postal": "44330",
+   "description": "Bâtiment de réception de 2015 (charpente métallique) sur 4 700 m², grande salle climatisée et acoustique, bar, cuisine traiteur équipée, 4 chambres (~25 couchages), parking ~80 places. Exploitation existante, contrats programmés jusqu'à fin 2026, trésorerie estimée ~25 000 €.",
+   "contact": {
+    "organisme": "Loire Océan Expansion, 1 avenue des Améthystes, 44300 Nantes",
+    "nom": null,
+    "telephone": "02 40 20 63 11",
+    "email": null,
+    "url": "https://www.bureauxlocaux.com/annonce/salle-de-reception-a-vendre--40625715"
+   },
+   "sources": [
+    {
+     "url": "https://www.bureauxlocaux.com/annonce/salle-de-reception-a-vendre--40625715",
+     "site": "BureauxLocaux",
+     "collecte_le": "2026-10-04",
+     "ref": "44_7933"
+    },
+    {
+     "url": "https://www.fnaim.fr/annonce-immobiliere/52950983/17-acheter-localindustriel-mouzillon-44330.htm",
+     "site": "FNAIM",
+     "collecte_le": "2026-10-04",
+     "ref": "44_7933"
+    }
+   ],
+   "verifie": true,
+   "a_verifier": [
+    "ca_annonce",
+    "capacite_annoncee",
+    "date_premiere_parution",
+    "dpe",
+    "licence IV et bail",
+    "murs+fonds vs fonds seul",
+    "nuisances sonores voisinage",
+    "prix exact (750/800/848 k€)",
+    "surface_salle_m2"
+   ],
+   "id": "lieu-reception-activite-mouzillon-90a3fb",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 800000
+    }
+   ],
+   "code_insee": "44108",
+   "trajets": {
+    "nantes": 35,
+    "laroche": 64
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 152.9
+  },
+  {
+   "lat": 47.236324,
+   "lon": -1.9209,
+   "precision_gps": "commune",
+   "prix": 1652000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 238,
+   "surface_salle_m2": null,
+   "terrain_m2": null,
+   "chambres": null,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [
+    "dependances"
+   ],
+   "capacite_annoncee": 200,
+   "activite_reception_existante": true,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Au-dessus du budget (1,65 M€). Identité du lieu non confirmée.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "44",
+   "titre": "Domaine de réception et gîte de groupe (ancien corps de ferme, salle ~200 couverts, ~35 couchages)",
+   "type": "lieu_reception_activite",
+   "commune": "Frossay",
+   "code_postal": "44320",
+   "description": "Selon la page de liste Green-Acres : domaine à Frossay avec salle de réception pour environ 200 couverts, hébergement de groupe d'environ 35 couchages, 7 douches et 6 WC, environ 3 000 m² d'extérieur ; 238 m² habitables, honoraires à charge vendeur. Annonce individuelle non ouverte (lien non fourni). Une fiche de location évoque 'Guermiton' à Frossay, rattachement non confirmé.",
+   "contact": {
+    "organisme": "Green-Acres",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.green-acres.fr/property-for-sale/frossay"
+   },
+   "sources": [
+    {
+     "url": "https://www.green-acres.fr/property-for-sale/frossay",
+     "site": "Green-Acres (page de liste)",
+     "collecte_le": "2026-10-04",
+     "ref": null
+    }
+   ],
+   "verifie": false,
+   "a_verifier": [
+    "URL précise de l'annonce",
+    "ca_annonce",
+    "dpe",
+    "identité du lieu",
+    "mode_vente (murs+fonds ?)",
+    "statut ERP",
+    "terrain_m2"
+   ],
+   "id": "lieu-reception-activite-frossay-d16e80",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 1652000
+    }
+   ],
+   "code_insee": "44061",
+   "trajets": {
+    "nantes": 44,
+    "laroche": 80
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 200.0
+  },
+  {
+   "lat": 47.4432,
+   "lon": -1.5153,
+   "precision_gps": "commune",
+   "prix": null,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": null,
+   "surface_salle_m2": null,
+   "terrain_m2": 7000,
+   "chambres": 24,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": 371000,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "murs_fonds",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "44",
+   "titre": "Hôtel-restaurant 3 étoiles proche de Nort-sur-Erdre, 24 chambres, salle de séminaire",
+   "type": "hotel_restaurant",
+   "commune": "Nort-sur-Erdre (proche)",
+   "code_postal": null,
+   "description": "D'après un extrait de recherche de l'annonce Paruvendu (page bloquée en 403) : murs et fonds d'un hôtel 3 étoiles depuis 2017, 24 chambres dont une PMR, salle de petit-déjeuner et de séminaire, terrain de 7 000 m² avec grand parking et possibilité d'agrandissement, CA annoncé 371 000 € HT.",
+   "contact": {
+    "organisme": null,
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.paruvendu.fr/t/vente-commerces/1286933667A1KIRCCO000"
+   },
+   "sources": [
+    {
+     "url": "https://www.paruvendu.fr/t/vente-commerces/1286933667A1KIRCCO000",
+     "site": "Paruvendu",
+     "collecte_le": "2026-10-04",
+     "ref": null
+    }
+   ],
+   "verifie": false,
+   "a_verifier": [
+    "commune exacte",
+    "correspondance URL/annonce non confirmée",
+    "date de parution",
+    "dpe",
+    "prix",
+    "surface bâtie",
+    "taille de la salle de séminaire"
+   ],
+   "id": "hotel-restaurant-nort-sur-erdre-80ff0c",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "code_insee": "44110",
+   "trajets": {
+    "nantes": 44,
+    "laroche": 86
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 168.6
+  },
+  {
+   "lat": null,
+   "lon": null,
+   "precision_gps": null,
+   "prix": 695000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 410,
+   "surface_salle_m2": null,
+   "terrain_m2": 8735,
+   "chambres": null,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [
+    "pierre",
+    "dependances"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "44",
+   "titre": "Manoir XVIIIe-XIXe avec ferme rénovée, jardin clos et piscine, Pays de la Mée (près de Châteaubriant)",
+   "type": "manoir",
+   "commune": "Pays de la Mée (près de Châteaubriant)",
+   "code_postal": null,
+   "description": "D'après un extrait de recherche Belles Demeures (Barnes Propriétés et Châteaux, page bloquée en 403) : demeure des XVIIIe-XIXe siècles, ferme entièrement rénovée, jardin clos de 8 735 m² avec piscine chauffée, 410 m² habitables.",
+   "contact": {
+    "organisme": "Barnes Propriétés et Châteaux",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.bellesdemeures.com/en/sale/france/western-loire/loire-atlantique/manor-house/tt-2-stb-28-pl-329/"
+   },
+   "sources": [
+    {
+     "url": "https://www.bellesdemeures.com/en/sale/france/western-loire/loire-atlantique/manor-house/tt-2-stb-28-pl-329/",
+     "site": "Belles Demeures (page de liste)",
+     "collecte_le": "2026-10-04",
+     "ref": null
+    }
+   ],
+   "verifie": false,
+   "a_verifier": [
+    "URL précise de l'annonce",
+    "code postal",
+    "commune exacte",
+    "dpe",
+    "localisation",
+    "surface de la ferme / dépendance pour 200 invités",
+    "taxe foncière"
+   ],
+   "id": "manoir-pays-de-la-0be3fd",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 695000
+    }
+   ]
+  },
+  {
+   "lat": 47.385541,
+   "lon": -1.197594,
+   "precision_gps": "commune",
+   "prix": 649000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": null,
+   "surface_salle_m2": null,
+   "terrain_m2": 560000,
+   "chambres": null,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [
+    "parc"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": null,
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "44",
+   "titre": "Propriété à Ancenis avec 56 ha de parc, prairies, bois et étang",
+   "type": "autre",
+   "commune": "Ancenis",
+   "code_postal": null,
+   "description": "D'après un extrait de recherche Belles Demeures (page bloquée en 403) : bien à Ancenis avec 56 hectares de parc, prairies, bois et étang, potentiel de développement. Nature du bâti non connue.",
+   "contact": {
+    "organisme": null,
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.bellesdemeures.com/en/sale/france/western-loire/loire-atlantique/manor-house/tt-2-stb-28-pl-329/"
+   },
+   "sources": [
+    {
+     "url": "https://www.bellesdemeures.com/en/sale/france/western-loire/loire-atlantique/manor-house/tt-2-stb-28-pl-329/",
+     "site": "Belles Demeures (page de liste)",
+     "collecte_le": "2026-10-04",
+     "ref": null
+    }
+   ],
+   "verifie": false,
+   "a_verifier": [
+    "URL précise",
+    "bâti et surfaces",
+    "commune/code postal",
+    "dpe",
+    "type exact"
+   ],
+   "code_insee": "44003",
+   "trajet_min": 117,
+   "distance_route_km": 186.8,
+   "trajets": {
+    "spdc": 117,
+    "nantes": 39,
+    "laroche": 78
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 144.6,
+   "id": "autre-ancenis-0be3fd",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 649000
+    }
+   ]
+  },
+  {
+   "code_postal": "85300",
+   "lat": 46.83053,
+   "lon": -1.845829,
+   "precision_gps": "commune",
+   "prix": 598000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 260,
+   "surface_salle_m2": 300,
+   "terrain_m2": 12300,
+   "chambres": 5,
+   "etat": null,
+   "dpe": "C",
+   "taxe_fonciere": null,
+   "cachet": [
+    "pierre",
+    "parc",
+    "dependances",
+    "cave"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Grange de 300 m² à vérifier pour changement de destination/ERP; assainissement autonome; usage habitation à requalifier en ERP.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "85",
+   "titre": "Maison de caractère (1730) sur 1,2 ha avec grange de 300 m²",
+   "type": "longere",
+   "commune": "Challans",
+   "description": "Maison de caractère de 1730, 260 m² habitables, sur 1,23 ha clos avec parc, prairie et petit plan d'eau. Grange d'environ 300 m² avec atelier, cave et boxes, plus grange ouverte (préau).",
+   "contact": {
+    "organisme": "Demeures & Caractère (Cabinet Retz Immobilier)",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.french-property.com/fr/bien-a-vendre/1494-CCVPR290037040"
+   },
+   "sources": [
+    {
+     "url": "https://www.french-property.com/fr/bien-a-vendre/1494-CCVPR290037040",
+     "site": "French-Property",
+     "collecte_le": "2026-10-04",
+     "ref": "CCVPR290037040"
+    }
+   ],
+   "verifie": true,
+   "a_verifier": [
+    "ERP/changement destination grange",
+    "date_parution",
+    "disponibilité",
+    "etat",
+    "honoraires",
+    "téléphone"
+   ],
+   "code_insee": "85047",
+   "trajets": {
+    "nantes": 60,
+    "laroche": 36
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 204.0,
+   "id": "longere-challans-159354",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 598000
+    }
+   ]
+  },
+  {
+   "code_postal": "85700",
+   "lat": 46.782357,
+   "lon": -0.824854,
+   "precision_gps": "commune",
+   "prix": 770000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 300,
+   "surface_salle_m2": null,
+   "terrain_m2": 18000,
+   "chambres": 6,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [
+    "pierre",
+    "parc",
+    "cave",
+    "dependances"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Annonce marquée retirée par l'agent sur French-Property: disponibilité incertaine. Prix hors frais de notaire.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "85",
+   "titre": "Manoir XIXe près du Puy du Fou, dépendances 390 m², parc 1,8 ha",
+   "type": "manoir",
+   "commune": "Pouzauges",
+   "description": "Manoir du XIXe siècle de 300 m² habitables avec caves voûtées, maison d'amis, boxes à chevaux, piscine, dépendances d'environ 390 m² et parc d'1,8 ha. Environ 200 m² aménageables selon l'annonce.",
+   "contact": {
+    "organisme": "Yannick Cormerais via Green-Acres / French-Property",
+    "nom": "Yannick Cormerais",
+    "telephone": null,
+    "email": null,
+    "url": "https://www.french-property.com/fr/bien-a-vendre/3772-A513lnt0tbbigpa4"
+   },
+   "sources": [
+    {
+     "url": "https://www.french-property.com/fr/bien-a-vendre/3772-A513lnt0tbbigpa4",
+     "site": "French-Property",
+     "collecte_le": "2026-10-04",
+     "ref": "afvma90005596-5596"
+    }
+   ],
+   "verifie": true,
+   "a_verifier": [
+    "disponibilité (annonce retirée)",
+    "dpe",
+    "honoraires",
+    "surface salle",
+    "téléphone"
+   ],
+   "code_insee": "85182",
+   "trajet_min": 156,
+   "distance_route_km": 240.7,
+   "trajets": {
+    "spdc": 156,
+    "nantes": 83,
+    "laroche": 53
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 135.1,
+   "id": "manoir-pouzauges-50e09b",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 770000
+    }
+   ]
+  },
+  {
+   "code_postal": "85700",
+   "lat": 46.782357,
+   "lon": -0.824854,
+   "precision_gps": "commune",
+   "prix": 595000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 260,
+   "surface_salle_m2": null,
+   "terrain_m2": 2900,
+   "chambres": 7,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [
+    "dependances",
+    "vue"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Terrain petit: tente 200 invités peu plausible; aucune activité réception; prix hors frais de notaire.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "85",
+   "titre": "Maison familiale avec 2 gîtes, dépendances 400 m², près du Puy du Fou",
+   "type": "ferme",
+   "commune": "Pouzauges",
+   "description": "Maison de 260 m² avec deux gîtes rénovés indépendants, dépendances de 400 m² (garage, atelier, cave) et espace détente de 140 m² avec piscine, sauna et spa. Terrain d'environ 2 900 m².",
+   "contact": {
+    "organisme": "Damien Guilloteau via Green-Acres / French-Property",
+    "nom": "Damien Guilloteau",
+    "telephone": null,
+    "email": null,
+    "url": "https://www.french-property.com/index.php/sale-property/3772-Avrw62rwhabkljv9"
+   },
+   "sources": [
+    {
+     "url": "https://www.french-property.com/index.php/sale-property/3772-Avrw62rwhabkljv9",
+     "site": "French-Property",
+     "collecte_le": "2026-10-04",
+     "ref": "5379-5689"
+    }
+   ],
+   "verifie": true,
+   "a_verifier": [
+    "capacité 200 invités",
+    "date_parution",
+    "dpe",
+    "honoraires",
+    "téléphone"
+   ],
+   "code_insee": "85182",
+   "trajet_min": 156,
+   "distance_route_km": 240.7,
+   "trajets": {
+    "spdc": 156,
+    "nantes": 83,
+    "laroche": 53
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 135.1,
+   "id": "ferme-pouzauges-1a95c2",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 595000
+    }
+   ]
+  },
+  {
+   "code_postal": "85150",
+   "lat": 46.600071,
+   "lon": -1.752542,
+   "precision_gps": "commune",
+   "prix": 559000,
+   "prix_inclut_honoraires": false,
+   "honoraires_pct": 4.99,
+   "surface_bati_m2": 170,
+   "surface_salle_m2": null,
+   "terrain_m2": 1009,
+   "chambres": 5,
+   "etat": "bon",
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [
+    "pierre"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Surface et terrain insuffisants pour 200 invités; prix incohérent dans l'annonce (498 700 en en-tête vs 559 000 dans le texte).",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "85",
+   "titre": "Moulin, ferme et gîte entièrement rénovés",
+   "type": "moulin",
+   "commune": "Vairé",
+   "description": "Ensemble moulin, ferme et gîte rénové, 5 chambres, 1 009 m² de terrain à environ 10 km de la mer. Potentiel chambres d'hôtes.",
+   "contact": {
+    "organisme": "Agence Newton",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.french-property.com/fr/bien-a-vendre/1689-MN-5150"
+   },
+   "sources": [
+    {
+     "url": "https://www.french-property.com/fr/bien-a-vendre/1689-MN-5150",
+     "site": "French-Property",
+     "collecte_le": "2026-10-04",
+     "ref": "MN-5150"
+    }
+   ],
+   "verifie": true,
+   "a_verifier": [
+    "capacité",
+    "prix exact",
+    "téléphone"
+   ],
+   "code_insee": "85298",
+   "trajets": {
+    "nantes": 80,
+    "laroche": 38
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 207.1,
+   "id": "moulin-vaire-354d2b",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 559000
+    }
+   ]
+  },
+  {
+   "code_postal": "85600",
+   "lat": 46.979292,
+   "lon": -1.292128,
+   "precision_gps": "commune",
+   "prix": 1378000,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": 6.0,
+   "surface_bati_m2": 765,
+   "surface_salle_m2": 90,
+   "terrain_m2": 113375,
+   "chambres": 12,
+   "etat": null,
+   "dpe": "D",
+   "taxe_fonciere": null,
+   "cachet": [
+    "parc",
+    "chapelle",
+    "dependances"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": true,
+   "ca_annonce": null,
+   "logement_exploitant": true,
+   "risques_notes": "Prix 1,3 M€ hors frais: hors budget 800 k€. Capacité non indiquée; CA non communiqué.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "85",
+   "titre": "Château XIXe avec activité d'accueil et d'événementiel établie",
+   "type": "chateau",
+   "commune": "Montaigu-Vendée",
+   "description": "Château néoclassique de 765 m² sur environ 11,3 ha, orangerie de 90 m² dédiée aux événements, chapelle, parc paysager. Exploité en hébergement, mariages, séminaires et réceptions.",
+   "contact": {
+    "organisme": "Groupe Mercure (agence Mercure Pays de la Loire)",
+    "nom": "Eric Louvet",
+    "telephone": "+33 6 07 71 56 64",
+    "email": null,
+    "url": "https://www.french-property.com/sale-property/3772-Ag5tmgadqfg4st8d"
+   },
+   "sources": [
+    {
+     "url": "https://www.french-property.com/sale-property/3772-Ag5tmgadqfg4st8d",
+     "site": "French-Property",
+     "collecte_le": "2026-10-04",
+     "ref": "2155pl"
+    },
+    {
+     "url": "https://www.groupe-mercure.fr/en/properties/chateau-and-manors-vendee-85600-450149-2155pl/",
+     "site": "Groupe Mercure",
+     "collecte_le": "2026-10-04",
+     "ref": "2155pl"
+    }
+   ],
+   "verifie": true,
+   "a_verifier": [
+    "CA",
+    "capacité",
+    "statut actif",
+    "taxe_fonciere"
+   ],
+   "code_insee": "85146",
+   "trajets": {
+    "nantes": 44,
+    "laroche": 44
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 158.9,
+   "id": "chateau-montaigu-vendee-58ed48",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 1378000
+    }
+   ]
+  },
+  {
+   "code_postal": "85110",
+   "lat": 46.670663,
+   "lon": -1.049215,
+   "precision_gps": "commune",
+   "prix": 1148000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 843,
+   "surface_salle_m2": 264,
+   "terrain_m2": 22900,
+   "chambres": 8,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [
+    "parc",
+    "cave",
+    "dependances",
+    "patrimoine"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Annonce supprimée par l'agence: probablement plus disponible. Hors budget.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "85",
+   "titre": "Château à Chantonnay avec orangerie et écuries, parc 2,3 ha",
+   "type": "chateau",
+   "commune": "Chantonnay",
+   "description": "Château de 843 m² avec cave de neuf pièces voûtées, orangerie 24x11 m et écuries de 1880 de 26x13 m à restaurer, deux pavillons et piscine, jardins et verger.",
+   "contact": {
+    "organisme": "Prestige Property Group",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.french-property.com/fr/bien-a-vendre/127-249015"
+   },
+   "sources": [
+    {
+     "url": "https://www.french-property.com/fr/bien-a-vendre/127-249015",
+     "site": "French-Property",
+     "collecte_le": "2026-10-04",
+     "ref": "249015"
+    }
+   ],
+   "verifie": true,
+   "a_verifier": [
+    "disponibilité",
+    "honoraires",
+    "état dépendances"
+   ],
+   "code_insee": "85051",
+   "trajets": {
+    "nantes": 65,
+    "laroche": 31
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 156.1,
+   "id": "chateau-chantonnay-64d114",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 1148000
+    }
+   ]
+  },
+  {
+   "code_postal": "85480",
+   "lat": 46.632343,
+   "lon": -1.136618,
+   "precision_gps": "commune",
+   "prix": 5830000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 900,
+   "surface_salle_m2": null,
+   "terrain_m2": 236000,
+   "chambres": 8,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [
+    "parc",
+    "chapelle",
+    "dependances"
+   ],
+   "capacite_annoncee": 350,
+   "activite_reception_existante": true,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Hors budget (5,83 M€); annonce supprimée par l'agence.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "85",
+   "titre": "Château florentin XIXe avec restaurant, véranda 350 places, chapelle",
+   "type": "chateau",
+   "commune": "Bournezeau",
+   "description": "Château XIXe sur 23,6 ha avec restaurant jusqu'à 110 couverts, véranda jusqu'à 350 personnes avec cuisine professionnelle, deux salles de réunion, sept appartements, piscine et tennis.",
+   "contact": {
+    "organisme": "Prestige Property Group",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.french-property.com/fr/bien-a-vendre/127-238677"
+   },
+   "sources": [
+    {
+     "url": "https://www.french-property.com/fr/bien-a-vendre/127-238677",
+     "site": "French-Property",
+     "collecte_le": "2026-10-04",
+     "ref": "238677"
+    }
+   ],
+   "verifie": true,
+   "a_verifier": [
+    "CA",
+    "disponibilité"
+   ],
+   "code_insee": "85034",
+   "trajets": {
+    "nantes": 57,
+    "laroche": 23
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 164.0,
+   "id": "chateau-bournezeau-b8a020",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 5830000
+    }
+   ]
+  },
+  {
+   "code_postal": "85000",
+   "lat": 46.670848,
+   "lon": -1.412533,
+   "precision_gps": "commune",
+   "prix": 4000000,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 900,
+   "surface_salle_m2": null,
+   "terrain_m2": 420000,
+   "chambres": 12,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [
+    "mh",
+    "chapelle",
+    "parc",
+    "dependances"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Hors budget (4 M€).",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "85",
+   "titre": "Château historique (MH) avec maison d'hôtes, domaine de 42 ha",
+   "type": "chateau",
+   "commune": "La Roche-sur-Yon",
+   "description": "Château du XVIIIe siècle sur 42 ha avec maison d'hôtes, La Bergerie avec piscine, tour de guet du XVe, chapelle classée, dépendances et ancien hippodrome.",
+   "contact": {
+    "organisme": "Prestige Property Group",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.french-property.com/fr/bien-a-vendre/127-257320"
+   },
+   "sources": [
+    {
+     "url": "https://www.french-property.com/fr/bien-a-vendre/127-257320",
+     "site": "French-Property",
+     "collecte_le": "2026-10-04",
+     "ref": "257320"
+    }
+   ],
+   "verifie": true,
+   "a_verifier": [
+    "capacité",
+    "disponibilité"
+   ],
+   "code_insee": "85191",
+   "trajets": {
+    "nantes": 57,
+    "laroche": 3
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 180.3,
+   "id": "chateau-la-roche-sur-a9d5e0",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 4000000
+    }
+   ]
+  },
+  {
+   "code_postal": "85120",
+   "lat": 46.644518,
+   "lon": -0.737543,
+   "precision_gps": "commune",
+   "prix": 357000,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": null,
+   "surface_bati_m2": 250,
+   "surface_salle_m2": null,
+   "terrain_m2": 4000,
+   "chambres": 7,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [
+    "cave"
+   ],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Pas de capacité 200 invités; annonce supprimée par l'agence.",
+   "mode_vente": "classique",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "85",
+   "titre": "Gîte / maison 250 m² avec piscine à La Châtaigneraie",
+   "type": "maison_maitre",
+   "commune": "La Châtaigneraie",
+   "description": "Maison de 250 m² avec appartement indépendant, 7 chambres, piscine, grange de 7x4 m et jardin clos d'environ 4 000 m².",
+   "contact": {
+    "organisme": "La Residence",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.french-property.com/index.php/fr/bien-a-vendre/1027-9749A"
+   },
+   "sources": [
+    {
+     "url": "https://www.french-property.com/index.php/fr/bien-a-vendre/1027-9749A",
+     "site": "French-Property",
+     "collecte_le": "2026-10-04",
+     "ref": "9749A"
+    }
+   ],
+   "verifie": true,
+   "a_verifier": [
+    "disponibilité",
+    "terrain"
+   ],
+   "code_insee": "85059",
+   "trajet_min": 156,
+   "distance_route_km": 236.7,
+   "trajets": {
+    "spdc": 156,
+    "nantes": 93,
+    "laroche": 59
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 138.1,
+   "id": "maison-maitre-la-chataigneraie-6bab57",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 357000
+    }
+   ]
+  },
+  {
+   "code_postal": "85400",
+   "lat": 46.45857,
+   "lon": -1.16072,
+   "precision_gps": "commune",
+   "prix": 128900,
+   "prix_inclut_honoraires": null,
+   "honoraires_pct": null,
+   "surface_bati_m2": 600,
+   "surface_salle_m2": null,
+   "terrain_m2": null,
+   "chambres": null,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": true,
+   "ca_annonce": null,
+   "logement_exploitant": null,
+   "risques_notes": "Fonds seul: bail, loyer, licence, murs à vérifier. Page bloquée (403), non lue.",
+   "mode_vente": "cession_fonds",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "85",
+   "titre": "Fonds de commerce salle de spectacle et de réception (Minoterie)",
+   "type": "salle",
+   "commune": "Luçon",
+   "description": "D'après les extraits de recherche (page non ouverte, 403): fonds d'une salle de 600 m² avec bar, cuisine de réchauffage, vestiaires; exploitée depuis plus de 20 ans (mariages, thés dansants, lotos, concerts).",
+   "contact": {
+    "organisme": null,
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.etreproprio.com/immobilier-25724455-vente-fonds-de-commerce-salle-de-spectacle-salle-de-reception-a-lucon-activite-evenementielle-reconnue-depuis-lucon"
+   },
+   "sources": [
+    {
+     "url": "https://www.etreproprio.com/immobilier-25724455-vente-fonds-de-commerce-salle-de-spectacle-salle-de-reception-a-lucon-activite-evenementielle-reconnue-depuis-lucon",
+     "site": "Etreproprio",
+     "collecte_le": "2026-10-04",
+     "ref": "25724455"
+    }
+   ],
+   "verifie": false,
+   "a_verifier": [
+    "CA",
+    "bail/loyer",
+    "capacité",
+    "contact",
+    "surface salle",
+    "tout"
+   ],
+   "code_insee": "85128",
+   "trajets": {
+    "nantes": 72,
+    "laroche": 42
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 176.3,
+   "id": "salle-lucon-e59598",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 128900
+    }
+   ]
+  },
+  {
+   "code_postal": "85400",
+   "lat": 46.45857,
+   "lon": -1.16072,
+   "precision_gps": "commune",
+   "prix": 730000,
+   "prix_inclut_honoraires": true,
+   "honoraires_pct": 5.8,
+   "surface_bati_m2": 600,
+   "surface_salle_m2": null,
+   "terrain_m2": null,
+   "chambres": 6,
+   "etat": null,
+   "dpe": null,
+   "taxe_fonciere": null,
+   "cachet": [],
+   "capacite_annoncee": null,
+   "activite_reception_existante": false,
+   "ca_annonce": 400000,
+   "logement_exploitant": true,
+   "risques_notes": "Salles de 63 couverts: insuffisant pour 200 invités sans extension/tente; vendeur cherche 200 k€ d'apport, supérieur à l'apport de Florian.",
+   "mode_vente": "murs_fonds",
+   "date_vente_encheres": null,
+   "mise_a_prix": null,
+   "date_premiere_parution": null,
+   "baisse_prix": null,
+   "departement": "85",
+   "titre": "Hôtel-restaurant 6 chambres, murs et fonds, avec maison de 110 m²",
+   "type": "hotel_restaurant",
+   "commune": "Luçon",
+   "description": "D'après extraits de recherche (page 403, non lue): hôtel de 6 chambres et restaurant (2 salles de 35 et 28 couverts), maison attenante de 110 m², parking, piscine, jardin. CA 400 k€ HT, EBE 91 k€.",
+   "contact": {
+    "organisme": "Capifrance",
+    "nom": null,
+    "telephone": null,
+    "email": null,
+    "url": "https://www.capifrance.fr/en/realestate/sale/businessgoodwill/lucon//84153"
+   },
+   "sources": [
+    {
+     "url": "https://www.capifrance.fr/en/realestate/sale/businessgoodwill/lucon//84153",
+     "site": "Capifrance",
+     "collecte_le": "2026-10-04",
+     "ref": "903066"
+    }
+   ],
+   "verifie": false,
+   "a_verifier": [
+    "apport requis",
+    "capacité",
+    "terrain",
+    "tout"
+   ],
+   "id": "hotel-restaurant-lucon-17703e",
+   "premiere_apparition": "2026-10-09",
+   "derniere_vue": "2026-10-09",
+   "statut_annonce": "active",
+   "controles_echec": 0,
+   "historique_prix": [
+    {
+     "date": "2026-10-09",
+     "prix": 730000
+    }
+   ],
+   "code_insee": "85128",
+   "trajets": {
+    "nantes": 72,
+    "laroche": 42
+   },
+   "trajet_source": "Valhalla OSM, samedi 10 h, centre de la commune",
+   "dist_gare_km": 176.3
+  }
+ ],
+ "log": [
+  "https://api-adresse.data.gouv.fr/search/?q=Salbris&limit=1&type=municipality : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Salbris&limit=1&type=municipality : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Gy-en-Sologne&limit=1&type=municipali : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Mouzillon&limit=1&type=municipality : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Frossay&limit=1&type=municipality : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Nort-sur-Erdre&limit=1&type=municipal : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Pays+de+la+M%C3%A9e&limit=1&type=muni : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Lu%C3%A7on&limit=1&type=municipality : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Salbris&limit=1&type=municipality : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Salbris&limit=1&type=municipality : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Mouzillon&limit=1&type=municipality : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Salbris&limit=1&type=municipality : <urlopen error [Errno 104] Connection reset by peer>",
+  "https://api-adresse.data.gouv.fr/search/?q=Mouzillon&limit=1&type=municipality : <urlopen error [Errno 104] Connection reset by peer>"
+ ],
+ "nb_bruts": 25
+}

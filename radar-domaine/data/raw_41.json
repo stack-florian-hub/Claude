@@ -231,5 +231,288 @@
    "taxe_fonciere",
    "contact direct"
   ]
+ },
+ {
+  "precision_gps": "commune",
+  "lat": null,
+  "lon": null,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": null,
+  "surface_salle_m2": null,
+  "chambres": 12,
+  "etat": "bon",
+  "dpe": "D",
+  "taxe_fonciere": null,
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Prix 899 k€ > cible.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "41",
+  "verifie": true,
+  "titre": "Manoir (ancien relais de chasse) 520 m² sur 6 ha, Salbris",
+  "type": "manoir",
+  "commune": "Salbris",
+  "code_postal": "41300",
+  "prix": 899000,
+  "surface_bati_m2": 520,
+  "terrain_m2": 60660,
+  "description": "Ancien relais de chasse vers 1850, 520 m², 12 chambres avec salles d'eau, caves. Longère annexe 110 m², maison de gardien, maison d'amis, anciennes écuries (4 boxes), hangar, 4 garages, piscine 10x5 m, cour close et arborée.",
+  "cachet": [
+   "pierre",
+   "parc",
+   "dependances",
+   "cave"
+  ],
+  "contact": {
+   "organisme": "Cabinet LE NAIL",
+   "nom": "Baudouin Le Grelle",
+   "telephone": "02 43 98 20 20",
+   "email": null,
+   "url": "https://www.fnaim.fr/annonce-immobiliere/52515551/17-acheter-maison-salbris-41300.htm"
+  },
+  "sources": [
+   {
+    "url": "https://www.fnaim.fr/annonce-immobiliere/52515551/17-acheter-maison-salbris-41300.htm",
+    "site": "FNAIM (Cabinet Le Nail)",
+    "collecte_le": "2026-10-04",
+    "ref": "NA4-1992 / 4588"
+   }
+  ],
+  "a_verifier": [
+   "surface salle/dépendance pour 200 invités",
+   "référence incohérente",
+   "prix au-dessus de 800 k€",
+   "taxe_fonciere"
+  ]
+ },
+ {
+  "precision_gps": "commune",
+  "lat": null,
+  "lon": null,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": null,
+  "surface_salle_m2": null,
+  "chambres": 3,
+  "etat": "a_renover",
+  "dpe": "F",
+  "taxe_fonciere": null,
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "DPE F; plusieurs bâtiments à rénover.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "41",
+  "verifie": true,
+  "titre": "Propriété de chasse 34 ha, tour + dépendances, Salbris",
+  "type": "gentilhommiere",
+  "commune": "Salbris",
+  "code_postal": "41300",
+  "prix": 695000,
+  "surface_bati_m2": 160,
+  "terrain_m2": 343000,
+  "description": "Maison principale 160 m² (tour enduite + bâtiment briques/colombages), 34,3 ha de bois et friches giboyeux. Dépendances : vieille ferme en L à rénover, maison de gardien, salle de chasse avec cuisine, studio, granges et hangars agricoles.",
+  "cachet": [
+   "parc",
+   "dependances"
+  ],
+  "contact": {
+   "organisme": "Cabinet LE NAIL",
+   "nom": "Baudouin Le Grelle",
+   "telephone": "02 43 98 20 20",
+   "email": null,
+   "url": "https://www.cabinetlenail.com/en/print-property-page/details/2664/&mobile=0"
+  },
+  "sources": [
+   {
+    "url": "https://www.cabinetlenail.com/en/print-property-page/details/2799/&mobile=0",
+    "site": "Cabinet Le Nail",
+    "collecte_le": "2026-10-04",
+    "ref": "4843"
+   }
+  ],
+  "a_verifier": [
+   "surface granges/hangars",
+   "capacité réception",
+   "état dépendances",
+   "coût travaux élevé"
+  ]
+ },
+ {
+  "precision_gps": "commune",
+  "lat": null,
+  "lon": null,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 6.8,
+  "surface_salle_m2": null,
+  "chambres": 4,
+  "etat": "rafraichir",
+  "dpe": "E",
+  "taxe_fonciere": null,
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Trop petit pour 200 invités sans tente; parc 1 800 m².",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "41",
+  "verifie": true,
+  "titre": "Ancienne école 203 m² sur 1 800 m², Salbris",
+  "type": "ecole",
+  "commune": "Salbris",
+  "code_postal": "41300",
+  "prix": 170800,
+  "surface_bati_m2": 203,
+  "terrain_m2": 1800,
+  "description": "Ancienne école partiellement rénovée, séjour avec bar, cuisine, 4 chambres, +50 m² attenants en cours d'aménagement, terrain clos arboré.",
+  "cachet": [],
+  "contact": {
+   "organisme": "ACTIF IMMO",
+   "nom": "Alain Delory",
+   "telephone": "02 54 76 77 59",
+   "email": null,
+   "url": "https://www.fnaim.fr/annonce-immobiliere/51535863/17-acheter-maison-loir-et-cher-41.htm"
+  },
+  "sources": [
+   {
+    "url": "https://www.fnaim.fr/annonce-immobiliere/51535863/17-acheter-maison-loir-et-cher-41.htm",
+    "site": "FNAIM (Actif Immo)",
+    "collecte_le": "2026-10-04",
+    "ref": "E3113"
+   }
+  ],
+  "a_verifier": [
+   "salle 250 m² absente: capacité 200 invités improbable",
+   "changement de destination"
+  ]
+ },
+ {
+  "precision_gps": "commune",
+  "lat": null,
+  "lon": null,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_salle_m2": null,
+  "chambres": null,
+  "etat": "a_renover",
+  "dpe": null,
+  "taxe_fonciere": null,
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Capifrance a renvoyé 403: données non vérifiées.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "41",
+  "verifie": false,
+  "titre": "Propriété de chasse de 84 ha, longère et dépendances, Gy-en-Sologne",
+  "type": "gentilhommiere",
+  "commune": "Gy-en-Sologne",
+  "code_postal": "41230",
+  "prix": 840000,
+  "surface_bati_m2": 175,
+  "terrain_m2": 840000,
+  "description": "D'après l'extrait de recherche (page non ouverte, 403) : propriété de chasse de 84 ha à 15 min de Romorantin, longère ~175 m² à rénover, maison de gardien, hangar, 3 granges, 2 dépendances aménageables en gîtes ; exploitée par un agriculteur proche de la retraite.",
+  "cachet": [
+   "dependances"
+  ],
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.capifrance.fr/fr/immobilier/vente/propriete/gy-en-sologne/propriete-de-chasse-en-sologne-s-etendant-sur-84-hectares-a-15-minutes-de-romorantin/85343"
+  },
+  "sources": [
+   {
+    "url": "https://www.capifrance.fr/fr/immobilier/vente/propriete/gy-en-sologne/propriete-de-chasse-en-sologne-s-etendant-sur-84-hectares-a-15-minutes-de-romorantin/85343",
+    "site": "Capifrance",
+    "collecte_le": "2026-10-04",
+    "ref": "85343"
+   }
+  ],
+  "a_verifier": [
+   "prix (≈840 k€ d'après extrait)",
+   "honoraires",
+   "surfaces granges",
+   "dpe",
+   "contact"
+  ]
+ },
+ {
+  "precision_gps": "commune",
+  "lat": null,
+  "lon": null,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_salle_m2": null,
+  "chambres": null,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "etreproprio a renvoyé 403: données non vérifiées.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "41",
+  "verifie": false,
+  "titre": "Propriété de chasse de 42 ha, bâtiments en carré, Gy-en-Sologne",
+  "type": "gentilhommiere",
+  "commune": "Gy-en-Sologne",
+  "code_postal": "41230",
+  "prix": 466000,
+  "terrain_m2": 420000,
+  "description": "D'après l'extrait de recherche (page non ouverte, 403) : habitation et plusieurs bâtiments disposés en carré, étang, 40 ha de chasse, à 10 min de Romorantin.",
+  "cachet": [
+   "dependances",
+   "piece_eau"
+  ],
+  "contact": {
+   "organisme": "Jean-Michel Richard (via etreproprio)",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.etreproprio.com/immobilier-25631343-vente-propriete-de-chasse-sologne-42-hectares-gy-en-sologne"
+  },
+  "sources": [
+   {
+    "url": "https://www.etreproprio.com/immobilier-25631343-vente-propriete-de-chasse-sologne-42-hectares-gy-en-sologne",
+    "site": "etreproprio",
+    "collecte_le": "2026-10-04",
+    "ref": "25631343"
+   }
+  ],
+  "a_verifier": [
+   "prix",
+   "surface bâti",
+   "dpe",
+   "état",
+   "contact"
+  ],
+  "surface_bati_m2": null
  }
 ]
