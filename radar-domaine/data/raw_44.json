@@ -1,0 +1,301 @@
+[
+ {
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 800000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": 6.0,
+  "surface_bati_m2": 287,
+  "surface_salle_m2": null,
+  "terrain_m2": 4700,
+  "chambres": 4,
+  "etat": "bon",
+  "dpe": null,
+  "taxe_fonciere": 574,
+  "cachet": [
+   "dependances"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Prix divergents selon portails : 800 000 € HT + 6 % (BureauxLocaux), 848 000 € FAI (FNAIM), 750 000 € (particulier, Leboncoin/Zimo selon recherche, non ouvert). Murs + fonds probables, à confirmer.",
+  "mode_vente": "murs_fonds",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "44",
+  "titre": "Salle de réception avec cuisine traiteur et 4 chambres (ERP 5)",
+  "type": "lieu_reception_activite",
+  "commune": "Mouzillon",
+  "code_postal": "44330",
+  "description": "Bâtiment de réception de 2015 (charpente métallique) sur 4 700 m², grande salle climatisée et acoustique, bar, cuisine traiteur équipée, 4 chambres (~25 couchages), parking ~80 places. Exploitation existante, contrats programmés jusqu'à fin 2026, trésorerie estimée ~25 000 €.",
+  "contact": {
+   "organisme": "Loire Océan Expansion, 1 avenue des Améthystes, 44300 Nantes",
+   "nom": null,
+   "telephone": "02 40 20 63 11",
+   "email": null,
+   "url": "https://www.bureauxlocaux.com/annonce/salle-de-reception-a-vendre--40625715"
+  },
+  "sources": [
+   {
+    "url": "https://www.bureauxlocaux.com/annonce/salle-de-reception-a-vendre--40625715",
+    "site": "BureauxLocaux",
+    "collecte_le": "2026-10-04",
+    "ref": "44_7933"
+   },
+   {
+    "url": "https://www.fnaim.fr/annonce-immobiliere/52950983/17-acheter-localindustriel-mouzillon-44330.htm",
+    "site": "FNAIM",
+    "collecte_le": "2026-10-04",
+    "ref": "44_7933"
+   }
+  ],
+  "verifie": true,
+  "a_verifier": [
+   "surface_salle_m2",
+   "capacite_annoncee",
+   "ca_annonce",
+   "dpe",
+   "date_premiere_parution",
+   "prix exact (750/800/848 k€)",
+   "murs+fonds vs fonds seul",
+   "licence IV et bail",
+   "nuisances sonores voisinage"
+  ]
+ },
+ {
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 1652000,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 238,
+  "surface_salle_m2": null,
+  "terrain_m2": null,
+  "chambres": null,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "dependances"
+  ],
+  "capacite_annoncee": 200,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Au-dessus du budget (1,65 M€). Identité du lieu non confirmée.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "44",
+  "titre": "Domaine de réception et gîte de groupe (ancien corps de ferme, salle ~200 couverts, ~35 couchages)",
+  "type": "lieu_reception_activite",
+  "commune": "Frossay",
+  "code_postal": "44320",
+  "description": "Selon la page de liste Green-Acres : domaine à Frossay avec salle de réception pour environ 200 couverts, hébergement de groupe d'environ 35 couchages, 7 douches et 6 WC, environ 3 000 m² d'extérieur ; 238 m² habitables, honoraires à charge vendeur. Annonce individuelle non ouverte (lien non fourni). Une fiche de location évoque 'Guermiton' à Frossay, rattachement non confirmé.",
+  "contact": {
+   "organisme": "Green-Acres",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.green-acres.fr/property-for-sale/frossay"
+  },
+  "sources": [
+   {
+    "url": "https://www.green-acres.fr/property-for-sale/frossay",
+    "site": "Green-Acres (page de liste)",
+    "collecte_le": "2026-10-04",
+    "ref": null
+   }
+  ],
+  "verifie": false,
+  "a_verifier": [
+   "URL précise de l'annonce",
+   "terrain_m2",
+   "ca_annonce",
+   "statut ERP",
+   "identité du lieu",
+   "dpe",
+   "mode_vente (murs+fonds ?)"
+  ]
+ },
+ {
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": null,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": null,
+  "surface_salle_m2": null,
+  "terrain_m2": 7000,
+  "chambres": 24,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": 371000,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "murs_fonds",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "44",
+  "titre": "Hôtel-restaurant 3 étoiles proche de Nort-sur-Erdre, 24 chambres, salle de séminaire",
+  "type": "hotel_restaurant",
+  "commune": "Nort-sur-Erdre (proche)",
+  "code_postal": null,
+  "description": "D'après un extrait de recherche de l'annonce Paruvendu (page bloquée en 403) : murs et fonds d'un hôtel 3 étoiles depuis 2017, 24 chambres dont une PMR, salle de petit-déjeuner et de séminaire, terrain de 7 000 m² avec grand parking et possibilité d'agrandissement, CA annoncé 371 000 € HT.",
+  "contact": {
+   "organisme": null,
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.paruvendu.fr/t/vente-commerces/1286933667A1KIRCCO000"
+  },
+  "sources": [
+   {
+    "url": "https://www.paruvendu.fr/t/vente-commerces/1286933667A1KIRCCO000",
+    "site": "Paruvendu",
+    "collecte_le": "2026-10-04",
+    "ref": null
+   }
+  ],
+  "verifie": false,
+  "a_verifier": [
+   "prix",
+   "commune exacte",
+   "surface bâtie",
+   "taille de la salle de séminaire",
+   "dpe",
+   "date de parution",
+   "correspondance URL/annonce non confirmée"
+  ]
+ },
+ {
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 695000,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 410,
+  "surface_salle_m2": null,
+  "terrain_m2": 8735,
+  "chambres": null,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "pierre",
+   "dependances"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "44",
+  "titre": "Manoir XVIIIe-XIXe avec ferme rénovée, jardin clos et piscine, Pays de la Mée (près de Châteaubriant)",
+  "type": "manoir",
+  "commune": "Pays de la Mée (près de Châteaubriant)",
+  "code_postal": null,
+  "description": "D'après un extrait de recherche Belles Demeures (Barnes Propriétés et Châteaux, page bloquée en 403) : demeure des XVIIIe-XIXe siècles, ferme entièrement rénovée, jardin clos de 8 735 m² avec piscine chauffée, 410 m² habitables.",
+  "contact": {
+   "organisme": "Barnes Propriétés et Châteaux",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.bellesdemeures.com/en/sale/france/western-loire/loire-atlantique/manor-house/tt-2-stb-28-pl-329/"
+  },
+  "sources": [
+   {
+    "url": "https://www.bellesdemeures.com/en/sale/france/western-loire/loire-atlantique/manor-house/tt-2-stb-28-pl-329/",
+    "site": "Belles Demeures (page de liste)",
+    "collecte_le": "2026-10-04",
+    "ref": null
+   }
+  ],
+  "verifie": false,
+  "a_verifier": [
+   "URL précise de l'annonce",
+   "commune exacte",
+   "code postal",
+   "surface de la ferme / dépendance pour 200 invités",
+   "dpe",
+   "taxe foncière"
+  ]
+ },
+ {
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 649000,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": null,
+  "surface_salle_m2": null,
+  "terrain_m2": 560000,
+  "chambres": null,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "parc"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "44",
+  "titre": "Propriété à Ancenis avec 56 ha de parc, prairies, bois et étang",
+  "type": "autre",
+  "commune": "Ancenis",
+  "code_postal": null,
+  "description": "D'après un extrait de recherche Belles Demeures (page bloquée en 403) : bien à Ancenis avec 56 hectares de parc, prairies, bois et étang, potentiel de développement. Nature du bâti non connue.",
+  "contact": {
+   "organisme": null,
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.bellesdemeures.com/en/sale/france/western-loire/loire-atlantique/manor-house/tt-2-stb-28-pl-329/"
+  },
+  "sources": [
+   {
+    "url": "https://www.bellesdemeures.com/en/sale/france/western-loire/loire-atlantique/manor-house/tt-2-stb-28-pl-329/",
+    "site": "Belles Demeures (page de liste)",
+    "collecte_le": "2026-10-04",
+    "ref": null
+   }
+  ],
+  "verifie": false,
+  "a_verifier": [
+   "URL précise",
+   "bâti et surfaces",
+   "type exact",
+   "commune/code postal",
+   "dpe"
+  ]
+ }
+]

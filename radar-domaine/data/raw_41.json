@@ -1,0 +1,235 @@
+[
+ {
+  "precision_gps": "commune",
+  "lat": null,
+  "lon": null,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": null,
+  "surface_salle_m2": null,
+  "chambres": 3,
+  "etat": null,
+  "dpe": "G",
+  "taxe_fonciere": null,
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "DPE G (passoire thermique).",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "41",
+  "verifie": true,
+  "titre": "Corps de ferme de 350 m² sur 25 ha, rivière et étang, Romorantin-Lanthenay",
+  "type": "ferme",
+  "commune": "Romorantin-Lanthenay",
+  "code_postal": "41200",
+  "prix": 329787,
+  "surface_bati_m2": 350,
+  "terrain_m2": 250000,
+  "description": "Corps de ferme d'environ 350 m² (175 m² habitables, 175 m² restant à aménager) sur 25 ha avec rivière et étang. Dépendances : grange ~100 m², hangar ~215 m², deux ateliers vitrés, toitures refaites en 2016. Convient chasse, équestre ou tourisme.",
+  "cachet": [
+   "parc",
+   "dependances",
+   "piece_eau"
+  ],
+  "contact": {
+   "organisme": "Leggett Immobilier",
+   "nom": "Bruno Debain",
+   "telephone": "06 31 30 32 76",
+   "email": "bruno.debain@leggett.fr",
+   "url": "https://www.fnaim.fr/annonce-immobiliere/53116973/17-acheter-maison-romorantin-lanthenay-41200.htm"
+  },
+  "sources": [
+   {
+    "url": "https://www.fnaim.fr/annonce-immobiliere/53116973/17-acheter-maison-romorantin-lanthenay-41200.htm",
+    "site": "FNAIM (Leggett)",
+    "collecte_le": "2026-10-04",
+    "ref": "A46073BDE41"
+   }
+  ],
+  "a_verifier": [
+   "etat",
+   "adresse exacte",
+   "honoraires (charge vendeur)",
+   "règles PLU/ERP pour réception",
+   "surface hangar réutilisable"
+  ]
+ },
+ {
+  "precision_gps": "commune",
+  "lat": null,
+  "lon": null,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": null,
+  "surface_salle_m2": null,
+  "chambres": 8,
+  "etat": "bon",
+  "dpe": "B",
+  "taxe_fonciere": null,
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Au-dessus du budget cible (990 k€).",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "41",
+  "verifie": true,
+  "titre": "Propriété de 38 ha en Sologne, 3 maisons (530 m²), étang et rivière, Romorantin-Lanthenay",
+  "type": "gentilhommiere",
+  "commune": "Romorantin-Lanthenay",
+  "code_postal": "41200",
+  "prix": 990500,
+  "surface_bati_m2": 530,
+  "terrain_m2": 380000,
+  "description": "Trois maisons totalisant 530 m² (longère récente de 350 m² avec spa, pavillon de chasse 130 m², maison 50 m²) sur ~38 ha : 17 ha de bois (PSG), 11 ha de prés et équipements équestres, étang de 1 500 m², 800 m de rive. Deux dépendances dont une grange.",
+  "cachet": [
+   "parc",
+   "dependances",
+   "piece_eau"
+  ],
+  "contact": {
+   "organisme": "Val de Loire - Sologne Sotheby's International Realty",
+   "nom": null,
+   "telephone": "+33 6 84 13 57 02",
+   "email": null,
+   "url": "https://www.fnaim.fr/annonce-immobiliere/52155755/17-acheter-maison-romorantin-lanthenay-41200.htm"
+  },
+  "sources": [
+   {
+    "url": "https://www.fnaim.fr/annonce-immobiliere/52155755/17-acheter-maison-romorantin-lanthenay-41200.htm",
+    "site": "FNAIM (Sotheby's)",
+    "collecte_le": "2026-10-04",
+    "ref": "OR1-1324"
+   }
+  ],
+  "a_verifier": [
+   "surface de la grange",
+   "capacité de réception",
+   "prix au-dessus de 700 k€"
+  ]
+ },
+ {
+  "precision_gps": "commune",
+  "lat": null,
+  "lon": null,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": null,
+  "surface_salle_m2": null,
+  "chambres": 16,
+  "etat": "bon",
+  "dpe": null,
+  "taxe_fonciere": null,
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Prix très au-dessus de 800 k€.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "41",
+  "verifie": true,
+  "titre": "Château restauré avec gîtes, Saint-Aignan",
+  "type": "chateau",
+  "commune": "Saint-Aignan",
+  "code_postal": "41110",
+  "prix": 1595000,
+  "surface_bati_m2": 500,
+  "terrain_m2": 16100,
+  "description": "Château du XVIIe remanié au XVIIIe, 500 m², 16 chambres, deux gîtes (90 et 180 m²), garage, atelier, piscine, parc avec cèdres sur 1,61 ha. Usage commercial mentionné.",
+  "cachet": [
+   "parc",
+   "patrimoine",
+   "dependances",
+   "pierre"
+  ],
+  "contact": {
+   "organisme": "Cabinet LE NAIL",
+   "nom": "Baudouin LE GRELLE",
+   "telephone": "+33 2 43 98 20 20",
+   "email": null,
+   "url": "https://www.cabinetlenail.com/en/print-property-page/details/2497/&mobile=0"
+  },
+  "sources": [
+   {
+    "url": "https://www.cabinetlenail.com/en/print-property-page/details/2497/&mobile=0",
+    "site": "Cabinet Le Nail",
+    "collecte_le": "2026-10-04",
+    "ref": "4634"
+   }
+  ],
+  "a_verifier": [
+   "dpe",
+   "taxe_fonciere",
+   "capacité réception 200 invités",
+   "prix hors budget"
+  ]
+ },
+ {
+  "precision_gps": "commune",
+  "lat": null,
+  "lon": null,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": null,
+  "surface_salle_m2": null,
+  "chambres": 7,
+  "etat": null,
+  "dpe": "F",
+  "taxe_fonciere": null,
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": null,
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "41",
+  "verifie": true,
+  "titre": "Ensemble de 5 gîtes troglodytiques, Montoire-sur-le-Loir",
+  "type": "troglodyte",
+  "commune": "Montoire-sur-le-Loir",
+  "code_postal": "41800",
+  "prix": 699000,
+  "surface_bati_m2": 400,
+  "terrain_m2": 1621,
+  "description": "Cinq logements troglodytiques modulables en vallée du Loir, terrasses avec vue, galerie interne, terrain au-dessus des caves inclus (1 621 m² + parcelle de 300 m² accès rivière). Activité de gîtes.",
+  "cachet": [
+   "cave",
+   "vue",
+   "pierre"
+  ],
+  "contact": {
+   "organisme": "Immotourisme (via Green-Acres / French-Property)",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.french-property.com/fr/bien-a-vendre/3772-Ayustdsmr300ap9p"
+  },
+  "sources": [
+   {
+    "url": "https://www.french-property.com/fr/bien-a-vendre/3772-Ayustdsmr300ap9p",
+    "site": "French-Property / Green-Acres",
+    "collecte_le": "2026-10-04",
+    "ref": "vm479-immotourisme"
+   }
+  ],
+  "a_verifier": [
+   "capacité 200 invités improbable (terrain 1 621 m²)",
+   "CA",
+   "taxe_fonciere",
+   "contact direct"
+  ]
+ }
+]

@@ -1,0 +1,58 @@
+{
+ "sources_interrogees": [
+  {
+   "site": "BureauxLocaux / FNAIM (Loire Océan Expansion)",
+   "statut": "ok",
+   "detail": "Annonce Mouzillon ouverte",
+   "nb_biens": 1
+  },
+  {
+   "site": "Green-Acres",
+   "statut": "partiel",
+   "detail": "Pages de liste lues, pas d'URL d'annonce individuelle ; château MH 4,52 M€ vu en recherche, hors budget",
+   "nb_biens": 1
+  },
+  {
+   "site": "Immonot",
+   "statut": "partiel",
+   "detail": "Listes ouvertes ; seulement immeubles/maisons sans rapport (La Plaine-sur-Mer 3 appartements écarté)",
+   "nb_biens": 0
+  },
+  {
+   "site": "Belles Demeures / Barnes",
+   "statut": "bloque",
+   "detail": "403 ; données issues d'extraits de recherche",
+   "nb_biens": 2
+  },
+  {
+   "site": "Paruvendu",
+   "statut": "bloque",
+   "detail": "403 ; hôtel près de Nort-sur-Erdre via extrait de recherche",
+   "nb_biens": 1
+  },
+  {
+   "site": "Zimo, Logic-Immo, Mitula, Bellespierres",
+   "statut": "bloque",
+   "detail": "403/401/challenge",
+   "nb_biens": 0
+  },
+  {
+   "site": "Licitor",
+   "statut": "vide",
+   "detail": "Recherche : aucun château/manoir/salle pertinent trouvé pour Nantes/Saint-Nazaire",
+   "nb_biens": 0
+  },
+  {
+   "site": "Fusacq / Michel Simond / Cession-PME",
+   "statut": "vide",
+   "detail": "Aucune annonce de lieu de réception 44 trouvée",
+   "nb_biens": 0
+  },
+  {
+   "site": "Ma-propriete.fr, IAD, Safti, Patrice Besse, Bien'ici, Leboncoin",
+   "statut": "vide",
+   "detail": "Rien de ciblé remonté par la recherche, non ouverts directement",
+   "nb_biens": 0
+  }
+ ]
+}

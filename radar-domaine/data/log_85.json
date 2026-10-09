@@ -1,0 +1,52 @@
+{
+ "sources_interrogees": [
+  {
+   "site": "French-Property / Green-Acres",
+   "statut": "ok",
+   "detail": "Pages ouvertes; plusieurs annonces marquées supprimées par l'agence",
+   "nb_biens": 9
+  },
+  {
+   "site": "Etreproprio",
+   "statut": "bloque",
+   "detail": "403 sur WebFetch; Minoterie Luçon connue via résultats de recherche seulement",
+   "nb_biens": 1
+  },
+  {
+   "site": "Capifrance / ma-propriete.fr",
+   "statut": "bloque",
+   "detail": "403 sur fiche Luçon; hôtel-restaurant connu via recherche",
+   "nb_biens": 1
+  },
+  {
+   "site": "Zimo",
+   "statut": "bloque",
+   "detail": "403",
+   "nb_biens": 0
+  },
+  {
+   "site": "Trovit",
+   "statut": "bloque",
+   "detail": "401",
+   "nb_biens": 0
+  },
+  {
+   "site": "A Place in the Sun",
+   "statut": "partiel",
+   "detail": "Château du Breuil (St-Denis-la-Chevasse, 1,73 M€) retiré; non retenu",
+   "nb_biens": 0
+  },
+  {
+   "site": "Michael Zingraf",
+   "statut": "vide",
+   "detail": "404",
+   "nb_biens": 0
+  },
+  {
+   "site": "Immonot, Patrice Besse, IAD, Safti, Michel Simond, Cession-PME, Fusacq, Licitor, Bien'ici, Leboncoin, Green-Acres direct",
+   "statut": "vide",
+   "detail": "Non interrogés directement (budget d'appels); recherche générale sans résultat exploitable (camping, discothèque, école, domaine viticole: aucune annonce trouvée)",
+   "nb_biens": 0
+  }
+ ]
+}

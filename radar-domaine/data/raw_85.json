@@ -1,0 +1,635 @@
+[
+ {
+  "code_postal": "85300",
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 598000,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 260,
+  "surface_salle_m2": 300,
+  "terrain_m2": 12300,
+  "chambres": 5,
+  "etat": null,
+  "dpe": "C",
+  "taxe_fonciere": null,
+  "cachet": [
+   "pierre",
+   "parc",
+   "dependances",
+   "cave"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Grange de 300 m² à vérifier pour changement de destination/ERP; assainissement autonome; usage habitation à requalifier en ERP.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "85",
+  "titre": "Maison de caractère (1730) sur 1,2 ha avec grange de 300 m²",
+  "type": "longere",
+  "commune": "Challans",
+  "description": "Maison de caractère de 1730, 260 m² habitables, sur 1,23 ha clos avec parc, prairie et petit plan d'eau. Grange d'environ 300 m² avec atelier, cave et boxes, plus grange ouverte (préau).",
+  "contact": {
+   "organisme": "Demeures & Caractère (Cabinet Retz Immobilier)",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.french-property.com/fr/bien-a-vendre/1494-CCVPR290037040"
+  },
+  "sources": [
+   {
+    "url": "https://www.french-property.com/fr/bien-a-vendre/1494-CCVPR290037040",
+    "site": "French-Property",
+    "collecte_le": "2026-10-04",
+    "ref": "CCVPR290037040"
+   }
+  ],
+  "verifie": true,
+  "a_verifier": [
+   "honoraires",
+   "date_parution",
+   "etat",
+   "ERP/changement destination grange",
+   "disponibilité",
+   "téléphone"
+  ]
+ },
+ {
+  "code_postal": "85700",
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 770000,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 300,
+  "surface_salle_m2": null,
+  "terrain_m2": 18000,
+  "chambres": 6,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "pierre",
+   "parc",
+   "cave",
+   "dependances"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Annonce marquée retirée par l'agent sur French-Property: disponibilité incertaine. Prix hors frais de notaire.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "85",
+  "titre": "Manoir XIXe près du Puy du Fou, dépendances 390 m², parc 1,8 ha",
+  "type": "manoir",
+  "commune": "Pouzauges",
+  "description": "Manoir du XIXe siècle de 300 m² habitables avec caves voûtées, maison d'amis, boxes à chevaux, piscine, dépendances d'environ 390 m² et parc d'1,8 ha. Environ 200 m² aménageables selon l'annonce.",
+  "contact": {
+   "organisme": "Yannick Cormerais via Green-Acres / French-Property",
+   "nom": "Yannick Cormerais",
+   "telephone": null,
+   "email": null,
+   "url": "https://www.french-property.com/fr/bien-a-vendre/3772-A513lnt0tbbigpa4"
+  },
+  "sources": [
+   {
+    "url": "https://www.french-property.com/fr/bien-a-vendre/3772-A513lnt0tbbigpa4",
+    "site": "French-Property",
+    "collecte_le": "2026-10-04",
+    "ref": "afvma90005596-5596"
+   }
+  ],
+  "verifie": true,
+  "a_verifier": [
+   "disponibilité (annonce retirée)",
+   "honoraires",
+   "dpe",
+   "surface salle",
+   "téléphone"
+  ]
+ },
+ {
+  "code_postal": "85700",
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 595000,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 260,
+  "surface_salle_m2": null,
+  "terrain_m2": 2900,
+  "chambres": 7,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "dependances",
+   "vue"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Terrain petit: tente 200 invités peu plausible; aucune activité réception; prix hors frais de notaire.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "85",
+  "titre": "Maison familiale avec 2 gîtes, dépendances 400 m², près du Puy du Fou",
+  "type": "ferme",
+  "commune": "Pouzauges",
+  "description": "Maison de 260 m² avec deux gîtes rénovés indépendants, dépendances de 400 m² (garage, atelier, cave) et espace détente de 140 m² avec piscine, sauna et spa. Terrain d'environ 2 900 m².",
+  "contact": {
+   "organisme": "Damien Guilloteau via Green-Acres / French-Property",
+   "nom": "Damien Guilloteau",
+   "telephone": null,
+   "email": null,
+   "url": "https://www.french-property.com/index.php/sale-property/3772-Avrw62rwhabkljv9"
+  },
+  "sources": [
+   {
+    "url": "https://www.french-property.com/index.php/sale-property/3772-Avrw62rwhabkljv9",
+    "site": "French-Property",
+    "collecte_le": "2026-10-04",
+    "ref": "5379-5689"
+   }
+  ],
+  "verifie": true,
+  "a_verifier": [
+   "capacité 200 invités",
+   "honoraires",
+   "dpe",
+   "téléphone",
+   "date_parution"
+  ]
+ },
+ {
+  "code_postal": "85150",
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 559000,
+  "prix_inclut_honoraires": false,
+  "honoraires_pct": 4.99,
+  "surface_bati_m2": 170,
+  "surface_salle_m2": null,
+  "terrain_m2": 1009,
+  "chambres": 5,
+  "etat": "bon",
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "pierre"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Surface et terrain insuffisants pour 200 invités; prix incohérent dans l'annonce (498 700 en en-tête vs 559 000 dans le texte).",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "85",
+  "titre": "Moulin, ferme et gîte entièrement rénovés",
+  "type": "moulin",
+  "commune": "Vairé",
+  "description": "Ensemble moulin, ferme et gîte rénové, 5 chambres, 1 009 m² de terrain à environ 10 km de la mer. Potentiel chambres d'hôtes.",
+  "contact": {
+   "organisme": "Agence Newton",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.french-property.com/fr/bien-a-vendre/1689-MN-5150"
+  },
+  "sources": [
+   {
+    "url": "https://www.french-property.com/fr/bien-a-vendre/1689-MN-5150",
+    "site": "French-Property",
+    "collecte_le": "2026-10-04",
+    "ref": "MN-5150"
+   }
+  ],
+  "verifie": true,
+  "a_verifier": [
+   "prix exact",
+   "capacité",
+   "téléphone"
+  ]
+ },
+ {
+  "code_postal": "85600",
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 1378000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 6.0,
+  "surface_bati_m2": 765,
+  "surface_salle_m2": 90,
+  "terrain_m2": 113375,
+  "chambres": 12,
+  "etat": null,
+  "dpe": "D",
+  "taxe_fonciere": null,
+  "cachet": [
+   "parc",
+   "chapelle",
+   "dependances"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": true,
+  "risques_notes": "Prix 1,3 M€ hors frais: hors budget 800 k€. Capacité non indiquée; CA non communiqué.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "85",
+  "titre": "Château XIXe avec activité d'accueil et d'événementiel établie",
+  "type": "chateau",
+  "commune": "Montaigu-Vendée",
+  "description": "Château néoclassique de 765 m² sur environ 11,3 ha, orangerie de 90 m² dédiée aux événements, chapelle, parc paysager. Exploité en hébergement, mariages, séminaires et réceptions.",
+  "contact": {
+   "organisme": "Groupe Mercure (agence Mercure Pays de la Loire)",
+   "nom": "Eric Louvet",
+   "telephone": "+33 6 07 71 56 64",
+   "email": null,
+   "url": "https://www.french-property.com/sale-property/3772-Ag5tmgadqfg4st8d"
+  },
+  "sources": [
+   {
+    "url": "https://www.french-property.com/sale-property/3772-Ag5tmgadqfg4st8d",
+    "site": "French-Property",
+    "collecte_le": "2026-10-04",
+    "ref": "2155pl"
+   },
+   {
+    "url": "https://www.groupe-mercure.fr/en/properties/chateau-and-manors-vendee-85600-450149-2155pl/",
+    "site": "Groupe Mercure",
+    "collecte_le": "2026-10-04",
+    "ref": "2155pl"
+   }
+  ],
+  "verifie": true,
+  "a_verifier": [
+   "capacité",
+   "CA",
+   "taxe_fonciere",
+   "statut actif"
+  ]
+ },
+ {
+  "code_postal": "85110",
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 1148000,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 843,
+  "surface_salle_m2": 264,
+  "terrain_m2": 22900,
+  "chambres": 8,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "parc",
+   "cave",
+   "dependances",
+   "patrimoine"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Annonce supprimée par l'agence: probablement plus disponible. Hors budget.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "85",
+  "titre": "Château à Chantonnay avec orangerie et écuries, parc 2,3 ha",
+  "type": "chateau",
+  "commune": "Chantonnay",
+  "description": "Château de 843 m² avec cave de neuf pièces voûtées, orangerie 24x11 m et écuries de 1880 de 26x13 m à restaurer, deux pavillons et piscine, jardins et verger.",
+  "contact": {
+   "organisme": "Prestige Property Group",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.french-property.com/fr/bien-a-vendre/127-249015"
+  },
+  "sources": [
+   {
+    "url": "https://www.french-property.com/fr/bien-a-vendre/127-249015",
+    "site": "French-Property",
+    "collecte_le": "2026-10-04",
+    "ref": "249015"
+   }
+  ],
+  "verifie": true,
+  "a_verifier": [
+   "disponibilité",
+   "honoraires",
+   "état dépendances"
+  ]
+ },
+ {
+  "code_postal": "85480",
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 5830000,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 900,
+  "surface_salle_m2": null,
+  "terrain_m2": 236000,
+  "chambres": 8,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "parc",
+   "chapelle",
+   "dependances"
+  ],
+  "capacite_annoncee": 350,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Hors budget (5,83 M€); annonce supprimée par l'agence.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "85",
+  "titre": "Château florentin XIXe avec restaurant, véranda 350 places, chapelle",
+  "type": "chateau",
+  "commune": "Bournezeau",
+  "description": "Château XIXe sur 23,6 ha avec restaurant jusqu'à 110 couverts, véranda jusqu'à 350 personnes avec cuisine professionnelle, deux salles de réunion, sept appartements, piscine et tennis.",
+  "contact": {
+   "organisme": "Prestige Property Group",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.french-property.com/fr/bien-a-vendre/127-238677"
+  },
+  "sources": [
+   {
+    "url": "https://www.french-property.com/fr/bien-a-vendre/127-238677",
+    "site": "French-Property",
+    "collecte_le": "2026-10-04",
+    "ref": "238677"
+   }
+  ],
+  "verifie": true,
+  "a_verifier": [
+   "disponibilité",
+   "CA"
+  ]
+ },
+ {
+  "code_postal": "85000",
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 4000000,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 900,
+  "surface_salle_m2": null,
+  "terrain_m2": 420000,
+  "chambres": 12,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "mh",
+   "chapelle",
+   "parc",
+   "dependances"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Hors budget (4 M€).",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "85",
+  "titre": "Château historique (MH) avec maison d'hôtes, domaine de 42 ha",
+  "type": "chateau",
+  "commune": "La Roche-sur-Yon",
+  "description": "Château du XVIIIe siècle sur 42 ha avec maison d'hôtes, La Bergerie avec piscine, tour de guet du XVe, chapelle classée, dépendances et ancien hippodrome.",
+  "contact": {
+   "organisme": "Prestige Property Group",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.french-property.com/fr/bien-a-vendre/127-257320"
+  },
+  "sources": [
+   {
+    "url": "https://www.french-property.com/fr/bien-a-vendre/127-257320",
+    "site": "French-Property",
+    "collecte_le": "2026-10-04",
+    "ref": "257320"
+   }
+  ],
+  "verifie": true,
+  "a_verifier": [
+   "disponibilité",
+   "capacité"
+  ]
+ },
+ {
+  "code_postal": "85120",
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 357000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": null,
+  "surface_bati_m2": 250,
+  "surface_salle_m2": null,
+  "terrain_m2": 4000,
+  "chambres": 7,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [
+   "cave"
+  ],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Pas de capacité 200 invités; annonce supprimée par l'agence.",
+  "mode_vente": "classique",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "85",
+  "titre": "Gîte / maison 250 m² avec piscine à La Châtaigneraie",
+  "type": "maison_maitre",
+  "commune": "La Châtaigneraie",
+  "description": "Maison de 250 m² avec appartement indépendant, 7 chambres, piscine, grange de 7x4 m et jardin clos d'environ 4 000 m².",
+  "contact": {
+   "organisme": "La Residence",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.french-property.com/index.php/fr/bien-a-vendre/1027-9749A"
+  },
+  "sources": [
+   {
+    "url": "https://www.french-property.com/index.php/fr/bien-a-vendre/1027-9749A",
+    "site": "French-Property",
+    "collecte_le": "2026-10-04",
+    "ref": "9749A"
+   }
+  ],
+  "verifie": true,
+  "a_verifier": [
+   "disponibilité",
+   "terrain"
+  ]
+ },
+ {
+  "code_postal": "85400",
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 128900,
+  "prix_inclut_honoraires": null,
+  "honoraires_pct": null,
+  "surface_bati_m2": 600,
+  "surface_salle_m2": null,
+  "terrain_m2": null,
+  "chambres": null,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [],
+  "capacite_annoncee": null,
+  "activite_reception_existante": true,
+  "ca_annonce": null,
+  "logement_exploitant": null,
+  "risques_notes": "Fonds seul: bail, loyer, licence, murs à vérifier. Page bloquée (403), non lue.",
+  "mode_vente": "cession_fonds",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "85",
+  "titre": "Fonds de commerce salle de spectacle et de réception (Minoterie)",
+  "type": "salle",
+  "commune": "Luçon",
+  "description": "D'après les extraits de recherche (page non ouverte, 403): fonds d'une salle de 600 m² avec bar, cuisine de réchauffage, vestiaires; exploitée depuis plus de 20 ans (mariages, thés dansants, lotos, concerts).",
+  "contact": {
+   "organisme": null,
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.etreproprio.com/immobilier-25724455-vente-fonds-de-commerce-salle-de-spectacle-salle-de-reception-a-lucon-activite-evenementielle-reconnue-depuis-lucon"
+  },
+  "sources": [
+   {
+    "url": "https://www.etreproprio.com/immobilier-25724455-vente-fonds-de-commerce-salle-de-spectacle-salle-de-reception-a-lucon-activite-evenementielle-reconnue-depuis-lucon",
+    "site": "Etreproprio",
+    "collecte_le": "2026-10-04",
+    "ref": "25724455"
+   }
+  ],
+  "verifie": false,
+  "a_verifier": [
+   "tout",
+   "bail/loyer",
+   "CA",
+   "contact",
+   "surface salle",
+   "capacité"
+  ]
+ },
+ {
+  "code_postal": "85400",
+  "lat": null,
+  "lon": null,
+  "precision_gps": null,
+  "prix": 730000,
+  "prix_inclut_honoraires": true,
+  "honoraires_pct": 5.8,
+  "surface_bati_m2": 600,
+  "surface_salle_m2": null,
+  "terrain_m2": null,
+  "chambres": 6,
+  "etat": null,
+  "dpe": null,
+  "taxe_fonciere": null,
+  "cachet": [],
+  "capacite_annoncee": null,
+  "activite_reception_existante": false,
+  "ca_annonce": 400000,
+  "logement_exploitant": true,
+  "risques_notes": "Salles de 63 couverts: insuffisant pour 200 invités sans extension/tente; vendeur cherche 200 k€ d'apport, supérieur à l'apport de Florian.",
+  "mode_vente": "murs_fonds",
+  "date_vente_encheres": null,
+  "mise_a_prix": null,
+  "date_premiere_parution": null,
+  "baisse_prix": null,
+  "departement": "85",
+  "titre": "Hôtel-restaurant 6 chambres, murs et fonds, avec maison de 110 m²",
+  "type": "hotel_restaurant",
+  "commune": "Luçon",
+  "description": "D'après extraits de recherche (page 403, non lue): hôtel de 6 chambres et restaurant (2 salles de 35 et 28 couverts), maison attenante de 110 m², parking, piscine, jardin. CA 400 k€ HT, EBE 91 k€.",
+  "contact": {
+   "organisme": "Capifrance",
+   "nom": null,
+   "telephone": null,
+   "email": null,
+   "url": "https://www.capifrance.fr/en/realestate/sale/businessgoodwill/lucon//84153"
+  },
+  "sources": [
+   {
+    "url": "https://www.capifrance.fr/en/realestate/sale/businessgoodwill/lucon//84153",
+    "site": "Capifrance",
+    "collecte_le": "2026-10-04",
+    "ref": "903066"
+   }
+  ],
+  "verifie": false,
+  "a_verifier": [
+   "tout",
+   "capacité",
+   "terrain",
+   "apport requis"
+  ]
+ }
+]
