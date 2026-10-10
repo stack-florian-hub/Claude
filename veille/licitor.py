@@ -8,8 +8,8 @@ DEPTS = {"loire-atlantique": "44", "vendee": "85", "maine-et-loire": "49", "sart
          "indre-et-loire": "37", "loir-et-cher": "41", "loiret": "45", "indre": "36", "vienne": "86"}
 CUTOFF = (datetime.date.today() - datetime.timedelta(days=730)).isoformat()
 MOIS = {m: i + 1 for i, m in enumerate("janvier février mars avril mai juin juillet août septembre octobre novembre décembre".split())}
-OUT = sys.argv[1] if len(sys.argv) > 1 else "licitor.json"
-CACHE = os.path.join(os.path.dirname(OUT) or ".", "cache")
+OUT = sys.argv[1] if len(sys.argv) > 1 and __name__ == "__main__" else "licitor.json"
+CACHE = os.environ.get("LICITOR_CACHE") or os.path.join(os.path.dirname(OUT) or ".", "cache")
 os.makedirs(CACHE, exist_ok=True)
 
 def get(url):
@@ -130,18 +130,19 @@ def listing(region, hist):
             break
     return rows
 
-out = {"genere": datetime.datetime.now().isoformat(timespec="minutes"), "resultats": [], "avenir": []}
-for hist, key in [(True, "resultats"), (False, "avenir")]:
-    for reg in REGIONS:
-        for path, dept in listing(reg, hist):
-            try:
-                d = detail(path)
-            except Exception as e:
-                print("ERR", path, e, file=sys.stderr); continue
-            d["dept"] = dept
-            if hist and (not d["date"] or d["date"][:10] < CUTOFF):
-                continue
-            out[key].append(d)
-        print(key, reg, len(out[key]), file=sys.stderr, flush=True)
-        json.dump(out, open(OUT, "w"), ensure_ascii=False, indent=1)
-print("OK", len(out["resultats"]), "résultats,", len(out["avenir"]), "à venir", file=sys.stderr)
+if __name__ == "__main__":
+    out = {"genere": datetime.datetime.now().isoformat(timespec="minutes"), "resultats": [], "avenir": []}
+    for hist, key in [(True, "resultats"), (False, "avenir")]:
+        for reg in REGIONS:
+            for path, dept in listing(reg, hist):
+                try:
+                    d = detail(path)
+                except Exception as e:
+                    print("ERR", path, e, file=sys.stderr); continue
+                d["dept"] = dept
+                if hist and (not d["date"] or d["date"][:10] < CUTOFF):
+                    continue
+                out[key].append(d)
+            print(key, reg, len(out[key]), file=sys.stderr, flush=True)
+            json.dump(out, open(OUT, "w"), ensure_ascii=False, indent=1)
+    print("OK", len(out["resultats"]), "résultats,", len(out["avenir"]), "à venir", file=sys.stderr)

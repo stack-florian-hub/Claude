@@ -157,6 +157,12 @@ tr[data-rk]{cursor:grab}
 tr.dragging{opacity:.4}
 tr.dropbefore td{box-shadow:inset 0 2px 0 var(--accent)}
 tr.dropafter td{box-shadow:inset 0 -2px 0 var(--accent)}
+th{position:relative}
+.colgrip{position:absolute;top:0;right:-3px;width:7px;height:100%;cursor:col-resize;z-index:2;touch-action:none}
+.colgrip:hover,.colresizing .colgrip{background:linear-gradient(to right,transparent 2px,var(--accent) 2px,var(--accent) 4px,transparent 4px)}
+table.fixedcols{table-layout:fixed;width:max-content}
+table.fixedcols td{overflow-wrap:anywhere}
+body.colresizing{cursor:col-resize;user-select:none}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
 .legend span{display:inline-flex;gap:6px;align-items:center}
 </style>
@@ -445,6 +451,37 @@ document.addEventListener("drop",e=>{if(!rkDrag)return;const r=e.target.closest&
 document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-rkmove]");if(!b)return;e.preventDefault();e.stopPropagation();
   const tj=b.dataset.rktj;const rows=[...b.closest("table").querySelectorAll("tr[data-rk]")].map(x=>x.dataset.rk);const i=rows.indexOf(b.dataset.rkid);const j=i+Number(b.dataset.rkmove);
   if(j<0||j>=rows.length)return;[rows[i],rows[j]]=[rows[j],rows[i]];saveOrder(tj,rows)},true);
+
+/* ---------- largeur des colonnes réglable (comme Excel), mémorisée dans ce navigateur ---------- */
+const COLW_KEY="tdc-colw";
+let COLW={};try{COLW=JSON.parse(localStorage.getItem(COLW_KEY)||"{}")||{}}catch(_){COLW={}}
+const saveColw=()=>{try{localStorage.setItem(COLW_KEY,JSON.stringify(COLW))}catch(_){}};
+function tableKey(t){
+  if(t.dataset.tjtable)return S.tab+"|tj|"+t.dataset.tjtable;
+  const sec=t.closest("section");const h=sec&&sec.querySelector("h2");const sub=t.closest(".tbl")&&t.closest(".tbl").querySelector("h3");
+  return S.tab+"|"+(h?h.textContent.trim().slice(0,40):"")+"|"+(sub?sub.textContent.trim().slice(0,40):"")+"|"+t.querySelectorAll("tr:first-child th").length;
+}
+function initResizers(){
+  document.querySelectorAll("#view table").forEach(t=>{
+    if(t.closest(".leaflet-container"))return;
+    const ths=t.querySelectorAll("tr:first-child th");if(!ths.length)return;
+    const key=tableKey(t);t.dataset.colkey=key;const ws=COLW[key]||{};
+    if(Object.keys(ws).length)t.classList.add("fixedcols");
+    ths.forEach((th,i)=>{th.dataset.ci=i;if(ws[i]){th.style.width=ws[i]+"px";th.style.minWidth=ws[i]+"px";th.style.maxWidth=ws[i]+"px"}
+      if(!th.querySelector(".colgrip")){const g=document.createElement("span");g.className="colgrip";g.title="Glisser pour régler la largeur, double-clic pour revenir à l'automatique";th.appendChild(g)}});
+  });
+}
+let colDrag=null;
+document.addEventListener("pointerdown",e=>{const g=e.target.closest&&e.target.closest(".colgrip");if(!g)return;e.preventDefault();e.stopPropagation();
+  const th=g.parentElement,t=th.closest("table");
+  // fige toutes les colonnes à leur largeur actuelle avant le premier réglage
+  t.querySelectorAll("tr:first-child th").forEach(x=>{const w=Math.round(x.getBoundingClientRect().width);x.style.width=x.style.minWidth=x.style.maxWidth=w+"px"});
+  t.classList.add("fixedcols");colDrag={th,t,x:e.clientX,w:th.getBoundingClientRect().width};g.setPointerCapture&&g.setPointerCapture(e.pointerId);document.body.classList.add("colresizing")},true);
+document.addEventListener("pointermove",e=>{if(!colDrag)return;const w=Math.max(40,Math.round(colDrag.w+e.clientX-colDrag.x));const th=colDrag.th;th.style.width=th.style.minWidth=th.style.maxWidth=w+"px"});
+document.addEventListener("pointerup",e=>{if(!colDrag)return;const {t}=colDrag;const key=t.dataset.colkey;const ws={};
+  t.querySelectorAll("tr:first-child th").forEach((x,i)=>{ws[i]=Math.round(x.getBoundingClientRect().width)});COLW[key]=ws;saveColw();colDrag=null;document.body.classList.remove("colresizing")});
+document.addEventListener("dblclick",e=>{const g=e.target.closest&&e.target.closest(".colgrip");if(!g)return;const t=g.closest("table");delete COLW[t.dataset.colkey];saveColw();render()});
+document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest(".colgrip")){e.stopPropagation();e.preventDefault()}},true);
 /* ---------- rendu ---------- */
 function render(){
   document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===S.tab));
@@ -453,6 +490,7 @@ function render(){
   if(S.map){S.map.remove();S.map=null}
   v.innerHTML=fn();
   if(S.tab==="carte")initMap();
+  initResizers();
 }
 function visiteCell(l){
   if(!l.visite)return `<span class="tag">non communiquée</span>`;
