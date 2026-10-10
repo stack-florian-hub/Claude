@@ -167,6 +167,10 @@ body.colresizing{cursor:col-resize;user-select:none}
 .chip{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:99px;padding:3px 10px;font:600 12px var(--f-body);cursor:pointer}
 .chip.on{background:var(--accent);border-color:var(--accent);color:var(--panel)}
 .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.alerts li{display:flex;gap:8px;align-items:baseline}
+.alerts .al-t{flex:1;min-width:0}
+.alerts .al-b{font-size:12px;white-space:nowrap}
+.alerts li.masq{opacity:.5}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
 .legend span{display:inline-flex;gap:6px;align-items:center}
 </style>
@@ -219,6 +223,9 @@ const days=d=>d?Math.round((new Date(d).setHours(0,0,0,0)-today())/864e5):null;
 // Audience passée sans adjudication pour Florian : masqué, le résultat arrive via la veille
 // Lot marqué « pas intéressé » par Florian : masqué comme les audiences passées
 const pasInt=l=>l.interet==="non";
+// Pilotage : uniquement les lots marqués Intéressé, ou déjà engagés (plafond, enchère, gagné, revendu)
+const ENGAGE=["plafond","enchere","gagne","revendu"];
+const suivi=l=>ENGAGE.includes(l.statut)||(l.interet==="oui"&&!l.horsZone&&!passe(l));
 const passe=l=>{const d=days(l.audience);return d!=null&&d<0&&!["gagne","revendu"].includes(l.statut)};
 const fdate=s=>{const d=pd(s);if(!d)return "n.d.";return d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"2-digit"})+(s.length>10&&(d.getHours()||d.getMinutes())?" "+d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}):"")};
 const addDays=(s,n)=>{const d=pd(s);if(!d)return null;d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
@@ -297,29 +304,29 @@ function calc(lot,Pover){
 }
 
 /* ---------- alertes et agenda ---------- */
-function alerts(){
-  const out=[];const actifs=S.lots.filter(l=>!["gagne","perdu","retire","revendu","horsjeu"].includes(l.statut));
+function alerts(lots){
+  lots=lots||S.lots;const out=[];const actifs=lots.filter(l=>!["gagne","perdu","retire","revendu","horsjeu"].includes(l.statut));
   actifs.forEach(l=>{
     const c=calc(l),d=days(l.audience);
-    if(d!=null&&d>=0&&d<=10&&c.cov.level!=="ok")out.push({s:c.cov.level==="warn"?"warn":"bad",t:`${l.titre} (${l.tribunal}, J-${d}) : ${c.cov.level==="warn"?"avocat à confirmer par écrit pour ce tribunal ("+c.cov.names.join(", ")+")":"aucun avocat pour enchérir au TJ "+l.tribunal}.`,lot:l.id});
-    if(d!=null&&d>=0&&d<=14&&c.revente==null)out.push({s:"warn",t:`${l.titre} : audience dans ${d} j et pas de valorisation.`,lot:l.id});
-    if(d!=null&&d>=0&&d<=14&&c.revente!=null&&c.conf==="faible")out.push({s:"info",t:`${l.titre} : prix au m² validé par moins de 2 sources, plafond à confiance faible.`,lot:l.id});
+    if(d!=null&&d>=0&&d<=10&&c.cov.level!=="ok")out.push({k:"cov:"+l.id,s:c.cov.level==="warn"?"warn":"bad",t:`${l.titre} (${l.tribunal}, J-${d}) : ${c.cov.level==="warn"?"avocat à confirmer par écrit pour ce tribunal ("+c.cov.names.join(", ")+")":"aucun avocat pour enchérir au TJ "+l.tribunal}.`,lot:l.id});
+    if(d!=null&&d>=0&&d<=14&&c.revente==null)out.push({k:"val:"+l.id,s:"warn",t:`${l.titre} : audience dans ${d} j et pas de valorisation.`,lot:l.id});
+    if(d!=null&&d>=0&&d<=14&&c.revente!=null&&c.conf==="faible")out.push({k:"conf:"+l.id,s:"info",t:`${l.titre} : prix au m² validé par moins de 2 sources, plafond à confiance faible.`,lot:l.id});
   });
   // conflits de cash : lots avec plafond fixé ou enchère dont les audiences sont à moins de 60 j
   const eng=actifs.filter(l=>["plafond","enchere"].includes(l.statut)&&pd(l.audience));
   for(let i=0;i<eng.length;i++)for(let j=i+1;j<eng.length;j++){
     const a=eng[i],b=eng[j];const gap=Math.abs(pd(a.audience)-pd(b.audience))/864e5;
     const need=calc(a).cout(calc(a).eff||0)+calc(b).cout(calc(b).eff||0);
-    if(gap<60&&need>S.params.cash+S.params.financement)out.push({s:"bad",t:`Conflit de cash : ${a.titre} et ${b.titre} (${Math.round(gap)} j d'écart). Gagner les deux demanderait ${keur(need)}.`});
-    if(gap<1)out.push({s:"warn",t:`Même jour : ${a.titre} et ${b.titre}.`});
+    if(gap<60&&need>S.params.cash+S.params.financement)out.push({k:"cash:"+a.id+":"+b.id,s:"bad",t:`Conflit de cash : ${a.titre} et ${b.titre} (${Math.round(gap)} j d'écart). Gagner les deux demanderait ${keur(need)}.`});
+    if(gap<1)out.push({k:"jour:"+a.id+":"+b.id,s:"warn",t:`Même jour : ${a.titre} et ${b.titre}.`});
   }
-  S.actions.filter(a=>!a.fait&&a.echeance&&days(a.echeance)<0).forEach(a=>out.push({s:"warn",t:`Action en retard : ${a.titre} (${fdate(a.echeance)}).`}));
-  S.lots.filter(l=>l.statut==="gagne").forEach(l=>{const p=addMonths(l.audience,2);const d=days(p);if(d!=null&&d<=15)out.push({s:"bad",t:`${l.titre} : prix à consigner avant le ${fdate(p)} (J-${d}).`,lot:l.id})});
-  const ord={bad:0,warn:1,info:2};return out.sort((a,b)=>ord[a.s]-ord[b.s]);
+  S.actions.filter(a=>!a.fait&&a.echeance&&days(a.echeance)<0).forEach(a=>out.push({k:"act:"+a.id,act:a.id,s:"warn",t:`Action en retard : ${a.titre} (${fdate(a.echeance)}).`}));
+  lots.filter(l=>l.statut==="gagne").forEach(l=>{const p=addMonths(l.audience,2);const d=days(p);if(d!=null&&d<=15)out.push({k:"consig:"+l.id,s:"bad",t:`${l.titre} : prix à consigner avant le ${fdate(p)} (J-${d}).`,lot:l.id})});
+  const ord={bad:0,warn:1,info:2};const mq=S.alertesMasquees||{};out.forEach(a=>a.masq=!!mq[a.k]);return out.sort((a,b)=>ord[a.s]-ord[b.s]);
 }
-function agenda(n){
+function agenda(n,lots){
   const ev=[];const lim=n??14;
-  S.lots.forEach(l=>{
+  (lots||S.lots).forEach(l=>{
     if(l.audience)ev.push({d:l.audience,t:"Audience",w:`${l.titre} · TJ ${l.tribunal}`,lot:l.id,k:"aud"});
     if(l.visite)ev.push({d:l.visite,t:"Visite",w:l.titre,lot:l.id,k:"vis"});
     if(l.statut==="gagne"){
@@ -328,7 +335,7 @@ function agenda(n){
       ev.push({d:addMonths(l.audience,2),t:"Prix + droits + publication",w:l.titre,lot:l.id});
     }
   });
-  S.actions.filter(a=>!a.fait&&a.echeance).forEach(a=>ev.push({d:a.echeance,t:"Action",w:a.titre,k:"act"}));
+  S.actions.filter(a=>!a.fait&&a.echeance).forEach(a=>ev.push({d:a.echeance,t:"Action",w:a.titre,k:"act",act:a.id}));
   return ev.filter(e=>{const d=days(e.d);return d!=null&&d>=0&&d<=lim}).sort((a,b)=>pd(a.d)-pd(b.d));
 }
 function cashState(){
@@ -489,6 +496,16 @@ document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest(".co
 
 document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-resyear]");if(!b)return;S.resYear=b.dataset.resyear;render()});
 document.addEventListener("change",e=>{if(e.target.id==="res-zone"){S.resZone=e.target.checked;render()}});
+
+document.addEventListener("click",async e=>{
+  const ea=e.target.closest&&e.target.closest("[data-editact]");
+  if(ea&&!S.ro){e.preventDefault();e.stopPropagation();const a=S.actions.find(x=>x.id===ea.dataset.editact);if(a)openForm("actions",a);return}
+  const m=e.target.closest&&e.target.closest("[data-masq]");
+  if(m&&!S.ro&&S.db){e.preventDefault();e.stopPropagation();const k=m.dataset.masq;const cur={...(S.alertesMasquees||{})};
+    if(cur[k])delete cur[k];else cur[k]=new Date().toISOString().slice(0,10);S.alertesMasquees=cur;render();
+    try{await S.db.doc("params/alertes").set({masquees:cur})}catch(_){}return}
+  const tg=e.target.closest&&e.target.closest("[data-tab-go]");if(tg){S.tab=tg.dataset.tabGo;render();return}
+},true);
 /* ---------- rendu ---------- */
 function render(){
   document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===S.tab));
@@ -521,12 +538,16 @@ function lotRow(l){
 const lotHead=`<tr><th>Bien</th><th>Tribunal</th><th>Visite</th><th class="num">MAP</th><th class="num">Plafond reco.</th><th class="num">Adjugé probable</th><th class="num">P(gagner)</th><th class="num">Espérance</th><th>Décision</th><th>Avocat</th></tr>`;
 
 function vPilotage(){
-  const cs=cashState();const al=alerts();const ag=agenda(14);
-  const actifs=S.lots.filter(l=>!passe(l)&&!pasInt(l)&&!["perdu","retire","revendu","horsjeu"].includes(l.statut));
-  const next=S.lots.filter(l=>days(l.audience)>=0&&!["perdu","retire","horsjeu"].includes(l.statut)).sort((a,b)=>pd(a.audience)-pd(b.audience))[0];
+  const cs=cashState();
+  const LP=S.lots.filter(suivi);
+  const nTri=S.lots.filter(l=>!l.interet&&!ENGAGE.includes(l.statut)&&!passe(l)&&!l.horsZone&&l.statut!=="horsjeu").length;
+  const alAll=alerts(LP);const al=alAll.filter(a=>S.showMasq||!a.masq);const nMasq=alAll.filter(a=>a.masq).length;const ag=agenda(14,LP);
+  const actifs=LP.filter(l=>!passe(l)&&!["perdu","retire","revendu","horsjeu"].includes(l.statut));
+  const next=LP.filter(l=>days(l.audience)>=0&&!["perdu","retire","horsjeu"].includes(l.statut)).sort((a,b)=>pd(a.audience)-pd(b.audience))[0];
   const ranked=actifs.map(l=>({l,c:calc(l)})).sort((a,b)=>(b.c.esper??-1e9)-(a.c.esper??-1e9)||(pd(a.l.audience)||0)-(pd(b.l.audience)||0));
   const prio=ranked.filter(r=>r.c.dec==="Priorité 1").length;
   const openA=S.actions.filter(a=>!a.fait).sort((a,b)=>(pd(a.echeance)||9e15)-(pd(b.echeance)||9e15));
+  const triNote=nTri?`<p class="small muted">Le Pilotage ne montre que tes lots marqués « Intéressé » et ceux déjà engagés. <button class="linkbtn" data-tab-go="lots">${nTri} lot${nTri>1?"s":""} à trier dans l'onglet Lots</button>.</p>`:"";
   if(!S.lots.length&&!S.actions.length)return empty("Aucun lot dans la base. Ajoute un lot depuis l'onglet Lots, ou demande à Claude de charger les lots suivis.");
   const R=ratios(null);const rs=R.set.map(r=>r.ratio);
   return `<div class="wrap">
@@ -536,16 +557,18 @@ function vPilotage(){
     ${kpi("Cautions",eur(cs.cautions),"chèques remis, audiences à venir")}
     ${kpi("Cash libre",eur(cs.libre),cs.libre<S.params.cautionMin?"sous la caution minimale":"une balle dans le fusil")}
     ${kpi("Prochaine audience",next?fdate(next.audience):"aucune",next?esc(next.titre)+" · J-"+days(next.audience):"")}
-    ${kpi("Priorité 1",String(prio),ranked.length+" lots actifs")}
+    ${kpi("Priorité 1",String(prio),ranked.length+" lot"+(ranked.length>1?"s":"")+" suivi"+(ranked.length>1?"s":""))}
   </div>
+  ${triNote}
   ${veillePanel()}
   ${digest(al,ranked,openA)}
   <div class="grid2">
     <section class="panel"><div class="panel-head"><h2>Alertes</h2><span class="muted small">${al.length} point${al.length>1?"s":""}</span></div>
-      ${al.length?`<ul class="alerts">${al.map(a=>`<li ${a.lot?`data-lot="${esc(a.lot)}" style="cursor:pointer"`:""}><span class="sev ${a.s}"></span><span>${esc(a.t)}</span></li>`).join("")}</ul>`:`<div class="empty">Rien d'urgent.</div>`}
+      ${al.length?`<ul class="alerts">${al.map(a=>`<li class="${a.masq?"masq":""}"><span class="sev ${a.s}"></span><span class="al-t" ${a.lot?`data-lot="${esc(a.lot)}" style="cursor:pointer"`:a.act?`data-editact="${esc(a.act)}" style="cursor:pointer"`:""}>${esc(a.t)}</span>${S.ro?"":`<button class="linkbtn al-b" data-masq="${esc(a.k)}">${a.masq?"Réafficher":"Masquer"}</button>`}</li>`).join("")}</ul>`:`<div class="empty">Rien d'urgent.</div>`}
+      ${nMasq?`<p class="small"><button class="linkbtn" data-act="toggle-masq">${S.showMasq?"Cacher":"Voir"} ${nMasq} alerte${nMasq>1?"s":""} masquée${nMasq>1?"s":""}</button></p>`:""}
     </section>
     <section class="panel"><div class="panel-head"><h2>14 prochains jours</h2></div>
-      ${ag.length?`<div class="agenda">${ag.map(e=>`<div class="ag" ${e.lot?`data-lot="${esc(e.lot)}" style="cursor:pointer"`:""}><div class="d"><b>${fdate(e.d)}</b><br>J-${days(e.d)}</div><div><span class="pill ${e.k==="aud"?"p-info":e.k==="act"?"p-warn":"p-mute"}">${esc(e.t)}</span> ${esc(e.w)}</div></div>`).join("")}</div>`:`<div class="empty">Agenda vide.</div>`}
+      ${ag.length?`<div class="agenda">${ag.map(e=>`<div class="ag" ${e.lot?`data-lot="${esc(e.lot)}" style="cursor:pointer"`:e.act?`data-editact="${esc(e.act)}" style="cursor:pointer"`:""}><div class="d"><b>${fdate(e.d)}</b><br>J-${days(e.d)}</div><div><span class="pill ${e.k==="aud"?"p-info":e.k==="act"?"p-warn":"p-mute"}">${esc(e.t)}</span> ${esc(e.w)}</div></div>`).join("")}</div>`:`<div class="empty">Agenda vide.</div>`}
     </section>
   </div>
   <section class="panel"><div class="panel-head"><h2>Lots classés par espérance</h2><span class="muted small">Espérance = P(gagner) x marge au plafond, moins le coût d'une tentative ratée</span></div>
@@ -553,10 +576,10 @@ function vPilotage(){
   </section>
   <div class="grid2">
     <section class="panel"><div class="panel-head"><h2>Actions ouvertes</h2><button class="btn ghost" data-act="add-action">Ajouter</button></div>
-      ${openA.length?openA.map(a=>`<label class="row" style="justify-content:space-between;border-bottom:1px dashed var(--line);padding:4px 0"><span class="row"><input type="checkbox" style="width:auto" data-done="${esc(a.id)}" ${S.ro?"disabled":""}> <span>${esc(a.titre)}${a.qui?` <span class="tag">${esc(a.qui)}</span>`:""}</span></span><span class="tag">${a.echeance?fdate(a.echeance):""}</span></label>`).join(""):`<div class="empty">Aucune action ouverte.</div>`}
+      ${openA.length?openA.map(a=>`<label class="row" style="justify-content:space-between;border-bottom:1px dashed var(--line);padding:4px 0"><span class="row"><input type="checkbox" style="width:auto" data-done="${esc(a.id)}" ${S.ro?"disabled":""}> <span>${esc(a.titre)}${a.qui?` <span class="tag">${esc(a.qui)}</span>`:""}</span></span><span class="row"><span class="tag">${a.echeance?fdate(a.echeance):""}</span>${S.ro?"":`<button class="linkbtn" data-editact="${esc(a.id)}">Modifier</button>`}</span></label>`).join(""):`<div class="empty">Aucune action ouverte.</div>`}
     </section>
     <section class="panel"><h2>Pipeline</h2>
-      <div class="funnel">${FUNNEL.map((k,i)=>{const n=S.lots.filter(l=>reach(l)>=i).length;return `<div class="fn"><span>${STATUTS[k]}</span><div class="track"><div class="bar" style="width:${n/Math.max(1,S.lots.length)*100}%"></div></div><span class="num">${n}</span></div>`}).join("")}</div>
+      <div class="funnel">${FUNNEL.map((k,i)=>{const n=LP.filter(l=>reach(l)>=i).length;return `<div class="fn"><span>${STATUTS[k]}</span><div class="track"><div class="bar" style="width:${n/Math.max(1,LP.length)*100}%"></div></div><span class="num">${n}</span></div>`}).join("")}</div>
       <h3>Marché et modèle</h3>
       <div class="small">${rs.length?`${rs.length} adjudication${rs.length>1?"s":""} en base. Ratio adjugé/MAP médian <b class="num">${x(quant(rs,.5))}</b>${rs.length>=4?`, P25 ${x(quant(rs,.25))}, P75 ${x(quant(rs,.75))}`:""}. ${modelErr()}`:"Aucun résultat d'adjudication : les probabilités de gagner ne sont pas calculables."}
       ${rs.length<10?`<br><span class="pill p-warn">Confiance faible</span> moins de 10 résultats, objectif 24 mois d'historique.`:""}</div>
@@ -789,6 +812,7 @@ document.addEventListener("click",async e=>{
   const res=e.target.closest("[data-res]");if(res&&!S.ro){openForm("resultats",S.resultats.find(r=>r.id===res.dataset.res));return}
   const ct=e.target.closest("[data-contact]");if(ct&&!S.ro){openForm("contacts",S.contacts.find(r=>r.id===ct.dataset.contact));return}
   const a=e.target.closest("[data-act]");if(!a)return;const act=a.dataset.act;
+  if(act==="toggle-masq"){S.showMasq=!S.showMasq;render();return}
   if(act==="toggle-pas"){S.showPas=!S.showPas;render();return}
   if(act==="add-lot")openForm("lots");
   if(act==="edit-lot")openForm("lots",S.lots.find(l=>l.id===a.dataset.id));
@@ -817,6 +841,7 @@ render();
   let t=null;const sched=()=>{clearTimeout(t);t=setTimeout(render,30)};
   const err=e=>{$("#dbstatus").textContent="Base interrompue : recharge la page ("+e.code+")"};
   ["lots","resultats","contacts","actions","archives","veille"].forEach(c=>db.collection(c).onSnapshot(s=>{S[c]=s.docs.map(d=>({id:d.id,...d.data()}));sched()},err));
+  db.doc("params/alertes").onSnapshot(s=>{S.alertesMasquees=(s.exists&&s.data().masquees)||{};sched()},()=>{});
   db.doc("params/global").onSnapshot(s=>{S.params={...DEF,...(s.exists?s.data():{})};sched()},err);
 })();
 })();
