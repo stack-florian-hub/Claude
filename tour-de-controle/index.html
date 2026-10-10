@@ -122,6 +122,17 @@ textarea{min-height:70px}
 .dot{width:12px;height:12px;border-radius:50%;margin-top:3px;border:2px solid var(--panel);box-shadow:0 0 0 1px var(--line)}
 .chk{display:inline-flex;gap:6px;align-items:center;white-space:nowrap}.chk input{width:auto;margin:0}
 @media (max-width:600px){#map{height:440px}}
+.tline{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.ib{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.ib button{font:600 11px var(--f-body);padding:2px 8px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.ib button+button{border-left:1px solid var(--line)}
+.ib button:hover{background:var(--accent-soft);color:var(--ink)}
+.ib button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.ib button[data-int="oui"][aria-pressed="true"]{background:var(--ok-soft);color:var(--ok)}
+.ib button[data-int="non"][aria-pressed="true"]{background:var(--bad-soft);color:var(--bad)}
+tr.int-oui td:first-child{box-shadow:inset 3px 0 0 var(--ok)}
+tr.int-non{opacity:.55}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);font:inherit;text-decoration:underline;cursor:pointer}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
 .legend span{display:inline-flex;gap:6px;align-items:center}
 </style>
@@ -171,6 +182,8 @@ const today=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
 const pd=s=>{if(!s)return null;const d=new Date(s);return isNaN(d)?null:d};
 const days=d=>d?Math.round((new Date(d).setHours(0,0,0,0)-today())/864e5):null;
 // Audience passée sans adjudication pour Florian : masqué, le résultat arrive via la veille
+// Lot marqué « pas intéressé » par Florian : masqué comme les audiences passées
+const pasInt=l=>l.interet==="non";
 const passe=l=>{const d=days(l.audience);return d!=null&&d<0&&!["gagne","revendu"].includes(l.statut)};
 const fdate=s=>{const d=pd(s);if(!d)return "n.d.";return d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"2-digit"})+(s.length>10&&(d.getHours()||d.getMinutes())?" "+d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}):"")};
 const addDays=(s,n)=>{const d=pd(s);if(!d)return null;d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
@@ -292,7 +305,7 @@ function cashState(){
 const TRIB_GEO={"Nantes":[47.232,-1.548],"Saint-Nazaire":[47.28,-2.251],"La Roche-sur-Yon":[46.668,-1.408],"Les Sables-d'Olonne":[46.501,-1.793],"Angers":[47.477,-0.556],"Saumur":[47.267,-0.083],"Tours":[47.398,0.696],"Blois":[47.581,1.306]};
 const CLS_TOK={"p-ok":"--ok","p-warn":"--warn","p-bad":"--bad","p-info":"--accent","p-mute":"--muted"};
 const tok=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-function mapLots(){return S.lots.filter(l=>(S.mapPasses||!passe(l))&&(!l.tribunal||TRIB_GEO[l.tribunal])).map(l=>({l,c:calc(l)}))}
+function mapLots(){return S.lots.filter(l=>(S.mapPasses||!passe(l))&&!pasInt(l)&&(!l.tribunal||TRIB_GEO[l.tribunal])).map(l=>({l,c:calc(l)}))}
 function vCarte(){
   const rows=mapLots();const geo=rows.filter(r=>num(r.l.lat)&&num(r.l.lon));const sans=rows.filter(r=>!(num(r.l.lat)&&num(r.l.lon)));
   const nP=S.lots.filter(passe).length;
@@ -351,9 +364,13 @@ function visiteCell(l){
   const d=days(l.visite);
   return `${fdate(l.visite)}<div class="tag">${d==null?"":d<0?"passée":d===0?"aujourd'hui":"J-"+d}</div>`;
 }
+function intBtns(l){
+  if(S.ro)return l.interet?`<span class="pill ${l.interet==="oui"?"p-ok":"p-mute"}">${l.interet==="oui"?"Intéressé":"Pas intéressé"}</span>`:"";
+  return `<span class="ib" role="group" aria-label="Intérêt"><button data-int="oui" data-id="${esc(l.id)}" aria-pressed="${l.interet==="oui"}" title="Intéressé">Intéressé</button><button data-int="non" data-id="${esc(l.id)}" aria-pressed="${l.interet==="non"}" title="Pas intéressé">Pas intéressé</button></span>`;
+}
 function lotRow(l){
   const c=calc(l);const d=days(l.audience);
-  return `<tr class="click" data-lot="${esc(l.id)}"><td><b>${esc(l.titre)}</b><div class="tag">${esc(l.ref||"")} · ${esc(l.adresse||l.commune||"")}${l.adresse?"":` <span class="pill p-warn">adresse ?</span>`}</div></td>
+  return `<tr class="click${l.interet==="oui"?" int-oui":l.interet==="non"?" int-non":""}" data-lot="${esc(l.id)}"><td><div class="tline"><b>${esc(l.titre)}</b>${intBtns(l)}</div><div class="tag">${esc(l.ref||"")} · ${esc(l.adresse||l.commune||"")}${l.adresse?"":` <span class="pill p-warn">adresse ?</span>`}</div></td>
   <td>${esc(l.tribunal||"")}<div class="tag">${l.audience?fdate(l.audience):"date n.d."}${d!=null&&d>=0?" · J-"+d:""}</div></td>
   <td>${visiteCell(l)}</td>
   <td class="num">${keur(num(l.map))}</td><td class="num">${keur(c.reco)}${num(l.plafondDecide)?`<div class="tag">décidé ${keur(+l.plafondDecide)}</div>`:""}</td>
@@ -365,7 +382,7 @@ const lotHead=`<tr><th>Bien</th><th>Tribunal</th><th>Visite</th><th class="num">
 
 function vPilotage(){
   const cs=cashState();const al=alerts();const ag=agenda(14);
-  const actifs=S.lots.filter(l=>!passe(l)&&!["perdu","retire","revendu","horsjeu"].includes(l.statut));
+  const actifs=S.lots.filter(l=>!passe(l)&&!pasInt(l)&&!["perdu","retire","revendu","horsjeu"].includes(l.statut));
   const next=S.lots.filter(l=>days(l.audience)>=0&&!["perdu","retire","horsjeu"].includes(l.statut)).sort((a,b)=>pd(a.audience)-pd(b.audience))[0];
   const ranked=actifs.map(l=>({l,c:calc(l)})).sort((a,b)=>(b.c.esper??-1e9)-(a.c.esper??-1e9)||(pd(a.l.audience)||0)-(pd(b.l.audience)||0));
   const prio=ranked.filter(r=>r.c.dec==="Priorité 1").length;
@@ -434,10 +451,12 @@ const empty=t=>`<div class="empty">${esc(t)}</div>`;
 function vLots(){
   const sel=S.lots.find(l=>l.id===S.lotSel);
   const nPasse=S.lots.filter(passe).length;
-  const ord=S.lots.filter(l=>!passe(l)||l.id===S.lotSel).sort((a,b)=>(pd(a.audience)||9e15)-(pd(b.audience)||9e15));
+  const nPas=S.lots.filter(l=>pasInt(l)&&!passe(l)).length;
+  const ord=S.lots.filter(l=>(!passe(l)&&!l.horsZone&&(S.showPas||!pasInt(l)))||l.id===S.lotSel).sort((a,b)=>(pd(a.audience)||9e15)-(pd(b.audience)||9e15));
   return `<div class="wrap">${sel?lotDetail(sel):""}
   <section class="panel"><div class="panel-head"><h2>Tous les lots</h2>${S.ro?"":`<button class="btn" data-act="add-lot">Nouveau lot</button>`}</div>
   ${ord.length?`<div class="tbl"><table>${lotHead}${ord.map(lotRow).join("")}</table></div>`:empty("Aucun lot à venir. Clique sur Nouveau lot.")}
+  ${nPas?`<p class="small muted" style="margin-top:8px"><button class="linkbtn" data-act="toggle-pas">${S.showPas?"Masquer":"Afficher"} ${nPas} lot${nPas>1?"s":""} marqué${nPas>1?"s":""} pas intéressé${nPas>1?"s":""}</button></p>`:""}
   ${nPasse?`<p class="small muted" style="margin-top:8px">${nPasse} lot${nPasse>1?"s":""} à audience passée masqué${nPasse>1?"s":""} : ${nPasse>1?"ils arriveront":"il arrivera"} dans Résultats dès publication de l'adjudication.</p>`:""}</section></div>`;
 }
 const RF=[["rf_inondable","Zone inondable (PPRI, Géorisques)"],["rf_toiture","Toiture ou façade défaillante"],["rf_structure","Structure, fissures, humidité"],["rf_amiante","Amiante ou fibrociment"],["rf_dpe","DPE F/G ou absent"],["rf_elec","Électricité ou gaz dangereux"],["rf_assainissement","Assainissement non conforme"],["rf_servitudes","Servitudes ou urbanisme bloquant"],["rf_copro","Copro en difficulté, travaux votés"],["rf_tva","TVA sur le prix"],["rf_radon","Radon, pollution, termites"]];
@@ -604,10 +623,13 @@ const stripId=d=>{const o={...d};delete o.id;return o};
 /* ---------- événements ---------- */
 document.addEventListener("click",async e=>{
   const tab=e.target.closest("#tabs button");if(tab){S.tab=tab.dataset.tab;try{history.replaceState(null,"","#"+S.tab)}catch(_){}render();return}
+  const ib=e.target.closest("[data-int]");if(ib){e.stopPropagation();if(S.ro||!S.db)return;const l=S.lots.find(x=>x.id===ib.dataset.id);if(!l)return;const v=l.interet===ib.dataset.int?null:ib.dataset.int;
+    try{await S.db.collection("lots").doc(l.id).update({interet:v})}catch(err){ib.title="Enregistrement refusé : "+(err.message||err.code)}return}
   const lot=e.target.closest("[data-lot]");if(lot&&!e.target.closest("input")){S.lotSel=lot.dataset.lot;S.tab="lots";render();window.scrollTo({top:0});return}
   const res=e.target.closest("[data-res]");if(res&&!S.ro){openForm("resultats",S.resultats.find(r=>r.id===res.dataset.res));return}
   const ct=e.target.closest("[data-contact]");if(ct&&!S.ro){openForm("contacts",S.contacts.find(r=>r.id===ct.dataset.contact));return}
   const a=e.target.closest("[data-act]");if(!a)return;const act=a.dataset.act;
+  if(act==="toggle-pas"){S.showPas=!S.showPas;render();return}
   if(act==="add-lot")openForm("lots");
   if(act==="edit-lot")openForm("lots",S.lots.find(l=>l.id===a.dataset.id));
   if(act==="close-lot"){S.lotSel=null;render()}
