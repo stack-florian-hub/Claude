@@ -145,6 +145,18 @@ tr.int-non{opacity:.55}
 .dropzone:focus-within{outline:2px solid var(--accent);outline-offset:2px}
 .dropzone input{position:absolute;width:1px;height:1px;opacity:0}
 .linkbtn.danger{color:var(--bad)}
+.rk{white-space:nowrap;width:1%}
+.rkn{font:600 12px var(--f-mono);color:var(--muted);display:inline-block;min-width:30px}
+.rkn.top{color:var(--ok)}
+.rkbtns{display:inline-flex;gap:2px;align-items:center;margin-left:4px}
+.grip{cursor:grab;color:var(--muted);padding:0 2px}
+.rkb{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:4px;font-size:10px;line-height:1;padding:3px 5px;cursor:pointer}
+.rkb:disabled{opacity:.35;cursor:default}
+.rkb:focus-visible{outline:2px solid var(--accent)}
+tr[data-rk]{cursor:grab}
+tr.dragging{opacity:.4}
+tr.dropbefore td{box-shadow:inset 0 2px 0 var(--accent)}
+tr.dropafter td{box-shadow:inset 0 -2px 0 var(--accent)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
 .legend span{display:inline-flex;gap:6px;align-items:center}
 </style>
@@ -210,8 +222,11 @@ function ratios(type){
   const seg=type?all.filter(r=>r.type===type):[];
   return seg.length>=3?{set:seg,label:"type "+type}:{set:all,label:"tous types"};
 }
+// Priorité de Florian par TJ (contacts/<id>.rangs = {TJ: n}) ; sans rang = en fin de liste
+const rangOf=(c,tj)=>{const r=c.rangs&&c.rangs[tj];return typeof r==="number"?r:999};
+const byRang=tj=>(a,b)=>rangOf(a,tj)-rangOf(b,tj)||String(a.nom||"").localeCompare(String(b.nom||""));
 function coverage(trib){
-  const av=S.contacts.filter(c=>c.role==="avocat"&&c.statut!=="écarté");
+  const av=S.contacts.filter(c=>c.role==="avocat"&&c.statut!=="écarté").sort(byRang(trib));
   const ok=av.filter(c=>list(c.tribunaux).includes(trib)&&["mandaté","contact"].includes(c.statut));
   const conf=av.filter(c=>list(c.aConfirmer).includes(trib)||(list(c.tribunaux).includes(trib)&&!["mandaté","contact"].includes(c.statut)));
   if(ok.length)return{level:"ok",names:ok.map(c=>c.nom)};
@@ -403,6 +418,33 @@ document.addEventListener("click",async e=>{const b=e.target.closest&&e.target.c
   S.delArm=null;const l=S.lots.find(x=>x.id===lotId);const rest=(l&&l.fichiers||[]).filter(f=>f.id!==id);
   try{await S.db.collection("lots").doc(lotId).update({fichiers:rest});await S.assets.delete(id)}catch(err){const m=$("#upmsg-"+lotId);if(m)m.textContent="Suppression refusée."}
 },true);
+
+/* ---------- classement des avocats par TJ (glisser-déposer + flèches) ---------- */
+const avsOf=cs=>cs.filter(c=>c.role==="avocat");
+const rkAttrs=(c,tj)=>tj&&c.role==="avocat"&&!S.ro?` draggable="true" data-rk="${esc(c.id)}" data-rktj="${esc(tj)}"`:"";
+function rkCell(c,tj,avs){
+  if(!tj||c.role!=="avocat")return `<td class="rk"></td>`;
+  const i=avs.indexOf(c);const ranked=rangOf(c,tj)<999;
+  return `<td class="rk"><span class="rkn${i===0&&ranked?" top":""}">${ranked?"n°"+(i+1):"–"}</span>${S.ro?"":`<span class="rkbtns"><span class="grip" aria-hidden="true">⠿</span><button class="rkb" data-rkmove="-1" data-rkid="${esc(c.id)}" data-rktj="${esc(tj)}" aria-label="Monter ${esc(c.nom||"")}" ${i===0?"disabled":""}>▲</button><button class="rkb" data-rkmove="1" data-rkid="${esc(c.id)}" data-rktj="${esc(tj)}" aria-label="Descendre ${esc(c.nom||"")}" ${i===avs.length-1?"disabled":""}>▼</button></span>`}</td>`;
+}
+async function saveOrder(tj,ids){
+  if(!S.db||S.ro)return;
+  for(let i=0;i<ids.length;i++){const c=S.contacts.find(x=>x.id===ids[i]);if(!c)continue;
+    if(rangOf(c,tj)!==i+1){const rangs={...(c.rangs||{}),[tj]:i+1};c.rangs=rangs;
+      try{await S.db.collection("contacts").doc(c.id).update({rangs})}catch(e){}}}
+  render();
+}
+let rkDrag=null;
+document.addEventListener("dragstart",e=>{const r=e.target.closest&&e.target.closest("tr[data-rk]");if(!r)return;rkDrag={id:r.dataset.rk,tj:r.dataset.rktj};r.classList.add("dragging");try{e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/plain",rkDrag.id)}catch(_){}});
+document.addEventListener("dragend",e=>{document.querySelectorAll("tr.dragging,tr.dropbefore,tr.dropafter").forEach(x=>x.classList.remove("dragging","dropbefore","dropafter"));rkDrag=null});
+document.addEventListener("dragover",e=>{if(!rkDrag)return;const r=e.target.closest&&e.target.closest("tr[data-rk]");if(!r||r.dataset.rktj!==rkDrag.tj)return;e.preventDefault();
+  const b=r.getBoundingClientRect();const after=e.clientY>b.top+b.height/2;document.querySelectorAll("tr.dropbefore,tr.dropafter").forEach(x=>x.classList.remove("dropbefore","dropafter"));r.classList.add(after?"dropafter":"dropbefore")});
+document.addEventListener("drop",e=>{if(!rkDrag)return;const r=e.target.closest&&e.target.closest("tr[data-rk]");if(!r||r.dataset.rktj!==rkDrag.tj)return;e.preventDefault();
+  const tj=rkDrag.tj;const rows=[...r.closest("table").querySelectorAll("tr[data-rk]")].map(x=>x.dataset.rk);const from=rows.indexOf(rkDrag.id);
+  const b=r.getBoundingClientRect();let to=rows.indexOf(r.dataset.rk)+(e.clientY>b.top+b.height/2?1:0);rows.splice(from,1);if(from<to)to--;rows.splice(to,0,rkDrag.id);rkDrag=null;saveOrder(tj,rows)});
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-rkmove]");if(!b)return;e.preventDefault();e.stopPropagation();
+  const tj=b.dataset.rktj;const rows=[...b.closest("table").querySelectorAll("tr[data-rk]")].map(x=>x.dataset.rk);const i=rows.indexOf(b.dataset.rkid);const j=i+Number(b.dataset.rkmove);
+  if(j<0||j>=rows.length)return;[rows[i],rows[j]]=[rows[j],rows[i]];saveOrder(tj,rows)},true);
 /* ---------- rendu ---------- */
 function render(){
   document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===S.tab));
@@ -626,7 +668,7 @@ function feeCell(n,t){
   return t?`<span class="small">${esc(t)}</span>`:`<span class="tag">à demander</span>`;
 }
 function lawyerFees(trib){
-  const av=S.contacts.filter(c=>c.role==="avocat"&&list(c.tribunaux).includes(trib)&&["mandaté","contact"].includes(c.statut));
+  const av=S.contacts.filter(c=>c.role==="avocat"&&list(c.tribunaux).includes(trib)&&["mandaté","contact"].includes(c.statut)).sort(byRang(trib));
   const pick=av.find(c=>c.statut==="mandaté"&&num(c.fraisAdjudication)!=null)||av.find(c=>num(c.fraisAdjudication)!=null)||av.find(c=>num(c.fraisRepresentation)!=null);
   return pick?{nom:pick.nom,adj:num(pick.fraisAdjudication),rep:num(pick.fraisRepresentation)}:null;
 }
@@ -640,7 +682,8 @@ function vReseau(){
   <div class="tbl"><table><tr><th>Département</th><th>Tribunal</th><th>Couverture</th><th>Avocats</th><th>Audiences à venir</th></tr>
   ${trib.map(t=>{const c=coverage(t);const up=S.lots.filter(l=>l.tribunal===t&&days(l.audience)>=0&&!["perdu","retire","horsjeu"].includes(l.statut));return `<tr><td>${esc(TRIB_DEP[t]||"")}</td><td>TJ ${esc(t)}</td><td><span class="pill ${c.level==="ok"?"p-ok":c.level==="warn"?"p-warn":"p-bad"}">${c.level==="ok"?"Couvert":c.level==="warn"?"À confirmer":"Manquant"}</span></td><td>${esc(c.names.join(", ")||"aucun")}</td><td>${up.map(l=>esc(l.titre)+" ("+fdate(l.audience)+")").join("<br>")||"<span class='muted'>aucune</span>"}</td></tr>`}).join("")}</table></div></section>
   <section class="panel"><div class="panel-head"><h2>Annuaire</h2>${S.ro?"":`<button class="btn" data-act="add-contact">Ajouter un contact</button>`}</div>
-  ${DEPS.map(d=>`<h3 class="dep-h">${esc(d)}</h3>`+TRIBUNAUX.filter(t=>TRIB_DEP[t]===d).map(g=>{const cs=groups[g]||[];const cv=coverage(g);return `<h4 class="tj-h">TJ ${esc(g)} <span class="pill ${cv.level==="ok"?"p-ok":cv.level==="warn"?"p-warn":"p-bad"}">${cv.level==="ok"?"Couvert":cv.level==="warn"?"À confirmer":"Manquant"}</span></h4>`+(cs.length?`<div class="tbl"><table><tr><th>Nom</th><th>Rôle</th><th>Téléphone</th><th>Email</th><th>Enchérit au TJ</th><th>Statut</th><th class="num">Frais de représentation</th><th class="num">Frais d'adjudication</th></tr>${cs.map(c=>`<tr class="click" data-contact="${esc(c.id)}"><td><b>${esc(c.nom||c.structure)}</b><div class="tag">${esc(c.nom?c.structure||"":"")}</div></td><td>${esc(c.role||"")}</td><td class="mono" style="white-space:nowrap">${esc(c.telephone||"")}</td><td class="mono small">${esc(c.email||"")}</td><td>${esc(list(c.tribunaux).join(", "))}${list(c.aConfirmer).length?`<div><span class="pill p-warn">à confirmer : ${esc(list(c.aConfirmer).join(", "))}</span></div>`:""}</td><td>${esc(c.statut||"")}</td><td class="num">${feeCell(c.fraisRepresentation,c.forfaitTentative)}</td><td class="num">${feeCell(c.fraisAdjudication,c.forfaitAdjudication)}</td></tr>`).join("")}</table></div>`:`<p class="small muted">Aucun contact au barreau de ${esc(g)}.</p>`)}).join("")).join("")}${(()=>{const cs=groups.Autres||[];return cs.length?`<h3 class="dep-h">Hors barreaux (banque, autres)</h3><div class="tbl"><table><tr><th>Nom</th><th>Rôle</th><th>Téléphone</th><th>Email</th><th>Enchérit au TJ</th><th>Statut</th><th class="num">Frais de représentation</th><th class="num">Frais d'adjudication</th></tr>${cs.map(c=>`<tr class="click" data-contact="${esc(c.id)}"><td><b>${esc(c.nom||c.structure)}</b><div class="tag">${esc(c.nom?c.structure||"":"")}</div></td><td>${esc(c.role||"")}</td><td class="mono" style="white-space:nowrap">${esc(c.telephone||"")}</td><td class="mono small">${esc(c.email||"")}</td><td>${esc(list(c.tribunaux).join(", "))}${list(c.aConfirmer).length?`<div><span class="pill p-warn">à confirmer : ${esc(list(c.aConfirmer).join(", "))}</span></div>`:""}</td><td>${esc(c.statut||"")}</td><td class="num">${feeCell(c.fraisRepresentation,c.forfaitTentative)}</td><td class="num">${feeCell(c.fraisAdjudication,c.forfaitAdjudication)}</td></tr>`).join("")}</table></div>`:""})()}
+  ${DEPS.map(d=>`<h3 class="dep-h">${esc(d)}</h3>`+TRIBUNAUX.filter(t=>TRIB_DEP[t]===d).map(g=>{const cs=groups[g]||[];const cv=coverage(g);const avs=cs.filter(c=>c.role==="avocat").sort(byRang(g)),oth=cs.filter(c=>c.role!=="avocat");cs.length=0;cs.push(...avs,...oth);const tj=g;
+    return `<h4 class="tj-h">TJ ${esc(g)} <span class="pill ${cv.level==="ok"?"p-ok":cv.level==="warn"?"p-warn":"p-bad"}">${cv.level==="ok"?"Couvert":cv.level==="warn"?"À confirmer":"Manquant"}</span></h4>`+(cs.length?`<div class="tbl"><table data-tjtable="${esc(typeof tj==="string"?tj:"")}"><tr><th class="rkh">Priorité</th><th>Nom</th><th>Rôle</th><th>Téléphone</th><th>Email</th><th>Enchérit au TJ</th><th>Statut</th><th class="num">Frais de représentation</th><th class="num">Frais d'adjudication</th></tr>${cs.map(c=>`<tr class="click" data-contact="${esc(c.id)}"${rkAttrs(c,typeof tj==="string"?tj:"")}>${rkCell(c,typeof tj==="string"?tj:"",avsOf(cs))}<td><b>${esc(c.nom||c.structure)}</b><div class="tag">${esc(c.nom?c.structure||"":"")}</div></td><td>${esc(c.role||"")}</td><td class="mono" style="white-space:nowrap">${esc(c.telephone||"")}</td><td class="mono small">${esc(c.email||"")}</td><td>${esc(list(c.tribunaux).join(", "))}${list(c.aConfirmer).length?`<div><span class="pill p-warn">à confirmer : ${esc(list(c.aConfirmer).join(", "))}</span></div>`:""}</td><td>${esc(c.statut||"")}</td><td class="num">${feeCell(c.fraisRepresentation,c.forfaitTentative)}</td><td class="num">${feeCell(c.fraisAdjudication,c.forfaitAdjudication)}</td></tr>`).join("")}</table></div>`:`<p class="small muted">Aucun contact au barreau de ${esc(g)}.</p>`)}).join("")).join("")}${(()=>{const cs=groups.Autres||[];return cs.length?`<h3 class="dep-h">Hors barreaux (banque, autres)</h3><div class="tbl"><table data-tjtable="${esc(typeof tj==="string"?tj:"")}"><tr><th class="rkh">Priorité</th><th>Nom</th><th>Rôle</th><th>Téléphone</th><th>Email</th><th>Enchérit au TJ</th><th>Statut</th><th class="num">Frais de représentation</th><th class="num">Frais d'adjudication</th></tr>${cs.map(c=>`<tr class="click" data-contact="${esc(c.id)}"${rkAttrs(c,typeof tj==="string"?tj:"")}>${rkCell(c,typeof tj==="string"?tj:"",avsOf(cs))}<td><b>${esc(c.nom||c.structure)}</b><div class="tag">${esc(c.nom?c.structure||"":"")}</div></td><td>${esc(c.role||"")}</td><td class="mono" style="white-space:nowrap">${esc(c.telephone||"")}</td><td class="mono small">${esc(c.email||"")}</td><td>${esc(list(c.tribunaux).join(", "))}${list(c.aConfirmer).length?`<div><span class="pill p-warn">à confirmer : ${esc(list(c.aConfirmer).join(", "))}</span></div>`:""}</td><td>${esc(c.statut||"")}</td><td class="num">${feeCell(c.fraisRepresentation,c.forfaitTentative)}</td><td class="num">${feeCell(c.fraisAdjudication,c.forfaitAdjudication)}</td></tr>`).join("")}</table></div>`:""})()}
   </section></div>`;
 }
 

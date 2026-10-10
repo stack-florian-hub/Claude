@@ -1,6 +1,6 @@
 # Annuaire avocats et commissaires de justice
 
-Mis à jour le 07/10/2026. Données structurées : `contacts.csv`.
+Mis à jour le 10/10/2026. Données structurées : `contacts.csv`.
 Règle : on enchérit uniquement par un avocat inscrit au **barreau du tribunal** de la vente. Critère de Florian : indépendants ou très petits cabinets. Aucun tarif publié : demander un forfait écrit (tentative non retenue + adjudication).
 
 ## Couverture par tribunal
@@ -68,6 +68,22 @@ Commissaire : **SARL Herbette-Bouquet**, 3 rue Georges Legagneux, BP 70123, 8550
 - **Me Éric Le Coz**. 02 47 45 04 66. info@lecoz-avocat.fr
 - Repli : Me Corinne Baylac, Envergure Avocats, 02 47 20 24 42.
 - Commissaires : Me Stéphane Brudy, 14 rue Galpin-Thiou, 02 47 20 90 30 ou 06 87 39 47 06, brudycdj@gmail.com ; Étude SKS, 100 rue Marceau, 02 47 05 66 34, sks@huissier-tours.com
+
+
+## Saint-Nazaire, Saumur, Blois (trouvés le 10/10/2026, à confirmer)
+Méthode : avocats poursuivants des ventes passées (Licitor, enchères-publiques) et avocats affichant la saisie immobilière ; priorité aux indépendants.
+
+| TJ | Avocat | Contact | Pourquoi |
+|---|---|---|---|
+| Saint-Nazaire | Me Pierre Gendronneau (SCP Estuaire Avocats) | 02 40 22 95 75, contact@estuaire-avocats.fr | Saisie immobilière et représentation aux ventes judiciaires |
+| Saint-Nazaire | Me Philippe Gonet | 02 49 88 35 04 (formulaire du site) | Indépendant, page « enchère immobilière » |
+| Saint-Nazaire | Me Peggy Moran (O2A & Associés) | 02 40 22 47 32 | Poursuivante d'une vente à Saint-Nazaire |
+| Saumur | Me Olivier Vaillant | 02 41 53 25 18, contact@vaillant-avocat.fr | Indépendant, publie des ventes judiciaires |
+| Saumur | Me Elisabeth Gohier | 02 41 77 05 25, elisabeth.gohier@yahoo.fr | Indépendante, publie des ventes judiciaires |
+| Saumur | Me Xavier Blanchard | 06 18 76 15 70, contact@xb-avocat.fr | Ancien bâtonnier, publie des ventes |
+| Blois | Me Florence Devouard | 02 54 57 03 03, cabinet-devouard@orange.fr | Poursuivante au TJ de Blois |
+| Blois | Me Céline Toulet | 02 54 74 86 50, contact@toulet-avocat.fr | Vente judiciaire au TJ de Blois (2024) |
+| Blois | Me Alexandre Godeau (SCP HCG), repli | 02 54 78 02 02, contact@hcg-avocats.fr | Poursuivant en 2026 |
 
 ## Script d'appel (2 minutes)
 1. Inscrit à quel barreau ? Pratiquez-vous les enchères judiciaires ?
