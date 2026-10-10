@@ -19,12 +19,13 @@ for r in data["resultats"]:
     if r.get("lots", 1) > 1:
         stats["multi"] += 1; continue
     if not r.get("adjuge") and not r.get("carence"):
-        stats["inconnu"] += 1; continue
+        stats["inconnu"] += 1  # gardé pour les volumes et les mises à prix, sans ratio
     if r.get("carence"):
         stats["carence"] += 1
     doc = clean({"date": (r.get("date") or r.get("audience_page") or "")[:10], "tribunal": r["tribunal"], "commune": r.get("commune"),
                  "dept": r.get("dept"), "type": r.get("type"), "surface": r.get("surface"), "map": r.get("map"),
-                 "adjuge": r.get("adjuge"), "carence": "oui" if r.get("carence") else None, "occupation": r.get("occupation"),
+                 "adjuge": r.get("adjuge"), "carence": "oui" if r.get("carence") else None,
+                 "resultat": "adjugé" if r.get("adjuge") else "carence" if r.get("carence") else "inconnu", "occupation": r.get("occupation"),
                  "baisse": r.get("baisse"), "surenchere": "non", "source": "Licitor (calendrier du TJ)", "lien": r.get("lien"),
                  "verifie": "oui", "notes": (r.get("description") or "")[:300]})
     p = os.path.join(out, did + ".json")
