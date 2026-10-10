@@ -172,6 +172,7 @@ body.colresizing{cursor:col-resize;user-select:none}
 .alerts .al-b{font-size:12px;white-space:nowrap}
 .alerts li.masq{opacity:.5}
 tr.sel td{background:var(--accent-soft)}
+.annlink{font-size:12px;color:var(--accent);white-space:nowrap}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
 .legend span{display:inline-flex;gap:6px;align-items:center}
 </style>
@@ -529,7 +530,7 @@ function intBtns(l){
 }
 function lotRow(l){
   const c=calc(l);const d=days(l.audience);
-  return `<tr class="click${l.interet==="oui"?" int-oui":l.interet==="non"?" int-non":""}" data-lot="${esc(l.id)}"><td><div class="tline"><b>${esc(l.titre)}</b>${intBtns(l)}</div><div class="tag">${esc(l.ref||"")} · ${esc(l.adresse||l.commune||"")}${l.adresse?"":` <span class="pill p-warn">adresse ?</span>`}</div></td>
+  return `<tr class="click${l.interet==="oui"?" int-oui":l.interet==="non"?" int-non":""}" data-lot="${esc(l.id)}"><td><div class="tline"><b>${esc(l.titre)}</b>${l.lien?`<a class="annlink" href="${esc(l.lien)}" target="_blank" rel="noopener" title="Ouvrir l'annonce">annonce ↗</a>`:""}${intBtns(l)}</div><div class="tag">${esc(l.ref||"")} · ${esc(l.adresse||l.commune||"")}${l.adresse?"":` <span class="pill p-warn">adresse ?</span>`}</div></td>
   <td>${esc(l.tribunal||"")}<div class="tag">${l.audience?fdate(l.audience):"date n.d."}${d!=null&&d>=0?" · J-"+d:""}</div></td>
   <td>${visiteCell(l)}</td>
   <td class="num">${keur(num(l.map))}</td><td class="num">${keur(c.reco)}${num(l.plafondDecide)?`<div class="tag">décidé ${keur(+l.plafondDecide)}</div>`:""}</td>
@@ -666,7 +667,7 @@ function lotDetail(l){
   const qs=["État des frais préalables (frais taxés estimés)","Vente soumise à TVA ?","Occupation, bail, mobilier","Charges de copropriété et arriérés","Certificat d'urbanisme, servitudes","Ordre exact du chèque de banque (séquestre)"];
   const cov=c.cov;
   return `<section class="panel lotcard"><div class="panel-head"><div><h2>${esc(l.titre)}</h2><div class="small"><b>${l.adresse?esc(l.adresse):`<span class="pill p-warn">Adresse à compléter</span>`}</b> <span class="muted">· ${esc(l.commune||"")}</span></div>${l.visitesTxt?`<div class="small">${esc(l.visitesTxt)}</div>`:""}<div class="muted small">${esc(l.ref||"")} · TJ ${esc(l.tribunal||"n.d.")} · ${l.audience?fdate(l.audience):"audience n.d."} · ${esc(l.occupation||"occupation n.d.")} · <span class="pill p-mute">${esc(STATUTS[l.statut]||l.statut||"")}</span></div></div>
-  <div class="row">${S.ro?"":`<button class="btn ghost" data-act="edit-lot" data-id="${esc(l.id)}">Modifier</button>`}<button class="btn ghost" data-act="close-lot">Fermer</button></div></div>
+  <div class="row">${l.lien?`<a class="btn" href="${esc(l.lien)}" target="_blank" rel="noopener">Voir l'annonce${/licitor/.test(l.lien)?" (Licitor)":""}</a>`:`<span class="pill p-warn">Lien de l'annonce manquant</span>`}${l.lienAlt?`<a class="btn ghost" href="${esc(l.lienAlt)}" target="_blank" rel="noopener">Autre source</a>`:""}${S.ro?"":`<button class="btn ghost" data-act="edit-lot" data-id="${esc(l.id)}">Modifier</button>`}<button class="btn ghost" data-act="close-lot">Fermer</button></div></div>
   ${flagsBlock(l)}
   ${docsBlock(l)}
   <div class="decision"><span class="pill ${c.cls}" style="font-size:13px">${esc(c.dec)}</span><span class="why">${esc(c.why)}</span></div>
@@ -697,7 +698,7 @@ function lotDetail(l){
   </div>
   ${l.notes?`<div><h3>Notes</h3><p class="small" style="white-space:pre-wrap">${esc(l.notes)}</p></div>`:""}
   ${l.postmortem||l.statut==="perdu"||l.statut==="gagne"?`<div><h3>Post-mortem</h3><p class="small" style="white-space:pre-wrap">${esc(l.postmortem||"À rédiger : notre plafond, le prix réel, l'écart, ce que le modèle aurait dû dire.")}</p>${num(l.predit)&&num(l.adjuge)?`<p class="small">Prédit ${eur(+l.predit)}, réel ${eur(+l.adjuge)}, écart <b>${pct((+l.predit-+l.adjuge)/+l.adjuge)}</b>.</p>`:""}</div>`:""}
-  ${l.lien?`<p class="small"><a href="${esc(l.lien)}" target="_blank" rel="noopener">Fiche de vente</a></p>`:""}
+
   </section>`;
 }
 
@@ -786,7 +787,7 @@ function vParams(){
 
 /* ---------- formulaires ---------- */
 const FIELDS={
-  lots:[["titre","Bien"],["ref","Référence"],["adresse","Adresse du bien"],["commune","Commune"],["type","Type","select",["maison","appartement","studio","local","immeuble","terrain","autre"]],["tribunal","Tribunal","select",TRIBUNAUX],["audience","Audience","datetime-local"],["visite","Prochaine visite","datetime-local"],["visitesTxt","Toutes les visites (texte)"],["statut","Statut","select",Object.keys(STATUTS)],["map","Mise à prix (€)","number"],["surface","Surface (m²)","number"],["prixM2MA","Prix m² MeilleursAgents, moyenne (€)","number"],["prixM2MABas","MeilleursAgents, bas de fourchette (€)","number"],["prixM2MAHaut","MeilleursAgents, haut de fourchette (€)","number"],["prixM2MADate","MeilleursAgents, date de l'estimation","date"],["prixM2DVF","Prix m² DVF médiane (€)","number"],["prixM2Annonces","Prix m² annonces comparables (€)","number"],["prixM2Autre","Prix m² autre source (€)","number"],["prixM2AutreSource","Nom de l'autre source"],["prixM2","Prix m² manuel si aucune source (€)","number"],["decote","Décote état et sortie (0,3 = 30 %)","number"],["travaux","Travaux (€)","number"],["autresFrais","Serrurier, diag, portage (€)","number"],["occupation","Occupation","select",["libre","occupé","bail","inconnu"]],...RF.map(([k,n])=>[k,"Red flag : "+n,"select",["inconnu","oui","non"]]),["plafondDecide","Plafond décidé (€)","number"],["predit","Prix prédit (€)","number"],["adjuge","Prix adjugé (€)","number"],["poursuivant","Avocat poursuivant"],["lien","Lien de la fiche"],["notes","Notes","textarea"],["postmortem","Post-mortem","textarea"]],
+  lots:[["titre","Bien"],["ref","Référence"],["adresse","Adresse du bien"],["commune","Commune"],["type","Type","select",["maison","appartement","studio","local","immeuble","terrain","autre"]],["tribunal","Tribunal","select",TRIBUNAUX],["audience","Audience","datetime-local"],["visite","Prochaine visite","datetime-local"],["visitesTxt","Toutes les visites (texte)"],["statut","Statut","select",Object.keys(STATUTS)],["map","Mise à prix (€)","number"],["surface","Surface (m²)","number"],["prixM2MA","Prix m² MeilleursAgents, moyenne (€)","number"],["prixM2MABas","MeilleursAgents, bas de fourchette (€)","number"],["prixM2MAHaut","MeilleursAgents, haut de fourchette (€)","number"],["prixM2MADate","MeilleursAgents, date de l'estimation","date"],["prixM2DVF","Prix m² DVF médiane (€)","number"],["prixM2Annonces","Prix m² annonces comparables (€)","number"],["prixM2Autre","Prix m² autre source (€)","number"],["prixM2AutreSource","Nom de l'autre source"],["prixM2","Prix m² manuel si aucune source (€)","number"],["decote","Décote état et sortie (0,3 = 30 %)","number"],["travaux","Travaux (€)","number"],["autresFrais","Serrurier, diag, portage (€)","number"],["occupation","Occupation","select",["libre","occupé","bail","inconnu"]],...RF.map(([k,n])=>[k,"Red flag : "+n,"select",["inconnu","oui","non"]]),["plafondDecide","Plafond décidé (€)","number"],["predit","Prix prédit (€)","number"],["adjuge","Prix adjugé (€)","number"],["poursuivant","Avocat poursuivant"],["lien","Lien de l'annonce"],["lienAlt","Autre lien (vench, avocat…)"],["notes","Notes","textarea"],["postmortem","Post-mortem","textarea"]],
   resultats:[["date","Date","date"],["tribunal","Tribunal","select",TRIBUNAUX],["commune","Commune"],["type","Type","select",["maison","appartement","studio","local","immeuble","terrain","autre"]],["surface","Surface (m²)","number"],["map","Mise à prix (€)","number"],["adjuge","Prix adjugé (€)","number"],["occupation","Occupation","select",["libre","occupé","bail","inconnu"]],["baisse","Baisse d'un quart","select",["non","oui"]],["surenchere","Surenchère","select",["non","oui"]],["source","Source"],["lien","Lien"],["verifie","Vérifié","select",["non","oui"]],["notes","Notes","textarea"]],
   contacts:[["nom","Nom"],["structure","Cabinet ou étude"],["role","Rôle","select",["avocat","commissaire de justice","avocat poursuivant","banque","comptable","courtier","autre"]],["barreau","Barreau ou ressort"],["tribunaux","Enchérit au TJ (liste, virgules)"],["aConfirmer","TJ à confirmer (liste, virgules)"],["telephone","Téléphone"],["email","Email"],["site","Site"],["adresse","Adresse"],["statut","Statut","select",["mandaté","contact","candidat","repli","écarté","référence"]],["fraisRepresentation","Frais de représentation, TTC (€)","number"],["forfaitTentative","Détail représentation (HT/TTC, source)"],["fraisAdjudication","Frais d'adjudication, TTC (€)","number"],["forfaitAdjudication","Détail adjudication (source)"],["notes","Notes","textarea"]],
   actions:[["titre","Action"],["echeance","Échéance","date"],["qui","Qui"],["lotRef","Lot lié"]]
@@ -818,7 +819,7 @@ document.addEventListener("click",async e=>{
   const tab=e.target.closest("#tabs button");if(tab){S.tab=tab.dataset.tab;try{history.replaceState(null,"","#"+S.tab)}catch(_){}render();return}
   const ib=e.target.closest("[data-int]");if(ib){e.stopPropagation();if(S.ro||!S.db)return;const l=S.lots.find(x=>x.id===ib.dataset.id);if(!l)return;const v=l.interet===ib.dataset.int?null:ib.dataset.int;
     try{await S.db.collection("lots").doc(l.id).update({interet:v})}catch(err){ib.title="Enregistrement refusé : "+(err.message||err.code)}return}
-  const lot=e.target.closest("[data-lot]");if(lot&&!e.target.closest("input")){S.lotSel=lot.dataset.lot;S.tab="lots";render();window.scrollTo({top:0});return}
+  const lot=e.target.closest("[data-lot]");if(lot&&!e.target.closest("input")&&!e.target.closest("a")){S.lotSel=lot.dataset.lot;S.tab="lots";render();window.scrollTo({top:0});return}
   const res=e.target.closest("[data-res]");if(res&&!S.ro){openForm("resultats",S.resultats.find(r=>r.id===res.dataset.res));return}
   const ct=e.target.closest("[data-contact]");if(ct&&!S.ro){openForm("contacts",S.contacts.find(r=>r.id===ct.dataset.contact));return}
   const a=e.target.closest("[data-act]");if(!a)return;const act=a.dataset.act;
