@@ -133,6 +133,8 @@ textarea{min-height:70px}
 tr.int-oui td:first-child{box-shadow:inset 3px 0 0 var(--ok)}
 tr.int-non{opacity:.55}
 .linkbtn{background:none;border:0;padding:0;color:var(--accent);font:inherit;text-decoration:underline;cursor:pointer}
+.dep-h{margin-top:18px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.tj-h{font:600 14px var(--f-display);margin:12px 0 6px;display:flex;gap:8px;align-items:center}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
 .legend span{display:inline-flex;gap:6px;align-items:center}
 </style>
@@ -164,6 +166,7 @@ tr.int-non{opacity:.55}
 <script>
 (function(){
 const TRIB_DEP={"Nantes":"44 Loire-Atlantique","Saint-Nazaire":"44 Loire-Atlantique","La Roche-sur-Yon":"85 Vendée","Les Sables-d'Olonne":"85 Vendée","Angers":"49 Maine-et-Loire","Saumur":"49 Maine-et-Loire","Tours":"37 Indre-et-Loire","Blois":"41 Loir-et-Cher"};
+const DEPS=["44 Loire-Atlantique","85 Vendée","49 Maine-et-Loire","37 Indre-et-Loire","41 Loir-et-Cher"];
 const TRIBUNAUX=["Nantes","Saint-Nazaire","La Roche-sur-Yon","Les Sables-d'Olonne","Angers","Saumur","Tours","Blois"];
 const STATUTS={repere:"Repéré",analyse:"Analysé",plafond:"Plafond fixé",enchere:"Enchère mandatée",gagne:"Gagné",perdu:"Non gagné",retire:"Retiré / reporté",revendu:"Revendu",horsjeu:"Écarté"};
 const FUNNEL=["repere","analyse","plafond","enchere","gagne","revendu"];
@@ -572,13 +575,15 @@ function lawyerFees(trib){
 }
 function vReseau(){
   const trib=TRIBUNAUX; // uniquement les TJ ciblés
-  const groups={};S.contacts.forEach(c=>{const k=c.barreau||"Autres";(groups[k]=groups[k]||[]).push(c)});
+  // Annuaire rangé comme la couverture : département, puis TJ ciblé ; le reste dans « Autres »
+  const tjOf=c=>TRIBUNAUX.find(t=>(c.barreau||"").includes(t))||list(c.tribunaux).find(t=>TRIBUNAUX.includes(t))||"Autres";
+  const groups={};S.contacts.forEach(c=>{const k=tjOf(c);(groups[k]=groups[k]||[]).push(c)});
   return `<div class="wrap"><section class="panel"><h2>Couverture par tribunal</h2><p class="small">Zone ciblée : 44 Loire-Atlantique, 85 Vendée, 49 Maine-et-Loire, 37 Indre-et-Loire, 41 Loir-et-Cher.</p>
   <p class="small muted">On enchérit par un avocat inscrit au barreau du tribunal de la vente. Une couverture « à confirmer » doit être validée par écrit par l'avocat avant l'audience.</p>
   <div class="tbl"><table><tr><th>Département</th><th>Tribunal</th><th>Couverture</th><th>Avocats</th><th>Audiences à venir</th></tr>
   ${trib.map(t=>{const c=coverage(t);const up=S.lots.filter(l=>l.tribunal===t&&days(l.audience)>=0&&!["perdu","retire","horsjeu"].includes(l.statut));return `<tr><td>${esc(TRIB_DEP[t]||"")}</td><td>TJ ${esc(t)}</td><td><span class="pill ${c.level==="ok"?"p-ok":c.level==="warn"?"p-warn":"p-bad"}">${c.level==="ok"?"Couvert":c.level==="warn"?"À confirmer":"Manquant"}</span></td><td>${esc(c.names.join(", ")||"aucun")}</td><td>${up.map(l=>esc(l.titre)+" ("+fdate(l.audience)+")").join("<br>")||"<span class='muted'>aucune</span>"}</td></tr>`}).join("")}</table></div></section>
   <section class="panel"><div class="panel-head"><h2>Annuaire</h2>${S.ro?"":`<button class="btn" data-act="add-contact">Ajouter un contact</button>`}</div>
-  ${Object.keys(groups).length?Object.entries(groups).map(([g,cs])=>`<h3>${esc(g)}</h3><div class="tbl"><table><tr><th>Nom</th><th>Rôle</th><th>Téléphone</th><th>Email</th><th>Enchérit au TJ</th><th>Statut</th><th class="num">Frais de représentation</th><th class="num">Frais d'adjudication</th></tr>${cs.map(c=>`<tr class="click" data-contact="${esc(c.id)}"><td><b>${esc(c.nom||c.structure)}</b><div class="tag">${esc(c.nom?c.structure||"":"")}</div></td><td>${esc(c.role||"")}</td><td class="mono" style="white-space:nowrap">${esc(c.telephone||"")}</td><td class="mono small">${esc(c.email||"")}</td><td>${esc(list(c.tribunaux).join(", "))}${list(c.aConfirmer).length?`<div><span class="pill p-warn">à confirmer : ${esc(list(c.aConfirmer).join(", "))}</span></div>`:""}</td><td>${esc(c.statut||"")}</td><td class="num">${feeCell(c.fraisRepresentation,c.forfaitTentative)}</td><td class="num">${feeCell(c.fraisAdjudication,c.forfaitAdjudication)}</td></tr>`).join("")}</table></div>`).join(""):empty("Annuaire vide.")}
+  ${DEPS.map(d=>`<h3 class="dep-h">${esc(d)}</h3>`+TRIBUNAUX.filter(t=>TRIB_DEP[t]===d).map(g=>{const cs=groups[g]||[];const cv=coverage(g);return `<h4 class="tj-h">TJ ${esc(g)} <span class="pill ${cv.level==="ok"?"p-ok":cv.level==="warn"?"p-warn":"p-bad"}">${cv.level==="ok"?"Couvert":cv.level==="warn"?"À confirmer":"Manquant"}</span></h4>`+(cs.length?`<div class="tbl"><table><tr><th>Nom</th><th>Rôle</th><th>Téléphone</th><th>Email</th><th>Enchérit au TJ</th><th>Statut</th><th class="num">Frais de représentation</th><th class="num">Frais d'adjudication</th></tr>${cs.map(c=>`<tr class="click" data-contact="${esc(c.id)}"><td><b>${esc(c.nom||c.structure)}</b><div class="tag">${esc(c.nom?c.structure||"":"")}</div></td><td>${esc(c.role||"")}</td><td class="mono" style="white-space:nowrap">${esc(c.telephone||"")}</td><td class="mono small">${esc(c.email||"")}</td><td>${esc(list(c.tribunaux).join(", "))}${list(c.aConfirmer).length?`<div><span class="pill p-warn">à confirmer : ${esc(list(c.aConfirmer).join(", "))}</span></div>`:""}</td><td>${esc(c.statut||"")}</td><td class="num">${feeCell(c.fraisRepresentation,c.forfaitTentative)}</td><td class="num">${feeCell(c.fraisAdjudication,c.forfaitAdjudication)}</td></tr>`).join("")}</table></div>`:`<p class="small muted">Aucun contact au barreau de ${esc(g)}.</p>`)}).join("")).join("")}${(()=>{const cs=groups.Autres||[];return cs.length?`<h3 class="dep-h">Hors barreaux (banque, autres)</h3><div class="tbl"><table><tr><th>Nom</th><th>Rôle</th><th>Téléphone</th><th>Email</th><th>Enchérit au TJ</th><th>Statut</th><th class="num">Frais de représentation</th><th class="num">Frais d'adjudication</th></tr>${cs.map(c=>`<tr class="click" data-contact="${esc(c.id)}"><td><b>${esc(c.nom||c.structure)}</b><div class="tag">${esc(c.nom?c.structure||"":"")}</div></td><td>${esc(c.role||"")}</td><td class="mono" style="white-space:nowrap">${esc(c.telephone||"")}</td><td class="mono small">${esc(c.email||"")}</td><td>${esc(list(c.tribunaux).join(", "))}${list(c.aConfirmer).length?`<div><span class="pill p-warn">à confirmer : ${esc(list(c.aConfirmer).join(", "))}</span></div>`:""}</td><td>${esc(c.statut||"")}</td><td class="num">${feeCell(c.fraisRepresentation,c.forfaitTentative)}</td><td class="num">${feeCell(c.fraisAdjudication,c.forfaitAdjudication)}</td></tr>`).join("")}</table></div>`:""})()}
   </section></div>`;
 }
 
