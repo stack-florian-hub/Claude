@@ -171,6 +171,7 @@ body.colresizing{cursor:col-resize;user-select:none}
 .alerts .al-t{flex:1;min-width:0}
 .alerts .al-b{font-size:12px;white-space:nowrap}
 .alerts li.masq{opacity:.5}
+tr.sel td{background:var(--accent-soft)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
 .legend span{display:inline-flex;gap:6px;align-items:center}
 </style>
@@ -496,6 +497,7 @@ document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest(".co
 
 document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-resyear]");if(!b)return;S.resYear=b.dataset.resyear;render()});
 document.addEventListener("change",e=>{if(e.target.id==="res-zone"){S.resZone=e.target.checked;render()}});
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-resdep]");if(!b)return;const v=b.dataset.resdep;S.resDep=(S.resDep===v&&v!=="all")?"all":v;render()});
 
 document.addEventListener("click",async e=>{
   const ea=e.target.closest&&e.target.closest("[data-editact]");
@@ -707,9 +709,10 @@ function pm2Block(l){
   <p class="small muted">Retenu : la source la plus basse (prudence). ${ps.n<need?`<span class="pill p-warn">${ps.n}/${need} sources</span> ${l.type==="local"?"Pour un local, comparer au moins 3 sources.":"Ajouter une deuxième source."}`:`<span class="pill p-ok">${ps.n} sources</span>`}${ps.rows.length>1?" Écart max entre sources : "+pct(Math.max(...ps.rows.map(r=>r.v))/ps.retenu-1)+".":""}</p></div>`;
 }
 function vResultats(){
-  const yr=S.resYear||"all",zoneOnly=S.resZone!==false;
+  const yr=S.resYear||"all",zoneOnly=S.resZone!==false,dsel=S.resDep||"all";
   const depOf=r=>r.dept||(TRIB_DEP[r.tribunal]||"").slice(0,2)||"";
-  const rows=S.resultats.filter(r=>(yr==="all"||String(r.date||"").startsWith(yr))&&(!zoneOnly||TRIBUNAUX.includes(r.tribunal))).map(r=>({...r,dep:depOf(r),ratio:num(r.map)&&num(r.adjuge)?+r.adjuge/+r.map:null,m2:num(r.surface)&&num(r.adjuge)?+r.adjuge/+r.surface:null})).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const base=S.resultats.filter(r=>(yr==="all"||String(r.date||"").startsWith(yr))&&(!zoneOnly||TRIBUNAUX.includes(r.tribunal)));
+  const rows=base.filter(r=>dsel==="all"||depOf(r)===dsel).map(r=>({...r,dep:depOf(r),ratio:num(r.map)&&num(r.adjuge)?+r.adjuge/+r.map:null,m2:num(r.surface)&&num(r.adjuge)?+r.adjuge/+r.surface:null})).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
   const rs=rows.map(r=>r.ratio).filter(v=>v);
   const by={};rows.filter(r=>r.ratio).forEach(r=>{const k=[r.dep||"?",r.tribunal||"?",r.type||"?"].join("|");(by[k]=by[k]||[]).push(r)});
   const tjIdx=t=>{const i=TRIBUNAUX.indexOf(t);return i<0?99:i};
@@ -725,6 +728,13 @@ function vResultats(){
   </div>
   <div class="row resfilters small"><span class="muted">Période</span>${["all",...yrs].map(y=>`<button class="chip${yr===y?" on":""}" data-resyear="${y}">${y==="all"?"Tout":y}</button>`).join("")}
     <label class="chk"><input type="checkbox" id="res-zone" ${zoneOnly?"checked":""}> Uniquement mes 8 TJ</label></div>
+  <div class="row resfilters small"><span class="muted">Département</span><button class="chip${dsel==="all"?" on":""}" data-resdep="all">Tous</button>${DEPS.map(d=>`<button class="chip${dsel===d.slice(0,2)?" on":""}" data-resdep="${d.slice(0,2)}">${esc(d)}</button>`).join("")}</div>
+  <section class="panel"><h2>Par département</h2>
+    <div class="tbl"><table><tr><th>Département</th><th class="num">Ventes</th><th class="num">Médiane</th><th class="num">P25</th><th class="num">P75</th><th class="num">Sous 1,5 x MAP</th>${yr==="all"?["2024","2025","2026"].map(y=>`<th class="num">${y}</th>`).join(""):""}</tr>
+    ${DEPS.map(d=>{const c=d.slice(0,2);const rr=base.filter(r=>depOf(r)===c&&num(r.map)&&num(r.adjuge));const a=rr.map(r=>+r.adjuge/+r.map);
+      return `<tr class="${dsel===c?"sel":""}" data-resdep="${c}" style="cursor:pointer"><td>${esc(d)}</td><td class="num">${a.length}</td><td class="num">${a.length?x(quant(a,.5)):"–"}</td><td class="num">${a.length>=4?x(quant(a,.25)):"n.d."}</td><td class="num">${a.length>=4?x(quant(a,.75)):"n.d."}</td><td class="num">${a.length?pct(a.filter(v=>v<1.5).length/a.length):"–"}</td>${yr==="all"?["2024","2025","2026"].map(y=>{const b=rr.filter(r=>String(r.date||"").startsWith(y)).map(r=>+r.adjuge/+r.map);return `<td class="num">${b.length?x(quant(b,.5))+` <span class="tag">${b.length}</span>`:"<span class='tag'>–</span>"}</td>`}).join(""):""}</tr>`}).join("")}</table></div>
+    <p class="small muted">Clique sur un département pour filtrer toute la page. Ratio = adjugé / mise à prix, ventes avec un prix connu uniquement.</p>
+  </section>
   <section class="panel"><h2>Par tribunal et type</h2>
     ${segs.length?`<div class="tbl"><table><tr><th>Dépt</th><th>Tribunal</th><th>Type</th><th class="num">n</th><th class="num">Médiane</th><th class="num">P25</th><th class="num">P75</th>${yr==="all"?yrs.map(y=>`<th class="num">${y}</th>`).join(""):""}</tr>${segs.map(([k,rs2])=>{const [d,t,ty]=k.split("|");const a=rs2.map(r=>r.ratio);return `<tr><td class="mono">${esc(d)}</td><td>TJ ${esc(t)}</td><td>${esc(ty)}</td><td class="num">${a.length}</td><td class="num">${x(quant(a,.5))}</td><td class="num">${a.length>=4?x(quant(a,.25)):"n.d."}</td><td class="num">${a.length>=4?x(quant(a,.75)):"n.d."}</td>${yr==="all"?yrs.map(y=>`<td class="num">${med(rs2.filter(r=>String(r.date||"").startsWith(y)).map(r=>r.ratio))}</td>`).join(""):""}</tr>`}).join("")}</table></div>
     <p class="small muted">Ratio = prix adjugé / mise à prix. P25 et P75 à partir de 4 ventes. Colonnes par année : médiane et nombre de ventes.</p>`:empty("Pas encore de segment.")}
