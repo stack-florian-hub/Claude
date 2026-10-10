@@ -7,6 +7,8 @@ src, existing_path, out = sys.argv[1], sys.argv[2], sys.argv[3]
 vench = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else []
 # Zone de prospection (09/10/2026 : Florian retire Laval, Le Mans, Orléans, Montargis, Châteauroux, Poitiers)
 ZONE = {"Nantes", "Saint-Nazaire", "La Roche-sur-Yon", "Les Sables-d'Olonne", "Angers", "Saumur", "Tours", "Blois"}
+# Résultats : on garde aussi les TJ voisins comme points de comparaison
+ZONE_RES = ZONE | {"Le Mans", "Laval", "Poitiers", "Orléans", "Châteauroux", "Montargis"}
 data = json.load(open(src))
 existing = json.load(open(existing_path)) if os.path.exists(existing_path) else {}
 MAP_MAX = 40000
@@ -45,7 +47,7 @@ for r in data["resultats"]:
     if r["ref"] in rseen:
         continue
     rseen.add(r["ref"])
-    if not r.get("adjuge") or not r.get("map") or r.get("lots", 1) > 1 or trib(r["tribunal"]) not in ZONE:
+    if not r.get("adjuge") or not r.get("map") or r.get("lots", 1) > 1 or trib(r["tribunal"]) not in ZONE_RES:
         continue
     docs.append(("resultats", "lic-" + r["ref"], clean({
         "date": r["date"][:10], "tribunal": trib(r["tribunal"]), "commune": r["commune"], "dept": r["dept"], "type": r["type"],

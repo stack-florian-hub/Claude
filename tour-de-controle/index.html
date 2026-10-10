@@ -163,6 +163,10 @@ th{position:relative}
 table.fixedcols{table-layout:fixed;width:max-content}
 table.fixedcols td{overflow-wrap:anywhere}
 body.colresizing{cursor:col-resize;user-select:none}
+.resfilters{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
+.chip{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:99px;padding:3px 10px;font:600 12px var(--f-body);cursor:pointer}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
 .legend span{display:inline-flex;gap:6px;align-items:center}
 </style>
@@ -482,6 +486,9 @@ document.addEventListener("pointerup",e=>{if(!colDrag)return;const {t}=colDrag;c
   t.querySelectorAll("tr:first-child th").forEach((x,i)=>{ws[i]=Math.round(x.getBoundingClientRect().width)});COLW[key]=ws;saveColw();colDrag=null;document.body.classList.remove("colresizing")});
 document.addEventListener("dblclick",e=>{const g=e.target.closest&&e.target.closest(".colgrip");if(!g)return;const t=g.closest("table");delete COLW[t.dataset.colkey];saveColw();render()});
 document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest(".colgrip")){e.stopPropagation();e.preventDefault()}},true);
+
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-resyear]");if(!b)return;S.resYear=b.dataset.resyear;render()});
+document.addEventListener("change",e=>{if(e.target.id==="res-zone"){S.resZone=e.target.checked;render()}});
 /* ---------- rendu ---------- */
 function render(){
   document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===S.tab));
@@ -677,27 +684,37 @@ function pm2Block(l){
   <p class="small muted">Retenu : la source la plus basse (prudence). ${ps.n<need?`<span class="pill p-warn">${ps.n}/${need} sources</span> ${l.type==="local"?"Pour un local, comparer au moins 3 sources.":"Ajouter une deuxième source."}`:`<span class="pill p-ok">${ps.n} sources</span>`}${ps.rows.length>1?" Écart max entre sources : "+pct(Math.max(...ps.rows.map(r=>r.v))/ps.retenu-1)+".":""}</p></div>`;
 }
 function vResultats(){
-  const rows=S.resultats.map(r=>({...r,ratio:num(r.map)&&num(r.adjuge)?+r.adjuge/+r.map:null,m2:num(r.surface)&&num(r.adjuge)?+r.adjuge/+r.surface:null})).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const yr=S.resYear||"all",zoneOnly=S.resZone!==false;
+  const depOf=r=>r.dept||(TRIB_DEP[r.tribunal]||"").slice(0,2)||"";
+  const rows=S.resultats.filter(r=>(yr==="all"||String(r.date||"").startsWith(yr))&&(!zoneOnly||TRIBUNAUX.includes(r.tribunal))).map(r=>({...r,dep:depOf(r),ratio:num(r.map)&&num(r.adjuge)?+r.adjuge/+r.map:null,m2:num(r.surface)&&num(r.adjuge)?+r.adjuge/+r.surface:null})).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
   const rs=rows.map(r=>r.ratio).filter(v=>v);
-  const by={};rows.filter(r=>r.ratio).forEach(r=>{const k=(r.tribunal||"?")+" · "+(r.type||"?");(by[k]=by[k]||[]).push(r.ratio)});
+  const by={};rows.filter(r=>r.ratio).forEach(r=>{const k=[r.dep||"?",r.tribunal||"?",r.type||"?"].join("|");(by[k]=by[k]||[]).push(r)});
+  const tjIdx=t=>{const i=TRIBUNAUX.indexOf(t);return i<0?99:i};
+  const segs=Object.entries(by).sort(([a],[b])=>{const [da,ta,ya]=a.split("|"),[db,tb,yb]=b.split("|");return tjIdx(ta)-tjIdx(tb)||da.localeCompare(db)||ta.localeCompare(tb)||ya.localeCompare(yb)});
+  const yrs=["2024","2025","2026"];
+  const med=a=>a.length?x(quant(a,.5))+` <span class="tag">${a.length}</span>`:"<span class='tag'>–</span>";
   const mapIn=num(S.mapSim)||25000;
   return `<div class="wrap"><div class="kpis">
-    ${kpi("Résultats en base",String(rows.length),"objectif : 24 mois, zone élargie")}
+    ${kpi("Résultats affichés",String(rows.length),(yr==="all"?"2024 à 2026":yr)+(zoneOnly?" · tes 8 TJ":" · toutes zones"))}
     ${kpi("Ratio médian",x(quant(rs,.5)),"adjugé / MAP")}
     ${kpi("Sous 1,5 x MAP",rs.length?pct(rs.filter(r=>r<1.5).length/rs.length):"n.d.","part des ventes")}
     ${kpi("Vérifiés",String(rows.filter(r=>r.verifie==="oui").length),"source confirmée")}
   </div>
+  <div class="row resfilters small"><span class="muted">Période</span>${["all",...yrs].map(y=>`<button class="chip${yr===y?" on":""}" data-resyear="${y}">${y==="all"?"Tout":y}</button>`).join("")}
+    <label class="chk"><input type="checkbox" id="res-zone" ${zoneOnly?"checked":""}> Uniquement mes 8 TJ</label></div>
+  <section class="panel"><h2>Par tribunal et type</h2>
+    ${segs.length?`<div class="tbl"><table><tr><th>Dépt</th><th>Tribunal</th><th>Type</th><th class="num">n</th><th class="num">Médiane</th><th class="num">P25</th><th class="num">P75</th>${yr==="all"?yrs.map(y=>`<th class="num">${y}</th>`).join(""):""}</tr>${segs.map(([k,rs2])=>{const [d,t,ty]=k.split("|");const a=rs2.map(r=>r.ratio);return `<tr><td class="mono">${esc(d)}</td><td>TJ ${esc(t)}</td><td>${esc(ty)}</td><td class="num">${a.length}</td><td class="num">${x(quant(a,.5))}</td><td class="num">${a.length>=4?x(quant(a,.25)):"n.d."}</td><td class="num">${a.length>=4?x(quant(a,.75)):"n.d."}</td>${yr==="all"?yrs.map(y=>`<td class="num">${med(rs2.filter(r=>String(r.date||"").startsWith(y)).map(r=>r.ratio))}</td>`).join(""):""}</tr>`}).join("")}</table></div>
+    <p class="small muted">Ratio = prix adjugé / mise à prix. P25 et P75 à partir de 4 ventes. Colonnes par année : médiane et nombre de ventes.</p>`:empty("Pas encore de segment.")}
+  </section>
   <div class="grid2">
   <section class="panel"><h2>Quel plafond gagne ?</h2>
     <label class="small muted" for="mapsim">Mise à prix testée (€)</label><input id="mapsim" type="number" value="${mapIn}" style="max-width:200px">
     ${rs.length?`<table><tr><th>Gagne dans</th><th class="num">Ratio</th><th class="num">Plafond</th></tr>${[[.3,"30 % des cas"],[.5,"50 % des cas"],[.8,"80 % des cas"]].map(([q,t])=>`<tr><td>${t}</td><td class="num">${x(quant(rs,q))}</td><td class="num">${eur(quant(rs,q)*mapIn)}</td></tr>`).join("")}</table><p class="small muted">Calculé sur ${rs.length} résultat${rs.length>1?"s":""}. ${rs.length<10?"Trop peu de points : ordre de grandeur seulement.":""}</p>`:empty("Ajoute des résultats pour calculer.")}
   </section>
-  <section class="panel"><h2>Par tribunal et type</h2>
-    ${Object.keys(by).length?`<div class="tbl"><table><tr><th>Segment</th><th class="num">n</th><th class="num">Médiane</th><th class="num">P25</th><th class="num">P75</th></tr>${Object.entries(by).map(([k,a])=>`<tr><td>${esc(k)}</td><td class="num">${a.length}</td><td class="num">${x(quant(a,.5))}</td><td class="num">${a.length>=4?x(quant(a,.25)):"n.d."}</td><td class="num">${a.length>=4?x(quant(a,.75)):"n.d."}</td></tr>`).join("")}</table></div>`:empty("Pas encore de segment.")}
-  </section></div>
+</div>
   <section class="panel"><div class="panel-head"><h2>Historique des adjudications</h2>${S.ro?"":`<button class="btn" data-act="add-res">Ajouter un résultat</button>`}</div>
-  ${rows.length?`<div class="tbl"><table><tr><th>Date</th><th>Bien</th><th>Tribunal</th><th class="num">MAP</th><th class="num">Adjugé</th><th class="num">Ratio</th><th class="num">€/m²</th><th>Occupation</th><th>Source</th></tr>
-  ${rows.map(r=>`<tr class="click" data-res="${esc(r.id)}"><td class="mono">${esc(r.date||"")}</td><td>${esc(r.type||"")} · ${esc(r.commune||"")}${r.surface?` · ${r.surface} m²`:""}</td><td>${esc(r.tribunal||"")}</td><td class="num">${eur(num(r.map))}</td><td class="num">${eur(num(r.adjuge))}</td><td class="num">${x(r.ratio)}</td><td class="num">${eur(r.m2)}</td><td>${esc(r.occupation||"")}</td><td><span class="cert ${r.verifie==="oui"?"c-ok":"c-hyp"}">${r.verifie==="oui"?"vérifié":"à vérifier"}</span> <span class="tag">${esc(r.source||"")}</span></td></tr>`).join("")}</table></div>`:empty("Aucun résultat. Chaque adjudication relevée (Licitor, encheres-publiques, vench) améliore le modèle.")}
+  ${rows.length?`<div class="tbl"><table><tr><th>Date</th><th>Bien</th><th>Dépt</th><th>Tribunal</th><th class="num">MAP</th><th class="num">Adjugé</th><th class="num">Ratio</th><th class="num">€/m²</th><th>Occupation</th><th>Source</th></tr>
+  ${rows.map(r=>`<tr class="click" data-res="${esc(r.id)}"><td class="mono">${esc(r.date||"")}</td><td>${esc(r.type||"")} · ${esc(r.commune||"")}${r.surface?` · ${r.surface} m²`:""}</td><td class="mono">${esc(r.dep||"")}</td><td>${esc(r.tribunal||"")}</td><td class="num">${eur(num(r.map))}</td><td class="num">${eur(num(r.adjuge))}</td><td class="num">${x(r.ratio)}</td><td class="num">${eur(r.m2)}</td><td>${esc(r.occupation||"")}</td><td><span class="cert ${r.verifie==="oui"?"c-ok":"c-hyp"}">${r.verifie==="oui"?"vérifié":"à vérifier"}</span> <span class="tag">${esc(r.source||"")}</span></td></tr>`).join("")}</table></div>`:empty("Aucun résultat. Chaque adjudication relevée (Licitor, encheres-publiques, vench) améliore le modèle.")}
   </section></div>`;
 }
 
