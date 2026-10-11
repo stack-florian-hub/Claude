@@ -506,25 +506,25 @@ VIEWS.exclus = function () {
   var ok = L.filter(function (x) { return x.a.fin.budgetStatut === 'ok'; }).length;
   var sansPrix = analysesDept().filter(function (x) { return actifs(x) && !x.a.fin.ok; }).length;
   function prixMax(x) {
-    var f = x.a.fin, reste = f.budgetMaxHaut - f.travauxRetenus;
+    var f = x.a.fin, reste = f.budgetMaxHaut - f.travaux.total.bas;
     if (reste <= 0) return 'aucun : les travaux seuls dépassent';
     return k(reste / (1 + f.fraisPct) / (1 - f.negociation.taux));
   }
-  return '<div><h2>Exclus</h2><p class="muted small" style="max-width:75ch;margin:4px 0 0">Biens que je ne peux pas financer. Ils sont masqués partout ailleurs. Deux règles : un prix affiché au-delà de ' + k(p.prixMax) + ', ou un montant à lever tout compris (prix négocié, travaux en scénario moyen, frais de notaire) dépasse ce qu\u2019un apport de ' + k(p.apportMax) + ' permet, même si la banque n\u2019exige que ' + pct(p.apportPctBas, 0) + ' d\u2019apport, soit <b>' + k(p.apportMax / p.apportPctBas) + '</b>. Si la banque exige ' + pct(p.apportPctHaut, 0) + ', la limite tombe à ' + k(p.apportMax / p.apportPctHaut) + '. Ces seuils se règlent dans Paramètres.</p></div>' +
+  return '<div><h2>Exclus</h2><p class="muted small" style="max-width:75ch;margin:4px 0 0">Biens que je ne peux pas financer. Ils sont masqués partout ailleurs. Deux règles : un prix affiché au-delà de ' + k(p.prixMax) + ', ou un montant à lever tout compris (prix négocié, frais de notaire et travaux, même en scénario bas) qui dépasse ce qu\u2019un apport de ' + k(p.apportMax) + ' permet, même si la banque n\u2019exige que ' + pct(p.apportPctBas, 0) + ' d\u2019apport, soit <b>' + k(p.apportMax / p.apportPctBas) + '</b>. Si la banque exige ' + pct(p.apportPctHaut, 0) + ', la limite tombe à ' + k(p.apportMax / p.apportPctHaut) + '. Ces seuils se règlent dans Paramètres.</p></div>' +
     '<div class="kpis"><div class="kpi"><b style="color:var(--bad)">' + ex.length + '</b><span>Exclus, au-delà de ' + k(p.apportMax / p.apportPctBas) + '</span></div>' +
     '<div class="kpi"><b style="color:var(--warn)">' + limite + '</b><span>Possibles selon la banque, entre ' + k(p.apportMax / p.apportPctHaut) + ' et ' + k(p.apportMax / p.apportPctBas) + '</span></div>' +
     '<div class="kpi"><b style="color:var(--ok)">' + ok + '</b><span>Dans le budget même à ' + pct(p.apportPctHaut, 0) + ' d\u2019apport</span></div>' +
     '<div class="kpi"><b>' + sansPrix + '</b><span>Prix inconnu, non classés</span></div></div>' +
-    (ex.length ? '<div class="tablewrap"><table><thead><tr><th>Bien</th><th class="n">Prix affiché</th><th class="n">Travaux (moyen)</th><th class="n">Montant à lever</th><th class="n">Dépassement</th><th class="n">Apport nécessaire</th><th class="n">Prix max pour passer</th><th class="n">Score</th><th></th></tr></thead><tbody>' +
+    (ex.length ? '<div class="tablewrap"><table><thead><tr><th>Bien</th><th class="n">Prix affiché</th><th class="n">Travaux (bas)</th><th class="n">Montant à lever (bas)</th><th class="n">Dépassement</th><th class="n">Apport nécessaire</th><th class="n">Prix max pour passer</th><th class="n">Score</th><th></th></tr></thead><tbody>' +
       ex.map(function (x) { var f = x.a.fin, url = sourceUrl(x.b);
         return '<tr class="click" data-fiche="' + h(x.id) + '"><td style="min-width:200px"><b>' + h(x.b.titre) + '</b><div class="small muted">' + h(x.b.commune || '') + (trajetMin(x.b) != null ? ' · ' + trajetMin(x.b) + ' min' : '') + '</div></td>' +
-          '<td class="n">' + k(x.b.prix) + '</td><td class="n">' + k(f.travauxRetenus) + '</td><td class="n"><b>' + k(f.montantALever) + '</b></td>' +
-          '<td class="n" style="color:var(--bad)">' + (f.horsPrix ? 'prix > ' + k(p.prixMax) : '+' + k(f.montantALever - f.budgetMaxHaut)) + '</td>' +
+          '<td class="n">' + k(x.b.prix) + '</td><td class="n">' + k(f.travaux.total.bas) + '</td><td class="n"><b>' + k(f.montantALeverBas) + '</b></td>' +
+          '<td class="n" style="color:var(--bad)">' + (f.horsPrix ? 'prix > ' + k(p.prixMax) : '+' + k(f.montantALeverBas - f.budgetMaxHaut)) + '</td>' +
           '<td class="n">' + k(f.apportRequisBas) + ' à ' + k(f.apportRequisHaut) + '</td><td class="n small">' + prixMax(x) + '</td>' +
           '<td class="n"><span class="pill lv-' + x.a.score.niveau + '">' + x.a.score.total + '</span></td>' +
           '<td>' + (url ? '<a href="' + h(url) + '" target="_blank" rel="noopener" class="small" data-stop="1">Annonce ↗</a>' : '') + '</td></tr>'; }).join('') +
       '</tbody></table></div>' : empty('Aucun bien exclu avec ces paramètres.')) +
-    '<p class="disclaimer">Travaux estimés en scénario moyen, hors trésorerie de démarrage. Un bien exclu peut redevenir accessible avec un associé, un crédit vendeur, un bail ou un partenariat (voir Stratégies).</p>';
+    '<p class="disclaimer">Travaux estimés en scénario bas (le plus favorable), hors trésorerie de démarrage. Un bien exclu peut redevenir accessible avec un associé, un crédit vendeur, un bail ou un partenariat (voir Stratégies).</p>';
 };
 
 // ---------- suivi (kanban) ----------

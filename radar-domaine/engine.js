@@ -249,7 +249,9 @@
     var budgetMaxBas = Math.round(p.apportMax / p.apportPctHaut);
     var budgetMaxHaut = Math.round(p.apportMax / p.apportPctBas);
     var horsPrix = p.prixMax > 0 && prix > p.prixMax;
-    var exclu = horsPrix || coutHorsTreso > budgetMaxHaut;
+    // exclu seulement si même le cas favorable ne passe pas : travaux en scénario bas, banque à 10 % d'apport
+    var montantBas = prixCible + frais + trav.total.bas;
+    var exclu = horsPrix || montantBas > budgetMaxHaut;
     var apportTotal = p.apport + (p.pretHonneur || 0);
     // déblocage progressif : la moitié du prêt en moyenne pendant le différé
     var interetsDiffere = Math.max(0, coutHorsTreso - apportTotal) * 0.5 * p.taux * moisAvantRecettes / 12;
@@ -309,7 +311,7 @@
     res.scenarios = scen; res.dscr = dscr; res.pointMortMariages = pointMort;
     res.valeurRevente = valeurRevente; res.crd10 = crd10; res.gain10 = Math.round(gain10); res.multiple10 = multiple;
     res.capaciteStandard = Math.round(capaStandard); res.capaciteMontage = Math.round(capaMontage);
-    res.montantALever = Math.round(coutHorsTreso); res.budgetMaxBas = budgetMaxBas; res.budgetMaxHaut = budgetMaxHaut;
+    res.montantALever = Math.round(coutHorsTreso); res.montantALeverBas = Math.round(montantBas); res.budgetMaxBas = budgetMaxBas; res.budgetMaxHaut = budgetMaxHaut;
     res.apportRequisBas = Math.round(coutHorsTreso * p.apportPctBas); res.apportRequisHaut = Math.round(coutHorsTreso * p.apportPctHaut);
     res.exclu = exclu; res.horsPrix = horsPrix; res.prixMax = p.prixMax; res.budgetStatut = exclu ? 'exclu' : coutHorsTreso <= budgetMaxBas ? 'ok' : 'selon_banque';
     res.apportMinimum = apportMin; res.horsPortee = horsPortee; res.montageRequis = montageRequis; res.voyant = voyant;

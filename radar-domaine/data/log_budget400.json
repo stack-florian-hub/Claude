@@ -1,0 +1,76 @@
+{
+ "sources_interrogees": [
+  {
+   "site": "Immonot",
+   "statut": "ok",
+   "detail": "Pages communes 49 (Bauge, Beaufort, Saumur, Gennes, Montreuil-Bellay, Segre, Montjean) et propriete 41 ouvertes ; 8 fiches retenues.",
+   "nb_biens": 8
+  },
+  {
+   "site": "Laforet (Doue-en-Anjou)",
+   "statut": "ok",
+   "detail": "Domaine troglodytique Le Puy-Notre-Dame, 399 000 EUR.",
+   "nb_biens": 1
+  },
+  {
+   "site": "etreproprio / Optimhome (corps de ferme Puy-Saint-Bonnet 350 k, Cholet)",
+   "statut": "bloque",
+   "detail": "403 sur les pages ; bien vu seulement dans un extrait de recherche, non retenu.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Leggett",
+   "statut": "bloque",
+   "detail": "403 sur pages departement 49 et 41.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Capifrance (longere Saumur 199 900 EUR)",
+   "statut": "bloque",
+   "detail": "403 ; non retenu faute d'ouverture.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Trovit",
+   "statut": "bloque",
+   "detail": "401.",
+   "nb_biens": 0
+  },
+  {
+   "site": "French-Property",
+   "statut": "partiel",
+   "detail": "Moulin Saumur 996 000 EUR (hors budget, annonce supprimee).",
+   "nb_biens": 0
+  },
+  {
+   "site": "ma-propriete.fr",
+   "statut": "vide",
+   "detail": "Page ferme/grange 49 sans bien utile <= 400 k.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Green-Acres",
+   "statut": "vide",
+   "detail": "URL 404, rien d'indexe pour le 49.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Licitor Angers",
+   "statut": "vide",
+   "detail": "404 ; aucune vente pertinente trouvee.",
+   "nb_biens": 0
+  },
+  {
+   "site": "Cession-PME / Fusacq / Michel Simond / Agorastore / cessions Etat / IAD / Safti / Bien'ici / Leboncoin",
+   "statut": "vide",
+   "detail": "Non atteints ou aucun resultat exploitable pour le 49 (recherche web seule).",
+   "nb_biens": 0
+  },
+  {
+   "site": "Immonot fonds et murs 49",
+   "statut": "vide",
+   "detail": "Aucun fonds de salle/restaurant exploitable.",
+   "nb_biens": 0
+  }
+ ]
+}
