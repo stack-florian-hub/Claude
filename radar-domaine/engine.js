@@ -51,7 +51,8 @@
     filtreTrajet: false,
     voirAussi55: false,
     // zone de recherche : par département (Florian vit à Romorantin jusqu'en mai 2027 ; attaches en 44 et 85)
-    departements: ['37', '41', '44', '85'],
+    departements: ['37', '41', '44', '49', '85'],
+    prixMax: 400000,               // prix affiché maximal : au-delà, le bien est hors budget et masqué
     // pondérations du score (total 100)
     poids: { cachet: 20, capacite: 15, reglementaire: 15, financabilite: 15, rentabilite: 10, localisation: 10, hebergement: 5, negociabilite: 5, upside: 5 },
     malusMax: 15,
@@ -79,9 +80,10 @@
     spdc: { nom: 'gare TGV de Saint-Pierre-des-Corps', lat: 47.38575, lon: 0.72330 },
     romorantin: { nom: 'Romorantin-Lanthenay', lat: 47.3586, lon: 1.7414 },
     nantes: { nom: 'gare de Nantes', lat: 47.2173, lon: -1.5420 },
+    angers: { nom: 'gare d\u2019Angers', lat: 47.4647, lon: -0.5566 },
     laroche: { nom: 'gare de La Roche-sur-Yon', lat: 46.6705, lon: -1.4206 }
   };
-  var DEPARTEMENTS = { '37': 'Indre-et-Loire', '41': 'Loir-et-Cher', '44': 'Loire-Atlantique', '85': 'Vendée' };
+  var DEPARTEMENTS = { '37': 'Indre-et-Loire', '41': 'Loir-et-Cher', '44': 'Loire-Atlantique', '49': 'Maine-et-Loire', '85': 'Vendée' };
   function departementDe(b) {
     if (b.departement) return String(b.departement);
     var c = b.code_insee || b.code_postal;
@@ -246,7 +248,8 @@
     // exclu si même une banque à 10 % d'apport demanderait plus que l'apport maximal.
     var budgetMaxBas = Math.round(p.apportMax / p.apportPctHaut);
     var budgetMaxHaut = Math.round(p.apportMax / p.apportPctBas);
-    var exclu = coutHorsTreso > budgetMaxHaut;
+    var horsPrix = p.prixMax > 0 && prix > p.prixMax;
+    var exclu = horsPrix || coutHorsTreso > budgetMaxHaut;
     var apportTotal = p.apport + (p.pretHonneur || 0);
     // déblocage progressif : la moitié du prêt en moyenne pendant le différé
     var interetsDiffere = Math.max(0, coutHorsTreso - apportTotal) * 0.5 * p.taux * moisAvantRecettes / 12;
@@ -308,7 +311,7 @@
     res.capaciteStandard = Math.round(capaStandard); res.capaciteMontage = Math.round(capaMontage);
     res.montantALever = Math.round(coutHorsTreso); res.budgetMaxBas = budgetMaxBas; res.budgetMaxHaut = budgetMaxHaut;
     res.apportRequisBas = Math.round(coutHorsTreso * p.apportPctBas); res.apportRequisHaut = Math.round(coutHorsTreso * p.apportPctHaut);
-    res.exclu = exclu; res.budgetStatut = exclu ? 'exclu' : coutHorsTreso <= budgetMaxBas ? 'ok' : 'selon_banque';
+    res.exclu = exclu; res.horsPrix = horsPrix; res.prixMax = p.prixMax; res.budgetStatut = exclu ? 'exclu' : coutHorsTreso <= budgetMaxBas ? 'ok' : 'selon_banque';
     res.apportMinimum = apportMin; res.horsPortee = horsPortee; res.montageRequis = montageRequis; res.voyant = voyant;
     if (!opts.sansInverse) res.prixMaxCompatible = prixMaxCompatible(b, p);
     if (b.mode_vente === 'encheres') res.alertes.push('Vente aux enchères : la mise à prix n’est pas le prix final, frais d’environ ' + Math.round(p.fraisEncheres * 100) + ' %, consignation à prévoir.');
@@ -472,7 +475,8 @@
     if (!b.activite_reception_existante && cap === null && bati !== null && bati < 150 && (terrain === null || terrain < 5000)) f.push({ code: 'capacite', libelle: '200 invités impossibles sans extension plausible' });
     if (b.risques && b.risques.ppri === 'rouge' && !b.risques.solution) f.push({ code: 'ppri', libelle: 'Zone rouge PPRI' });
     if (b.risques && b.risques.enclave) f.push({ code: 'enclave', libelle: 'Enclave dense sans parking' });
-    if (fin && fin.ok && fin.exclu) f.push({ code: 'exclu', libelle: 'Montant à lever supérieur à ' + Math.round(fin.budgetMaxHaut / 1000) + ' k€ (apport max à 10 %)', onglet: true });
+    if (fin && fin.ok && fin.horsPrix) f.push({ code: 'budget', libelle: 'Prix affiché au-delà de ' + Math.round(p.prixMax / 1000) + ' k€' });
+    if (fin && fin.ok && fin.exclu && !fin.horsPrix) f.push({ code: 'exclu', libelle: 'Montant à lever supérieur à ' + Math.round(fin.budgetMaxHaut / 1000) + ' k€ (apport max à 10 %)', onglet: true });
     if (fin && fin.ok && fin.horsPortee) f.push({ code: 'portee', libelle: 'Hors de portée, même avec montage', onglet: true });
     return f;
   }

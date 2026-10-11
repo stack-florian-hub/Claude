@@ -7,7 +7,7 @@ import hashlib, json, math, os, re, sys, time, unicodedata, urllib.parse, urllib
 
 GARE = (47.38575, 0.72330)
 # Pôles de référence (gares) : le trajet est calculé depuis chaque pôle à moins de 150 km à vol d'oiseau
-POLES = {'spdc': GARE, 'romorantin': (47.3586, 1.7414), 'nantes': (47.2173, -1.5420), 'laroche': (46.6705, -1.4206)}
+POLES = {'spdc': GARE, 'romorantin': (47.3586, 1.7414), 'nantes': (47.2173, -1.5420), 'angers': (47.4647, -0.5566), 'laroche': (46.6705, -1.4206)}
 TODAY = time.strftime('%Y-%m-%d')
 HERE = os.path.dirname(os.path.abspath(__file__))
 LOG = []

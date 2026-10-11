@@ -41,11 +41,11 @@ test('bien sans surface : capacité faible mais pas d\'erreur', () => {
   assert.ok(a.fin.travaux.lignes.some(l => /Salle à créer/.test(l.poste)));
 });
 
-test('zone par département : 37, 41, 44, 85 suivis, les autres filtrés', () => {
+test('zone par département : 37, 41, 44, 49, 85 suivis, les autres filtrés', () => {
   assert.ok(!E.analyser({ ...base, code_postal: '37210' }, P).filtres.some(f => f.code === 'zone'));
   assert.ok(!E.analyser({ ...base, code_insee: '41194' }, P).filtres.some(f => f.code === 'zone'));
   assert.ok(!E.analyser({ ...base, departement: '85' }, P).filtres.some(f => f.code === 'zone'));
-  assert.ok(E.analyser({ ...base, code_postal: '49400' }, P).filtres.some(f => f.code === 'zone'));
+  assert.ok(E.analyser({ ...base, code_postal: '72500' }, P).filtres.some(f => f.code === 'zone'));
   assert.ok(!E.analyser({ ...base, code_postal: null, code_insee: null }, P).filtres.some(f => f.code === 'zone'));
   assert.ok(E.analyser({ ...base, departement: '44' }, { ...P, departements: ['37'] }).filtres.some(f => f.code === 'zone'));
 });
@@ -122,16 +122,27 @@ test('dédoublonnage : même grange sur deux portails fusionnée', () => {
 test('exclusion par apport : montant à lever comparé à apport max / 10 %', () => {
   const p = E.merge(E.DEFAULTS, { apportMax: 80000, apportPctBas: 0.10, apportPctHaut: 0.20 });
   const petit = E.analyser({ ...base, type: 'lieu_reception_activite', activite_reception_existante: true, prix: 300000 }, p);
+  const sansPlafond = E.merge(p, { prixMax: 0 });
+  assert.ok(E.analyser({ ...base, type: 'chateau', prix: 2000000 }, sansPlafond).filtres.some(f => f.code === 'exclu'));
   assert.strictEqual(petit.fin.budgetMaxHaut, 800000);
   assert.strictEqual(petit.fin.budgetMaxBas, 400000);
   assert.strictEqual(petit.fin.exclu, false);
   assert.strictEqual(petit.fin.montantALever, petit.fin.prixCible + petit.fin.frais + petit.fin.travauxRetenus);
   const gros = E.analyser({ ...base, type: 'chateau', prix: 2000000 }, p);
   assert.strictEqual(gros.fin.exclu, true);
-  assert.ok(gros.filtres.some(f => f.code === 'exclu'));
+  assert.ok(gros.filtres.some(f => f.code === 'budget'));
   assert.ok(gros.fin.apportRequisBas > 80000);
   const sansPrix = E.analyser({ ...base, prix: null }, p);
   assert.ok(!sansPrix.filtres.some(f => f.code === 'exclu'));
+});
+
+test('prix affiché au-delà de 400 k€ : hors budget', () => {
+  const a = E.analyser({ ...base, prix: 450000 }, P);
+  assert.ok(a.fin.horsPrix && a.fin.exclu);
+  assert.ok(a.filtres.some(f => f.code === 'budget'));
+  assert.ok(!E.analyser({ ...base, prix: 390000 }, P).filtres.some(f => f.code === 'budget'));
+  assert.ok(!E.analyser({ ...base, prix: 450000 }, { ...P, prixMax: 0 }).filtres.some(f => f.code === 'budget'));
+  assert.ok(!E.analyser({ ...base, departement: '49' }, P).filtres.some(f => f.code === 'zone'));
 });
 
 test('base vide : aucune erreur', () => {

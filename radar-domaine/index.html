@@ -178,7 +178,7 @@ textarea { width: 100%; min-height: 90px; }
         <h1>Radar Domaine</h1>
         <span class="sub">Lieux de réception 200 invités · recherche par département</span>
       </div>
-      <div class="row" style="gap:12px"><label class="deptsel" for="dept"><span class="sr">Département</span><select id="dept" aria-label="Département"></select></label><div class="status"><span class="dot" id="dbdot"></span><span id="dbstatus">Connexion à la base…</span></div></div>
+      <div class="row" style="gap:12px"><label class="deptsel" for="dept"><span class="sr">Département</span><select id="dept" aria-label="Département"></select></label><label class="chk small" for="masquer"><input type="checkbox" id="masquer"> <span id="masquerlib">Masquer au-delà de 400 k€</span></label><div class="status"><span class="dot" id="dbdot"></span><span id="dbstatus">Connexion à la base…</span></div></div>
     </div>
     <nav class="tabs" role="tablist" id="tabs"></nav>
   </div>
@@ -209,11 +209,11 @@ var SOUS_LIB = { cachet: 'Cachet et attractivité', capacite: 'Capacité 200 et 
 var S = {
   db: null, biens: {}, suivi: {}, journal: [], marche: {}, paramsSaved: null, sim: null, geo: null,
   tab: 'tableau', fiche: null, loaded: { biens: false },
-  comp: { vue: 'radar', q: '', type: '', strat: '', statut: '', tri: 'score', dir: -1, f: { zone: true, trajet: false, capacite: true, ppri: true, enclave: true, exclu: true, portee: true } },
-  dept: '',
+  comp: { vue: 'radar', q: '', type: '', strat: '', statut: '', tri: 'score', dir: -1, f: { zone: true, budget: true, trajet: false, capacite: true, ppri: true, enclave: true, exclu: true, portee: true } },
+  dept: '', masquerBudget: true,
   map: { vb: null, montrer55: false, romo: true, concurrents: true }
 };
-try { var dsel = localStorage.getItem('rd_dept'); if (dsel != null) S.dept = dsel; } catch (e) {}
+try { var dsel = localStorage.getItem('rd_dept'); if (dsel != null) S.dept = dsel; if (localStorage.getItem('rd_masquer') === '0') S.masquerBudget = false; } catch (e) {}
 try { var t = localStorage.getItem('rd_tab'); if (t && TABS.some(function (x) { return x[0] === t; })) S.tab = t; } catch (e) {}
 if (location.hash && TABS.some(function (x) { return x[0] === location.hash.slice(1); })) S.tab = location.hash.slice(1);
 
@@ -243,9 +243,14 @@ function deptDe(b) { return E.departementDe(b) || '?'; }
 
 // ---------- calcul ----------
 var cache = { key: null, list: [] };
-function analyses() {
+function analysesDept() {
   var all = analysesAll();
   return S.dept ? all.filter(function (x) { return deptDe(x.b) === S.dept; }) : all;
+}
+function horsBudgetPrix(x) { return x.a.filtres.some(function (f) { return f.code === 'budget'; }); }
+function analyses() {
+  var l = analysesDept();
+  return S.masquerBudget ? l.filter(function (x) { return !horsBudgetPrix(x); }) : l;
 }
 function analysesAll() {
   var p = params();
@@ -276,7 +281,7 @@ function ring(score, niveau, size) {
 }
 function sourceUrl(b) { return (b.sources && b.sources[0] && b.sources[0].url) || null; }
 function voyant(fin) { var v = fin.voyant || { couleur: 'gris', raison: '' }; return '<span class="voy ' + v.couleur + '" title="' + h(v.raison) + '"></span>'; }
-var POLE_COURT = { spdc: 'Saint-Pierre-des-Corps', romorantin: 'Romorantin', nantes: 'Nantes', laroche: 'La Roche-sur-Yon' };
+var POLE_COURT = { spdc: 'Saint-Pierre-des-Corps', romorantin: 'Romorantin', nantes: 'Nantes', angers: 'Angers', laroche: 'La Roche-sur-Yon' };
 function trajet(b) { var t = E.trajetRef(b); return t ? t.min + '\u00a0min de ' + (POLE_COURT[t.pole] || t.pole) : '<span class="muted">trajet à calculer</span>'; }
 function trajetMin(b) { var t = E.trajetRef(b); return t ? t.min : null; }
 function telLink(c) {
@@ -319,6 +324,7 @@ function renderDept() {
   var opts = params().departements.slice();
   Object.keys(cnt).forEach(function (d) { if (opts.indexOf(d) < 0) opts.push(d); });
   if (S.dept && opts.indexOf(S.dept) < 0) opts.push(S.dept);
+  var mq = document.getElementById('masquer'); if (mq) { mq.checked = S.masquerBudget; document.getElementById('masquerlib').textContent = 'Masquer au-delà de ' + k(params().prixMax); }
   sel.innerHTML = '<option value="">Tous les départements (' + all.length + ')</option>' + opts.map(function (d) { return '<option value="' + h(d) + '"' + (S.dept === d ? ' selected' : '') + '>' + h(nomDept(d)) + ' · ' + (cnt[d] || 0) + '</option>'; }).join('');
 }
 function render() {
@@ -351,7 +357,7 @@ VIEWS.tableau = function () {
     '<div class="kpi"><b style="color:var(--lvA)">' + niv.A + '</b><span>Niveau A, à appeler cette semaine</span></div>' +
     '<div class="kpi"><b style="color:var(--lvB)">' + niv.B + '</b><span>Niveau B, à surveiller ou visiter</span></div>' +
     '<div class="kpi"><b>' + (niv.C + niv.D) + '</b><span>Niveaux C et D</span></div>' +
-    '<div class="kpi"><b>' + L.filter(function (x) { return actifs(x) && x.a.fin.exclu; }).length + '</b><span>Exclus, au-delà de mon apport</span></div>' +
+    '<div class="kpi"><b>' + analysesDept().filter(function (x) { return actifs(x) && x.a.fin.exclu; }).length + '</b><span>Exclus (prix ou montant à lever trop élevés)</span></div>' +
     '<div class="kpi"><b>' + nouveaux.length + '</b><span>Nouveautés de la semaine</span></div>' +
     '<div class="kpi"><b>' + baisses.length + '</b><span>Baisses de prix</span></div>' +
     '<div class="kpi"><b>' + retires.length + '</b><span>Retirés ou vendus</span></div>' +
@@ -397,7 +403,7 @@ VIEWS.comparatif = function () {
     '<select id="fstrat"><option value="">Toutes les stratégies</option>' + Object.keys(E.STRATEGIES).map(function (s) { return '<option value="' + s + '"' + (C.strat === s ? ' selected' : '') + '>' + s + ' · ' + h(E.STRATEGIES[s]) + '</option>'; }).join('') + '</select>' +
     '<select id="fstatut"><option value="">Tous les statuts</option>' + STATUTS.map(function (s) { return '<option value="' + s[0] + '"' + (C.statut === s[0] ? ' selected' : '') + '>' + s[1] + '</option>'; }).join('') + '</select></div>' +
     '<div class="filters small"><span class="muted">Filtres éliminatoires :</span>' +
-    [['zone', 'Hors départements suivis'], ['trajet', 'Trajet > ' + params().trajetMax + ' min du pôle le plus proche'], ['exclu', 'Au-delà de mon apport'], ['capacite', '200 invités impossibles'], ['ppri', 'Zone rouge PPRI'], ['enclave', 'Enclave sans parking'], ['portee', 'Hors de portée']].map(function (f) { return '<label class="chk"><input type="checkbox" data-filtre="' + f[0] + '"' + (C.f[f[0]] ? ' checked' : '') + '> ' + f[1] + '</label>'; }).join('') +
+    [['zone', 'Hors départements suivis'], ['budget', 'Prix > ' + k(params().prixMax)], ['trajet', 'Trajet > ' + params().trajetMax + ' min du pôle le plus proche'], ['exclu', 'Au-delà de mon apport'], ['capacite', '200 invités impossibles'], ['ppri', 'Zone rouge PPRI'], ['enclave', 'Enclave sans parking'], ['portee', 'Hors de portée']].map(function (f) { return '<label class="chk"><input type="checkbox" data-filtre="' + f[0] + '"' + (C.f[f[0]] ? ' checked' : '') + '> ' + f[1] + '</label>'; }).join('') +
     '</div>' +
     (rows.length ? '<div class="tablewrap"><table><thead><tr>' + th('score', 'Score', true) + th('titre', 'Bien') + '<th>Type</th>' + th('prix', 'Prix', true) + th('trajet', 'Trajet', true) + th('cout', 'Coût total', true) + th('pm', 'Point mort', true) + '<th>Banque</th><th>Stratégie</th><th>Suivi</th><th></th></tr></thead><tbody>' +
       rows.map(function (x) {
@@ -444,9 +450,9 @@ function drawMap() {
   if (S.map.montrer55 && G.isochrones.spdc_55) s += '<path vector-effect="non-scaling-stroke" d="' + path(G.isochrones.spdc_55) + '" fill="var(--iso55)" stroke="var(--accent)" stroke-width="1" stroke-dasharray="4 3"/>';
   if (G.isochrones.spdc_45) s += '<path vector-effect="non-scaling-stroke" d="' + path(G.isochrones.spdc_45) + '" fill="var(--iso45)" stroke="var(--accent)" stroke-width="1.2"/>';
   if (S.map.romo && G.isochrones.romorantin_45) s += '<path vector-effect="non-scaling-stroke" d="' + path(G.isochrones.romorantin_45) + '" fill="var(--iso45)" stroke="var(--accent)" stroke-width="1.2"/>';
-  var labels = [['Tours', 0.688, 47.394], ['Amboise', 0.982, 47.413], ['Loches', 0.995, 47.128], ['Chinon', 0.242, 47.167], ['Blois', 1.335, 47.586], ['Vendôme', 1.066, 47.793], ['Saumur', -0.077, 47.26], ['Angers', -0.554, 47.473], ['Saint-Nazaire', -2.214, 47.273], ['Ancenis', -1.177, 47.366], ['Châteaubriant', -1.376, 47.718], ['Les Sables-d’Olonne', -1.783, 46.497], ['Challans', -1.877, 46.847], ['Fontenay-le-Comte', -0.806, 46.466], ['Salbris', 2.052, 47.425], ['Montrichard', 1.186, 47.343], ['Cholet', -0.879, 47.060]];
+  var labels = [['Tours', 0.688, 47.394], ['Amboise', 0.982, 47.413], ['Loches', 0.995, 47.128], ['Chinon', 0.242, 47.167], ['Blois', 1.335, 47.586], ['Vendôme', 1.066, 47.793], ['Saumur', -0.077, 47.26], ['Saint-Nazaire', -2.214, 47.273], ['Ancenis', -1.177, 47.366], ['Châteaubriant', -1.376, 47.718], ['Les Sables-d’Olonne', -1.783, 46.497], ['Challans', -1.877, 46.847], ['Fontenay-le-Comte', -0.806, 46.466], ['Salbris', 2.052, 47.425], ['Montrichard', 1.186, 47.343], ['Cholet', -0.879, 47.060]];
   s += '<g font-size="' + (u * 1.3).toFixed(1) + '" fill="var(--muted)" font-family="var(--f-body)">' + labels.map(function (l) { return '<text x="' + px(l[1]).toFixed(1) + '" y="' + (py(l[2]) - u * 0.9).toFixed(1) + '" text-anchor="middle">' + h(l[0]) + '</text>'; }).join('') + '</g>';
-  if (S.map.concurrents && S.marche.benchmark) s += '<g>' + (S.marche.benchmark.lieux || []).filter(function (c) { return c.lat && c.lon; }).map(function (c) { var x = px(c.lon), y = py(c.lat), r = u * 0.55; return '<rect class="mpt" data-tip="' + h('Concurrent : ' + c.nom + ' (' + c.commune + ')' + (c.capacite_max ? ', ' + c.capacite_max + ' pers.' : '') + (c.prix_location_weekend_min ? ', dès ' + c.prix_location_weekend_min + ' €' : '')) + '" x="' + (x - r) + '" y="' + (y - r) + '" width="' + 2 * r + '" height="' + 2 * r + '" transform="rotate(45 ' + x + ' ' + y + ')" fill="var(--surface)" stroke="var(--gold)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>'; }).join('') + '</g>';
+  if (S.map.concurrents && S.marche.benchmark) s += '<g>' + (S.marche.benchmark.lieux || []).map(function (c, i) { return Object.assign({ _i: i }, c); }).filter(function (c) { return c.lat && c.lon; }).map(function (c) { var x = px(c.lon), y = py(c.lat), r = u * 0.55; return '<rect class="mpt" data-conc="' + c._i + '" style="cursor:pointer" data-tip=""' + h('Concurrent : ' + c.nom + ' (' + c.commune + ')' + (c.capacite_max ? ', ' + c.capacite_max + ' pers.' : '') + (c.prix_location_weekend_min ? ', dès ' + c.prix_location_weekend_min + ' €' : '')) + '" x="' + (x - r) + '" y="' + (y - r) + '" width="' + 2 * r + '" height="' + 2 * r + '" transform="rotate(45 ' + x + ' ' + y + ')" fill="var(--surface)" stroke="var(--gold)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>'; }).join('') + '</g>';
   var L = analyses().filter(function (x) { return x.b.lat && x.b.lon && actifs(x); }).sort(function (a, b) { return a.a.score.total - b.a.score.total; });
   s += '<g>' + L.map(function (x) { return '<circle class="mpt" data-fiche="' + h(x.id) + '" data-tip="' + h(x.b.titre + ' · ' + (x.b.commune || '') + ' · ' + x.a.score.total + '/100 · ' + (x.b.prix ? k(x.b.prix) : 'prix ?') + (x.a.fin.exclu ? ' · au-delà de mon apport' : '')) + '" cx="' + px(x.b.lon).toFixed(1) + '" cy="' + py(x.b.lat).toFixed(1) + '" r="' + (u * 0.8).toFixed(1) + '" fill="var(--lv' + x.a.score.niveau + ')" fill-opacity="' + (x.a.fin.exclu ? 0.45 : 1) + '" stroke="var(--surface)" stroke-width="1.5" vector-effect="non-scaling-stroke" style="cursor:pointer"/>'; }).join('') + '</g>';
   s += '<g>' + (G.poles || []).map(function (g) { var x = px(g.lon), y = py(g.lat); return '<circle cx="' + x + '" cy="' + y + '" r="' + u * 0.9 + '" fill="var(--ink)"/><circle cx="' + x + '" cy="' + y + '" r="' + u * 0.4 + '" fill="var(--surface)"/><text x="' + (g.id === 'spdc' ? x - u * 1.2 : x + u * 1.2) + '" y="' + (y + u * 2.2) + '" text-anchor="' + (g.id === 'spdc' ? 'end' : 'start') + '" font-size="' + (u * 1.4).toFixed(1) + '" font-weight="600" fill="var(--ink)">' + h(POLE_COURT[g.id] || g.nom) + '</text>'; }).join('') + '</g>';
@@ -494,17 +500,17 @@ VIEWS.simulateur = function () {
 // ---------- exclus ----------
 VIEWS.exclus = function () {
   var p = params();
-  var L = analyses().filter(function (x) { return actifs(x) && x.a.fin.ok; });
+  var L = analysesDept().filter(function (x) { return actifs(x) && x.a.fin.ok; });
   var ex = L.filter(function (x) { return x.a.fin.exclu; }).sort(function (a, b) { return a.a.fin.montantALever - b.a.fin.montantALever; });
   var limite = L.filter(function (x) { return x.a.fin.budgetStatut === 'selon_banque'; }).length;
   var ok = L.filter(function (x) { return x.a.fin.budgetStatut === 'ok'; }).length;
-  var sansPrix = analyses().filter(function (x) { return actifs(x) && !x.a.fin.ok; }).length;
+  var sansPrix = analysesDept().filter(function (x) { return actifs(x) && !x.a.fin.ok; }).length;
   function prixMax(x) {
     var f = x.a.fin, reste = f.budgetMaxHaut - f.travauxRetenus;
     if (reste <= 0) return 'aucun : les travaux seuls dépassent';
     return k(reste / (1 + f.fraisPct) / (1 - f.negociation.taux));
   }
-  return '<div><h2>Exclus</h2><p class="muted small" style="max-width:75ch;margin:4px 0 0">Biens que je ne peux pas financer. Règle : le montant à lever tout compris (prix négocié, travaux en scénario moyen, frais de notaire) dépasse ce qu\u2019un apport de ' + k(p.apportMax) + ' permet, même si la banque n\u2019exige que ' + pct(p.apportPctBas, 0) + ' d\u2019apport, soit <b>' + k(p.apportMax / p.apportPctBas) + '</b>. Si la banque exige ' + pct(p.apportPctHaut, 0) + ', la limite tombe à ' + k(p.apportMax / p.apportPctHaut) + '. Ces seuils se règlent dans Paramètres.</p></div>' +
+  return '<div><h2>Exclus</h2><p class="muted small" style="max-width:75ch;margin:4px 0 0">Biens que je ne peux pas financer. Ils sont masqués partout ailleurs. Deux règles : un prix affiché au-delà de ' + k(p.prixMax) + ', ou un montant à lever tout compris (prix négocié, travaux en scénario moyen, frais de notaire) dépasse ce qu\u2019un apport de ' + k(p.apportMax) + ' permet, même si la banque n\u2019exige que ' + pct(p.apportPctBas, 0) + ' d\u2019apport, soit <b>' + k(p.apportMax / p.apportPctBas) + '</b>. Si la banque exige ' + pct(p.apportPctHaut, 0) + ', la limite tombe à ' + k(p.apportMax / p.apportPctHaut) + '. Ces seuils se règlent dans Paramètres.</p></div>' +
     '<div class="kpis"><div class="kpi"><b style="color:var(--bad)">' + ex.length + '</b><span>Exclus, au-delà de ' + k(p.apportMax / p.apportPctBas) + '</span></div>' +
     '<div class="kpi"><b style="color:var(--warn)">' + limite + '</b><span>Possibles selon la banque, entre ' + k(p.apportMax / p.apportPctHaut) + ' et ' + k(p.apportMax / p.apportPctBas) + '</span></div>' +
     '<div class="kpi"><b style="color:var(--ok)">' + ok + '</b><span>Dans le budget même à ' + pct(p.apportPctHaut, 0) + ' d\u2019apport</span></div>' +
@@ -513,7 +519,7 @@ VIEWS.exclus = function () {
       ex.map(function (x) { var f = x.a.fin, url = sourceUrl(x.b);
         return '<tr class="click" data-fiche="' + h(x.id) + '"><td style="min-width:200px"><b>' + h(x.b.titre) + '</b><div class="small muted">' + h(x.b.commune || '') + (trajetMin(x.b) != null ? ' · ' + trajetMin(x.b) + ' min' : '') + '</div></td>' +
           '<td class="n">' + k(x.b.prix) + '</td><td class="n">' + k(f.travauxRetenus) + '</td><td class="n"><b>' + k(f.montantALever) + '</b></td>' +
-          '<td class="n" style="color:var(--bad)">+' + k(f.montantALever - f.budgetMaxHaut) + '</td>' +
+          '<td class="n" style="color:var(--bad)">' + (f.horsPrix ? 'prix > ' + k(p.prixMax) : '+' + k(f.montantALever - f.budgetMaxHaut)) + '</td>' +
           '<td class="n">' + k(f.apportRequisBas) + ' à ' + k(f.apportRequisHaut) + '</td><td class="n small">' + prixMax(x) + '</td>' +
           '<td class="n"><span class="pill lv-' + x.a.score.niveau + '">' + x.a.score.total + '</span></td>' +
           '<td>' + (url ? '<a href="' + h(url) + '" target="_blank" rel="noopener" class="small" data-stop="1">Annonce ↗</a>' : '') + '</td></tr>'; }).join('') +
@@ -590,7 +596,7 @@ VIEWS.marche = function () {
 
 // ---------- paramètres ----------
 var PFIELDS = [
-  ['Financement', [['apportMax', 'Apport maximal mobilisable (€)'], ['apportPctBas', 'Apport exigé, cas favorable (ratio)'], ['apportPctHaut', 'Apport exigé, cas exigeant (ratio)'], ['apport', 'Apport personnel utilisé dans les calculs (€)'], ['pretHonneur', 'Prêt d’honneur (€)'], ['investisseursMax', 'Fonds propres investisseurs max (€)'], ['apportMinPct', 'Apport exigé, scénario central (ratio)'], ['taux', 'Taux du prêt (ratio)'], ['assurancePct', 'Assurance emprunteur (ratio par an)'], ['duree', 'Durée (années)'], ['dscrCible', 'DSCR cible']]],
+  ['Financement', [['prixMax', 'Prix affiché maximal, au-delà le bien est masqué (€)'], ['apportMax', 'Apport maximal mobilisable (€)'], ['apportPctBas', 'Apport exigé, cas favorable (ratio)'], ['apportPctHaut', 'Apport exigé, cas exigeant (ratio)'], ['apport', 'Apport personnel utilisé dans les calculs (€)'], ['pretHonneur', 'Prêt d’honneur (€)'], ['investisseursMax', 'Fonds propres investisseurs max (€)'], ['apportMinPct', 'Apport exigé, scénario central (ratio)'], ['taux', 'Taux du prêt (ratio)'], ['assurancePct', 'Assurance emprunteur (ratio par an)'], ['duree', 'Durée (années)'], ['dscrCible', 'DSCR cible']]],
   ['Acquisition', [['negociation', 'Négociation par défaut (ratio)'], ['notaireAncien', 'Frais de notaire ancien (ratio)'], ['fraisEncheres', 'Frais d’enchères (ratio)'], ['fraisCession', 'Frais de cession de fonds (ratio)'], ['honorairesAgenceSiNonInclus', 'Honoraires si non inclus (ratio)'], ['aleas', 'Aléas travaux (ratio)'], ['moe', 'Maîtrise d’œuvre (ratio)'], ['tresorerieDemarrage', 'Trésorerie de démarrage (€)'], ['moisAutorisations', 'Délai autorisations (mois)'], ['moisTravauxParTranche', 'Mois de travaux par 100 k€']]],
   ['Exploitation', [['mariages.prudent', 'Mariages par an, prudent'], ['mariages.base', 'Mariages par an, base'], ['mariages.ambitieux', 'Mariages par an, ambitieux'], ['prixHaute', 'Location week-end haute saison (€)'], ['prixBasse', 'Location week-end basse saison (€)'], ['partHaute', 'Part des mariages en haute saison'], ['extrasParMariage', 'Marge extras par mariage (€)'], ['autresEvenements', 'Marge autres événements par an (€)'], ['chargesVariablesParMariage', 'Charges variables par mariage (€)'], ['commissionPct', 'Commissions (ratio du prix)'], ['chargesFixes', 'Charges fixes (€ par an)'], ['energieFixe', 'Énergie fixe (€ par an)'], ['assurancesPct', 'Assurances (ratio de la valeur)'], ['taxeFonciereDefaut', 'Taxe foncière si inconnue (€)'], ['revalorisation', 'Revalorisation annuelle du bien'], ['partTravauxValorisee', 'Part des travaux retrouvée à la revente']]],
   ['Filtres', [['trajetMax', 'Trajet maximal depuis le pôle le plus proche, si le filtre est coché (min)']]]
@@ -761,6 +767,24 @@ function renderFiche() {
     '</div></aside>';
 }
 
+// ---------- fiche concurrent ----------
+function renderConcurrent(i) {
+  var c = ((S.marche.benchmark || {}).lieux || [])[i]; if (!c) return;
+  S.fiche = null;
+  var url = c.url || c.source_url;
+  document.getElementById('sheetroot').innerHTML = '<div class="sheet-bg" data-close="1"></div><aside class="sheet" role="dialog" aria-modal="true" aria-label="Lieu de mariage concurrent" style="width:min(520px,100%)">' +
+    '<div class="sheet-head"><h2>' + h(c.nom) + '</h2><button class="btn" data-close="1" aria-label="Fermer">Fermer</button></div>' +
+    '<div class="sheet-body"><div class="eyebrow">Lieu de mariage concurrent</div>' +
+    '<div class="row" style="gap:8px">' + (c.url ? '<a class="btn primary" href="' + h(c.url) + '" target="_blank" rel="noopener">Voir le lieu</a>' : '') + (c.source_url && c.source_url !== c.url ? '<a class="btn" href="' + h(c.source_url) + '" target="_blank" rel="noopener">Source</a>' : '') + '</div>' +
+    '<dl class="kv"><dt>Commune</dt><dd>' + h(c.commune || '—') + '</dd><dt>Type</dt><dd>' + h(c.type || '—') + '</dd>' +
+    '<dt>Capacité</dt><dd>' + (c.capacite_assis ? c.capacite_assis + ' assis' : c.capacite_max ? 'jusqu\u2019à ' + c.capacite_max + ' invités' : '<span class="muted">non publiée</span>') + '</dd>' +
+    '<dt>Prix week-end</dt><dd>' + (c.prix_location_weekend_min ? 'dès ' + eur(c.prix_location_weekend_min) : '<span class="muted">non publié</span>') + (c.prix_location_weekend_max ? ' à ' + eur(c.prix_location_weekend_max) : '') + '</dd>' +
+    '<dt>Couchages</dt><dd>' + (c.hebergement_sur_place_couchages || '<span class="muted">non publié</span>') + '</dd>' +
+    '<dt>Collecté le</dt><dd>' + fdate(c.collecte_le) + '</dd></dl>' +
+    (c.prix_note ? '<p class="small muted" style="margin:0">' + h(c.prix_note) + '</p>' : '') +
+    '<p class="disclaimer">Données relevées sur des sites publics, à confirmer auprès du lieu.</p></div></aside>';
+}
+
 // ---------- écritures ----------
 function saveSuivi(id, patch) {
   var cur = Object.assign({}, S.suivi[id] || {}, patch, { maj: new Date().toISOString() });
@@ -776,9 +800,10 @@ function saveParams(obj) {
 
 // ---------- événements ----------
 document.addEventListener('click', function (e) {
-  var t = e.target.closest('[data-tab],[data-fiche],[data-close],[data-sort],[data-vue],[data-copy],#f-save,#psave,#preset,#simsave,#simreset,[data-stop]');
+  var t = e.target.closest('[data-conc],[data-tab],[data-fiche],[data-close],[data-sort],[data-vue],[data-copy],#f-save,#psave,#preset,#simsave,#simreset,[data-stop]');
   if (!t) return;
   if (t.hasAttribute('data-stop')) return;
+  if (t.hasAttribute('data-conc')) { renderConcurrent(+t.getAttribute('data-conc')); return; }
   if (t.hasAttribute('data-tab')) { S.tab = t.getAttribute('data-tab'); try { localStorage.setItem('rd_tab', S.tab); } catch (er) {} render(); window.scrollTo(0, 0); return; }
   if (t.hasAttribute('data-fiche')) { S.fiche = t.getAttribute('data-fiche'); renderFiche(); return; }
   if (t.hasAttribute('data-close')) { S.fiche = null; document.getElementById('sheetroot').innerHTML = ''; return; }
@@ -808,7 +833,8 @@ document.addEventListener('input', function (e) {
 });
 document.addEventListener('change', function (e) {
   var t = e.target;
-  if (t.id === 'dept') { S.dept = t.value; S.map.vb = null; try { localStorage.setItem('rd_dept', S.dept); } catch (er) {} render(); }
+  if (t.id === 'masquer') { S.masquerBudget = t.checked; try { localStorage.setItem('rd_masquer', t.checked ? '1' : '0'); } catch (er) {} render(); }
+  else if (t.id === 'dept') { S.dept = t.value; S.map.vb = null; try { localStorage.setItem('rd_dept', S.dept); } catch (er) {} render(); }
   else if (t.id === 'ftype') { S.comp.type = t.value; render(); }
   else if (t.id === 'fstrat') { S.comp.strat = t.value; render(); }
   else if (t.id === 'fstatut') { S.comp.statut = t.value; render(); }

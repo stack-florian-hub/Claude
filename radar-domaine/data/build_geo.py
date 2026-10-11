@@ -17,7 +17,7 @@ def dp(pts, tol):
         m = len(pts) // 2
         return _dp(pts[:m + 1], tol)[:-1] + _dp(pts[m:], tol)
     return _dp(pts, tol)
-SUIVIS = ['37', '41', '44', '85']
+SUIVIS = ['37', '41', '44', '49', '85']
 coms = []; cent = {}
 for d in SUIVIS:
     for f in json.load(open(f'com_{d}.json'))['features']:
@@ -46,6 +46,7 @@ out = {'gare': {'nom': 'Gare de Saint-Pierre-des-Corps', 'lat': 47.38575, 'lon':
        'poles': [{'id': 'spdc', 'nom': 'Gare TGV Saint-Pierre-des-Corps', 'lat': 47.38575, 'lon': 0.72330},
                  {'id': 'romorantin', 'nom': 'Romorantin-Lanthenay', 'lat': 47.3586, 'lon': 1.7414},
                  {'id': 'nantes', 'nom': 'Gare de Nantes', 'lat': 47.2173, 'lon': -1.5420},
+                 {'id': 'angers', 'nom': 'Gare d\u2019Angers', 'lat': 47.4647, 'lon': -0.5566},
                  {'id': 'laroche', 'nom': 'Gare de La Roche-sur-Yon', 'lat': 46.6705, 'lon': -1.4206}],
        'isochrones': iso, 'isochrone_meta': {'moteur': 'Valhalla (valhalla1.openstreetmap.de, données OSM)', 'depart': 'samedi 10:00', 'calcule_le': '2026-10-09'},
        'departements': deps, 'communes': coms}
