@@ -16,6 +16,10 @@ Architecture et modèle de données : [ARCHITECTURE.md](ARCHITECTURE.md).
 
 Prérequis : **Node.js 20 ou plus** (https://nodejs.org). Aucune base de données ni abonnement.
 
+**Le plus simple** : double-cliquer sur `Lancer le scanner (Windows).bat` ou `Lancer le scanner (Mac).command`. Au premier lancement, ils installent l’outil, téléchargent la DVF des départements 44, 85, 49, 37 et 78, puis ouvrent le navigateur. Après une mise à jour du code, supprimer le dossier `.next` pour forcer la reconstruction.
+
+En ligne de commande :
+
 ```bash
 cd scanner
 npm install

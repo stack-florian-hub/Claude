@@ -74,6 +74,7 @@ export default function MarketsView({ rows }: { rows: CommuneMarket[] }) {
         <h3>Lecture</h3>
         <ul className="plain small">
           <li><b>Prime de vente séparée</b> : écart entre le prix d’une dépendance vendue seule et sa valeur implicite quand elle part avec un appartement. Une prime forte = les vendeurs « donnent » le garage ou le parking dans les ventes groupées : c’est là que le modèle New Port rapporte le plus.</li>
+          <li><b>Limite de cet indicateur</b> : les appartements vendus avec un parking sont souvent dans des immeubles plus récents ou mieux situés, donc plus chers au m². La valeur implicite de la dépendance en est gonflée et la prime sous-estimée (elle peut même devenir négative, comme à Saint-Germain-en-Laye). À lire comme une tendance entre communes, pas comme un montant exact.</li>
           <li><b>Dépendance seule</b> : DVF mélange garages, parkings, caves et parfois remises ou chais (valeurs hautes sur le littoral). Lire la fourchette P20 – P80, pas seulement la médiane.</li>
           <li><b>Ventes / an</b> : un marché liquide se revend vite. En dessous de ~100 ventes par an, compter un délai de revente plus long.</li>
           <li>Calculs sur les {years.length ? `${years[0]}–${years[years.length - 1]}` : ''} ventes DVF chargées ; commandes de mise à jour dans Paramètres.</li>

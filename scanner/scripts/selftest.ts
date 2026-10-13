@@ -1,4 +1,5 @@
 // Vérifie le scoring sur le jeu de démo (sans toucher à la base) : npm test
+import fsx from 'node:fs';
 import { DEFAULT_SETTINGS, DEFAULT_ZONES } from '../src/lib/defaults';
 import { demoDvf, demoListings } from '../src/lib/demo';
 import { analyze } from '../src/lib/scoring';
@@ -42,6 +43,14 @@ Parking visiteurs dans la résidence.`);
 check(p.price === 168000 && p.surface === 58 && p.address.postalCode === '44000' && p.dpe === 'E', 'Lecture de texte : prix, surface, CP, DPE');
 check(p.lots.map((x) => x.type).join(',') === 'appartement,cave,parking,parking', `Lot groupé détecté : ${p.lots.map((x) => x.type).join(',')}`);
 check(p.seller === 'particulier' && p.chargesAnnual === 1400 && p.coproLots === 24, 'Vendeur, charges, copro');
+
+// Captures de pages de portails (bruit : prix au m², mensualités, annonces similaires)
+
+const lbc = parseListingText(fsx.readFileSync('scripts/fixtures/leboncoin.txt', 'utf8'));
+check(lbc.source === 'leboncoin' && lbc.price === 189000 && lbc.address.city === 'Nantes' && lbc.address.postalCode === '44100' && lbc.dpe === 'D' && lbc.chargesAnnual === 1320 && lbc.seller === 'particulier', `Capture Leboncoin : ${lbc.price} €, ${lbc.address.postalCode} ${lbc.address.city}, DPE ${lbc.dpe}, charges ${lbc.chargesAnnual}`);
+check(lbc.lots.map((x) => x.type).join(',') === 'appartement,cave,parking', `Capture Leboncoin : lots ${lbc.lots.map((x) => x.type).join(',')} (annonces similaires ignorées)`);
+const sl = parseListingText(fsx.readFileSync('scripts/fixtures/seloger.txt', 'utf8'));
+check(sl.source === 'seloger' && sl.price === 159000 && sl.dpe === 'C' && sl.lots.map((x) => x.type).join(',') === 'appartement,garage,cave' && sl.seller === 'agence', `Capture SeLoger : ${sl.price} €, DPE ${sl.dpe}, lots ${sl.lots.map((x) => x.type).join(',')}`);
 
 const sim = simulate({ price: 525000, acquisitionFees: 39400, travaux: 12000, travauxMonth: 1, loanAmount: 450000, loanRate: 4.5, loanRepayment: 'in_fine', chargesMonthly: 400, lots: [
   { label: 'Garage', resale: 30000, month: 2, saleCostsPct: 0 }, { label: 'Parking', resale: 17000, month: 3, saleCostsPct: 4 }, { label: 'Cave', resale: 7000, month: 4, saleCostsPct: 4 }, { label: 'Appartement', resale: 650000, month: 6, saleCostsPct: 4 }] }, s);

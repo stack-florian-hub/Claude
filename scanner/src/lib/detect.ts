@@ -90,10 +90,18 @@ function pickPrice(t: string): number | undefined {
 }
 
 export function parseListingText(raw: string, url?: string): ListingInput & { parseNotes: string[] } {
-  const text = raw.replace(/\r/g, '').trim();
+  // on coupe avant les blocs « annonces similaires » des portails (prix et lots d'autres biens)
+  const full = raw.replace(/\r/g, '').trim();
+  const cut = full.search(/\n\s*(?:annonces similaires|ces (?:biens|annonces) (?:pourraient|peuvent)|biens similaires|vous aimerez aussi|d'autres annonces|autres biens|à découvrir aussi)/i);
+  const text = cut > 0 ? full.slice(0, cut) : full;
   const notes: string[] = [];
   const urlInText = url || text.match(/https?:\/\/\S+/)?.[0];
-  const source = sourceFromUrl(urlInText);
+  let source = sourceFromUrl(urlInText);
+  if (source === 'manuel' || source === 'autre') {
+    const head = text.slice(0, 300).toLowerCase();
+    const m = [['seloger', 'seloger'], ['leboncoin', 'leboncoin'], ['logic-immo', 'logicimmo'], ["bien'ici", 'bienici'], ['bienici', 'bienici'], ['pap.fr', 'pap'], ['de particulier à particulier', 'pap'], ['licitor', 'licitor']].find(([k]) => head.includes(k));
+    if (m) source = m[1] as Source;
+  }
   const firstLine = text.split('\n').map((x) => x.trim()).find((x) => x && !/^https?:/.test(x)) || 'Annonce';
   const price = pickPrice(text);
   if (!price) notes.push('Prix non trouvé');
@@ -111,6 +119,12 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
       cityBefore = m[1].replace(/^(?:.*\s)?(?:à|a|sur|de)\s+/i, '');
     }
   }
+  if (cpM && !cityBefore) {
+    // « Nantes 44100 Chantenay » (Leboncoin) : la ville est avant le code postal, le quartier après
+    const line = text.split('\n').find((x) => x.includes(cpM![1])) || '';
+    const before = line.slice(0, line.indexOf(cpM[1])).replace(/[,(–-]\s*$/, '').trim();
+    if (/^[A-ZÀ-Ý][A-Za-zÀ-ÿ'’ -]{1,40}$/.test(before) && !/\b(rue|avenue|boulevard|bd|place|quai|all[ée]e|chemin|impasse|route|cours|promenade|square|r[ée]sidence|prix|vente|appartement|maison|garage|parking)\b/i.test(before)) cityBefore = before;
+  }
   if (!cpM) notes.push('Code postal non trouvé');
   // adresse : d'abord sur la ligne du code postal, sinon une voie précédée d'un numéro
   const STREET = /(?<!\d)(\d{1,4}(?:\s?(?:bis|ter))?(?:-\d{1,4})?)?[,\s]*\b((?:rue|avenue|av\.|boulevard|bd|place|quai|all[ée]e|chemin|impasse|route|cours|promenade|square|r[ée]sidence)\s[^\n,.;()]{2,45})/i;
@@ -120,7 +134,7 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
     const m = text.match(new RegExp(STREET.source.replace(')?[,\\s]*', ')[,\\s]+'), 'i'));
     streetM = m;
   }
-  const dpeM = text.match(/(?:DPE|classe [ée]nerg(?:[ée]tique|ie)|consommation [ée]nerg[ée]tique|[ée]tiquette [ée]nergie)\s*:?\s*(?:classe\s*)?([A-G])\b/i);
+  const dpeM = text.match(/(?:DPE|classe [ée]nerg(?:[ée]tique|ie)|consommation [ée]nerg[ée]tique|[ée]tiquette [ée]nergie|diagnostic de performance [ée]nerg[ée]tique(?:\s*\(DPE\))?)[)\s:]*(?:classe\s*)?([A-G])\b/i);
   const chM = text.match(/charges?[^\d\n]{0,30}(\d[\d\s .]*)\s*€\s*(?:\/|par)?\s*(an|mois|trimestre)?/i);
   let chargesAnnual: number | undefined;
   if (chM) {
