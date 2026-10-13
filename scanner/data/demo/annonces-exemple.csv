@@ -1,0 +1,4 @@
+titre;prix;url;source;numero;rue;cp;ville;insee;surface;pieces;type;lots;dpe;charges;vendeur;date;description;travaux
+T3 58 m² + cave + parking;168000;;leboncoin;12;rue de Coulmiers;44000;Nantes;44109;58;3;appartement;appartement:58:3|cave|parking;E;1400;particulier;2026-10-01;Vendu avec cave et parking;9000
+Garage fermé;12000;;pap;8;rue Paul Bellamy;44000;Nantes;;14;;garage;garage:14;;;particulier;2026-10-08;;
+Lot de 3 boxes;32000;;pap;22;avenue Rosa Bonheur;85100;Les Sables-d'Olonne;85194;;;garage;garage:13|garage:13|garage:15;;;particulier;2026-09-28;Succession, vente rapide;

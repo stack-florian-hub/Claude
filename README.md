@@ -7,4 +7,5 @@ Base de travail pour l'outil de prospection et d'aide à la décision (SASU Fina
 - `reseau/contacts.csv` : mêmes contacts, format exploitable par l'outil.
 - `ressources/ressources.md` : livre, vidéos, banque (chèque de banque, caution bancaire).
 - `ressources/email_banquier_caution.md` : email prêt à envoyer au Crédit Mutuel.
+- `scanner/` : **scanner d'anomalies de prix** (annonces × DVF, lots groupés, pipeline, trésorerie, matrices du groupe). Application Next.js locale : voir `scanner/README.md`.
 - `tour-de-controle/index.html` : tour de contrôle publiée (https://claude.ai/artifact/GrV2qEzNMXTVEWXnjwUQvY). Les données vivent dans la base de l'artefact.

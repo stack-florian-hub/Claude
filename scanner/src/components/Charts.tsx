@@ -9,7 +9,10 @@ function niceTicks(min: number, max: number, n = 5) {
   const mag = Math.pow(10, Math.floor(Math.log10(Math.abs(raw))));
   const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= raw) || raw;
   const out: number[] = [];
-  for (let v = Math.floor(min / step) * step; v <= max + step * 0.01; v += step) out.push(+v.toFixed(6));
+  for (let v = Math.floor(min / step) * step; ; v += step) {
+    out.push(+v.toFixed(6));
+    if (v >= max - step * 1e-6 || out.length > 50) break;
+  }
   return out;
 }
 

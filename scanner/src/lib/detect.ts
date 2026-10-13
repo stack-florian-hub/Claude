@@ -101,10 +101,26 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
   const surface = surfM ? toNum(surfM[1]) : undefined;
   const roomsM = text.match(/(\d{1,2})\s*pi[eè]ces?/i) || text.match(/\b[TF](\d)\b/);
   const rooms = roomsM ? parseInt(roomsM[1], 10) : undefined;
-  const cpM = text.match(/\b((?:0[1-9]|[1-8]\d|9[0-5])\d{3})\s+([A-ZÀ-Ýa-zà-ÿ][A-Za-zÀ-ÿ'’ -]{1,40})/);
+  let cpM = text.match(/\b((?:0[1-9]|[1-8]\d|9[0-5])\d{3})\s+([A-ZÀ-Ýa-zà-ÿ][A-Za-zÀ-ÿ'’ -]{1,40})/);
+  let cityBefore: string | undefined;
+  if (!cpM) {
+    // « Cholet 49300 » ou « Cholet (49300) » : ville avant le code postal
+    const m = text.match(/([A-ZÀ-Ý][A-Za-zÀ-ÿ'’-]+(?:[ -][A-Za-zÀ-ÿ'’-]+){0,3})\s*\(?\b((?:0[1-9]|[1-8]\d|9[0-5])\d{3})\b/);
+    if (m) {
+      cpM = [m[0], m[2], ''] as unknown as RegExpMatchArray;
+      cityBefore = m[1].replace(/^(?:.*\s)?(?:à|a|sur|de)\s+/i, '');
+    }
+  }
   if (!cpM) notes.push('Code postal non trouvé');
-  const streetM = text.match(/(\d{1,4}(?:\s?(?:bis|ter))?(?:-\d{1,4})?)?[,\s]*\b((?:rue|avenue|av\.|boulevard|bd|place|quai|all[ée]e|chemin|impasse|route|cours|promenade|square|r[ée]sidence)\s[^\n,.;()]{2,45})/i);
-  const dpeM = text.match(/(?:DPE|classe [ée]nerg[ée]tique|consommation [ée]nerg[ée]tique|[ée]tiquette [ée]nergie)\s*:?\s*(?:classe\s*)?([A-G])\b/i);
+  // adresse : d'abord sur la ligne du code postal, sinon une voie précédée d'un numéro
+  const STREET = /(?<!\d)(\d{1,4}(?:\s?(?:bis|ter))?(?:-\d{1,4})?)?[,\s]*\b((?:rue|avenue|av\.|boulevard|bd|place|quai|all[ée]e|chemin|impasse|route|cours|promenade|square|r[ée]sidence)\s[^\n,.;()]{2,45})/i;
+  const cpLine = cpM ? text.split('\n').find((x) => x.includes(cpM[1])) : undefined;
+  let streetM = cpLine?.match(STREET) || null;
+  if (!streetM) {
+    const m = text.match(new RegExp(STREET.source.replace(')?[,\\s]*', ')[,\\s]+'), 'i'));
+    streetM = m;
+  }
+  const dpeM = text.match(/(?:DPE|classe [ée]nerg(?:[ée]tique|ie)|consommation [ée]nerg[ée]tique|[ée]tiquette [ée]nergie)\s*:?\s*(?:classe\s*)?([A-G])\b/i);
   const chM = text.match(/charges?[^\d\n]{0,30}(\d[\d\s .]*)\s*€\s*(?:\/|par)?\s*(an|mois|trimestre)?/i);
   let chargesAnnual: number | undefined;
   if (chM) {
@@ -128,7 +144,7 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
       number: streetM?.[1]?.trim(),
       street: streetM?.[2]?.replace(/\s+\d{5}\b.*$/, '').trim(),
       postalCode,
-      city: (cpM?.[2] || '').replace(/\s+(?:-|–).*$/, '').trim(),
+      city: (cityBefore || cpM?.[2] || '').replace(/\s+(?:-|–).*$/, '').trim(),
       dept: postalCode.slice(0, 2),
     },
     surface,
