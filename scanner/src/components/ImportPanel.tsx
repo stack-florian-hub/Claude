@@ -7,6 +7,7 @@ import { rowToListing } from '@/lib/providers/listing';
 import { downloadCsv } from '@/lib/csv';
 import { LOT_LABELS, SELLER_LABELS, SOURCE_LABELS } from '@/lib/defaults';
 import { NETWORK_BY_ID } from '@/lib/networks';
+import { pdfToText } from '@/lib/pdf';
 import { eur, pct } from '@/lib/util';
 
 type Preview = { input: ListingInput & { parseNotes: string[] }; analysis: Analysis; zone?: string; existing?: { id: string; price: number; title: string } };
@@ -29,7 +30,8 @@ const EMPTY_MANUAL = { titre: '', prix: '', numero: '', rue: '', cp: '', ville: 
 const isArtifact = typeof window !== 'undefined' && !!(window as unknown as { __SCANNER_ARTIFACT__?: boolean }).__SCANNER_ARTIFACT__;
 
 export default function ImportPanel() {
-  const [tab, setTab] = useState<'collage' | 'csv' | 'json' | 'manuel' | 'bookmarklet'>('collage');
+  const [tab, setTab] = useState<'collage' | 'pdf' | 'csv' | 'json' | 'manuel' | 'bookmarklet'>('collage');
+  const [pdfMsg, setPdfMsg] = useState('');
   const [content, setContent] = useState('');
   const [preview, setPreview] = useState<Preview[]>([]);
   const [keep, setKeep] = useState<boolean[]>([]);
@@ -81,6 +83,30 @@ export default function ImportPanel() {
     }
   }
 
+  /** Une fiche PDF = une annonce ; plusieurs fiches sont séparées par --- avant analyse. */
+  async function onPdfs(files: FileList | File[] | null) {
+    const list = [...(files || [])].filter((f) => /\.pdf$/i.test(f.name) || f.type === 'application/pdf');
+    if (!list.length) return;
+    setErr('');
+    setPdfMsg(`Lecture de ${list.length} fiche(s)…`);
+    const texts: string[] = [];
+    const empty: string[] = [];
+    for (const f of list) {
+      try {
+        const t = await pdfToText(f);
+        if (t.replace(/\s/g, '').length < 40) empty.push(f.name);
+        else texts.push(t);
+      } catch (e) {
+        empty.push(`${f.name} (${(e as Error).message})`);
+      }
+    }
+    setPdfMsg(empty.length ? `Texte illisible pour : ${empty.join(', ')} (PDF scanné en image : saisir l’annonce à la main).` : '');
+    if (!texts.length) return;
+    const joined = texts.join('\n---\n');
+    setContent(joined);
+    analyse('collage', joined);
+  }
+
   function onFile(f: File | undefined) {
     if (!f) return;
     f.text().then((t) => {
@@ -94,7 +120,7 @@ export default function ImportPanel() {
   return (
     <>
       <div className="tabs">
-        {([['collage', 'Coller du texte'], ['csv', 'Fichier CSV'], ['json', 'Fichier JSON'], ['manuel', 'Saisie manuelle'], ['bookmarklet', 'Capture navigateur']] as const).filter(([k]) => !(k === 'bookmarklet' && isArtifact)).map(([k, l]) => (
+        {([['collage', 'Coller du texte'], ['pdf', 'Fiche PDF'], ['csv', 'Fichier CSV'], ['json', 'Fichier JSON'], ['manuel', 'Saisie manuelle'], ['bookmarklet', 'Capture navigateur']] as const).filter(([k]) => !(k === 'bookmarklet' && isArtifact)).map(([k, l]) => (
           <button key={k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>{l}</button>
         ))}
       </div>
@@ -126,6 +152,28 @@ export default function ImportPanel() {
             <textarea rows={8} value={content} onChange={(e) => setContent(e.target.value)} />
             <button style={{ marginTop: 6 }} disabled={!content.trim() || busy} onClick={() => analyse(tab, content)}>Analyser</button>
           </details>
+        </div>
+      )}
+
+      {tab === 'pdf' && (
+        <div className="panel">
+          <p className="muted">Fiche commerciale ou fiche de visite envoyée par un agent ou un notaire (PDF). Le texte est lu dans votre navigateur puis analysé comme une annonce collée : prix, surface, adresse, DPE, charges, réseau et lots vendus ensemble. Une fiche par bien ; plusieurs fiches à la fois possibles.</p>
+          <div
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => { e.preventDefault(); onPdfs(e.dataTransfer.files); }}
+            style={{ border: '2px dashed var(--line)', borderRadius: 8, padding: 24, textAlign: 'center' }}
+          >
+            <p>Déposez les fiches PDF ici, ou</p>
+            <input id="pdf-input" type="file" accept="application/pdf,.pdf" multiple onChange={(e) => onPdfs(e.target.files)} />
+          </div>
+          {pdfMsg && <p className="small muted" style={{ marginTop: 6 }}>{pdfMsg}</p>}
+          {content && (
+            <details style={{ marginTop: 8 }}>
+              <summary className="muted">Texte extrait (modifiable, puis « Analyser »)</summary>
+              <textarea rows={10} value={content} onChange={(e) => setContent(e.target.value)} />
+              <button style={{ marginTop: 6 }} disabled={busy} onClick={() => analyse('collage', content)}>Analyser</button>
+            </details>
+          )}
         </div>
       )}
 

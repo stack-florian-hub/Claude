@@ -120,7 +120,9 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
     const m = [['seloger', 'seloger'], ['leboncoin', 'leboncoin'], ['logic-immo', 'logicimmo'], ["bien'ici", 'bienici'], ['bienici', 'bienici'], ['pap.fr', 'pap'], ['de particulier à particulier', 'pap']].find(([k]) => head.includes(k));
     if (m) source = m[1] as Source;
   }
-  const firstLine = text.split('\n').map((x) => x.trim()).find((x) => x && !/^https?:/.test(x)) || 'Annonce';
+  const lines = text.split('\n').map((x) => x.trim()).filter((x) => x && !/^https?:/.test(x));
+  // titre = première ligne qui décrit le bien (une fiche PDF commence souvent par l'en-tête de l'agence)
+  const firstLine = lines.slice(0, 8).find((x) => /\b(appartement|maison|studio|duplex|[tf]\d|garage|box|parking|local|immeuble|terrain|lot de)\b/i.test(x) && x.length < 160) || lines[0] || 'Annonce';
   const price = pickPrice(text);
   if (!price) notes.push('Prix non trouvé');
   const surfM = text.match(/(\d{1,4}(?:[,.]\d{1,2})?)\s*m(?:²|2)(?![a-z0-9])/i);
