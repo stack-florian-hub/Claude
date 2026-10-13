@@ -74,11 +74,16 @@ score 0-100     = 35 × marge % (plafonnée à 40 %) + 35 × gain € (plafonné
 Valeur d'un lot, par ordre de préférence :
 1. Valeur forcée saisie (ex. offre reçue, estimation pro).
 2. **DVF même rue** (≥ 3 ventes du même type, surface ±40 %, 3 dernières années) : P25 / médiane / P75 du €/m² × surface.
-3. **DVF même code postal / commune** (≥ 5 ventes).
-4. **DVF département** (confiance faible).
-5. Valeurs par défaut selon la tension de la zone (garage 15-30 k€, parking 10-20 k€, cave 3-8 k€).
+3. **DVF < 300 m** puis **< 800 m** de l'adresse géocodée (tout le département : la commune voisine compte).
+4. **DVF commune** (≥ 5 ventes ; confiance réduite si la commune est hétérogène).
+5. **DVF département** (confiance faible).
+6. Valeurs par défaut selon la tension de la zone (garage 15-30 k€, parking 10-20 k€, cave 3-8 k€).
 
-Garages, parkings et caves : DVF les note « Dépendance » sans surface ni distinction. On calibre sur les ventes de dépendance seule de la commune : parking = P20-P50, garage = P40-P80, cave = valeur par défaut bornée (les caves se vendent rarement seules). Hypothèse affichée comme telle.
+Toutes les ventes de logement sont gardées, corrigées d'une valeur forfaitaire par dépendance incluse (les ventes « pures » sont biaisées vers les quartiers moins chers : −30 % à Saint-Germain-en-Laye).
+
+Garages, parkings et caves : DVF les note « Dépendance » sans surface ni distinction. Calibrage prudent sur les dépendances vendues seules : parking = P10-P40, garage = P25-P65, plafonnés par rapport aux valeurs de zone ; cave bornée par les valeurs par défaut. Hypothèse affichée comme telle.
+
+Indicateur de marché clé (écran Marchés) : **prime de vente séparée** = médiane d'une dépendance vendue seule − valeur implicite d'une dépendance vendue avec un appartement (prix de la vente groupée − surface × €/m² médian des appartements de même taille vendus seuls).
 
 ## 5. Connecteurs futurs
 

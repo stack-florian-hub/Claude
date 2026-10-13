@@ -8,7 +8,7 @@ import { downloadCsv } from '@/lib/csv';
 import { LOT_LABELS, SELLER_LABELS, SOURCE_LABELS } from '@/lib/defaults';
 import { eur, pct } from '@/lib/util';
 
-type Preview = { input: ListingInput & { parseNotes: string[] }; analysis: Analysis; zone?: string };
+type Preview = { input: ListingInput & { parseNotes: string[] }; analysis: Analysis; zone?: string; existing?: { id: string; price: number; title: string } };
 
 const EXAMPLE = `Appartement T3 58 m² avec cave et parking
 12 rue de Coulmiers 44000 Nantes
@@ -26,7 +26,7 @@ const TEMPLATE = [
 const EMPTY_MANUAL = { titre: '', prix: '', numero: '', rue: '', cp: '', ville: '', surface: '', type: 'appartement', lots: '', dpe: '', charges: '', vendeur: 'agence', source: 'manuel', url: '', date: new Date().toISOString().slice(0, 10), description: '', travaux: '' };
 
 export default function ImportPanel() {
-  const [tab, setTab] = useState<'collage' | 'csv' | 'json' | 'manuel' | 'bookmarklet'>('collage');
+  const [tab, setTab] = useState<'collage' | 'csv' | 'json' | 'licitor' | 'manuel' | 'bookmarklet'>('collage');
   const [content, setContent] = useState('');
   const [preview, setPreview] = useState<Preview[]>([]);
   const [keep, setKeep] = useState<boolean[]>([]);
@@ -66,8 +66,9 @@ export default function ImportPanel() {
     setBusy(true);
     try {
       const listings = preview.filter((_, i) => keep[i]).map((p) => p.input);
-      const r = await api<{ added: number; skipped: number; geocoded: number; ids: string[] }>('/api/listings', 'POST', { listings });
-      setMsg({ t: `${r.added} annonce(s) ajoutée(s)${r.skipped ? `, ${r.skipped} doublon(s) ignoré(s)` : ''}${r.geocoded ? `, ${r.geocoded} géocodée(s)` : ''}.`, ids: r.ids });
+      const r = await api<{ added: number; skipped: number; geocoded: number; ids: string[]; priceUpdates: { title: string; from: number; to: number }[] }>('/api/listings', 'POST', { listings });
+      const pu = r.priceUpdates.map((u) => `« ${u.title.slice(0, 40)} » ${eur(u.from)} → ${eur(u.to)}`).join(' ; ');
+      setMsg({ t: `${r.added} annonce(s) ajoutée(s)${r.priceUpdates.length ? `, ${r.priceUpdates.length} changement(s) de prix enregistré(s) : ${pu}` : ''}${r.skipped ? `, ${r.skipped} doublon(s) sans changement` : ''}${r.geocoded ? `, ${r.geocoded} géocodée(s)` : ''}.`, ids: r.ids });
       setPreview([]);
       setContent('');
     } catch (e) {
@@ -81,7 +82,7 @@ export default function ImportPanel() {
     if (!f) return;
     f.text().then((t) => {
       setContent(t);
-      analyse(tab === 'json' || f.name.endsWith('.json') ? 'json' : 'csv', t);
+      analyse(tab === 'licitor' ? 'licitor' : tab === 'json' || f.name.endsWith('.json') ? 'json' : 'csv', t);
     });
   }
 
@@ -90,7 +91,7 @@ export default function ImportPanel() {
   return (
     <>
       <div className="tabs">
-        {([['collage', 'Coller du texte'], ['csv', 'Fichier CSV'], ['json', 'Fichier JSON'], ['manuel', 'Saisie manuelle'], ['bookmarklet', 'Capture navigateur']] as const).map(([k, l]) => (
+        {([['collage', 'Coller du texte'], ['csv', 'Fichier CSV'], ['json', 'Fichier JSON'], ['licitor', 'Ventes judiciaires (Licitor)'], ['manuel', 'Saisie manuelle'], ['bookmarklet', 'Capture navigateur']] as const).map(([k, l]) => (
           <button key={k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>{l}</button>
         ))}
       </div>
@@ -122,6 +123,13 @@ export default function ImportPanel() {
             <textarea rows={8} value={content} onChange={(e) => setContent(e.target.value)} />
             <button style={{ marginTop: 6 }} disabled={!content.trim() || busy} onClick={() => analyse(tab, content)}>Analyser</button>
           </details>
+        </div>
+      )}
+
+      {tab === 'licitor' && (
+        <div className="panel">
+          <p className="muted">Fichier <code>licitor.json</code> produit par la veille du dépôt : <code>cd veille && python3 licitor.py licitor.json</code>. Les ventes à venir deviennent des annonces « justice » ; le prix retenu est l’<b>adjudication probable</b> (mise à prix × ratio médian adjudication / mise à prix observé au même tribunal sur 24 mois). La fiche donne ensuite l’<b>enchère maximale</b> pour garder vos seuils.</p>
+          <input type="file" accept=".json" onChange={(e) => onFile(e.target.files?.[0])} />
         </div>
       )}
 
@@ -184,7 +192,7 @@ export default function ImportPanel() {
                 {preview.map((p, i) => (
                   <tr key={i} className={p.analysis.flagged ? 'flag' : ''}>
                     <td><input type="checkbox" checked={keep[i]} onChange={(e) => setKeep(keep.map((k, j) => (j === i ? e.target.checked : k)))} /></td>
-                    <td className="wrap" style={{ maxWidth: 280 }}>{p.input.title}<div className="muted small">{SOURCE_LABELS[p.input.source]} · {SELLER_LABELS[p.input.seller]}{p.input.dpe ? ` · DPE ${p.input.dpe}` : ''}</div></td>
+                    <td className="wrap" style={{ maxWidth: 280 }}>{p.existing && <span className={'tag ' + (p.existing.price !== p.input.price ? (p.input.price < p.existing.price ? 'good' : 'warn') : 'grey')}>{p.existing.price !== p.input.price ? `déjà connue : ${eur(p.existing.price)} → ${eur(p.input.price)}` : 'déjà connue, prix inchangé'}</span>}{p.input.title}<div className="muted small">{SOURCE_LABELS[p.input.source]} · {SELLER_LABELS[p.input.seller]}{p.input.dpe ? ` · DPE ${p.input.dpe}` : ''}</div></td>
                     <td className="num">{eur(p.input.price)}</td>
                     <td>{p.input.address.postalCode} {p.input.address.city}<div className="muted small">{p.zone || 'hors zone'}</div></td>
                     <td className="wrap">{p.input.lots.map((l, j) => <span key={j} className="tag">{LOT_LABELS[l.type]}{l.surface ? ` ${l.surface} m²` : ''}</span>)}</td>

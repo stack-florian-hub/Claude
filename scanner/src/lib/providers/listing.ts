@@ -139,3 +139,75 @@ export const ApiProviderStub: ListingProvider = {
 };
 
 export const LISTING_PROVIDERS: ListingProvider[] = [PasteProvider, CsvProvider, JsonProvider, ApiProviderStub];
+
+// --- Ventes judiciaires : sortie de la veille Licitor du dépôt (veille/licitor.py → licitor.json)
+const TRIB_DEPT: Record<string, string> = {
+  nantes: '44', 'saint-nazaire': '44', 'la roche-sur-yon': '85', "les sables-d'olonne": '85', angers: '49', saumur: '49', tours: '37', blois: '41',
+  'le mans': '72', laval: '53', orleans: '45', montargis: '45', chateauroux: '36', poitiers: '86', niort: '79', 'la rochelle': '17',
+};
+const LICITOR_TYPE: Record<string, LotType> = { studio: 'appartement', appartement: 'appartement', maison: 'maison', immeuble: 'maison', local: 'local', terrain: 'terrain' };
+
+interface LicitorLot {
+  lien: string; ref: string; titre: string; commune: string; type: string; tribunal: string; date?: string; lots?: number; adjuge?: number | null; map?: number | null;
+  surface?: number | null; occupation?: string; description?: string; adresse?: string; poursuivant?: string; visite_txt?: string; carence?: boolean;
+}
+
+const median = (v: number[]) => {
+  const s = [...v].sort((a, b) => a - b);
+  return s.length ? s[Math.floor((s.length - 1) / 2)] : NaN;
+};
+
+/** Ratio médian adjudication / mise à prix observé, par tribunal (≥ 5 résultats) sinon toutes zones. */
+export function adjudicationRatios(resultats: LicitorLot[]) {
+  const ok = resultats.filter((r) => r.adjuge && r.map && r.map > 0);
+  const byTrib = new Map<string, number[]>();
+  for (const r of ok) (byTrib.get(norm(r.tribunal)) || byTrib.set(norm(r.tribunal), []).get(norm(r.tribunal))!).push(r.adjuge! / r.map!);
+  const all = ok.map((r) => r.adjuge! / r.map!);
+  return {
+    get(tribunal: string) {
+      const t = byTrib.get(norm(tribunal));
+      if (t && t.length >= 5) return { ratio: median(t), n: t.length, scope: tribunal };
+      if (all.length >= 5) return { ratio: median(all), n: all.length, scope: 'toutes zones' };
+      return { ratio: 1.6, n: 0, scope: 'hypothèse par défaut' };
+    },
+  };
+}
+
+export const LicitorProvider: ListingProvider = {
+  id: 'licitor', label: 'Ventes judiciaires (veille Licitor)', kind: 'fichier', available: true,
+  description: 'Fichier licitor.json produit par veille/licitor.py (ventes à venir + adjudications 24 mois). Prix retenu = adjudication probable = mise à prix × ratio médian observé au même tribunal.',
+  parse: (content) => {
+    const data = JSON.parse(content) as { avenir?: LicitorLot[]; resultats?: LicitorLot[] };
+    const ratios = adjudicationRatios(data.resultats || []);
+    const today = new Date().toISOString().slice(0, 10);
+    return (data.avenir || [])
+      .filter((d) => d.map && (!d.date || d.date.slice(0, 10) >= today))
+      .map((d) => {
+        const r = ratios.get(d.tribunal);
+        const price = Math.round((d.map! * r.ratio) / 500) * 500;
+        const [streetPart, cityPart] = d.adresse && d.adresse.includes(',') ? [d.adresse.slice(0, d.adresse.lastIndexOf(',')), d.adresse.slice(d.adresse.lastIndexOf(',') + 1)] : ['', d.adresse || d.commune];
+        const sm = streetPart.match(/^(\d{1,4}(?:\s?(?:bis|ter))?)[,\s]+(.+)$/i);
+        const type = LICITOR_TYPE[d.type] ?? detectMainType(d.titre);
+        const text = `${d.titre}. ${d.description || ''}`;
+        const notes = [`Prix = adjudication probable : mise à prix ${d.map!.toLocaleString('fr-FR')} € × ${r.ratio.toFixed(2)} (médiane ${r.scope}, ${r.n} résultats)`];
+        if (d.occupation === 'occupé' || d.occupation === 'bail') notes.push(`Bien ${d.occupation === 'bail' ? 'loué' : 'occupé'} : décote et délai`);
+        notes.push('Code postal complété par géocodage à l’import');
+        const listing: ParsedListing = {
+          source: 'licitor', sourceRef: d.ref, url: d.lien,
+          title: `Enchère ${d.tribunal} – ${d.titre} à ${d.commune}`.slice(0, 140),
+          description: [text, d.date ? `Audience : ${d.date.replace('T', ' à ')}` : '', `Tribunal judiciaire de ${d.tribunal}`, d.visite_txt || '', d.poursuivant ? `Avocat poursuivant : ${d.poursuivant}` : '', `Occupation : ${d.occupation || 'inconnue'}`].filter(Boolean).join('\n'),
+          price,
+          address: { number: sm?.[1], street: sm ? sm[2] : streetPart || undefined, postalCode: '', city: (cityPart || d.commune).trim(), dept: TRIB_DEPT[norm(d.tribunal).replace(/\s+/g, ' ')] || '' },
+          surface: d.surface ?? undefined,
+          lots: buildLots(type, d.surface ?? undefined, undefined, text),
+          seller: 'justice',
+          publishedAt: today,
+          auction: { date: d.date, map: d.map!, tribunal: d.tribunal, occupation: d.occupation, visite: d.visite_txt, avocat: d.poursuivant, ratio: r.ratio },
+          parseNotes: notes,
+        };
+        return listing;
+      });
+  },
+};
+
+LISTING_PROVIDERS.splice(3, 0, LicitorProvider);

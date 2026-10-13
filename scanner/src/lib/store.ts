@@ -74,19 +74,48 @@ export function fromInput(i: ListingInput): Listing {
 // --- Annonces
 export const getListings = () => read<Listing[]>('listings', () => []);
 export const getListing = (id: string) => getListings().find((l) => l.id === id);
+/** Même bien ? même URL, ou même code postal + même type principal + surface à ±3 % + prix à ±25 %. */
+export function findSameProperty(all: Listing[], i: ListingInput): Listing | undefined {
+  if (i.url) {
+    const byUrl = all.find((l) => l.url === i.url || l.alsoOn?.some((o) => o.url === i.url));
+    if (byUrl) return byUrl;
+  }
+  const main = (x: { lots: { type: string; surface?: number }[]; surface?: number }) => ({ type: x.lots[0]?.type, surface: x.lots[0]?.surface ?? x.surface });
+  const mi = main(i);
+  return all.find((l) => {
+    if (l.address.postalCode !== i.address.postalCode || !i.price || !l.price) return false;
+    const ml = main(l);
+    if (ml.type !== mi.type || l.lots.length !== i.lots.length) return false;
+    const priceClose = Math.abs(l.price - i.price) / l.price <= 0.25;
+    if (ml.surface && mi.surface) return Math.abs(ml.surface - mi.surface) / ml.surface <= 0.03 && priceClose;
+    return l.title === i.title && priceClose;
+  });
+}
+
 export function addListings(inputs: ListingInput[]) {
   const all = getListings();
   const added: Listing[] = [];
+  const priceUpdates: { id: string; title: string; from: number; to: number }[] = [];
+  let duplicates = 0;
+  const today = new Date().toISOString().slice(0, 10);
   for (const i of inputs) {
-    // dédoublonnage : même URL, ou même prix + même adresse
-    const dup = all.find((l) => (i.url && l.url === i.url) || (l.price === i.price && l.address.postalCode === i.address.postalCode && l.title === i.title));
-    if (dup) continue;
+    const same = findSameProperty(all, i);
+    if (same) {
+      // autre site : on le note ; prix différent : on l'ajoute à l'historique (signal de baisse)
+      if (i.url && i.url !== same.url && !same.alsoOn?.some((o) => o.url === i.url)) same.alsoOn = [...(same.alsoOn || []), { source: i.source, url: i.url, price: i.price, date: today }];
+      if (i.price && i.price !== same.price) {
+        priceUpdates.push({ id: same.id, title: same.title, from: same.price, to: i.price });
+        same.priceHistory = [...same.priceHistory, { date: today, price: i.price, source: i.source }];
+        same.price = i.price;
+      } else duplicates++;
+      continue;
+    }
     const l = fromInput(i);
     all.push(l);
     added.push(l);
   }
   write('listings', all);
-  return added;
+  return { added, priceUpdates, duplicates };
 }
 export function updateListing(id: string, patch: Partial<Listing>) {
   const all = getListings();

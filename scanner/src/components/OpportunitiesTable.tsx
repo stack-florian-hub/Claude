@@ -9,7 +9,7 @@ export interface OppRow {
   id: string; title: string; url?: string; source: string; seller: string; city: string; cp: string; dept: string; zone?: string; tension: number;
   lots: { type: string; surface?: number }[]; price: number; low: number; mid: number; high: number; ecart: number;
   gain: number; gainLow: number; gainHigh: number; gainPct: number; ratio: number; score: number; confidence: number; flagged: boolean;
-  cash: number; age: number; status: string; signals: string[]; warnings: string[]; dpe?: string; drop: number; demo?: boolean;
+  cash: number; priceMax: number; age: number; status: string; signals: string[]; warnings: string[]; dpe?: string; drop: number; demo?: boolean;
 }
 
 type Key = keyof OppRow;
@@ -20,7 +20,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
   const router = useRouter();
   const depts = [...new Set(rows.map((r) => r.dept))].sort();
   const sources = [...new Set(rows.map((r) => r.source))].sort();
-  const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', q: '' });
+  const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', q: '', licitor: 'masquer' });
   const [sort, setSort] = useState<{ k: Key; dir: 1 | -1 }>({ k: 'score', dir: -1 });
 
   useEffect(() => {
@@ -48,6 +48,9 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
       if (f.ageMax && r.age > +f.ageMax) return false;
       if (f.flagged && !r.flagged) return false;
       if (f.source && r.source !== f.source) return false;
+      // ventes Licitor : suivies dans l'application dédiée, masquées par défaut (toutes paraissent « anomalies » à la mise à prix)
+      if (f.licitor === 'masquer' && r.source === 'licitor') return false;
+      if (f.licitor === 'seules' && r.source !== 'licitor') return false;
       if (f.status === 'actifs' && r.status === 'ecarte') return false;
       if (f.status !== 'actifs' && f.status !== 'tous' && r.status !== f.status) return false;
       return true;
@@ -69,7 +72,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
     downloadCsv('opportunites', list.map((r) => ({
       score: r.score, alerte: r.flagged ? 'oui' : '', titre: r.title, ville: r.city, cp: r.cp, zone: r.zone, source: SOURCE_LABELS[r.source], vendeur: SELLER_LABELS[r.seller],
       lots: r.lots.map((l) => LOT_LABELS[l.type] + (l.surface ? ` ${l.surface}m²` : '')).join(' + '), prix: r.price, estimation_basse: r.low, estimation_moyenne: r.mid, estimation_haute: r.high,
-      ecart: r.ecart, gain_brut: r.gain, gain_pct: +(r.gainPct * 100).toFixed(1), ratio: +r.ratio.toFixed(2), cash_necessaire: r.cash, confiance: +(r.confidence * 100).toFixed(0), anciennete_j: r.age, statut: r.status, url: r.url,
+      ecart: r.ecart, gain_brut: r.gain, gain_pct: +(r.gainPct * 100).toFixed(1), ratio: +r.ratio.toFixed(2), offre_max: r.priceMax, cash_necessaire: r.cash, confiance: +(r.confidence * 100).toFixed(0), anciennete_j: r.age, statut: r.status, url: r.url,
     })));
   }
 
@@ -112,8 +115,11 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
             <option value="actifs">Actifs</option><option value="nouveau">Nouveaux</option><option value="suivi">Suivis</option><option value="pipeline">En pipeline</option><option value="ecarte">Écartés</option><option value="tous">Tous</option>
           </select>
         </label>
+        <label>Licitor
+          <select value={f.licitor} onChange={(e) => setF({ ...f, licitor: e.target.value })}><option value="masquer">Masquées</option><option value="inclure">Incluses</option><option value="seules">Seules</option></select>
+        </label>
         <label className="row" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 4 }}><input type="checkbox" checked={f.flagged} onChange={(e) => setF({ ...f, flagged: e.target.checked })} /> Alertes seulement</label>
-        <button onClick={() => setF({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', q: '' })}>Réinitialiser</button>
+        <button onClick={() => setF({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', q: '', licitor: 'masquer' })}>Réinitialiser</button>
         <button onClick={exportCsv}>Export CSV</button>
       </div>
 
@@ -130,6 +136,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
               {th('ecart', 'Écart')}
               {th('gain', 'Gain brut')}
               {th('gainPct', 'Gain / prix')}
+              {th('priceMax', 'Offre max')}
               {th('cash', 'Cash nécessaire')}
               {th('confidence', 'Confiance')}
               {th('age', 'Âge')}
@@ -151,6 +158,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
                 <td className={'num ' + (r.ecart > 0 ? 'pos' : 'neg')}>{eur(r.ecart)}</td>
                 <td className={'num ' + (r.gain > 0 ? 'pos' : 'neg')}><b>{eur(r.gain)}</b><div className="small muted">{keur(r.gainLow)} – {keur(r.gainHigh)}</div></td>
                 <td className={'num ' + (r.gainPct > 0 ? 'pos' : 'neg')}>{pct(r.gainPct)}<div className="small muted">ratio {r.ratio.toFixed(2)}</div></td>
+                <td className={'num ' + (r.priceMax >= r.price ? 'pos' : 'muted')}>{keur(r.priceMax)}<div className="small muted">{r.priceMax >= r.price ? `prix ${Math.round((1 - r.price / r.priceMax) * 100)} % sous` : `${Math.round((r.priceMax / r.price - 1) * 100)} %`}</div></td>
                 <td className={'num' + (r.cash > budget ? ' neg' : '')}>{keur(r.cash)}</td>
                 <td className="num">
                   <div className="bar" style={{ width: 50, display: 'inline-block' }}><div style={{ width: `${r.confidence * 100}%` }} /></div>

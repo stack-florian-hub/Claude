@@ -12,7 +12,7 @@ export default function OpportunitesPage() {
     id: l.id, title: l.title, url: l.url, source: l.source, seller: l.seller, city: l.address.city, cp: l.address.postalCode, dept: l.address.dept, zone, tension,
     lots: l.lots.map((x) => ({ type: x.type, surface: x.surface })), price: l.price, low: a.total.low, mid: a.total.mid, high: a.total.high, ecart: a.ecart,
     gain: a.gain.mid, gainLow: a.gain.low, gainHigh: a.gain.high, gainPct: a.gainPct, ratio: a.ratio, score: a.score, confidence: a.confidence, flagged: a.flagged,
-    cash: a.cashNeeded, age: l.publishedAt ? daysBetween(l.publishedAt) : 0, status: l.status, signals: a.signals, warnings: a.warnings, dpe: l.dpe,
+    cash: a.cashNeeded, priceMax: a.priceCaps.max, age: l.publishedAt ? daysBetween(l.publishedAt) : 0, status: l.status, signals: a.signals, warnings: a.warnings, dpe: l.dpe,
     drop: l.priceHistory[0] ? 1 - l.price / l.priceHistory[0].price : 0, demo: l.demo,
   }));
   const depts = [...new Set([...zones.map((z) => z.dept), ...rows.map((r) => r.dept)])].sort();

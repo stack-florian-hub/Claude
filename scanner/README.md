@@ -2,6 +2,7 @@
 
 Outil de travail local pour le groupe TUÉ et Fils : il croise les **annonces de vente** avec l’**historique des ventes réelles (DVF)** pour repérer les biens dont la **somme des lots revendus séparément** dépasse nettement le prix affiché (le modèle du coup New Port : appartement + garage + parking + cave vendus en un seul lot).
 
+- **Marchés** : vos communes comparées sur la DVF (€/m², tendance 2023→2025, liquidité, dépendances, **prime de revente séparée**) pour savoir où chasser les lots groupés.
 - **Opportunités** : liste triée par score d’anomalie, filtres (département, ville, budget 70 k€ ou élargi, type de lot, gain minimal, ancienneté), export CSV.
 - **Fiche opportunité** : valeur de revente lot par lot (bas / moyen / haut), calcul détaillé du gain, comparables DVF de la rue et de la commune, historique des baisses de prix, checklist achat-revente, simulateur (cash-flow mensuel, TRI, BFR, rotation possible avec la trésorerie).
 - **Pipeline** : repéré → visité → offre → signé → revente lot par lot → clos, cash engagé, gains prévus vs réalisés.
@@ -25,7 +26,9 @@ Au premier lancement, la base locale (`data/db/*.json`) est créée avec le **je
 
 Version optimisée (plus rapide au quotidien) : `npm run build` puis `npm start`.
 
-Vérifier le scoring : `npm test` (contrôle que New Port ressort avec ~180 k€ d’écart, que la lecture d’annonce détecte les lots groupés, etc.).
+Vérifier le scoring : `npm test` (contrôle que New Port ressort avec ~180 k€ d’écart, que la lecture d’annonce détecte les lots groupés, etc. ; si la vraie DVF du 78 est chargée, vérifie aussi la valorisation au quartier sur données réelles).
+
+Fiche marché en ligne de commande : `npm run dvf:marche` (toutes les communes des zones) ou `npm run dvf:marche -- 44109 85194`.
 
 ## Charger la vraie DVF (gratuit, data.gouv.fr)
 
@@ -58,13 +61,19 @@ Pour désactiver complètement la démo : Paramètres → décocher « Utiliser 
 3. **CSV / JSON** : modèle téléchargeable dans l’écran (exemple : `data/demo/annonces-exemple.csv`). La colonne `lots` décrit un lot groupé : `appartement:58:3|cave|parking` (type:surface:pièces).
 4. **Saisie manuelle**.
 
-Chaque import affiche un aperçu analysé avant enregistrement. Les doublons (même URL, ou même titre + prix + code postal) sont ignorés. Les adresses sont géocodées (Base Adresse Nationale, gratuite) pour trouver les ventes à moins de 300 m. Tout se corrige ensuite dans la fiche : lots, surfaces, valeur forcée d’un lot (offre reçue), baisses de prix, estimation externe.
+Chaque import affiche un aperçu analysé avant enregistrement. Une annonce **déjà connue** (même URL, ou même code postal + même type + surface à ±3 %, y compris vue sur un autre site) n’est pas dupliquée : si son prix a changé, le nouveau prix entre dans l’historique (signal de baisse) et le site supplémentaire est noté. Recoller régulièrement les annonces suivies suffit donc à suivre leurs baisses.
+
+5. **Ventes judiciaires (Licitor)** : onglet dédié qui lit le `licitor.json` de la veille du dépôt (`veille/licitor.py`). Ces annonces sont masquées par défaut dans Opportunités (filtre « Licitor ») car elles sont suivies dans l’application dédiée. Les adresses sont géocodées (Base Adresse Nationale, gratuite) pour trouver les ventes à moins de 300 m. Tout se corrige ensuite dans la fiche : lots, surfaces, valeur forcée d’un lot (offre reçue), baisses de prix, estimation externe.
 
 ## Comment le score est calculé
 
-Pour chaque lot : DVF même rue (ou < 300 m) si au moins 3 ventes comparables (même type, surface ±40 %, 3 dernières années), sinon commune / code postal (5 ventes), sinon département (confiance faible), sinon valeurs par défaut selon la tension de la zone (garage 15-30 k€, parking 10-20 k€, cave 3-8 k€ en zone très tendue). Bas / moyen / haut = 1er quartile / médiane / 3e quartile.
+Pour chaque lot, comparables du plus local au plus large (même type, surface ±40 %, 3 dernières années) : **même rue** (3 ventes), **< 300 m** (3 ventes), **< 800 m** (5 ventes), commune (5 ventes), département (confiance faible), sinon valeurs par défaut selon la tension de la zone. Bas / moyen / haut = 1er quartile / médiane / 3e quartile. Les rayons supposent l’adresse géocodée (automatique à l’import, bouton dans la fiche sinon) : **c’est indispensable dans les communes hétérogènes**. Exemple réel à Saint-Germain-en-Laye : 7 177 €/m² médian à moins de 300 m du centre contre 5 933 €/m² sur toute la commune.
 
-Garages, parkings, caves : DVF les enregistre tous comme « Dépendance », sans surface. Le parking est calibré sur les quantiles 20-50 % des dépendances vendues seules de la commune, le garage sur 40-80 %, la cave reste bornée par les valeurs par défaut. C’est une hypothèse, affichée dans la fiche ; la remplacer par une valeur forcée dès qu’on a mieux (prix d’un box voisin, avis d’agent).
+Toutes les ventes d’un logement sont utilisées, y compris celles qui incluent un garage ou une cave : on retranche alors une valeur forfaitaire par dépendance (1er quartile des dépendances vendues seules de la commune, entre 3 et 15 k€). Ne garder que les ventes « sans dépendance » biaiserait vers les immeubles anciens et les quartiers moins chers.
+
+Garages, parkings, caves : DVF les enregistre tous comme « Dépendance », sans surface, avec parfois des remises ou des chais. Calibrage prudent sur les dépendances vendues seules à proximité : garage = quantiles 25/45/65 %, parking = 10/25/40 %, plafonnés à 1,2 × (milieu) et 1,6 × (haut) la valeur haute de la zone ; la cave reste bornée par les valeurs par défaut. Hypothèse affichée dans la fiche ; la remplacer par une valeur forcée dès qu’on a mieux (prix d’un box voisin, avis d’agent).
+
+La fiche donne aussi l’**offre maximale** (ou l’enchère maximale) : le prix d’achat au-delà duquel le gain passe sous vos seuils, et le prix d’équilibre.
 
 ```
 gain brut = Σ lots × (1 − agence 4 %) − prix − frais d’acquisition (7,5 %) − travaux − diagnostics − division éventuelle − portage

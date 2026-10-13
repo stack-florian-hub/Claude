@@ -90,7 +90,8 @@ export function demoListings(): ListingInput[] {
     {
       source: 'ajp', title: 'Lot de 4 – Résidence New Port : appartement 4 pièces 92 m² + garage + parking + cave', price: 525000,
       description: 'Résidence New Port, 40-42 avenue Notre-Dame. Vendu en un seul lot : appartement 4 pièces de 92 m² (3 chambres, balcon), un garage fermé en sous-sol, une place de parking extérieure et une cave. Copropriété de 64 lots, charges 3 600 €/an. DPE D. Prix global, aucune ventilation par lot. REPRODUCTION FICTIVE DU COUP NEW PORT (démo).',
-      address: A('40-42', 'avenue Notre-Dame', '78100', 'Saint-Germain-en-Laye', '78551', '78'),
+      // adresse introuvable dans la Base Adresse Nationale : coordonnées du centre de Saint-Germain (à remplacer par l'adresse exacte)
+      address: { ...A('40-42', 'avenue Notre-Dame', '78100', 'Saint-Germain-en-Laye', '78551', '78'), lat: 48.8976, lon: 2.0937 },
       surface: 92, lots: [L('appartement', 92, { rooms: 4, label: 'Appartement 4 p.' }), L('garage', undefined, { label: 'Garage fermé s/sol', resaleMonths: 2 }), L('parking', undefined, { label: 'Place extérieure' }), L('cave', undefined, { label: 'Cave' })],
       dpe: 'D', chargesAnnual: 3600, coproLots: 64, seller: 'agence', publishedAt: ago(9), travaux: 12000, demo: true,
       priceHistory: [{ date: ago(9), price: 525000, source: 'annonce' }],

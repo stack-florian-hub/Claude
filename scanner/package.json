@@ -11,7 +11,8 @@
     "test": "tsx scripts/selftest.ts",
     "demo": "tsx scripts/seed-demo.ts",
     "dvf:fetch": "tsx scripts/dvf-fetch.ts",
-    "dvf:import": "tsx scripts/dvf-import.ts"
+    "dvf:import": "tsx scripts/dvf-import.ts",
+    "dvf:marche": "tsx scripts/dvf-marche.ts"
   },
   "dependencies": {
     "next": "14.2.35",

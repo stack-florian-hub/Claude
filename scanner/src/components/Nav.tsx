@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 const LINKS = [
   ['/opportunites', 'Opportunités'],
   ['/import', 'Import d’annonces'],
+  ['/marches', 'Marchés'],
   ['/pipeline', 'Pipeline'],
   ['/tresorerie', 'Trésorerie'],
   ['/groupe', 'Groupe'],

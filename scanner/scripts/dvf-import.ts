@@ -21,10 +21,10 @@ if (!files.length) {
       continue;
     }
     console.log(`Lecture de ${file}${depts ? ` (départements ${[...depts].join(', ')})` : ''} …`);
-    const { byDept, lines, years } = await readDvfFile(file, depts);
+    const { byDept, lines, years, names } = await readDvfFile(file, depts);
     console.log(`  ${lines} lignes lues, années ${[...years].join(', ')}`);
     for (const [dept, muts] of byDept) {
-      const r = mergeIntoIndex(dept, muts, file.split('/').pop()!);
+      const r = mergeIntoIndex(dept, muts, file.split('/').pop()!, names);
       console.log(`✔ ${dept} : +${muts.length} → ${r.n} mutations (${r.years.join(', ')})`);
     }
   }

@@ -34,6 +34,7 @@ async function download(url: string, dest: string) {
   fs.mkdirSync(RAW_DIR, { recursive: true });
   for (const dept of depts) {
     const all = [];
+    const names: Record<string, string> = {};
     for (const y of years) {
       const url = `https://files.data.gouv.fr/geo-dvf/latest/csv/${y}/departements/${dept}.csv.gz`;
       const dest = path.join(RAW_DIR, `geo-dvf-${y}-${dept}.csv.gz`);
@@ -47,7 +48,8 @@ async function download(url: string, dest: string) {
           continue;
         }
       }
-      const { byDept, lines } = await readDvfFile(dest, new Set([dept]));
+      const { byDept, lines, names: nm } = await readDvfFile(dest, new Set([dept]));
+      Object.assign(names, nm);
       const muts = byDept.get(dept) || [];
       console.log(`  ${dept} ${y} : ${lines} lignes → ${muts.length} mutations utiles`);
       all.push(...muts);
@@ -56,7 +58,7 @@ async function download(url: string, dest: string) {
       console.log(`  ${dept} : rien à indexer`);
       continue;
     }
-    const r = mergeIntoIndex(dept, all, 'geo-dvf data.gouv.fr');
+    const r = mergeIntoIndex(dept, all, 'geo-dvf data.gouv.fr', names);
     console.log(`✔ ${r.file} : ${r.n} mutations (${r.years.join(', ')})`);
   }
 })();

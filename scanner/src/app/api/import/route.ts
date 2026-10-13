@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { LISTING_PROVIDERS } from '@/lib/providers/listing';
-import { fromInput } from '@/lib/store';
+import { findSameProperty, fromInput, getListings } from '@/lib/store';
 import { analyzeAll } from '@/lib/server';
 
 export const dynamic = 'force-dynamic';
@@ -13,7 +13,11 @@ export async function POST(req: Request) {
   try {
     const parsed = p.parse(content);
     const rows = analyzeAll(parsed.map((x) => fromInput(x)));
-    return NextResponse.json(parsed.map((x, i) => ({ input: x, analysis: rows[i].analysis, zone: rows[i].zone })));
+    const known = getListings();
+    return NextResponse.json(parsed.map((x, i) => {
+      const same = findSameProperty(known, x);
+      return { input: x, analysis: rows[i].analysis, zone: rows[i].zone, existing: same ? { id: same.id, price: same.price, title: same.title } : undefined };
+    }));
   } catch (e) {
     return NextResponse.json({ error: `Lecture impossible : ${(e as Error).message}` }, { status: 400 });
   }

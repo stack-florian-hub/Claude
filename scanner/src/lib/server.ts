@@ -25,7 +25,7 @@ export async function geocode(l: Pick<Listing, 'address'>) {
   const a = l.address;
   const q = [a.number, a.street, a.city].filter(Boolean).join(' ');
   if (!q.trim()) return null;
-  const params = `q=${encodeURIComponent(q)}&limit=1${a.postalCode ? `&postcode=${a.postalCode}` : ''}`;
+  const params = `q=${encodeURIComponent(q)}&limit=1${/^\d{5}$/.test(a.postalCode) ? `&postcode=${a.postalCode}` : ''}`;
   for (const base of ['https://data.geopf.fr/geocodage/search', 'https://api-adresse.data.gouv.fr/search/']) {
     try {
       const r = await fetch(`${base}?${params}`, { signal: AbortSignal.timeout(5000) });
@@ -33,7 +33,7 @@ export async function geocode(l: Pick<Listing, 'address'>) {
       const j = await r.json();
       const f = j.features?.[0];
       if (!f) return null;
-      return { lon: f.geometry.coordinates[0], lat: f.geometry.coordinates[1], insee: f.properties.citycode as string, score: f.properties.score as number, label: f.properties.label as string };
+      return { lon: f.geometry.coordinates[0], lat: f.geometry.coordinates[1], insee: f.properties.citycode as string, postcode: f.properties.postcode as string, city: f.properties.city as string, score: f.properties.score as number, label: f.properties.label as string };
     } catch {
       /* source suivante */
     }

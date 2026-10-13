@@ -55,6 +55,8 @@ export interface Listing {
   manualValuation?: { low: number; mid: number; high: number; source: string; date: string };
   notes?: string;
   checklist?: Record<string, boolean>;
+  alsoOn?: { source: Source; url?: string; price: number; date: string }[]; // même bien vu sur d'autres sites
+  auction?: { date?: string; map: number; tribunal?: string; occupation?: string; visite?: string; avocat?: string; ratio?: number }; // vente judiciaire
   demo?: boolean;
 }
 
@@ -63,7 +65,7 @@ export type ListingInput = Omit<Listing, 'id' | 'importedAt' | 'status' | 'price
   status?: ListingStatus;
 };
 
-export type ValuationSource = 'force' | 'manuel' | 'dvf-rue' | 'dvf-commune' | 'dvf-dept' | 'defaut' | 'castorus' | 'meilleursagents';
+export type ValuationSource = 'force' | 'manuel' | 'dvf-rue' | 'dvf-proche' | 'dvf-quartier' | 'dvf-commune' | 'dvf-dept' | 'defaut' | 'castorus' | 'meilleursagents';
 
 export interface Comparable {
   date: string;
@@ -118,6 +120,7 @@ export interface Analysis {
   warnings: string[];
   cashNeeded: number; // apport + frais + travaux si financé, sinon prix + frais + travaux
   resaleMonths: number;
+  priceCaps: { breakEven: number; forMinGain: number; forMinPct: number; max: number }; // offre / enchère maximale
 }
 
 export type DealStage = 'repere' | 'visite' | 'offre' | 'signe' | 'revente' | 'clos' | 'abandonne';
@@ -237,4 +240,4 @@ export interface DvfMutation {
   y?: number; // lat
 }
 
-export interface DvfIndex { dept: string; years: number[]; builtAt: string; source: string; mutations: DvfMutation[] }
+export interface DvfIndex { dept: string; years: number[]; builtAt: string; source: string; mutations: DvfMutation[]; communes?: Record<string, string> }

@@ -37,8 +37,11 @@ export function cashNeed(l: Listing, s: Settings, fees: number, travaux: number)
   return { cash: l.price * (s.financing.apportPct / 100) + fees + travaux, financed: true };
 }
 
-export function analyze(l: Listing, s: Settings, zones: Zone[], dvf: DvfSource): Analysis {
-  const zone = zoneFor(l, zones);
+export function analyze(input: Listing, s: Settings, zones: Zone[], dvf: DvfSource): Analysis {
+  const zone = zoneFor(input, zones);
+  // adresse sans code postal ni INSEE (ex. Licitor avant géocodage) : commune déduite de la zone
+  const zoneInsee = zone?.communes.find((c) => /^\d{5}$/.test(c) && normCity(input.address.city) !== '' );
+  const l: Listing = input.address.insee || /^\d{5}$/.test(input.address.postalCode) || !zoneInsee ? input : { ...input, address: { ...input.address, insee: zoneInsee } };
   const tension = zone?.tension ?? 2;
   const lots: LotValuation[] = l.lots.map((lot) => valueLot({ listing: l, lot, settings: s, tension, dvf }));
   const total: Range = { low: 0, mid: 0, high: 0 };
@@ -79,6 +82,11 @@ export function analyze(l: Listing, s: Settings, zones: Zone[], dvf: DvfSource):
     sig += 3;
   }
   if (l.seller === 'particulier') sig += 1;
+  if (l.auction?.date) {
+    const days = -daysBetween(l.auction.date.slice(0, 10));
+    if (days >= 0) signals.push(`Audience dans ${days} j (${l.auction.tribunal ?? 'TJ'}) – mise à prix ${Math.round(l.auction.map / 1000)} k€`);
+  }
+  if (l.auction && (l.auction.occupation === 'occupé' || l.auction.occupation === 'bail')) warnings.push(`Bien ${l.auction.occupation === 'bail' ? 'loué' : 'occupé'} : décote, délai d’expulsion éventuel`);
   const age = l.publishedAt ? daysBetween(l.publishedAt) : 0;
   if (age > 60) {
     signals.push(`En ligne depuis ${age} jours (vendeur à relancer)`);
@@ -108,8 +116,16 @@ export function analyze(l: Listing, s: Settings, zones: Zone[], dvf: DvfSource):
   if (gain.mid <= 0) score = Math.min(score, 15);
   const flagged = gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100);
 
+  // Prix plafond (offre ou enchère maximale) : gain(prix) = Σ×(1−agence) − prix×(1+frais%) − coûts fixes hors frais d'acquisition
+  const netResale = total.mid * (1 - agency) - (c.travaux + c.diagnostics + c.division + c.carrying);
+  const fp = acquisitionPct(s);
+  const breakEven = Math.max(0, round(netResale / (1 + fp), 500));
+  const forMinGain = Math.max(0, round((netResale - s.thresholds.minGain) / (1 + fp), 500));
+  const forMinPct = Math.max(0, round(netResale / (1 + fp + s.thresholds.minGainPct / 100), 500));
+  const priceCaps = { breakEven, forMinGain, forMinPct, max: Math.max(forMinGain, forMinPct) };
+
   return {
-    listingId: l.id, lots, total, costs: c, gain, gainPct, ratio, ecart: total.mid - l.price, score: Math.round(score),
+    listingId: l.id, lots, total, costs: c, priceCaps, gain, gainPct, ratio, ecart: total.mid - l.price, score: Math.round(score),
     confidence, flagged, signals, warnings, cashNeeded: Math.round(cn.cash), resaleMonths: months,
   };
 }

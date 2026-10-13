@@ -13,7 +13,7 @@ import { eur, frDate, keur, num, pct, uid } from '@/lib/util';
 import SimPanel from './SimPanel';
 
 const SRC_LABEL: Record<string, string> = {
-  force: 'valeur saisie', manuel: 'manuel', 'dvf-rue': 'DVF même rue / < 300 m', 'dvf-commune': 'DVF commune', 'dvf-dept': 'DVF département', defaut: 'valeur par défaut', castorus: 'Castorus', meilleursagents: 'MeilleursAgents',
+  force: 'valeur saisie', manuel: 'manuel', 'dvf-rue': 'DVF même rue', 'dvf-proche': 'DVF < 300 m', 'dvf-quartier': 'DVF < 800 m', 'dvf-commune': 'DVF commune', 'dvf-dept': 'DVF département', defaut: 'valeur par défaut', castorus: 'Castorus', meilleursagents: 'MeilleursAgents',
 };
 
 interface Props {
@@ -83,6 +83,7 @@ export default function ListingDetail({ listing: l, analysis: a, zone, tension, 
             {[l.address.number, l.address.street].filter(Boolean).join(' ')} {l.address.postalCode} {l.address.city} · {zone ? `${zone} (tension ${tension}/3)` : 'hors zones paramétrées'}
             {l.address.insee ? ` · INSEE ${l.address.insee}` : ''}{l.address.lat != null ? ' · géocodé' : ''}
             {l.url && <> · <a href={l.url} target="_blank" rel="noreferrer">voir l’annonce ↗</a></>}
+            {l.alsoOn?.map((o, i) => <span key={i}> · <a href={o.url} target="_blank" rel="noreferrer">aussi sur {SOURCE_LABELS[o.source]} ({keur(o.price)}) ↗</a></span>)}
           </div>
         </div>
         <div className="row">
@@ -95,6 +96,13 @@ export default function ListingDetail({ listing: l, analysis: a, zone, tension, 
         </div>
       </div>
 
+      {l.auction && (
+        <div className="info">
+          <b>Vente judiciaire</b> · TJ {l.auction.tribunal} · audience {l.auction.date ? l.auction.date.replace('T', ' à ') : 'date à confirmer'} · mise à prix <b>{eur(l.auction.map)}</b>
+          {l.auction.ratio ? <> · prix retenu = adjudication probable (×{l.auction.ratio.toFixed(2)})</> : null} · occupation : {l.auction.occupation || 'inconnue'}
+          {l.auction.visite ? <> · {l.auction.visite}</> : null}{l.auction.avocat ? <div className="small">Avocat poursuivant : {l.auction.avocat}</div> : null}
+        </div>
+      )}
       <div className="kpis">
         <div className="kpi"><div className="l">Prix affiché</div><div className="v">{eur(l.price)}</div><div className="s">{first && first > l.price ? `initial ${eur(first)} (−${pct(1 - l.price / first)})` : `${l.lots.length} lot(s)`}</div></div>
         <div className="kpi"><div className="l">Valeur des lots séparés (moy.)</div><div className="v">{eur(a.total.mid)}</div><div className="s">bas {keur(a.total.low)} · haut {keur(a.total.high)}</div></div>
@@ -102,6 +110,11 @@ export default function ListingDetail({ listing: l, analysis: a, zone, tension, 
         <div className="kpi"><div className="l">Gain brut (moyen)</div><div className={'v ' + (a.gain.mid > 0 ? 'pos' : 'neg')}>{eur(a.gain.mid)}</div><div className="s">bas {keur(a.gain.low)} · haut {keur(a.gain.high)}</div></div>
         <div className="kpi"><div className="l">Gain / prix · ratio</div><div className="v">{pct(a.gainPct)}</div><div className="s">ratio {num(a.ratio, 2)} (&gt; 1 = rentable)</div></div>
         <div className="kpi"><div className="l">Score · confiance</div><div className="v">{a.score}/100</div><div className="s">confiance {pct(a.confidence)}</div></div>
+        <div className="kpi" title="Prix d’achat maximal pour garder le seuil d’alerte (gain ≥ seuil en € OU marge ≥ seuil en %), à frais et travaux identiques.">
+          <div className="l">{l.seller === 'justice' ? 'Enchère maximale' : 'Offre maximale'}</div>
+          <div className={'v ' + (a.priceCaps.max >= l.price ? 'pos' : 'neg')}>{eur(a.priceCaps.max)}</div>
+          <div className="s">{a.priceCaps.max >= l.price ? `prix affiché ${pct(1 - l.price / a.priceCaps.max)} sous le plafond` : `${pct(a.priceCaps.max / l.price - 1)} vs prix affiché`} · équilibre {keur(a.priceCaps.breakEven)}</div>
+        </div>
         <div className="kpi"><div className="l">Cash nécessaire</div><div className={'v' + (a.cashNeeded > s.budget.cash ? ' neg' : '')}>{eur(a.cashNeeded)}</div><div className="s">revente en ~{a.resaleMonths} mois</div></div>
       </div>
 
@@ -155,6 +168,7 @@ export default function ListingDetail({ listing: l, analysis: a, zone, tension, 
               <tr><td>− Portage {a.resaleMonths} mois (charges, taxe foncière, intérêts)</td><td className="num neg">−{eur(c.carrying)}</td></tr>
               <tr><td><b>= Gain brut avant impôt</b></td><td className={'num ' + (a.gain.mid > 0 ? 'pos' : 'neg')}><b>{eur(a.gain.mid)}</b></td></tr>
               <tr><td className="muted">Ratio (Σ lots − frais − travaux − coûts de revente) / prix</td><td className="num">{num(a.ratio, 2)}</td></tr>
+              <tr><td className="muted">Prix plafond : gain ≥ {keur(s.thresholds.minGain)} / marge ≥ {s.thresholds.minGainPct} % / gain nul</td><td className="num muted">{keur(a.priceCaps.forMinGain)} / {keur(a.priceCaps.forMinPct)} / {keur(a.priceCaps.breakEven)}</td></tr>
               <tr><td className="muted">Seuils d’alerte</td><td className="num muted">&gt; {keur(s.thresholds.minGain)} ou &gt; {s.thresholds.minGainPct} %</td></tr>
             </tbody>
           </table>
@@ -176,6 +190,11 @@ export default function ListingDetail({ listing: l, analysis: a, zone, tension, 
           <div className="kpi"><div className="l">Appartements (commune) €/m²</div><div className="v">{num(stats.A.med)}</div><div className="s">P25 {num(stats.A.p25)} · P75 {num(stats.A.p75)} · n={stats.A.n}</div></div>
           <div className="kpi"><div className="l">Maisons (commune) €/m²</div><div className="v">{num(stats.M.med)}</div><div className="s">P25 {num(stats.M.p25)} · P75 {num(stats.M.p75)} · n={stats.M.n}</div></div>
           <div className="kpi"><div className="l">Dépendance vendue seule</div><div className="v">{eur(stats.D.med)}</div><div className="s">P25 {keur(stats.D.p25)} · P75 {keur(stats.D.p75)} · n={stats.D.n}</div></div>
+          <div className="kpi" title="Valeur implicite = prix d’une vente appartement + 1 dépendance − surface × €/m² médian des appartements de même taille. L’écart avec la dépendance vendue seule mesure ce que rapporte la revente séparée.">
+            <div className="l">Dépendance vendue AVEC un logement (implicite)</div>
+            <div className="v">{eur(stats.implied.med)}</div>
+            <div className="s">n={stats.implied.n}{stats.implied.n > 0 && stats.D.n > 0 ? <> · prime de vente séparée <b className={stats.D.med - stats.implied.med > 0 ? 'pos' : 'neg'}>{keur(stats.D.med - stats.implied.med)}</b></> : null}</div>
+          </div>
         </div>
         <div className="tabs">
           {a.lots.map((v, i) => <button key={v.lotId} className={lotTab === i ? 'on' : ''} onClick={() => setLotTab(i)}>{l.lots[i]?.label || LOT_LABELS[v.type]} ({v.comparables.length})</button>)}

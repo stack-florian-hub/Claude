@@ -13,7 +13,7 @@ export const DVF_DIR = path.join(DATA_DIR, 'dvf');
 export const RAW_DIR = path.join(DATA_DIR, 'raw');
 
 interface Row {
-  key: string; date: string; nature: string; value: number; num?: string; voie: string; cp: string; insee: string; dept: string;
+  key: string; city?: string; date: string; nature: string; value: number; num?: string; voie: string; cp: string; insee: string; dept: string;
   type: string; surface?: number; rooms?: number; localId: string; terrain: number; lon?: number; lat?: number;
 }
 
@@ -62,7 +62,8 @@ function splitCsvLine(line: string, delim: string) {
 }
 
 /** Lit un fichier (txt, csv ou .gz) en flux et renvoie les mutations utiles, filtrées par départements. */
-export async function readDvfFile(file: string, depts?: Set<string>): Promise<{ byDept: Map<string, DvfMutation[]>; years: Set<number>; lines: number }> {
+export async function readDvfFile(file: string, depts?: Set<string>): Promise<{ byDept: Map<string, DvfMutation[]>; years: Set<number>; lines: number; names: Record<string, string> }> {
+  const names: Record<string, string> = {};
   let stream: NodeJS.ReadableStream = fs.createReadStream(file);
   if (file.endsWith('.gz')) stream = stream.pipe(zlib.createGunzip());
   const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
@@ -98,7 +99,7 @@ export async function readDvfFile(file: string, depts?: Set<string>): Promise<{ 
     let row: Row;
     if (geo) {
       row = {
-        key: g('id_mutation'), date: g('date_mutation'), nature: g('nature_mutation'), value: f(g('valeur_fonciere')) ?? 0,
+        key: g('id_mutation'), city: g('nom_commune'), date: g('date_mutation'), nature: g('nature_mutation'), value: f(g('valeur_fonciere')) ?? 0,
         num: [g('adresse_numero'), g('adresse_suffixe')].filter(Boolean).join(''), voie: g('adresse_nom_voie'), cp: g('code_postal'),
         insee: g('code_commune'), dept: g('code_departement'), type: g('type_local'), surface: f(g('surface_reelle_bati')),
         rooms: f(g('nombre_pieces_principales')), localId: [g('id_parcelle'), g('lot1_numero'), g('type_local'), g('surface_reelle_bati')].join('|'),
@@ -110,7 +111,7 @@ export async function readDvfFile(file: string, depts?: Set<string>): Promise<{ 
       const value = f(g('Valeur fonciere')) ?? 0;
       const commune = g('Code commune').padStart(3, '0');
       row = {
-        key: [g('Date mutation'), value, dept, commune].join('|'), date: `${yy}-${mm}-${dd}`, nature: g('Nature mutation'), value,
+        key: [g('Date mutation'), value, dept, commune].join('|'), city: g('Commune'), date: `${yy}-${mm}-${dd}`, nature: g('Nature mutation'), value,
         num: [g('No voie'), g('B/T/Q')].filter(Boolean).join(''), voie: [g('Type de voie'), g('Voie')].filter(Boolean).join(' '),
         cp: g('Code postal').padStart(5, '0'), insee: dept + commune, dept, type: g('Type local'), surface: f(g('Surface reelle bati')),
         rooms: f(g('Nombre pieces principales')), localId: [g('Section'), g('No plan'), g('1er lot'), g('Identifiant local'), g('Type local'), g('Surface reelle bati')].join('|'),
@@ -121,15 +122,16 @@ export async function readDvfFile(file: string, depts?: Set<string>): Promise<{ 
       flush();
       continue;
     }
+    if (row.city && row.insee) names[row.insee] = row.city;
     if (group.length && group[0].key !== row.key) flush();
     group.push(row);
   }
   flush();
-  return { byDept, years, lines };
+  return { byDept, years, lines, names };
 }
 
 /** Fusionne des mutations dans data/dvf/<dept>.json (remplace les années importées). */
-export function mergeIntoIndex(dept: string, muts: DvfMutation[], source: string) {
+export function mergeIntoIndex(dept: string, muts: DvfMutation[], source: string, names: Record<string, string> = {}) {
   fs.mkdirSync(DVF_DIR, { recursive: true });
   const file = path.join(DVF_DIR, `${dept}.json`);
   const newYears = new Set(muts.map((m) => parseInt(m.d.slice(0, 4), 10)));
@@ -138,7 +140,8 @@ export function mergeIntoIndex(dept: string, muts: DvfMutation[], source: string
   const kept = (prev?.mutations || []).filter((m) => !newYears.has(parseInt(m.d.slice(0, 4), 10)));
   const mutations = [...kept, ...muts].sort((a, b) => a.d.localeCompare(b.d));
   const years = [...new Set(mutations.map((m) => parseInt(m.d.slice(0, 4), 10)))].sort();
-  const idx: DvfIndex = { dept, years, builtAt: new Date().toISOString(), source, mutations };
+  const communes = { ...(prev?.communes || {}), ...Object.fromEntries(Object.entries(names).filter(([k]) => k.startsWith(dept))) };
+  const idx: DvfIndex = { dept, years, builtAt: new Date().toISOString(), source, mutations, communes };
   fs.writeFileSync(file, JSON.stringify(idx));
   return { file, n: mutations.length, years };
 }

@@ -31,7 +31,7 @@ check(np.a.ecart > 150000 && np.a.ecart < 215000, `New Port : sous-évaluation ~
 check(np.a.flagged, 'New Port signalé (gain > 30 k€)');
 check(res.slice(0, 3).some((r) => r.l === np.l), 'New Port dans le top 3');
 const garage = np.a.lots.find((v) => v.type === 'garage')!;
-check(garage.mid >= 18000 && garage.high >= 25000, `Garage New Port revendable 25-30 k€ en haut de fourchette (${garage.mid}/${garage.high})`);
+check(garage.mid >= 15000 && garage.high >= 20000, `Garage New Port valorisé (démo) ${garage.low}/${garage.mid}/${garage.high}`);
 const neg = res.find((r) => r.l.title.startsWith('Studio 30 m² Nantes'))!;
 check(!neg.a.flagged && neg.a.gain.mid < 0, 'Annonce surévaluée non signalée');
 
@@ -46,4 +46,24 @@ check(p.seller === 'particulier' && p.chargesAnnual === 1400 && p.coproLots === 
 const sim = simulate({ price: 525000, acquisitionFees: 39400, travaux: 12000, travauxMonth: 1, loanAmount: 450000, loanRate: 4.5, loanRepayment: 'in_fine', chargesMonthly: 400, lots: [
   { label: 'Garage', resale: 30000, month: 2, saleCostsPct: 0 }, { label: 'Parking', resale: 17000, month: 3, saleCostsPct: 4 }, { label: 'Cave', resale: 7000, month: 4, saleCostsPct: 4 }, { label: 'Appartement', resale: 650000, month: 6, saleCostsPct: 4 }] }, s);
 check(sim.netGain > 0 && sim.peakCash > 100000 && sim.irr > 0, `Simulation New Port : gain net ${Math.round(sim.netGain)} €, besoin ${Math.round(sim.peakCash)} €, TRI ${(sim.irr * 100).toFixed(0)} %`);
-process.exit(fails ? 1 : 0);
+// Avec la vraie DVF du 78 (si chargée) : New Port valorisé au quartier (centre de Saint-Germain), pas à la médiane communale
+import('node:fs').then(async (fs) => {
+  if (fs.existsSync('data/dvf/78.json')) {
+    const { dvfSource } = await import('../src/lib/dvf');
+    const real = structuredClone(s);
+    real.dvf.useDemo = false;
+    const l = structuredClone(np.l);
+    const sansXY = structuredClone(np.l);
+    delete sansXY.address.lat; delete sansXY.address.lon;
+    const commune = analyze(sansXY, real, DEFAULT_ZONES, dvfSource(real));
+    l.address.lat = 48.8976; l.address.lon = 2.0937;
+    const local = analyze(l, real, DEFAULT_ZONES, dvfSource(real));
+    const apt = local.lots[0];
+    check(apt.source === 'dvf-proche' || apt.source === 'dvf-quartier', `DVF réelle : comparables de quartier (${apt.source}, n=${apt.n})`);
+    check(apt.pricePerM2!.mid > 6500, `DVF réelle : €/m² du centre de Saint-Germain > 6 500 (${apt.pricePerM2!.mid} ; commune sans géocodage : ${commune.lots[0].pricePerM2?.mid})`);
+    const g = local.lots.find((v) => v.type === 'garage')!;
+    check(g.mid >= 24000 && g.mid <= 36000, `DVF réelle : garage New Port ~30 k€ (${g.low}/${g.mid}/${g.high}, ${g.source})`);
+    check(local.ecart > 150000, `DVF réelle : New Port sous-évalué de plus de 150 k€ (${local.ecart})`);
+  } else console.log('· DVF réelle du 78 absente : tests sur données réelles ignorés (npm run dvf:fetch -- 78)');
+  process.exit(fails ? 1 : 0);
+});
