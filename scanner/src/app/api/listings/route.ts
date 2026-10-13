@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       const g = await geocode(l);
       if (g && g.score > 0.4) {
         const cp = /^\d{5}$/.test(l.address.postalCode) ? l.address.postalCode : g.postcode;
-        updateListing(l.id, { address: { ...l.address, lat: l.address.lat ?? g.lat, lon: l.address.lon ?? g.lon, insee: l.address.insee || g.insee, postalCode: cp, dept: cp.slice(0, 2), city: l.address.city || g.city } });
+        updateListing(l.id, { address: { ...l.address, lat: l.address.lat ?? (g.precise ? g.lat : undefined), lon: l.address.lon ?? (g.precise ? g.lon : undefined), insee: l.address.insee || g.insee, postalCode: cp, dept: cp.slice(0, 2), city: l.address.city || g.city } });
         geocoded++;
       }
     }

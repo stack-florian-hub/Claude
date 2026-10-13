@@ -1,6 +1,22 @@
 // Lecture d'un texte d'annonce collé (ou capturé) et détection des lots groupés.
 import type { Dpe, ListingInput, LotType, SellerType, Source, SubLot } from './types';
 import { uid } from './util';
+import { detectNetwork } from './networks';
+
+/** Situations où le prix affiché n'est pas comparable à une vente libre (ou demande une décote). */
+export interface Special { id: 'residence' | 'viager' | 'nue' | 'loue' | 'local' | 'rehab'; label: string; blocking: boolean }
+const SPECIALS: [Special, RegExp][] = [
+  [{ id: 'residence', label: 'Résidence gérée / services (seniors, étudiants, tourisme, LMNP) : prix d’investissement locatif, non comparable', blocking: true },
+    /r[ée]sidences?[- ](?:de )?(?:services?|seniors?|s[ée]niors?|[ée]tudiante|de tourisme|g[ée]r[ée]e|h[ôo]teli[eè]re|affaires)|\bEHPAD\b|\bLMNP\b|bail commercial|garantie de (?:loyer|rentabilit)|loyers? (?:mensuels? )?garantis?|rentabilit[ée] garantie/i],
+  [{ id: 'viager', label: 'Viager : prix hors rente, non comparable', blocking: true }, /\bviager|\bbouquet\b|rente viag/i],
+  [{ id: 'nue', label: 'Nue-propriété / usufruit : non comparable', blocking: true }, /nue[- ]propri[ée]t[ée]|usufruit/i],
+  [{ id: 'local', label: 'Local commercial ou professionnel : à valoriser comme local, pas comme logement', blocking: true }, /local commercial|local professionnel|ancienne agence (?:bancaire)?|fonds de commerce|murs commerciaux/i],
+  [{ id: 'loue', label: 'Vendu loué : décote de 10 à 15 % et délai jusqu’à la libération', blocking: false }, /locataire en place|vendu lou[ée]|actuellement lou[ée]|bail en cours|\blou[ée] (?:\d|jusqu|depuis|meubl)/i],
+  [{ id: 'rehab', label: 'Bien à réhabiliter (atelier, plateau, grange) : travaux lourds à chiffrer', blocking: false }, /atelier [àa] r[ée]habiliter|[àa] r[ée]habiliter|plateau [àa] am[ée]nager|non soumis [àa] DPE/i],
+];
+export function detectSpecial(text: string): Special[] {
+  return SPECIALS.filter(([, re]) => re.test(text)).map(([sp]) => sp);
+}
 
 const WORDS: Record<string, number> = { un: 1, une: 1, deux: 2, trois: 3, quatre: 4, cinq: 5, six: 6 };
 
@@ -14,14 +30,14 @@ export function sourceFromUrl(url?: string): Source {
   if (u.includes('logic-immo')) return 'logicimmo';
   if (u.includes('bienici')) return 'bienici';
   if (u.includes('pap.fr')) return 'pap';
-  if (u.includes('ajp')) return 'ajp';
-  if (u.includes('licitor')) return 'licitor';
+  const n = detectNetwork(u);
+  if (n) return n.kind === 'notaires' ? 'notaires' : 'reseau';
   return 'autre';
 }
 
 export function detectSeller(t: string, src?: Source): SellerType {
-  if (/vente (?:aux ench[eè]res|judiciaire|[àa] la barre)|adjudication|mise [àa] prix|licitation|saisie immobili/i.test(t) || src === 'licitor') return 'justice';
-  if (/notaire|36h[- ]immo|immo-interactif/i.test(t)) return 'notaire';
+  if (/vente (?:aux ench[eè]res|judiciaire|[àa] la barre)|adjudication|mise [àa] prix|licitation|saisie immobili/i.test(t) ) return 'justice';
+  if (src === 'notaires' || /notaire|36 ?h(?:eures)?[- ]immo|immo-interactif|office notarial/i.test(t)) return 'notaire';
   if (/\bparticulier\b|de particulier [àa] particulier/i.test(t) || src === 'pap') return 'particulier';
   if (/agence|honoraires|mandat|n[ée]gociat(?:eur|rice)|conseill[eè]re? immobili/i.test(t)) return 'agence';
   return 'inconnu';
@@ -63,6 +79,8 @@ export function buildLots(main: LotType, surface: number | undefined, rooms: num
   const lots: SubLot[] = [];
   const deps = detectDependencies(text);
   const isDepOnly = ['garage', 'parking', 'cave'].includes(main);
+  // le garage ou la cave d'une maison font partie de la maison : pas de lot séparé
+  if (main === 'maison' || main === 'terrain') return [{ id: uid('l'), type: main, surface, rooms }];
   if (!isDepOnly) lots.push({ id: uid('l'), type: main, surface, rooms });
   for (const d of deps) {
     // annonce « garage seul » : la dépendance détectée est le bien principal
@@ -99,7 +117,7 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
   let source = sourceFromUrl(urlInText);
   if (source === 'manuel' || source === 'autre') {
     const head = text.slice(0, 300).toLowerCase();
-    const m = [['seloger', 'seloger'], ['leboncoin', 'leboncoin'], ['logic-immo', 'logicimmo'], ["bien'ici", 'bienici'], ['bienici', 'bienici'], ['pap.fr', 'pap'], ['de particulier à particulier', 'pap'], ['licitor', 'licitor']].find(([k]) => head.includes(k));
+    const m = [['seloger', 'seloger'], ['leboncoin', 'leboncoin'], ['logic-immo', 'logicimmo'], ["bien'ici", 'bienici'], ['bienici', 'bienici'], ['pap.fr', 'pap'], ['de particulier à particulier', 'pap']].find(([k]) => head.includes(k));
     if (m) source = m[1] as Source;
   }
   const firstLine = text.split('\n').map((x) => x.trim()).find((x) => x && !/^https?:/.test(x)) || 'Annonce';
@@ -109,7 +127,7 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
   const surface = surfM ? toNum(surfM[1]) : undefined;
   const roomsM = text.match(/(\d{1,2})\s*pi[eè]ces?/i) || text.match(/\b[TF](\d)\b/);
   const rooms = roomsM ? parseInt(roomsM[1], 10) : undefined;
-  let cpM = text.match(/\b((?:0[1-9]|[1-8]\d|9[0-5])\d{3})\s+([A-ZÀ-Ýa-zà-ÿ][A-Za-zÀ-ÿ'’ -]{1,40})/);
+  let cpM = text.match(/\b((?:0[1-9]|[1-8]\d|9[0-5])\d{3})\s+(?!euros?\b|eur\b|€|ttc\b|ht\b|hai\b)([A-ZÀ-Ýa-zà-ÿ][A-Za-zÀ-ÿ'’ -]{1,40})/i);
   let cityBefore: string | undefined;
   if (!cpM) {
     // « Cholet 49300 » ou « Cholet (49300) » : ville avant le code postal
@@ -148,8 +166,13 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
   const dateM = text.match(/(?:publi[ée]e?|mise en ligne|cr[ée]{1,2}e?)\s*(?:le\s*)?:?\s*(\d{1,2})[/.](\d{1,2})[/.](\d{2,4})/i);
   const publishedAt = dateM ? `${dateM[3].length === 2 ? '20' + dateM[3] : dateM[3]}-${dateM[2].padStart(2, '0')}-${dateM[1].padStart(2, '0')}` : new Date().toISOString().slice(0, 10);
   const postalCode = cpM?.[1] || '';
+  const network = detectNetwork(urlInText, text);
+  if (network && source === 'manuel') source = network.kind === 'notaires' ? 'notaires' : 'reseau';
+  const agencyM = text.match(/pr[ée]sent[ée]e? par\s*\n?\s*([^\n]{3,60})/i) || text.match(/\bREF\S*\s*-\s*([^\n]{3,60})/i);
   return {
     source,
+    network: network?.id,
+    agency: agencyM?.[1].trim(),
     url: urlInText,
     title: firstLine.slice(0, 140),
     description: text.slice(0, 4000),
@@ -167,7 +190,7 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
     chargesAnnual,
     coproLots: coproM ? parseInt(coproM[1], 10) : undefined,
     coproProcedure: procedure || undefined,
-    seller: detectSeller(text, source),
+    seller: ((sel) => (sel === 'inconnu' && network ? (network.kind === 'notaires' ? 'notaire' : 'agence') : sel))(detectSeller(text, source)),
     publishedAt,
     parseNotes: notes,
   };

@@ -3,6 +3,7 @@ import type { Analysis, CostBreakdown, Listing, LotValuation, Range, Settings, Z
 import type { DvfSource } from './dvf-query';
 import { valueLot } from './providers/valuation';
 import { clamp, daysBetween, normCity, round } from './util';
+import { detectSpecial } from './detect';
 
 export function zoneFor(l: Listing, zones: Zone[]): Zone | undefined {
   const c = normCity(l.address.city);
@@ -37,13 +38,30 @@ export function cashNeed(l: Listing, s: Settings, fees: number, travaux: number)
   return { cash: l.price * (s.financing.apportPct / 100) + fees + travaux, financed: true };
 }
 
-export function analyze(input: Listing, s: Settings, zones: Zone[], dvf: DvfSource): Analysis {
+/** Valeur de revente de chaque lot (seule étape qui demande la DVF). */
+export function valueLots(input: Listing, s: Settings, zones: Zone[], dvf: DvfSource): LotValuation[] {
   const zone = zoneFor(input, zones);
-  // adresse sans code postal ni INSEE (ex. Licitor avant géocodage) : commune déduite de la zone
+  const zoneInsee = zone?.communes.find((c) => /^\d{5}$/.test(c) && normCity(input.address.city) !== '');
+  const l: Listing = input.address.insee || /^\d{5}$/.test(input.address.postalCode) || !zoneInsee ? input : { ...input, address: { ...input.address, insee: zoneInsee } };
+  const tension = zone?.tension ?? 2;
+  return l.lots.map((lot) => valueLot({ listing: l, lot, settings: s, tension, dvf }));
+}
+
+export function analyze(input: Listing, s: Settings, zones: Zone[], dvf: DvfSource): Analysis {
+  return aggregate(input, valueLots(input, s, zones, dvf), s, zones);
+}
+
+/** Coûts, gains, score et alertes à partir des valeurs de lots (sans DVF : rejouable dans le navigateur). */
+export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, zones: Zone[]): Analysis {
+  let lots = lotsIn;
+  const zone = zoneFor(input, zones);
+  // adresse sans code postal ni INSEE (avant géocodage) : commune déduite de la zone
   const zoneInsee = zone?.communes.find((c) => /^\d{5}$/.test(c) && normCity(input.address.city) !== '' );
   const l: Listing = input.address.insee || /^\d{5}$/.test(input.address.postalCode) || !zoneInsee ? input : { ...input, address: { ...input.address, insee: zoneInsee } };
   const tension = zone?.tension ?? 2;
-  const lots: LotValuation[] = l.lots.map((lot) => valueLot({ listing: l, lot, settings: s, tension, dvf }));
+  // vendu loué : décote sur le logement occupé
+  const specials = detectSpecial(`${l.title}\n${l.description}`);
+  if (specials.some((x) => x.id === 'loue')) lots = lots.map((v) => (['appartement', 'maison'].includes(v.type) && v.source !== 'force' ? { ...v, low: round(v.low * 0.85), mid: round(v.mid * 0.87), high: round(v.high * 0.9), note: [v.note, 'Décote bien loué (−13 %)'].filter(Boolean).join(' · ') } : v));
   const total: Range = { low: 0, mid: 0, high: 0 };
   for (const v of lots) {
     total.low += v.low;
@@ -82,11 +100,7 @@ export function analyze(input: Listing, s: Settings, zones: Zone[], dvf: DvfSour
     sig += 3;
   }
   if (l.seller === 'particulier') sig += 1;
-  if (l.auction?.date) {
-    const days = -daysBetween(l.auction.date.slice(0, 10));
-    if (days >= 0) signals.push(`Audience dans ${days} j (${l.auction.tribunal ?? 'TJ'}) – mise à prix ${Math.round(l.auction.map / 1000)} k€`);
-  }
-  if (l.auction && (l.auction.occupation === 'occupé' || l.auction.occupation === 'bail')) warnings.push(`Bien ${l.auction.occupation === 'bail' ? 'loué' : 'occupé'} : décote, délai d’expulsion éventuel`);
+
   const age = l.publishedAt ? daysBetween(l.publishedAt) : 0;
   if (age > 60) {
     signals.push(`En ligne depuis ${age} jours (vendeur à relancer)`);
@@ -114,7 +128,15 @@ export function analyze(input: Listing, s: Settings, zones: Zone[], dvf: DvfSour
   const liquidity = (tension / 3) * 6 + (l.lots.some((x) => ['garage', 'parking', 'cave'].includes(x.type)) || l.price < 150000 ? 4 : 1);
   let score = clamp(gainPct / 0.4, 0, 1) * 35 + clamp(gain.mid / 100000, 0, 1) * 35 + confidence * 10 + Math.min(10, sig) + Math.min(10, liquidity);
   if (gain.mid <= 0) score = Math.min(score, 15);
-  const flagged = gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100);
+  // une estimation fragile ne doit pas remonter en tête
+  score *= 0.4 + 0.6 * Math.min(1, confidence / 0.5);
+  if (confidence < 0.3) score = Math.min(score, 30);
+  for (const sp of specials) warnings.unshift(sp.label);
+  const blocking = specials.some((x) => x.blocking);
+  if (blocking) score = Math.min(score, 20);
+  // pas d'alerte sur une estimation trop fragile (comparables départementaux, valeurs par défaut…)
+  const flagged = !blocking && confidence >= 0.3 && gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100);
+  if (confidence < 0.3 && gain.mid > 0) warnings.push('Confiance trop faible pour une alerte : compléter l’adresse ou forcer la valeur des lots');
 
   // Prix plafond (offre ou enchère maximale) : gain(prix) = Σ×(1−agence) − prix×(1+frais%) − coûts fixes hors frais d'acquisition
   const netResale = total.mid * (1 - agency) - (c.travaux + c.diagnostics + c.division + c.carrying);

@@ -17,8 +17,6 @@ interface DemoCommune { insee: string; cps: string[]; name: string; dept: string
 
 // dep = [médiane, dispersion] des dépendances vendues seules ; streets = [nom DVF, coefficient de prix]
 export const DEMO_COMMUNES: DemoCommune[] = [
-  { insee: '78551', cps: ['78100'], name: 'Saint-Germain-en-Laye', dept: '78', ppmA: 7200, ppmM: 7600, dep: [24000, 0.3], lat: 48.898, lon: 2.093,
-    streets: [['AV NOTRE DAME', 1.06], ['RUE DE PARIS', 1.05], ['RUE AU PAIN', 1.08], ['BD DE LA PAIX', 0.95], ['RUE DU MAL JOFFRE', 1.0], ['RUE DE POISSY', 0.97]] },
   { insee: '44109', cps: ['44000', '44100', '44300'], name: 'Nantes', dept: '44', ppmA: 3900, ppmM: 4300, dep: [18000, 0.35], lat: 47.218, lon: -1.553,
     streets: [['RUE DE STRASBOURG', 1.1], ['BD DES ANGLAIS', 0.95], ['RUE PAUL BELLAMY', 1.0], ['QUAI DE VERSAILLES', 1.05], ['RUE DE COULMIERS', 1.08], ['BD GUIST HAU', 1.12]] },
   { insee: '44184', cps: ['44600'], name: 'Saint-Nazaire', dept: '44', ppmA: 2900, ppmM: 3100, dep: [12000, 0.4], lat: 47.273, lon: -2.214,
@@ -28,7 +26,7 @@ export const DEMO_COMMUNES: DemoCommune[] = [
   { insee: '85194', cps: ['85100', '85180', '85340'], name: 'Les Sables-d’Olonne', dept: '85', ppmA: 4400, ppmM: 4100, dep: [18000, 0.35], lat: 46.497, lon: -1.783,
     streets: [['RUE DES HALLES', 1.0], ['PROM GEORGES CLEMENCEAU', 1.25], ['RUE NATIONALE', 0.97], ['AV ROSA BONHEUR', 0.95], ['QUAI GUINE', 1.08]] },
   { insee: '85222', cps: ['85800'], name: 'Saint-Gilles-Croix-de-Vie', dept: '85', ppmA: 4300, ppmM: 4000, dep: [16000, 0.4], lat: 46.697, lon: -1.94,
-    streets: [['RUE DU GEN DE GAULLE', 1.0], ['QUAI DU PORT FIDELE', 1.1], ['AV DE LA PLAGE', 1.15], ['RUE GAUTTE', 0.95]] },
+    streets: [['AV NOTRE DAME', 1.12], ['RUE DU GEN DE GAULLE', 1.0], ['QUAI DU PORT FIDELE', 1.1], ['AV DE LA PLAGE', 1.15], ['RUE GAUTTE', 0.95]] },
   { insee: '85191', cps: ['85000'], name: 'La Roche-sur-Yon', dept: '85', ppmA: 2200, ppmM: 2300, dep: [9000, 0.4], lat: 46.67, lon: -1.426,
     streets: [['RUE DES SABLIERS', 1.0], ['BD ARISTIDE BRIAND', 1.05], ['RUE GEORGES CLEMENCEAU', 1.02], ['PL NAPOLEON', 1.1]] },
   { insee: '49007', cps: ['49000', '49100'], name: 'Angers', dept: '49', ppmA: 3200, ppmM: 3300, dep: [11000, 0.4], lat: 47.471, lon: -0.551,
@@ -88,13 +86,12 @@ export function demoListings(): ListingInput[] {
   n = 0;
   return [
     {
-      source: 'ajp', title: 'Lot de 4 – Résidence New Port : appartement 4 pièces 92 m² + garage + parking + cave', price: 525000,
-      description: 'Résidence New Port, 40-42 avenue Notre-Dame. Vendu en un seul lot : appartement 4 pièces de 92 m² (3 chambres, balcon), un garage fermé en sous-sol, une place de parking extérieure et une cave. Copropriété de 64 lots, charges 3 600 €/an. DPE D. Prix global, aucune ventilation par lot. REPRODUCTION FICTIVE DU COUP NEW PORT (démo).',
-      // adresse introuvable dans la Base Adresse Nationale : coordonnées du centre de Saint-Germain (à remplacer par l'adresse exacte)
-      address: { ...A('40-42', 'avenue Notre-Dame', '78100', 'Saint-Germain-en-Laye', '78551', '78'), lat: 48.8976, lon: 2.0937 },
-      surface: 92, lots: [L('appartement', 92, { rooms: 4, label: 'Appartement 4 p.' }), L('garage', undefined, { label: 'Garage fermé s/sol', resaleMonths: 2 }), L('parking', undefined, { label: 'Place extérieure' }), L('cave', undefined, { label: 'Cave' })],
-      dpe: 'D', chargesAnnual: 3600, coproLots: 64, seller: 'agence', publishedAt: ago(9), travaux: 12000, demo: true,
-      priceHistory: [{ date: ago(9), price: 525000, source: 'annonce' }],
+      source: 'reseau', network: 'ajp', agency: 'AJP Immobilier (démo)', title: 'Lot de 4 – Résidence New Port : appartement 3 pièces 75 m² + garage + parking + cave', price: 185000,
+      description: 'Résidence New Port, 42 avenue Notre-Dame, à deux pas du port. Vendu en un seul lot : appartement 3 pièces de 75 m² (2 chambres, balcon), un garage fermé, une place de parking et une cave. Copropriété de 60 lots, charges 1 800 €/an. DPE D. Prix global, aucune ventilation par lot. REPRODUCTION FICTIVE DU COUP NEW PORT (démo) : remplacer par les chiffres réels.',
+      address: { ...A('42', 'avenue Notre-Dame', '85800', 'Saint-Gilles-Croix-de-Vie', '85222', '85'), lat: 46.692393, lon: -1.941317 },
+      surface: 75, lots: [L('appartement', 75, { rooms: 3, label: 'Appartement 3 p.' }), L('garage', undefined, { label: 'Garage fermé', resaleMonths: 2 }), L('parking', undefined, { label: 'Place de parking' }), L('cave', undefined, { label: 'Cave' })],
+      dpe: 'D', chargesAnnual: 1800, coproLots: 60, seller: 'agence', publishedAt: ago(9), travaux: 8000, demo: true,
+      priceHistory: [{ date: ago(9), price: 185000, source: 'annonce' }],
     },
     {
       source: 'leboncoin', title: 'T3 58 m² avec cave et parking – Nantes Coulmiers', price: 168000,
@@ -149,9 +146,9 @@ export function demoListings(): ListingInput[] {
       lots: [L('maison', 110, { rooms: 5 })], dpe: 'F', seller: 'agence', publishedAt: ago(140), travaux: 22000, demo: true,
     },
     {
-      source: 'ajp', title: 'Vente judiciaire – T2 48 m² Tours, rue Colbert (mise à prix)', price: 98000,
-      description: 'Vente aux enchères sur saisie immobilière, TJ de Tours. Appartement de 48 m² 2 pièces, libre d’occupation selon PV descriptif. Mise à prix 60 000 €, prix retenu = estimation d’adjudication. Visite unique avant audience.',
-      address: A('27', 'rue Colbert', '37000', 'Tours', '37261', '37'), surface: 48, lots: [L('appartement', 48, { rooms: 2 })], dpe: 'E', seller: 'justice', publishedAt: ago(25), travaux: 15000, demo: true,
+      source: 'notaires', network: 'immonot', agency: 'Office notarial (démo)', title: 'Vente notariale – T2 48 m² Tours, rue Colbert', price: 128000,
+      description: 'Appartement de 48 m², 2 pièces, au 2e étage, à rafraîchir. Succession, vente par l’office notarial. Libre.',
+      address: A('27', 'rue Colbert', '37000', 'Tours', '37261', '37'), surface: 48, lots: [L('appartement', 48, { rooms: 2 })], dpe: 'E', seller: 'notaire', publishedAt: ago(25), travaux: 15000, demo: true,
     },
     {
       source: 'leboncoin', title: 'Place de parking souterraine Tours centre', price: 9500,
@@ -176,10 +173,6 @@ export function demoListings(): ListingInput[] {
       lots: [L('appartement', 40, { rooms: 2 }), L('parking')], dpe: 'C', seller: 'agence', publishedAt: ago(60), demo: true,
     },
     {
-      source: 'leboncoin', title: 'Place de parking Saint-Germain-en-Laye centre', price: 26000,
-      description: 'Parking souterrain rue de Paris.', address: A('15', 'rue de Paris', '78100', 'Saint-Germain-en-Laye', '78551', '78'), lots: [L('parking')], seller: 'particulier', publishedAt: ago(40), demo: true,
-    },
-    {
       source: 'logicimmo', title: 'Immeuble 2 appartements (40 + 35 m²) – Tours Giraudeau, à diviser', price: 185000,
       description: 'Petit immeuble avec deux appartements indépendants de 40 et 35 m², non soumis à copropriété : division et règlement de copropriété à créer. DPE E. Rafraîchissement.',
       address: A('41', 'rue Giraudeau', '37000', 'Tours', '37261', '37'), surface: 75,
@@ -200,10 +193,10 @@ export function demoListings(): ListingInput[] {
       priceHistory: [{ date: ago(120), price: 9000 }, { date: ago(60), price: 7500 }, { date: ago(14), price: 6500 }],
     },
     {
-      source: 'ajp', title: 'Adjudication – T4 82 m² + 2 parkings, Saint-Nazaire', price: 185000,
-      description: 'Vente judiciaire (licitation). Appartement T4 de 82 m² occupé par un indivisaire, avec deux places de parking en sous-sol. Mise à prix 90 000 €. Prix retenu = adjudication probable.',
+      source: 'notaires', network: '36h', agency: 'Vente interactive 36h immo (démo)', title: 'Vente notariale interactive – T4 82 m² + 2 parkings, Saint-Nazaire', price: 245000,
+      description: 'Vente notariale interactive (36h immo), première offre possible 245 000 €. Appartement T4 de 82 m² avec deux places de parking en sous-sol. Succession, libre.',
       address: A('9', 'boulevard Président Wilson', '44600', 'Saint-Nazaire', '44184', '44'), surface: 82,
-      lots: [L('appartement', 82, { rooms: 4 }), L('parking', undefined, { label: 'Parking 1' }), L('parking', undefined, { label: 'Parking 2' })], dpe: 'D', seller: 'justice', publishedAt: ago(16), travaux: 20000, demo: true,
+      lots: [L('appartement', 82, { rooms: 4 }), L('parking', undefined, { label: 'Parking 1' }), L('parking', undefined, { label: 'Parking 2' })], dpe: 'D', seller: 'notaire', publishedAt: ago(16), travaux: 20000, demo: true,
     },
   ];
 }
@@ -214,13 +207,13 @@ export function demoDeals(listingIdByTitle: (startsWith: string) => string | und
   const signed = addMonths(now, -6);
   return [
     {
-      id: 'd-newport', name: 'New Port – Saint-Germain-en-Laye (4 lots)', listingId: listingIdByTitle('Lot de 4'), company: 'immobiliere', stage: 'revente', city: 'Saint-Germain-en-Laye',
-      purchasePrice: 525000, acquisitionFees: 39400, travaux: 12000, loanAmount: 450000, loanRate: 4.5, loanRepayment: 'in_fine', signedAt: signed, createdAt: addMonths(now, -8),
+      id: 'd-newport', name: 'New Port – Saint-Gilles-Croix-de-Vie (4 lots)', listingId: listingIdByTitle('Lot de 4'), company: 'immobiliere', stage: 'revente', city: 'Saint-Gilles-Croix-de-Vie',
+      purchasePrice: 185000, acquisitionFees: 13900, travaux: 8000, loanAmount: 140000, loanRate: 4.5, loanRepayment: 'in_fine', signedAt: signed, createdAt: addMonths(now, -8),
       lots: [
         { id: 'np1', label: 'Garage fermé', type: 'garage', plannedResale: 30000, plannedMonth: 7, status: 'sous_compromis', saleCostsPct: 0 },
-        { id: 'np2', label: 'Parking extérieur', type: 'parking', plannedResale: 17000, plannedMonth: 8, status: 'en_vente' },
-        { id: 'np3', label: 'Cave', type: 'cave', plannedResale: 7000, plannedMonth: 9, status: 'en_vente' },
-        { id: 'np4', label: 'Appartement 92 m²', type: 'appartement', plannedResale: 650000, plannedMonth: 10, status: 'en_vente' },
+        { id: 'np2', label: 'Place de parking', type: 'parking', plannedResale: 18000, plannedMonth: 8, status: 'en_vente' },
+        { id: 'np3', label: 'Cave', type: 'cave', plannedResale: 6000, plannedMonth: 9, status: 'en_vente' },
+        { id: 'np4', label: 'Appartement 75 m²', type: 'appartement', plannedResale: 310000, plannedMonth: 10, status: 'en_vente' },
       ],
       notes: 'Démo : compromis garage signé à 30 000 € net vendeur (vente entre particuliers, sans agence). Reproduction fictive.', demo: true,
     },

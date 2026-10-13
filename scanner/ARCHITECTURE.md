@@ -79,7 +79,7 @@ Valeur d'un lot, par ordre de préférence :
 5. **DVF département** (confiance faible).
 6. Valeurs par défaut selon la tension de la zone (garage 15-30 k€, parking 10-20 k€, cave 3-8 k€).
 
-Toutes les ventes de logement sont gardées, corrigées d'une valeur forfaitaire par dépendance incluse (les ventes « pures » sont biaisées vers les quartiers moins chers : −30 % à Saint-Germain-en-Laye).
+Toutes les ventes de logement sont gardées, corrigées d'une valeur forfaitaire par dépendance incluse (les ventes « pures » sont biaisées vers les immeubles anciens et les quartiers moins chers).
 
 Garages, parkings et caves : DVF les note « Dépendance » sans surface ni distinction. Calibrage prudent sur les dépendances vendues seules : parking = P10-P40, garage = P25-P65, plafonnés par rapport aux valeurs de zone ; cave bornée par les valeurs par défaut. Hypothèse affichée comme telle.
 
@@ -87,5 +87,10 @@ Indicateur de marché clé (écran Marchés) : **prime de vente séparée** = m�
 
 ## 5. Connecteurs futurs
 
-- `ListingProvider` : `fetch()` → `ListingInput[]`. Existants : collage de texte, CSV, JSON, saisie manuelle, bookmarklet (capture de la page affichée dans le navigateur, déclenchée par l'utilisateur). À brancher : API d'agrégateur, flux AJP, Licitor (déjà couvert par `../veille/`).
+- `ListingProvider` : collage de texte, CSV, JSON, saisie manuelle, bookmarklet (capture de la page affichée, déclenchée par l'utilisateur).
+- Collecteurs (`src/lib/collect/`) : **AJP Immobilier** (`npm run collect`). Les réseaux reconnus sont listés dans `src/lib/networks.ts` ; un nouveau collecteur = un module qui renvoie des `ListingInput` (vérifier d'abord le robots.txt du réseau).
+
+## 6. Artefact
+
+`artifact/` réutilise les composants de l'appli : `next/link`, `next/navigation` et `@/lib/api` sont remplacés (`artifact/shims/`) par un routeur en mémoire et un état local branché sur la base de l'artefact (collections `edits`, `annonces`, `operations`, `reglages`). `data.json` contient les annonces collectées, les valeurs de lots calculées sur toute la DVF, les statistiques de marché par commune et la DVF des communes des zones (pour les annonces collées dans la page). La page ne refait que l'agrégation (frais, gains, score) : un changement de réglage ou de valeur forcée s'applique tout de suite.
 - `ValuationProvider` : `valueLot(listing, lot)` → `LotValuation | null`. Existants : DVF, manuel. Stubs : Castorus (historique des prix affichés), MeilleursAgents. Activation dans Paramètres → Connecteurs.

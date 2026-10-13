@@ -37,12 +37,19 @@ export function toCsv(rows: Record<string, unknown>[], columns?: string[]): stri
   return '﻿' + [cols.map(esc).join(';'), ...rows.map((r) => cols.map((c) => esc(r[c])).join(';'))].join('\n');
 }
 
-/** Téléchargement côté navigateur. */
+/** Téléchargement côté navigateur (dans l'artefact : capacité « downloads », le lecteur confirme l'enregistrement). */
 export function downloadCsv(name: string, rows: Record<string, unknown>[], columns?: string[]) {
-  const blob = new Blob([toCsv(rows, columns)], { type: 'text/csv;charset=utf-8' });
+  const filename = name.endsWith('.csv') ? name : name + '.csv';
+  const text = toCsv(rows, columns);
+  const w = window as unknown as { __SCANNER_ARTIFACT__?: boolean; claude?: { use(n: string): Promise<{ save(r: { filename: string; data: string }): Promise<unknown> } | null> } };
+  if (w.__SCANNER_ARTIFACT__) {
+    w.claude?.use('downloads').then((d) => d?.save({ filename, data: text })).catch(() => {});
+    return;
+  }
+  const blob = new Blob([text], { type: 'text/csv;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = name.endsWith('.csv') ? name : name + '.csv';
+  a.download = filename;
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }

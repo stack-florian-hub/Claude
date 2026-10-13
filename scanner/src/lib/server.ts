@@ -33,7 +33,7 @@ export async function geocode(l: Pick<Listing, 'address'>) {
       const j = await r.json();
       const f = j.features?.[0];
       if (!f) return null;
-      return { lon: f.geometry.coordinates[0], lat: f.geometry.coordinates[1], insee: f.properties.citycode as string, postcode: f.properties.postcode as string, city: f.properties.city as string, score: f.properties.score as number, label: f.properties.label as string };
+      return { lon: f.geometry.coordinates[0], lat: f.geometry.coordinates[1], insee: f.properties.citycode as string, postcode: f.properties.postcode as string, city: f.properties.city as string, score: f.properties.score as number, label: f.properties.label as string, precise: ['housenumber', 'street'].includes(f.properties.type) };
     } catch {
       /* source suivante */
     }

@@ -6,7 +6,7 @@ import { downloadCsv } from '@/lib/csv';
 import { eur, keur, pct } from '@/lib/util';
 
 export interface OppRow {
-  id: string; title: string; url?: string; source: string; seller: string; city: string; cp: string; dept: string; zone?: string; tension: number;
+  id: string; title: string; url?: string; source: string; network?: string; networkName?: string; agency?: string; offMarket?: boolean; seller: string; city: string; cp: string; dept: string; zone?: string; tension: number;
   lots: { type: string; surface?: number }[]; price: number; low: number; mid: number; high: number; ecart: number;
   gain: number; gainLow: number; gainHigh: number; gainPct: number; ratio: number; score: number; confidence: number; flagged: boolean;
   cash: number; priceMax: number; age: number; status: string; signals: string[]; warnings: string[]; dpe?: string; drop: number; demo?: boolean;
@@ -19,8 +19,8 @@ const PREF_KEY = 'scanner.filtres';
 export default function OpportunitiesTable({ rows, budget, elargi, minGain, minGainPct }: { rows: OppRow[]; budget: number; elargi: number; minGain: number; minGainPct: number }) {
   const router = useRouter();
   const depts = [...new Set(rows.map((r) => r.dept))].sort();
-  const sources = [...new Set(rows.map((r) => r.source))].sort();
-  const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', q: '', licitor: 'masquer' });
+  const networks = [...new Map(rows.filter((r) => r.network).map((r) => [r.network!, r.networkName || r.network!])).entries()].sort((a, b) => a[1].localeCompare(b[1]));
+  const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', seller: '', q: '' });
   const [sort, setSort] = useState<{ k: Key; dir: 1 | -1 }>({ k: 'score', dir: -1 });
 
   useEffect(() => {
@@ -47,10 +47,11 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
       if (f.gainMin && r.gain < +f.gainMin) return false;
       if (f.ageMax && r.age > +f.ageMax) return false;
       if (f.flagged && !r.flagged) return false;
-      if (f.source && r.source !== f.source) return false;
-      // ventes Licitor : suivies dans l'application dédiée, masquées par défaut (toutes paraissent « anomalies » à la mise à prix)
-      if (f.licitor === 'masquer' && r.source === 'licitor') return false;
-      if (f.licitor === 'seules' && r.source !== 'licitor') return false;
+      if (f.source === 'sans' && r.network) return false;
+      if (f.source && f.source !== 'sans' && r.network !== f.source) return false;
+      if (f.seller && r.seller !== f.seller) return false;
+      if (f.status !== 'retirees' && r.offMarket) return false;
+      if (f.status === 'retirees') return !!r.offMarket;
       if (f.status === 'actifs' && r.status === 'ecarte') return false;
       if (f.status !== 'actifs' && f.status !== 'tous' && r.status !== f.status) return false;
       return true;
@@ -70,7 +71,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
 
   function exportCsv() {
     downloadCsv('opportunites', list.map((r) => ({
-      score: r.score, alerte: r.flagged ? 'oui' : '', titre: r.title, ville: r.city, cp: r.cp, zone: r.zone, source: SOURCE_LABELS[r.source], vendeur: SELLER_LABELS[r.seller],
+      score: r.score, alerte: r.flagged ? 'oui' : '', titre: r.title, ville: r.city, cp: r.cp, zone: r.zone, reseau: r.networkName || SOURCE_LABELS[r.source], agence: r.agency, vendeur: SELLER_LABELS[r.seller],
       lots: r.lots.map((l) => LOT_LABELS[l.type] + (l.surface ? ` ${l.surface}m²` : '')).join(' + '), prix: r.price, estimation_basse: r.low, estimation_moyenne: r.mid, estimation_haute: r.high,
       ecart: r.ecart, gain_brut: r.gain, gain_pct: +(r.gainPct * 100).toFixed(1), ratio: +r.ratio.toFixed(2), offre_max: r.priceMax, cash_necessaire: r.cash, confiance: +(r.confidence * 100).toFixed(0), anciennete_j: r.age, statut: r.status, url: r.url,
     })));
@@ -107,19 +108,19 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
         </label>
         <label>Gain min (€)<input type="number" value={f.gainMin} onChange={(e) => setF({ ...f, gainMin: e.target.value })} step={5000} /></label>
         <label>Ancienneté max (j)<input type="number" value={f.ageMax} onChange={(e) => setF({ ...f, ageMax: e.target.value })} style={{ width: 70 }} /></label>
-        <label>Source
-          <select value={f.source} onChange={(e) => setF({ ...f, source: e.target.value })}><option value="">Toutes</option>{sources.map((s) => <option key={s} value={s}>{SOURCE_LABELS[s]}</option>)}</select>
+        <label>Réseau
+          <select value={f.source} onChange={(e) => setF({ ...f, source: e.target.value })}><option value="">Tous</option>{networks.map(([id, name]) => <option key={id} value={id}>{name}</option>)}<option value="sans">Sans réseau (particuliers, portails)</option></select>
+        </label>
+        <label>Vendeur
+          <select value={f.seller} onChange={(e) => setF({ ...f, seller: e.target.value })}><option value="">Tous</option><option value="agence">Agence</option><option value="notaire">Notaire</option><option value="particulier">Particulier</option></select>
         </label>
         <label>Statut
           <select value={f.status} onChange={(e) => setF({ ...f, status: e.target.value })}>
-            <option value="actifs">Actifs</option><option value="nouveau">Nouveaux</option><option value="suivi">Suivis</option><option value="pipeline">En pipeline</option><option value="ecarte">Écartés</option><option value="tous">Tous</option>
+            <option value="actifs">Actifs</option><option value="nouveau">Nouveaux</option><option value="suivi">Suivis</option><option value="pipeline">En pipeline</option><option value="ecarte">Écartés</option><option value="retirees">Retirées du marché</option><option value="tous">Tous</option>
           </select>
         </label>
-        <label>Licitor
-          <select value={f.licitor} onChange={(e) => setF({ ...f, licitor: e.target.value })}><option value="masquer">Masquées</option><option value="inclure">Incluses</option><option value="seules">Seules</option></select>
-        </label>
         <label className="row" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 4 }}><input type="checkbox" checked={f.flagged} onChange={(e) => setF({ ...f, flagged: e.target.checked })} /> Alertes seulement</label>
-        <button onClick={() => setF({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', q: '', licitor: 'masquer' })}>Réinitialiser</button>
+        <button onClick={() => setF({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', seller: '', q: '' })}>Réinitialiser</button>
         <button onClick={exportCsv}>Export CSV</button>
       </div>
 
@@ -149,7 +150,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
                 <td className="num"><span className="score" style={{ color: scoreColor(r.score) }}>{r.score}</span></td>
                 <td className="wrap" style={{ minWidth: 240, maxWidth: 340 }}>
                   {r.title}
-                  <div className="small muted">{SOURCE_LABELS[r.source]} · {SELLER_LABELS[r.seller]}{r.dpe ? ` · DPE ${r.dpe}` : ''}{r.status !== 'nouveau' ? ` · ${r.status}` : ''}{r.demo ? ' · démo' : ''}</div>
+                  <div className="small muted">{r.networkName ? <b>{r.networkName}</b> : SOURCE_LABELS[r.source]}{r.agency && r.networkName ? ` · ${r.agency.replace(/^AJP Immobilier /, '')}` : ''} · {SELLER_LABELS[r.seller]}{r.dpe ? ` · DPE ${r.dpe}` : ''}{r.status !== 'nouveau' ? ` · ${r.status}` : ''}{r.offMarket ? ' · retirée' : ''}{r.demo ? ' · démo' : ''}</div>
                 </td>
                 <td>{r.city}<div className="small muted">{r.cp} · {r.zone ? `T${r.tension}` : 'hors zone'}</div></td>
                 <td className="wrap" style={{ maxWidth: 200 }}>{r.lots.map((l, i) => <span key={i} className={'tag' + (r.lots.length > 1 ? ' good' : '')}>{LOT_LABELS[l.type]}{l.surface ? ` ${l.surface}` : ''}</span>)}</td>

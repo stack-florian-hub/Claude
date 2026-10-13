@@ -54,12 +54,20 @@ function tiers(pool: DvfSlice, addr: Address, filter: (m: DvfMutation) => boolea
   const hasXY = addr.lat != null && addr.lon != null;
   const withDist = hasXY ? dept.filter((m) => m.y != null && m.x != null).map((m) => ({ m, dist: haversine(addr.lat!, addr.lon!, m.y!, m.x!) })) : [];
   const within = (r: number) => withDist.filter((x) => x.dist <= r).map((x) => x.m);
+  // environs : ventes à moins de 10 km du centre de la commune (centre = moyenne des ventes géolocalisées de la commune)
+  const located = pool.commune.filter((m) => m.x != null && m.y != null);
+  let environs: DvfMutation[] = [];
+  if (located.length >= 3) {
+    const cx = located.reduce((a, m) => a + m.x!, 0) / located.length, cy = located.reduce((a, m) => a + m.y!, 0) / located.length;
+    environs = dept.filter((m) => m.x != null && m.y != null && haversine(cy, cx, m.y!, m.x!) <= 10000);
+  }
   return [
     { source: 'dvf-rue', list: commune.filter((m) => sameStreet(m, key, core)), minN: s.dvf.minStreet, conf: (n) => Math.min(0.9, 0.6 + n / 30) },
     { source: 'dvf-proche', list: within(300), minN: s.dvf.minStreet, conf: (n) => Math.min(0.85, 0.55 + n / 40) },
     { source: 'dvf-quartier', list: within(800), minN: s.dvf.minCommune, conf: (n) => Math.min(0.75, 0.45 + n / 80) },
     { source: 'dvf-commune', list: commune, minN: s.dvf.minCommune, conf: (n) => Math.min(0.55, 0.35 + n / 150) },
-    { source: 'dvf-dept', list: dept, minN: 10, conf: () => 0.2 },
+    { source: 'dvf-environs', list: environs, minN: 10, conf: (n) => Math.min(0.45, 0.3 + n / 300) },
+    { source: 'dvf-dept', list: dept, minN: 10, conf: () => 0.15 },
   ];
 }
 
@@ -84,13 +92,17 @@ function valueBuilt(lot: SubLot, listing: Listing, pool: DvfSlice, s: Settings):
     if (m.t !== t || !m.s || m.s < 9) return false;
     const ppm = net(m) / m.s;
     if (ppm < 300 || ppm > 20000) return false;
-    return !surf || (m.s >= surf * 0.6 && m.s <= surf * 1.4);
+    // maisons : bande de surface plus étroite (le €/m² baisse vite avec la surface)
+    const band = t === 'M' ? 0.25 : 0.4;
+    return !surf || (m.s >= surf * (1 - band) && m.s <= surf * (1 + band));
   };
+  // maisons : terrain, état et annexes pèsent lourd → fourchette prudente (P20 / P40 / P60)
+  const Q = t === 'M' ? [0.2, 0.4, 0.6] : [0.25, 0.5, 0.75];
   for (const tier of tiers(pool, listing.address, ok, s)) {
     if (tier.list.length < tier.minN) continue;
     const used = tier.list;
     const ppm = used.map((m) => net(m) / m.s!).sort((a, b) => a - b);
-    const p = { low: Math.round(quantile(ppm, 0.25)), mid: Math.round(quantile(ppm, 0.5)), high: Math.round(quantile(ppm, 0.75)) };
+    const p = { low: Math.round(quantile(ppm, Q[0])), mid: Math.round(quantile(ppm, Q[1])), high: Math.round(quantile(ppm, Q[2])) };
     const val: Range = surf
       ? { low: round(p.low * surf), mid: round(p.mid * surf), high: round(p.high * surf) }
       : (() => {
@@ -98,12 +110,17 @@ function valueBuilt(lot: SubLot, listing: Listing, pool: DvfSlice, s: Settings):
           return { low: round(quantile(v, 0.25)), mid: round(quantile(v, 0.5)), high: round(quantile(v, 0.75)) };
         })();
     const notes: string[] = [];
-    let conf = tier.conf(used.length) * (surf ? 1 : 0.6);
+    let conf = tier.conf(used.length) * (surf ? 1 : 0.6) * (t === 'M' ? 0.7 : 1);
     if (!surf) notes.push('Surface inconnue : valeur médiane des ventes, peu fiable');
+    if (t === 'M') notes.push('Maison : fourchette prudente (quantiles 20/40/60 %), terrain et état non pris en compte : visiter avant de conclure');
+    if (t === 'M' && surf && surf > 150) conf *= 0.7;
     const spread = p.low > 0 ? p.high / p.low : 1;
-    if (tier.source === 'dvf-commune' && spread > 1.45) {
+    if ((tier.source === 'dvf-commune' || tier.source === 'dvf-environs') && spread > 1.45) {
+      // quartier inconnu dans une commune hétérogène : on se place en bas de fourchette (P15 / P35 / P60)
       conf *= 0.7;
-      notes.push(`Commune hétérogène (écart P75/P25 de ${Math.round((spread - 1) * 100)} %) : géocoder l’adresse pour comparer au quartier`);
+      p.low = Math.round(quantile(ppm, 0.15)); p.mid = Math.round(quantile(ppm, 0.35)); p.high = Math.round(quantile(ppm, 0.6));
+      if (surf) Object.assign(val, { low: round(p.low * surf), mid: round(p.mid * surf), high: round(p.high * surf) });
+      notes.push(`Commune hétérogène (écart P75/P25 de ${Math.round((spread - 1) * 100)} %) et adresse imprécise : estimation en bas de fourchette (P15/P35/P60). Préciser l’adresse pour comparer au quartier`);
     }
     if (used.some((m) => m.nd > 0)) notes.push(`Ventes avec dépendance corrigées de ${Math.round(adj / 100) * 100} € par dépendance`);
     return {

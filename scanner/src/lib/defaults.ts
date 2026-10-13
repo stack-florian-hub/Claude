@@ -17,7 +17,6 @@ export const DEFAULT_ZONES: Zone[] = [
   z('cholet', 'Cholet', '49', ['49300'], ['49099'], 1, 2),
   z('tours', 'Tours', '37', ['37000', '37100', '37200'], ['37261'], 2, 1),
   z('tours-peri', 'Tours péri-urbain (Joué, Saint-Cyr)', '37', ['37300', '37540'], ['37122', '37214'], 2, 2),
-  z('sgl', 'Saint-Germain-en-Laye', '78', ['78100'], ['78551'], 3, 1),
 ];
 
 export const DEFAULT_GROUP: GroupData = {
@@ -85,7 +84,7 @@ export const LOT_LABELS: Record<string, string> = {
   appartement: 'Appartement', maison: 'Maison', garage: 'Garage / box', parking: 'Parking', cave: 'Cave', local: 'Local', terrain: 'Terrain', autre: 'Autre',
 };
 export const SOURCE_LABELS: Record<string, string> = {
-  seloger: 'SeLoger', leboncoin: 'Leboncoin', logicimmo: 'Logic-Immo', bienici: 'Bien’ici', pap: 'PAP', ajp: 'AJP', licitor: 'Licitor', manuel: 'Manuel', autre: 'Autre',
+  seloger: 'SeLoger', leboncoin: 'Leboncoin', logicimmo: 'Logic-Immo', bienici: 'Bien’ici', pap: 'PAP', reseau: 'Site du réseau', notaires: 'Notaires', manuel: 'Manuel', autre: 'Autre',
 };
 export const SELLER_LABELS: Record<string, string> = {
   particulier: 'Particulier', agence: 'Agence', justice: 'Justice / enchères', notaire: 'Notaire', inconnu: '—',

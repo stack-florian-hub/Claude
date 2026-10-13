@@ -6,6 +6,7 @@ import { api } from '@/lib/api';
 import { rowToListing } from '@/lib/providers/listing';
 import { downloadCsv } from '@/lib/csv';
 import { LOT_LABELS, SELLER_LABELS, SOURCE_LABELS } from '@/lib/defaults';
+import { NETWORK_BY_ID } from '@/lib/networks';
 import { eur, pct } from '@/lib/util';
 
 type Preview = { input: ListingInput & { parseNotes: string[] }; analysis: Analysis; zone?: string; existing?: { id: string; price: number; title: string } };
@@ -25,8 +26,10 @@ const TEMPLATE = [
 
 const EMPTY_MANUAL = { titre: '', prix: '', numero: '', rue: '', cp: '', ville: '', surface: '', type: 'appartement', lots: '', dpe: '', charges: '', vendeur: 'agence', source: 'manuel', url: '', date: new Date().toISOString().slice(0, 10), description: '', travaux: '' };
 
+const isArtifact = typeof window !== 'undefined' && !!(window as unknown as { __SCANNER_ARTIFACT__?: boolean }).__SCANNER_ARTIFACT__;
+
 export default function ImportPanel() {
-  const [tab, setTab] = useState<'collage' | 'csv' | 'json' | 'licitor' | 'manuel' | 'bookmarklet'>('collage');
+  const [tab, setTab] = useState<'collage' | 'csv' | 'json' | 'manuel' | 'bookmarklet'>('collage');
   const [content, setContent] = useState('');
   const [preview, setPreview] = useState<Preview[]>([]);
   const [keep, setKeep] = useState<boolean[]>([]);
@@ -82,7 +85,7 @@ export default function ImportPanel() {
     if (!f) return;
     f.text().then((t) => {
       setContent(t);
-      analyse(tab === 'licitor' ? 'licitor' : tab === 'json' || f.name.endsWith('.json') ? 'json' : 'csv', t);
+      analyse(tab === 'json' || f.name.endsWith('.json') ? 'json' : 'csv', t);
     });
   }
 
@@ -91,7 +94,7 @@ export default function ImportPanel() {
   return (
     <>
       <div className="tabs">
-        {([['collage', 'Coller du texte'], ['csv', 'Fichier CSV'], ['json', 'Fichier JSON'], ['licitor', 'Ventes judiciaires (Licitor)'], ['manuel', 'Saisie manuelle'], ['bookmarklet', 'Capture navigateur']] as const).map(([k, l]) => (
+        {([['collage', 'Coller du texte'], ['csv', 'Fichier CSV'], ['json', 'Fichier JSON'], ['manuel', 'Saisie manuelle'], ['bookmarklet', 'Capture navigateur']] as const).filter(([k]) => !(k === 'bookmarklet' && isArtifact)).map(([k, l]) => (
           <button key={k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>{l}</button>
         ))}
       </div>
@@ -123,13 +126,6 @@ export default function ImportPanel() {
             <textarea rows={8} value={content} onChange={(e) => setContent(e.target.value)} />
             <button style={{ marginTop: 6 }} disabled={!content.trim() || busy} onClick={() => analyse(tab, content)}>Analyser</button>
           </details>
-        </div>
-      )}
-
-      {tab === 'licitor' && (
-        <div className="panel">
-          <p className="muted">Fichier <code>licitor.json</code> produit par la veille du dépôt : <code>cd veille && python3 licitor.py licitor.json</code>. Les ventes à venir deviennent des annonces « justice » ; le prix retenu est l’<b>adjudication probable</b> (mise à prix × ratio médian adjudication / mise à prix observé au même tribunal sur 24 mois). La fiche donne ensuite l’<b>enchère maximale</b> pour garder vos seuils.</p>
-          <input type="file" accept=".json" onChange={(e) => onFile(e.target.files?.[0])} />
         </div>
       )}
 
@@ -192,7 +188,7 @@ export default function ImportPanel() {
                 {preview.map((p, i) => (
                   <tr key={i} className={p.analysis.flagged ? 'flag' : ''}>
                     <td><input type="checkbox" checked={keep[i]} onChange={(e) => setKeep(keep.map((k, j) => (j === i ? e.target.checked : k)))} /></td>
-                    <td className="wrap" style={{ maxWidth: 280 }}>{p.existing && <span className={'tag ' + (p.existing.price !== p.input.price ? (p.input.price < p.existing.price ? 'good' : 'warn') : 'grey')}>{p.existing.price !== p.input.price ? `déjà connue : ${eur(p.existing.price)} → ${eur(p.input.price)}` : 'déjà connue, prix inchangé'}</span>}{p.input.title}<div className="muted small">{SOURCE_LABELS[p.input.source]} · {SELLER_LABELS[p.input.seller]}{p.input.dpe ? ` · DPE ${p.input.dpe}` : ''}</div></td>
+                    <td className="wrap" style={{ maxWidth: 280 }}>{p.existing && <span className={'tag ' + (p.existing.price !== p.input.price ? (p.input.price < p.existing.price ? 'good' : 'warn') : 'grey')}>{p.existing.price !== p.input.price ? `déjà connue : ${eur(p.existing.price)} → ${eur(p.input.price)}` : 'déjà connue, prix inchangé'}</span>}{p.input.title}<div className="muted small">{p.input.network ? NETWORK_BY_ID[p.input.network]?.name : SOURCE_LABELS[p.input.source]} · {SELLER_LABELS[p.input.seller]}{p.input.dpe ? ` · DPE ${p.input.dpe}` : ''}</div></td>
                     <td className="num">{eur(p.input.price)}</td>
                     <td>{p.input.address.postalCode} {p.input.address.city}<div className="muted small">{p.zone || 'hors zone'}</div></td>
                     <td className="wrap">{p.input.lots.map((l, j) => <span key={j} className="tag">{LOT_LABELS[l.type]}{l.surface ? ` ${l.surface} m²` : ''}</span>)}</td>

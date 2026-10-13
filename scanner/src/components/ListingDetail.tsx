@@ -13,7 +13,7 @@ import { eur, frDate, keur, num, pct, uid } from '@/lib/util';
 import SimPanel from './SimPanel';
 
 const SRC_LABEL: Record<string, string> = {
-  force: 'valeur saisie', manuel: 'manuel', 'dvf-rue': 'DVF même rue', 'dvf-proche': 'DVF < 300 m', 'dvf-quartier': 'DVF < 800 m', 'dvf-commune': 'DVF commune', 'dvf-dept': 'DVF département', defaut: 'valeur par défaut', castorus: 'Castorus', meilleursagents: 'MeilleursAgents',
+  force: 'valeur saisie', manuel: 'manuel', 'dvf-rue': 'DVF même rue', 'dvf-proche': 'DVF < 300 m', 'dvf-quartier': 'DVF < 800 m', 'dvf-commune': 'DVF commune', 'dvf-environs': 'DVF < 10 km', 'dvf-dept': 'DVF département', defaut: 'valeur par défaut', castorus: 'Castorus', meilleursagents: 'MeilleursAgents',
 };
 
 interface Props {
@@ -96,13 +96,6 @@ export default function ListingDetail({ listing: l, analysis: a, zone, tension, 
         </div>
       </div>
 
-      {l.auction && (
-        <div className="info">
-          <b>Vente judiciaire</b> · TJ {l.auction.tribunal} · audience {l.auction.date ? l.auction.date.replace('T', ' à ') : 'date à confirmer'} · mise à prix <b>{eur(l.auction.map)}</b>
-          {l.auction.ratio ? <> · prix retenu = adjudication probable (×{l.auction.ratio.toFixed(2)})</> : null} · occupation : {l.auction.occupation || 'inconnue'}
-          {l.auction.visite ? <> · {l.auction.visite}</> : null}{l.auction.avocat ? <div className="small">Avocat poursuivant : {l.auction.avocat}</div> : null}
-        </div>
-      )}
       <div className="kpis">
         <div className="kpi"><div className="l">Prix affiché</div><div className="v">{eur(l.price)}</div><div className="s">{first && first > l.price ? `initial ${eur(first)} (−${pct(1 - l.price / first)})` : `${l.lots.length} lot(s)`}</div></div>
         <div className="kpi"><div className="l">Valeur des lots séparés (moy.)</div><div className="v">{eur(a.total.mid)}</div><div className="s">bas {keur(a.total.low)} · haut {keur(a.total.high)}</div></div>

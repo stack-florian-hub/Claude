@@ -1,5 +1,7 @@
 // Télécharge la DVF géolocalisée (data.gouv.fr, gratuite) par département et construit l'index local.
-// Usage : npm run dvf:fetch -- 44 85 49 37 78 [--years 2023,2024,2025]
+// Usage : npm run dvf:fetch -- 44 85 49 37 [--years 2023,2024,2025] [--refresh]
+// Par défaut : les 3 années précédentes + l'année en cours (récupérée dès que data.gouv.fr la publie, en avril / octobre).
+// --refresh : retélécharge les fichiers des deux dernières années (mises à jour semestrielles).
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -8,10 +10,11 @@ import { RAW_DIR, mergeIntoIndex, readDvfFile } from './dvf-lib';
 const args = process.argv.slice(2);
 const yi = args.indexOf('--years');
 const thisYear = new Date().getFullYear();
-const years = yi >= 0 ? args[yi + 1].split(',').map(Number) : [thisYear - 3, thisYear - 2, thisYear - 1];
+const years = yi >= 0 ? args[yi + 1].split(',').map(Number) : [thisYear - 3, thisYear - 2, thisYear - 1, thisYear];
+const refresh = args.includes('--refresh');
 const depts = args.filter((a, i) => !a.startsWith('--') && (yi < 0 || i !== yi + 1));
 if (!depts.length) {
-  console.log('Usage : npm run dvf:fetch -- 44 85 49 37 78 [--years 2023,2024,2025]');
+  console.log('Usage : npm run dvf:fetch -- 44 85 49 37 [--years 2023,2024,2025] [--refresh]');
   process.exit(1);
 }
 
@@ -38,6 +41,7 @@ async function download(url: string, dest: string) {
     for (const y of years) {
       const url = `https://files.data.gouv.fr/geo-dvf/latest/csv/${y}/departements/${dept}.csv.gz`;
       const dest = path.join(RAW_DIR, `geo-dvf-${y}-${dept}.csv.gz`);
+      if (refresh && y >= thisYear - 1) fs.rmSync(dest, { force: true });
       if (!fs.existsSync(dest)) {
         process.stdout.write(`↓ ${dept} ${y} … `);
         try {

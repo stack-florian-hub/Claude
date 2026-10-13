@@ -1,7 +1,7 @@
 // Modèle de données du scanner. Voir ARCHITECTURE.md §3.
 
 export type LotType = 'appartement' | 'maison' | 'garage' | 'parking' | 'cave' | 'local' | 'terrain' | 'autre';
-export type Source = 'seloger' | 'leboncoin' | 'logicimmo' | 'bienici' | 'pap' | 'ajp' | 'licitor' | 'manuel' | 'autre';
+export type Source = 'seloger' | 'leboncoin' | 'logicimmo' | 'bienici' | 'pap' | 'reseau' | 'notaires' | 'manuel' | 'autre';
 export type SellerType = 'particulier' | 'agence' | 'justice' | 'notaire' | 'inconnu';
 export type Dpe = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
 export type ListingStatus = 'nouveau' | 'suivi' | 'ecarte' | 'pipeline';
@@ -33,6 +33,8 @@ export interface PricePoint { date: string; price: number; source?: string }
 export interface Listing {
   id: string;
   source: Source;
+  network?: string; // réseau d'agences ou canal notarial (src/lib/networks.ts)
+  agency?: string; // agence / office qui publie
   sourceRef?: string;
   url?: string;
   title: string;
@@ -55,8 +57,8 @@ export interface Listing {
   manualValuation?: { low: number; mid: number; high: number; source: string; date: string };
   notes?: string;
   checklist?: Record<string, boolean>;
+  offMarketAt?: string; // annonce disparue du site source (vendue ou retirée)
   alsoOn?: { source: Source; url?: string; price: number; date: string }[]; // même bien vu sur d'autres sites
-  auction?: { date?: string; map: number; tribunal?: string; occupation?: string; visite?: string; avocat?: string; ratio?: number }; // vente judiciaire
   demo?: boolean;
 }
 
@@ -65,7 +67,7 @@ export type ListingInput = Omit<Listing, 'id' | 'importedAt' | 'status' | 'price
   status?: ListingStatus;
 };
 
-export type ValuationSource = 'force' | 'manuel' | 'dvf-rue' | 'dvf-proche' | 'dvf-quartier' | 'dvf-commune' | 'dvf-dept' | 'defaut' | 'castorus' | 'meilleursagents';
+export type ValuationSource = 'force' | 'manuel' | 'dvf-rue' | 'dvf-proche' | 'dvf-quartier' | 'dvf-commune' | 'dvf-environs' | 'dvf-dept' | 'defaut' | 'castorus' | 'meilleursagents';
 
 export interface Comparable {
   date: string;

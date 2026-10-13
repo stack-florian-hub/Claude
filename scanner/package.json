@@ -12,7 +12,10 @@
     "demo": "tsx scripts/seed-demo.ts",
     "dvf:fetch": "tsx scripts/dvf-fetch.ts",
     "dvf:import": "tsx scripts/dvf-import.ts",
-    "dvf:marche": "tsx scripts/dvf-marche.ts"
+    "dvf:marche": "tsx scripts/dvf-marche.ts",
+    "collect": "tsx scripts/collect.ts",
+    "artifact:build": "tsx scripts/artifact-build.ts",
+    "artifact:restore": "tsx scripts/artifact-restore.ts"
   },
   "dependencies": {
     "next": "14.2.35",
@@ -23,6 +26,7 @@
     "@types/node": "20.14.10",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
+    "esbuild": "^0.23.1",
     "tsx": "4.19.2",
     "typescript": "5.5.4"
   }

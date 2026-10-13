@@ -5,6 +5,8 @@ import type { Deal, Listing, ListingInput, Settings, Zone } from './types';
 import { DEFAULT_SETTINGS, DEFAULT_ZONES } from './defaults';
 import { demoDeals, demoListings } from './demo';
 import { uid } from './util';
+import { findSameProperty } from './identity';
+export { findSameProperty };
 
 export const DATA_DIR = process.env.SCANNER_DATA_DIR || path.join(process.cwd(), 'data');
 const DB = path.join(DATA_DIR, 'db');
@@ -74,24 +76,6 @@ export function fromInput(i: ListingInput): Listing {
 // --- Annonces
 export const getListings = () => read<Listing[]>('listings', () => []);
 export const getListing = (id: string) => getListings().find((l) => l.id === id);
-/** Même bien ? même URL, ou même code postal + même type principal + surface à ±3 % + prix à ±25 %. */
-export function findSameProperty(all: Listing[], i: ListingInput): Listing | undefined {
-  if (i.url) {
-    const byUrl = all.find((l) => l.url === i.url || l.alsoOn?.some((o) => o.url === i.url));
-    if (byUrl) return byUrl;
-  }
-  const main = (x: { lots: { type: string; surface?: number }[]; surface?: number }) => ({ type: x.lots[0]?.type, surface: x.lots[0]?.surface ?? x.surface });
-  const mi = main(i);
-  return all.find((l) => {
-    if (l.address.postalCode !== i.address.postalCode || !i.price || !l.price) return false;
-    const ml = main(l);
-    if (ml.type !== mi.type || l.lots.length !== i.lots.length) return false;
-    const priceClose = Math.abs(l.price - i.price) / l.price <= 0.25;
-    if (ml.surface && mi.surface) return Math.abs(ml.surface - mi.surface) / ml.surface <= 0.03 && priceClose;
-    return l.title === i.title && priceClose;
-  });
-}
-
 export function addListings(inputs: ListingInput[]) {
   const all = getListings();
   const added: Listing[] = [];

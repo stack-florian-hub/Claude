@@ -8,6 +8,8 @@ import { frDate, uid } from '@/lib/util';
 
 interface DvfStat { dept: string; kind: string; n: number; years: number[]; builtAt?: string; refDate?: string; sizeMb: number }
 
+const isArtifact = typeof window !== 'undefined' && !!(window as unknown as { __SCANNER_ARTIFACT__?: boolean }).__SCANNER_ARTIFACT__;
+
 export default function SettingsView({ settings, zones, dvf }: { settings: Settings; zones: Zone[]; dvf: DvfStat[] }) {
   const router = useRouter();
   const [s, setS] = useState(settings);
@@ -125,10 +127,12 @@ export default function SettingsView({ settings, zones, dvf }: { settings: Setti
               ))}
             </tbody>
           </table>
+          {isArtifact ? <p className="small" style={{ marginTop: 8 }}>Mise à jour automatique chaque lundi matin : nouvelles ventes DVF dès leur publication (avril et octobre), annonces AJP, recalcul des scores.</p> : (<>
           <p className="small" style={{ marginTop: 8 }}>Charger ou mettre à jour (gratuit, data.gouv.fr), depuis le dossier <code>scanner</code> :</p>
           <pre>npm run dvf:fetch -- {depts.join(' ')}</pre>
           <p className="small muted">Ou à partir d’un fichier DVF brut déjà téléchargé : <code>npm run dvf:import -- ValeursFoncieres-2024.txt --dept {depts.join(',')}</code>. Recharger la page ensuite.</p>
 
+          </>)}
           <h2 style={{ marginTop: 14 }}>Connecteurs optionnels</h2>
           <label className="row"><input type="checkbox" checked={s.connectors.geocode} onChange={(e) => sec('connectors', { geocode: e.target.checked })} /> Géocoder les annonces importées (Base Adresse Nationale, gratuit) : comparables à moins de 300 m</label>
           <label className="row"><input type="checkbox" checked={s.connectors.castorus.enabled} onChange={(e) => sec('connectors', { castorus: { ...s.connectors.castorus, enabled: e.target.checked } })} /> Castorus premium (historique des prix affichés)</label>
@@ -137,11 +141,13 @@ export default function SettingsView({ settings, zones, dvf }: { settings: Setti
           {s.connectors.meilleursAgents.enabled && <input placeholder="clé / identifiant" value={s.connectors.meilleursAgents.apiKey ?? ''} onChange={(e) => sec('connectors', { meilleursAgents: { ...s.connectors.meilleursAgents, apiKey: e.target.value } })} />}
           <p className="small muted">Castorus et MeilleursAgents sont prévus dans le code (src/lib/providers/valuation.ts) mais pas encore branchés : il faudra adapter l’appel à l’accès obtenu. En attendant, saisir baisses de prix et estimations dans la fiche.</p>
 
+          {!isArtifact && (<>
           <h2 style={{ marginTop: 14 }}>Jeu de démonstration</h2>
           <div className="row">
             <button onClick={() => demo('seed')}>Recharger la démo</button>
             <button className="danger" onClick={() => demo('clear')}>Retirer la démo</button>
           </div>
+          </>)}
         </div>
       </div>
 

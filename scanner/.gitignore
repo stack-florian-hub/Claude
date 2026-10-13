@@ -5,3 +5,6 @@ next-env.d.ts
 data/db/
 data/dvf/
 data/raw/
+artifact/dist/
+data/collect/
+data/logs/

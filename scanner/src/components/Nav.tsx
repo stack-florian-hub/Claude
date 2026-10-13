@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 const LINKS = [
   ['/opportunites', 'Opportunités'],
   ['/import', 'Import d’annonces'],
+  ['/reseaux', 'Réseaux'],
   ['/marches', 'Marchés'],
   ['/pipeline', 'Pipeline'],
   ['/tresorerie', 'Trésorerie'],
@@ -23,7 +24,7 @@ export default function Nav() {
           {label}
         </Link>
       ))}
-      <div className="foot">Annonces × DVF · local</div>
+      <div className="foot">{typeof window !== 'undefined' && (window as unknown as { __SCANNER_FOOT__?: string }).__SCANNER_FOOT__ || 'Annonces × DVF · local'}</div>
     </nav>
   );
 }
