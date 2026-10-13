@@ -20,7 +20,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
   const router = useRouter();
   const depts = [...new Set(rows.map((r) => r.dept))].sort();
   const networks = [...new Map(rows.filter((r) => r.network).map((r) => [r.network!, r.networkName || r.network!])).entries()].sort((a, b) => a[1].localeCompare(b[1]));
-  const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', seller: '', q: '' });
+  const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, nego: false, status: 'actifs', source: '', seller: '', q: '' });
   const [sort, setSort] = useState<{ k: Key; dir: 1 | -1 }>({ k: 'score', dir: -1 });
 
   useEffect(() => {
@@ -50,6 +50,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
       if (f.gainMin && r.gain < +f.gainMin) return false;
       if (f.ageMax && r.age > +f.ageMax) return false;
       if (f.flagged && !r.flagged) return false;
+      if (f.nego && (r.flagged || r.priceMax >= r.price || r.priceMax < r.price * 0.8 || r.confidence < 0.3)) return false;
       if (f.source === 'sans' && r.network) return false;
       if (f.source && f.source !== 'sans' && r.network !== f.source) return false;
       if (f.seller && r.seller !== f.seller) return false;
@@ -122,8 +123,9 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
             <option value="actifs">Actifs</option><option value="nouveau">Nouveaux</option><option value="suivi">Suivis</option><option value="pipeline">En pipeline</option><option value="ecarte">Écartés</option><option value="retirees">Retirées du marché</option><option value="tous">Tous</option>
           </select>
         </label>
+        <label className="row" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 4 }}><input type="checkbox" checked={f.nego} onChange={(e) => setF({ ...f, nego: e.target.checked })} /> À négocier (≤ 20 %)</label>
         <label className="row" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 4 }}><input type="checkbox" checked={f.flagged} onChange={(e) => setF({ ...f, flagged: e.target.checked })} /> Alertes seulement</label>
-        <button onClick={() => setF({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', seller: '', q: '' })}>Réinitialiser</button>
+        <button onClick={() => setF({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, nego: false, status: 'actifs', source: '', seller: '', q: '' })}>Réinitialiser</button>
         <button onClick={exportCsv}>Export CSV</button>
       </div>
 
@@ -150,7 +152,8 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
           <tbody>
             {list.map((r) => (
               <tr key={r.id} className={'click' + (r.flagged ? ' flag' : '')} onClick={() => router.push(`/opportunites/${r.id}`)} style={r.status === 'ecarte' ? { opacity: 0.5 } : undefined}>
-                <td className="num"><span className="score" style={{ color: scoreColor(r.score) }}>{r.score}</span>{r.flagged && <div><span className={'tag ' + (r.strategy === 'global' ? 'warn' : 'good')} style={{ marginTop: 2 }}>{r.strategy === 'global' ? 'décote maison' : 'lots copro'}</span></div>}</td>
+                <td className="num"><span className="score" style={{ color: scoreColor(r.score) }}>{r.score}</span>{r.flagged && <div><span className={'tag ' + (r.strategy === 'global' ? 'warn' : 'good')} style={{ marginTop: 2 }}>{r.strategy === 'global' ? 'décote maison' : 'lots copro'}</span></div>}
+                  {!r.flagged && r.priceMax < r.price && r.priceMax >= r.price * 0.8 && r.confidence >= 0.3 && <div><span className="tag grey" style={{ marginTop: 2 }} title="Rentable si le prix descend jusqu’à l’offre maximale">à négocier −{Math.round((1 - r.priceMax / r.price) * 100)} %</span></div>}</td>
                 <td className="wrap" style={{ minWidth: 240, maxWidth: 340 }}>
                   {r.title}
                   <div className="small muted">{r.networkName ? <b>{r.networkName}</b> : SOURCE_LABELS[r.source]}{r.agency && r.networkName ? ` · ${r.agency.replace(/^AJP Immobilier /, '')}` : ''} · {SELLER_LABELS[r.seller]}{r.dpe ? ` · DPE ${r.dpe}` : ''}{r.status !== 'nouveau' ? ` · ${r.status}` : ''}{r.offMarket ? ' · retirée' : ''}{r.demo ? ' · démo' : ''}</div>

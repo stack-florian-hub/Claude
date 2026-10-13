@@ -41,7 +41,10 @@ function rows() {
 function Weekly() {
   const c = S.data?.meta.collecte;
   if (!c) return null;
-  const alerts = c.alerts.filter((a) => { const l = allListings().find((x) => x.id === a.id); return l && analysisOf(l).flagged; }).slice(0, 8);
+  let alerts = c.alerts.filter((a) => { const l = allListings().find((x) => x.id === a.id); return l && analysisOf(l).flagged; }).slice(0, 8);
+  // semaine sans nouvelle alerte : on rappelle les meilleures alertes en cours
+  const best = !alerts.length;
+  if (best) alerts = allListings().map((l) => ({ l, a: analysisOf(l) })).filter((x) => x.a.flagged && !x.l.offMarketAt).sort((x, y) => y.a.score - x.a.score).slice(0, 8).map((x) => ({ id: x.l.id, title: x.l.title, score: x.a.score, gain: x.a.gain.mid }));
   const drops = c.drops.filter((d) => d.to < d.from).slice(0, 8);
   if (!alerts.length && !drops.length) return null;
   return (
@@ -49,7 +52,7 @@ function Weekly() {
       <div className="row between"><h2>Nouveautés de la collecte du {frDate(c.date)}</h2><span className="small muted">{c.added} nouvelles annonces · {c.gone} retirées · {c.agencies} agences AJP parcourues</span></div>
       <div className="grid g2">
         <div>
-          <h3>Nouvelles alertes</h3>
+          <h3>{best ? 'Meilleures alertes en cours' : 'Nouvelles alertes'}</h3>
           {alerts.length ? <ul className="plain">{alerts.map((a) => <li key={a.id}><a href="#" onClick={(e) => { e.preventDefault(); navigate(`/opportunites/${a.id}`); }}>{a.title.slice(0, 80)}</a> <span className="pos">· gain {keur(a.gain)}</span> <span className="muted">· score {a.score}</span></li>)}</ul> : <p className="muted">Aucune nouvelle alerte cette semaine.</p>}
         </div>
         <div>

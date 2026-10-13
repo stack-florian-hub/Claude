@@ -149,7 +149,7 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
   const strategy: Analysis['strategy'] = l.lots.every((x) => x.type === 'maison' || x.type === 'terrain') ? 'global' : 'lots';
   if (strategy === 'global') warnings.unshift('Maison : estimation globale (bâti + terrain au €/m² DVF des maisons voisines), sans revente par lots ni valeur séparée du terrain : alerte « décote maison » à confirmer par la visite');
   const at = autoTravaux(l, s);
-  if (at) warnings.unshift(`Travaux estimés automatiquement : ${at.level === 'lourd' ? 'rénovation complète' : 'rafraîchissement'} annoncé, ${at.rate} €/m² → ${Math.round(at.amount / 1000)} k€ (à remplacer par un devis)`);
+  if (at) warnings.unshift(`Travaux estimés automatiquement : ${at.level === 'lourd' ? 'rénovation complète annoncée' : 'rafraîchissement annoncé'}, ${at.rate} €/m² → ${Math.round(at.amount / 1000)} k€ (à remplacer par un devis)`);
   const land = l.landSurface ?? detectLand(l.description);
   if (strategy === 'global' && land && land >= 1000) signals.push(`Terrain de ${land.toLocaleString('fr-FR')} m² : piste de division parcellaire à étudier (PLU, certificat d’urbanisme, accès, réseaux)`);
   const flagged = !blocking && confidence >= 0.3 && gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100);
