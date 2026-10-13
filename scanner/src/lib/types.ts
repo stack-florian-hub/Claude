@@ -54,6 +54,7 @@ export interface Listing {
   needsDivision?: boolean; // lots à créer (modificatif EDD, géomètre)
   manualValuation?: { low: number; mid: number; high: number; source: string; date: string };
   notes?: string;
+  checklist?: Record<string, boolean>;
   demo?: boolean;
 }
 
@@ -150,7 +151,7 @@ export interface Deal {
   signedAt?: string;
   createdAt: string;
   lots: DealLot[];
-  plannedGain: number;
+  plannedGain?: number;
   notes?: string;
   demo?: boolean;
 }
