@@ -216,23 +216,23 @@ export function demoDeals(listingIdByTitle: (startsWith: string) => string | und
       id: 'd-newport', name: 'New Port – Saint-Germain-en-Laye (4 lots)', listingId: listingIdByTitle('Lot de 4'), company: 'immobiliere', stage: 'revente', city: 'Saint-Germain-en-Laye',
       purchasePrice: 525000, acquisitionFees: 39400, travaux: 12000, loanAmount: 450000, loanRate: 4.5, loanRepayment: 'in_fine', signedAt: signed, createdAt: addMonths(now, -8),
       lots: [
-        { id: 'np1', label: 'Garage fermé', type: 'garage', plannedResale: 28000, plannedMonth: 7, status: 'sous_compromis', saleCostsPct: 0 },
+        { id: 'np1', label: 'Garage fermé', type: 'garage', plannedResale: 30000, plannedMonth: 7, status: 'sous_compromis', saleCostsPct: 0 },
         { id: 'np2', label: 'Parking extérieur', type: 'parking', plannedResale: 17000, plannedMonth: 8, status: 'en_vente' },
         { id: 'np3', label: 'Cave', type: 'cave', plannedResale: 7000, plannedMonth: 9, status: 'en_vente' },
         { id: 'np4', label: 'Appartement 92 m²', type: 'appartement', plannedResale: 650000, plannedMonth: 10, status: 'en_vente' },
       ],
-      plannedGain: 0, notes: 'Démo : compromis garage signé à 30 000 € net vendeur (vente entre particuliers, sans agence). Reproduction fictive.', demo: true,
+      notes: 'Démo : compromis garage signé à 30 000 € net vendeur (vente entre particuliers, sans agence). Reproduction fictive.', demo: true,
     },
     {
       id: 'd-cholet', name: 'Garage Cholet (2025)', company: 'immobiliere', stage: 'clos', city: 'Cholet', purchasePrice: 7000, acquisitionFees: 900, travaux: 300,
       loanAmount: 0, loanRate: 0, loanRepayment: 'in_fine', signedAt: addMonths(now, -14), createdAt: addMonths(now, -15),
       lots: [{ id: 'c1', label: 'Garage', type: 'garage', plannedResale: 12000, plannedMonth: 4, actualResale: 13000, soldAt: addMonths(now, -10), status: 'vendu', saleCostsPct: 0 }],
-      plannedGain: 0, demo: true,
+      demo: true,
     },
     {
       id: 'd-bellamy', name: 'Garage rue Paul Bellamy – Nantes', listingId: listingIdByTitle('Garage fermé centre-ville Nantes'), company: 'immobiliere', stage: 'offre', city: 'Nantes',
       purchasePrice: 11000, acquisitionFees: 1300, travaux: 0, loanAmount: 0, loanRate: 0, loanRepayment: 'in_fine', createdAt: now,
-      lots: [{ id: 'b1', label: 'Box 14 m²', type: 'garage', plannedResale: 19000, plannedMonth: 3, status: 'a_vendre' }], plannedGain: 0, notes: 'Offre à 11 000 € envoyée.', demo: true,
+      lots: [{ id: 'b1', label: 'Box 14 m²', type: 'garage', plannedResale: 19000, plannedMonth: 3, status: 'a_vendre' }], notes: 'Offre à 11 000 € envoyée.', demo: true,
     },
     {
       id: 'd-boxes', name: '3 boxes – Les Sables (Rosa Bonheur)', listingId: listingIdByTitle('Lot de 3 boxes'), company: 'immobiliere', stage: 'visite', city: 'Les Sables-d’Olonne',
@@ -241,7 +241,7 @@ export function demoDeals(listingIdByTitle: (startsWith: string) => string | und
         { id: 'x1', label: 'Box 1', type: 'garage', plannedResale: 18000, plannedMonth: 3, status: 'a_vendre' },
         { id: 'x2', label: 'Box 2', type: 'garage', plannedResale: 18000, plannedMonth: 4, status: 'a_vendre' },
         { id: 'x3', label: 'Box 3', type: 'garage', plannedResale: 19000, plannedMonth: 5, status: 'a_vendre' },
-      ], plannedGain: 0, demo: true,
+      ], demo: true,
     },
   ];
 }
