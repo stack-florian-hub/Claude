@@ -3,7 +3,7 @@ import type { Analysis, CostBreakdown, Listing, LotValuation, Range, Settings, Z
 import type { DvfSource } from './dvf-query';
 import { valueLot } from './providers/valuation';
 import { clamp, daysBetween, normCity, round } from './util';
-import { detectSpecial } from './detect';
+import { detectLand, detectRenovation, detectSpecial } from './detect';
 
 export function zoneFor(l: Listing, zones: Zone[]): Zone | undefined {
   const c = normCity(l.address.city);
@@ -21,7 +21,7 @@ export function lotMonths(l: Listing, s: Settings) {
 /** Coûts du scénario moyen (le portage dépend du délai de revente le plus long). */
 function costs(l: Listing, s: Settings, resaleTotal: number, months: number): CostBreakdown {
   const acquisitionFees = round(l.price * acquisitionPct(s), 10);
-  const travaux = (l.travaux || 0) + l.lots.reduce((a, x) => a + (x.travaux || 0), 0);
+  const travaux = (l.travaux ?? autoTravaux(l, s)?.amount ?? 0) + l.lots.reduce((a, x) => a + (x.travaux || 0), 0);
   const resaleAgency = round(resaleTotal * (s.fees.agenceRevPct / 100), 10);
   const diagnostics = l.lots.length * s.fees.diagnosticsParLot;
   const division = l.needsDivision ? Math.max(1, l.lots.length - 1) * s.fees.divisionParLot : 0;
@@ -30,6 +30,16 @@ function costs(l: Listing, s: Settings, resaleTotal: number, months: number): Co
   const interestM = cashNeed(l, s, acquisitionFees, travaux).financed ? (l.price * (1 - s.financing.apportPct / 100) * s.financing.rate) / 100 / 12 : 0;
   const carrying = round(months * (chargesM + tfM + interestM), 10);
   return { acquisitionFees, travaux, resaleAgency, diagnostics, division, carrying, total: acquisitionFees + travaux + resaleAgency + diagnostics + division + carrying };
+}
+
+/** Travaux estimés d'après la description quand ils ne sont pas saisis (rénovation complète / rafraîchissement). */
+export function autoTravaux(l: Listing, s: Settings) {
+  if (l.travaux != null) return undefined;
+  const level = detectRenovation(`${l.title}\n${l.description}`);
+  const surf = l.surface ?? l.lots.find((x) => x.type === 'maison' || x.type === 'appartement')?.surface;
+  if (!level || !surf) return undefined;
+  const rate = level === 'lourd' ? s.fees.travauxLourdsM2 ?? 1000 : s.fees.travauxLegersM2 ?? 300;
+  return { level, rate, amount: Math.round((surf * rate) / 1000) * 1000 };
 }
 
 export function cashNeed(l: Listing, s: Settings, fees: number, travaux: number) {
@@ -137,8 +147,12 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
   // pas d'alerte sur une estimation trop fragile (comparables départementaux, valeurs par défaut…)
   // maison / terrain : valeur d'ensemble (bâti + terrain au €/m² DVF), pas une revente par lots de copropriété
   const strategy: Analysis['strategy'] = l.lots.every((x) => x.type === 'maison' || x.type === 'terrain') ? 'global' : 'lots';
-  if (strategy === 'global') warnings.unshift('Maison : estimation globale (bâti + terrain au €/m² DVF des maisons voisines), sans valeur séparée du terrain ni revente par lots. Hors stratégie lots de copropriété : pas d’alerte');
-  const flagged = strategy === 'lots' && !blocking && confidence >= 0.3 && gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100);
+  if (strategy === 'global') warnings.unshift('Maison : estimation globale (bâti + terrain au €/m² DVF des maisons voisines), sans revente par lots ni valeur séparée du terrain : alerte « décote maison » à confirmer par la visite');
+  const at = autoTravaux(l, s);
+  if (at) warnings.unshift(`Travaux estimés automatiquement : ${at.level === 'lourd' ? 'rénovation complète' : 'rafraîchissement'} annoncé, ${at.rate} €/m² → ${Math.round(at.amount / 1000)} k€ (à remplacer par un devis)`);
+  const land = l.landSurface ?? detectLand(l.description);
+  if (strategy === 'global' && land && land >= 1000) signals.push(`Terrain de ${land.toLocaleString('fr-FR')} m² : piste de division parcellaire à étudier (PLU, certificat d’urbanisme, accès, réseaux)`);
+  const flagged = !blocking && confidence >= 0.3 && gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100);
   if (confidence < 0.3 && gain.mid > 0) warnings.push('Confiance trop faible pour une alerte : compléter l’adresse ou forcer la valeur des lots');
 
   // Prix plafond (offre ou enchère maximale) : gain(prix) = Σ×(1−agence) − prix×(1+frais%) − coûts fixes hors frais d'acquisition

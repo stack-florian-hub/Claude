@@ -57,6 +57,8 @@ export const DEFAULT_SETTINGS: Settings = {
     diagnosticsParLot: 350,
     divisionParLot: 1500,
     chargesMensuellesDefaut: 120,
+    travauxLourdsM2: 1000,
+    travauxLegersM2: 300,
     taxeFonciereAnnuelleParLot: 700,
   },
   thresholds: { minGain: 30000, minGainPct: 25 },

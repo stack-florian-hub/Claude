@@ -27,6 +27,7 @@ const log = (m: string) => { console.log(m); fs.appendFileSync(logFile, m + '\n'
     const old = before.get(i.url);
     if (!old) continue;
     const patch: Record<string, unknown> = {};
+    if (i.landSurface && !old.landSurface) patch.landSurface = i.landSurface;
     if (!old.description && i.description) Object.assign(patch, { description: i.description, lots: i.lots, title: i.title, dpe: i.dpe, chargesAnnual: i.chargesAnnual, coproLots: i.coproLots, agency: i.agency });
     if (old.offMarketAt) patch.offMarketAt = undefined;
     if (Object.keys(patch).length) updateListing(old.id, patch);

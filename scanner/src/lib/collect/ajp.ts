@@ -12,7 +12,7 @@ import { parseListingText } from '../detect';
 const BASE = 'https://www.ajp-immobilier.com';
 const UA = 'Mozilla/5.0 (compatible; scanner-mdb/1.0; usage personnel, 1 req/s)';
 
-export interface AjpCard { url: string; id: string; type: string; city: string; dept: string; price: number; surface?: number; agencyUrl: string }
+export interface AjpCard { url: string; id: string; type: string; city: string; dept: string; price: number; surface?: number; land?: number; agencyUrl: string }
 
 export interface CollectLog { (msg: string): void }
 
@@ -63,10 +63,12 @@ export function parseAgencyPage(html: string, agencyUrl: string): AjpCard[] {
     seen.add(m[4]);
     const price = chunk.match(/<span>\s*([\d\s  .]+)\s*€\s*<\/span>/);
     const surf = chunk.match(/class="ml-2 amount">\s*([\d.,]+)\s*m²/);
+    const land = chunk.match(/terrain-icon[\s\S]{0,200}?class="ml-2 amount">\s*([\d.,\s]+)\s*m²/);
     cards.push({
       url: m[0], type: m[1], city: m[2], dept: m[3], id: m[4], agencyUrl,
       price: price ? parseInt(price[1].replace(/[^\d]/g, ''), 10) : 0,
       surface: surf ? parseFloat(surf[1].replace(',', '.')) || undefined : undefined,
+      land: land ? parseFloat(land[1].replace(/\s/g, '').replace(',', '.')) || undefined : undefined,
     });
   }
   return cards;
@@ -74,7 +76,8 @@ export function parseAgencyPage(html: string, agencyUrl: string): AjpCard[] {
 
 const TYPE: Record<string, LotType> = { appartement: 'appartement', maison: 'maison', parking: 'parking', garage: 'garage', box: 'garage', local: 'local', local_commercial: 'local', immeuble: 'maison', terrain: 'terrain' };
 /** Types où un lot groupé ou une décote revendable est plausible : fiche détaillée récupérée. */
-export const DETAIL_TYPES = new Set(['appartement', 'parking', 'garage', 'box', 'immeuble', 'local', 'local_commercial']);
+// maisons comprises : la description donne l'état (travaux) et le terrain
+export const DETAIL_TYPES = new Set(['appartement', 'parking', 'garage', 'box', 'immeuble', 'local', 'local_commercial', 'maison']);
 const SKIP_TYPES = new Set(['terrain', 'programme_neuf', 'viager', 'fonds_de_commerce', 'bureau', 'autre']);
 
 export function cardToInput(c: AjpCard, detailText?: string): ListingInput {
@@ -89,6 +92,7 @@ export function cardToInput(c: AjpCard, detailText?: string): ListingInput {
       // le code postal lu dans la fiche doit être du bon département, sinon on garde la commune de l'URL
       address: p.address.postalCode.startsWith(c.dept) ? { ...p.address, city: p.address.city || cityName, dept: c.dept } : { number: p.address.number, street: p.address.street, postalCode: '', city: cityName, dept: c.dept },
       surface: p.surface ?? c.surface,
+      landSurface: c.land || p.landSurface,
       seller: 'agence',
     };
   }
@@ -96,7 +100,7 @@ export function cardToInput(c: AjpCard, detailText?: string): ListingInput {
   return {
     source: 'reseau', network: 'ajp', url: c.url, sourceRef: c.id,
     title: `${type[0].toUpperCase() + type.slice(1)}${c.surface ? ` ${c.surface} m²` : ''} – ${cityName}`,
-    description: '', price: c.price, surface: c.surface,
+    description: '', price: c.price, surface: c.surface, landSurface: c.land,
     address: { postalCode: '', city: cityName, dept: c.dept },
     lots: [{ id: `l${c.id}`, type, surface: c.surface }],
     seller: 'agence', publishedAt: new Date().toISOString().slice(0, 10),

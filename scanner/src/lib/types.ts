@@ -43,6 +43,7 @@ export interface Listing {
   priceHistory: PricePoint[]; // historique des prix affichés (manuel ou Castorus)
   address: Address;
   surface?: number; // surface principale
+  landSurface?: number; // terrain (m²)
   lots: SubLot[];
   dpe?: Dpe;
   chargesAnnual?: number;
@@ -185,6 +186,8 @@ export interface Settings {
     diagnosticsParLot: number;
     divisionParLot: number; // modificatif EDD, géomètre
     chargesMensuellesDefaut: number;
+    travauxLourdsM2?: number; // rénovation complète annoncée, €/m² habitable
+    travauxLegersM2?: number; // rafraîchissement annoncé, €/m²
     taxeFonciereAnnuelleParLot: number;
   };
   thresholds: { minGain: number; minGainPct: number };

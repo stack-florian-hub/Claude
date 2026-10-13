@@ -50,6 +50,8 @@ export default function SettingsView({ settings, zones, dvf }: { settings: Setti
             <label className="field">Agence revente %{n(s.fees.agenceRevPct, (x) => sec('fees', { agenceRevPct: x }), 0.5)}</label>
             <label className="field">Diagnostics / lot €{n(s.fees.diagnosticsParLot, (x) => sec('fees', { diagnosticsParLot: x }), 50)}</label>
             <label className="field">Division / lot €{n(s.fees.divisionParLot, (x) => sec('fees', { divisionParLot: x }), 100)}</label>
+            <label className="field">Travaux auto : rénovation complète €/m²{n(s.fees.travauxLourdsM2 ?? 1000, (x) => sec('fees', { travauxLourdsM2: x }), 50)}</label>
+            <label className="field">Travaux auto : rafraîchissement €/m²{n(s.fees.travauxLegersM2 ?? 300, (x) => sec('fees', { travauxLegersM2: x }), 50)}</label>
             <label className="field">Charges par défaut €/mois{n(s.fees.chargesMensuellesDefaut, (x) => sec('fees', { chargesMensuellesDefaut: x }), 10)}</label>
             <label className="field">Taxe foncière / lot €/an{n(s.fees.taxeFonciereAnnuelleParLot, (x) => sec('fees', { taxeFonciereAnnuelleParLot: x }), 50)}</label>
             <label className="field">Alerte : gain min €{n(s.thresholds.minGain, (x) => sec('thresholds', { minGain: x }), 1000)}</label>

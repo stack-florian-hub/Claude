@@ -14,6 +14,20 @@ const SPECIALS: [Special, RegExp][] = [
   [{ id: 'loue', label: 'Vendu loué : décote de 10 à 15 % et délai jusqu’à la libération', blocking: false }, /locataire en place|vendu lou[ée]|actuellement lou[ée]|bail en cours|\blou[ée] (?:\d|jusqu|depuis|meubl)/i],
   [{ id: 'rehab', label: 'Bien à réhabiliter (atelier, plateau, grange) : travaux lourds à chiffrer', blocking: false }, /atelier [àa] r[ée]habiliter|[àa] r[ée]habiliter|plateau [àa] am[ée]nager|non soumis [àa] DPE/i],
 ];
+/** Niveau de travaux annoncé dans la description (pour estimer les travaux quand ils ne sont pas saisis). */
+export function detectRenovation(text: string): 'lourd' | 'leger' | undefined {
+  if (/(?:[àa] r[ée]nover|r[ée]novation) (?:enti[eè]rement|compl[eè]te|totale|int[ée]grale)|enti[eè]rement [àa] r[ée]nover|tout [àa] refaire|[àa] r[ée]habiliter|gros (?:travaux|[œo]euvre)|[àa] restaurer enti|potentiel de r[ée]novation|pr[ée]voir (?:une )?r[ée]novation compl/i.test(text)) return 'lourd';
+  if (/[àa] r[ée]nover|travaux [àa] pr[ée]voir|[àa] rafra[îi]chir|rafra[îi]chissement|[àa] moderniser|[àa] remettre au go[ûu]t|petits travaux/i.test(text)) return 'leger';
+  return undefined;
+}
+
+/** Surface de terrain citée dans le texte. */
+export function detectLand(text: string): number | undefined {
+  const m = text.match(/(?:terrain|parcelle|jardin)[^.\n]{0,40}?(\d[\d\s\u00a0.]{1,7})\s*m(?:²|2)(?![a-z0-9])/i);
+  const v = m ? parseFloat(m[1].replace(/[\s\u00a0.]/g, '')) : NaN;
+  return v >= 50 && v < 500000 ? v : undefined;
+}
+
 export function detectSpecial(text: string): Special[] {
   return SPECIALS.filter(([, re]) => re.test(text)).map(([sp]) => sp);
 }
@@ -187,6 +201,7 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
       dept: postalCode.slice(0, 2),
     },
     surface,
+    landSurface: detectLand(text),
     lots,
     dpe: dpeM?.[1].toUpperCase() as Dpe | undefined,
     chargesAnnual,

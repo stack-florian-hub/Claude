@@ -14,13 +14,13 @@ export interface OppRow {
 
 type Key = keyof OppRow;
 const scoreColor = (s: number) => (s >= 65 ? 'var(--good)' : s >= 45 ? 'var(--warn)' : 'var(--muted)');
-const PREF_KEY = 'scanner.filtres.v2';
+const PREF_KEY = 'scanner.filtres.v3';
 
 export default function OpportunitiesTable({ rows, budget, elargi, minGain, minGainPct }: { rows: OppRow[]; budget: number; elargi: number; minGain: number; minGainPct: number }) {
   const router = useRouter();
   const depts = [...new Set(rows.map((r) => r.dept))].sort();
   const networks = [...new Map(rows.filter((r) => r.network).map((r) => [r.network!, r.networkName || r.network!])).entries()].sort((a, b) => a[1].localeCompare(b[1]));
-  const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: 'copro', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', seller: '', q: '' });
+  const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', seller: '', q: '' });
   const [sort, setSort] = useState<{ k: Key; dir: 1 | -1 }>({ k: 'score', dir: -1 });
 
   useEffect(() => {
@@ -44,8 +44,9 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
       if (f.budget === 'elargi' && r.cash > elargi) return false;
       if (f.type === 'copro' && r.strategy === 'global') return false;
       if (f.type === 'groupe' && (r.lots.length < 2 || r.strategy === 'global')) return false;
+      if (f.type === 'maisons' && r.strategy !== 'global') return false;
       if (f.type === 'multiapp' && r.lots.filter((l) => l.type === 'appartement').length < 2) return false;
-      if (f.type && !['copro', 'groupe', 'multiapp'].includes(f.type) && !r.lots.some((l) => l.type === f.type)) return false;
+      if (f.type && !['copro', 'groupe', 'multiapp', 'maisons'].includes(f.type) && !r.lots.some((l) => l.type === f.type)) return false;
       if (f.gainMin && r.gain < +f.gainMin) return false;
       if (f.ageMax && r.age > +f.ageMax) return false;
       if (f.flagged && !r.flagged) return false;
@@ -104,7 +105,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
         </label>
         <label>Type de lot
           <select value={f.type} onChange={(e) => setF({ ...f, type: e.target.value })}>
-            <option value="copro">Copropriété (hors maisons)</option><option value="groupe">Lots groupés en copropriété</option><option value="multiapp">Plusieurs appartements</option><option value="">Tous, maisons comprises</option>
+            <option value="">Tous</option><option value="copro">Copropriété (lots)</option><option value="groupe">Lots groupés en copropriété</option><option value="multiapp">Plusieurs appartements</option><option value="maisons">Maisons (décote, travaux, terrain)</option>
             {Object.entries(LOT_LABELS).map(([k, l]) => <option key={k} value={k}>{l}</option>)}
           </select>
         </label>
@@ -122,7 +123,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
           </select>
         </label>
         <label className="row" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 4 }}><input type="checkbox" checked={f.flagged} onChange={(e) => setF({ ...f, flagged: e.target.checked })} /> Alertes seulement</label>
-        <button onClick={() => setF({ dept: '', city: '', budget: 'tous', type: 'copro', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', seller: '', q: '' })}>Réinitialiser</button>
+        <button onClick={() => setF({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', seller: '', q: '' })}>Réinitialiser</button>
         <button onClick={exportCsv}>Export CSV</button>
       </div>
 
@@ -149,7 +150,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
           <tbody>
             {list.map((r) => (
               <tr key={r.id} className={'click' + (r.flagged ? ' flag' : '')} onClick={() => router.push(`/opportunites/${r.id}`)} style={r.status === 'ecarte' ? { opacity: 0.5 } : undefined}>
-                <td className="num"><span className="score" style={{ color: scoreColor(r.score) }}>{r.score}</span></td>
+                <td className="num"><span className="score" style={{ color: scoreColor(r.score) }}>{r.score}</span>{r.flagged && <div><span className={'tag ' + (r.strategy === 'global' ? 'warn' : 'good')} style={{ marginTop: 2 }}>{r.strategy === 'global' ? 'décote maison' : 'lots copro'}</span></div>}</td>
                 <td className="wrap" style={{ minWidth: 240, maxWidth: 340 }}>
                   {r.title}
                   <div className="small muted">{r.networkName ? <b>{r.networkName}</b> : SOURCE_LABELS[r.source]}{r.agency && r.networkName ? ` · ${r.agency.replace(/^AJP Immobilier /, '')}` : ''} · {SELLER_LABELS[r.seller]}{r.dpe ? ` · DPE ${r.dpe}` : ''}{r.status !== 'nouveau' ? ` · ${r.status}` : ''}{r.offMarket ? ' · retirée' : ''}{r.demo ? ' · démo' : ''}</div>
