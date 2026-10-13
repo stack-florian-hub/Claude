@@ -98,7 +98,7 @@ export default function ListingDetail({ listing: l, analysis: a, zone, tension, 
 
       <div className="kpis">
         <div className="kpi"><div className="l">Prix affiché</div><div className="v">{eur(l.price)}</div><div className="s">{first && first > l.price ? `initial ${eur(first)} (−${pct(1 - l.price / first)})` : `${l.lots.length} lot(s)`}</div></div>
-        <div className="kpi"><div className="l">Valeur des lots séparés (moy.)</div><div className="v">{eur(a.total.mid)}</div><div className="s">bas {keur(a.total.low)} · haut {keur(a.total.high)}</div></div>
+        <div className="kpi"><div className="l">{a.strategy === 'global' ? 'Valeur globale estimée (moy.)' : 'Valeur des lots séparés (moy.)'}</div><div className="v">{eur(a.total.mid)}</div><div className="s">bas {keur(a.total.low)} · haut {keur(a.total.high)}</div></div>
         <div className="kpi"><div className="l">Écart (Σ lots − prix)</div><div className={'v ' + (a.ecart > 0 ? 'pos' : 'neg')}>{eur(a.ecart)}</div><div className="s">{pct(a.ecart / l.price)} du prix</div></div>
         <div className="kpi"><div className="l">Gain brut (moyen)</div><div className={'v ' + (a.gain.mid > 0 ? 'pos' : 'neg')}>{eur(a.gain.mid)}</div><div className="s">bas {keur(a.gain.low)} · haut {keur(a.gain.high)}</div></div>
         <div className="kpi"><div className="l">Gain / prix · ratio</div><div className="v">{pct(a.gainPct)}</div><div className="s">ratio {num(a.ratio, 2)} (&gt; 1 = rentable)</div></div>

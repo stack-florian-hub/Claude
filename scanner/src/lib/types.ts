@@ -123,6 +123,7 @@ export interface Analysis {
   cashNeeded: number; // apport + frais + travaux si financé, sinon prix + frais + travaux
   resaleMonths: number;
   priceCaps: { breakEven: number; forMinGain: number; forMinPct: number; max: number }; // offre / enchère maximale
+  strategy: 'lots' | 'global'; // lots = revente par lots de copropriété ; global = maison / terrain (valeur d'ensemble, hors stratégie)
 }
 
 export type DealStage = 'repere' | 'visite' | 'offre' | 'signe' | 'revente' | 'clos' | 'abandonne';

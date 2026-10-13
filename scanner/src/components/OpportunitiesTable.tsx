@@ -6,7 +6,7 @@ import { downloadCsv } from '@/lib/csv';
 import { eur, keur, pct } from '@/lib/util';
 
 export interface OppRow {
-  id: string; title: string; url?: string; source: string; network?: string; networkName?: string; agency?: string; offMarket?: boolean; seller: string; city: string; cp: string; dept: string; zone?: string; tension: number;
+  id: string; title: string; url?: string; source: string; network?: string; networkName?: string; agency?: string; offMarket?: boolean; strategy?: 'lots' | 'global'; seller: string; city: string; cp: string; dept: string; zone?: string; tension: number;
   lots: { type: string; surface?: number }[]; price: number; low: number; mid: number; high: number; ecart: number;
   gain: number; gainLow: number; gainHigh: number; gainPct: number; ratio: number; score: number; confidence: number; flagged: boolean;
   cash: number; priceMax: number; age: number; status: string; signals: string[]; warnings: string[]; dpe?: string; drop: number; demo?: boolean;
@@ -14,13 +14,13 @@ export interface OppRow {
 
 type Key = keyof OppRow;
 const scoreColor = (s: number) => (s >= 65 ? 'var(--good)' : s >= 45 ? 'var(--warn)' : 'var(--muted)');
-const PREF_KEY = 'scanner.filtres';
+const PREF_KEY = 'scanner.filtres.v2';
 
 export default function OpportunitiesTable({ rows, budget, elargi, minGain, minGainPct }: { rows: OppRow[]; budget: number; elargi: number; minGain: number; minGainPct: number }) {
   const router = useRouter();
   const depts = [...new Set(rows.map((r) => r.dept))].sort();
   const networks = [...new Map(rows.filter((r) => r.network).map((r) => [r.network!, r.networkName || r.network!])).entries()].sort((a, b) => a[1].localeCompare(b[1]));
-  const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', seller: '', q: '' });
+  const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: 'copro', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', seller: '', q: '' });
   const [sort, setSort] = useState<{ k: Key; dir: 1 | -1 }>({ k: 'score', dir: -1 });
 
   useEffect(() => {
@@ -42,8 +42,10 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
       if (f.q && !(r.title + ' ' + r.signals.join(' ')).toLowerCase().includes(f.q.toLowerCase())) return false;
       if (f.budget === 'tresorerie' && r.cash > budget) return false;
       if (f.budget === 'elargi' && r.cash > elargi) return false;
-      if (f.type === 'groupe' && r.lots.length < 2) return false;
-      if (f.type && f.type !== 'groupe' && !r.lots.some((l) => l.type === f.type)) return false;
+      if (f.type === 'copro' && r.strategy === 'global') return false;
+      if (f.type === 'groupe' && (r.lots.length < 2 || r.strategy === 'global')) return false;
+      if (f.type === 'multiapp' && r.lots.filter((l) => l.type === 'appartement').length < 2) return false;
+      if (f.type && !['copro', 'groupe', 'multiapp'].includes(f.type) && !r.lots.some((l) => l.type === f.type)) return false;
       if (f.gainMin && r.gain < +f.gainMin) return false;
       if (f.ageMax && r.age > +f.ageMax) return false;
       if (f.flagged && !r.flagged) return false;
@@ -102,7 +104,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
         </label>
         <label>Type de lot
           <select value={f.type} onChange={(e) => setF({ ...f, type: e.target.value })}>
-            <option value="">Tous</option><option value="groupe">Lot groupé (≥ 2 lots)</option>
+            <option value="copro">Copropriété (hors maisons)</option><option value="groupe">Lots groupés en copropriété</option><option value="multiapp">Plusieurs appartements</option><option value="">Tous, maisons comprises</option>
             {Object.entries(LOT_LABELS).map(([k, l]) => <option key={k} value={k}>{l}</option>)}
           </select>
         </label>
@@ -120,7 +122,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
           </select>
         </label>
         <label className="row" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 4 }}><input type="checkbox" checked={f.flagged} onChange={(e) => setF({ ...f, flagged: e.target.checked })} /> Alertes seulement</label>
-        <button onClick={() => setF({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', seller: '', q: '' })}>Réinitialiser</button>
+        <button onClick={() => setF({ dept: '', city: '', budget: 'tous', type: 'copro', gainMin: '', ageMax: '', flagged: false, status: 'actifs', source: '', seller: '', q: '' })}>Réinitialiser</button>
         <button onClick={exportCsv}>Export CSV</button>
       </div>
 
@@ -155,7 +157,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
                 <td>{r.city}<div className="small muted">{r.cp} · {r.zone ? `T${r.tension}` : 'hors zone'}</div></td>
                 <td className="wrap" style={{ maxWidth: 200 }}>{r.lots.map((l, i) => <span key={i} className={'tag' + (r.lots.length > 1 ? ' good' : '')}>{LOT_LABELS[l.type]}{l.surface ? ` ${l.surface}` : ''}</span>)}</td>
                 <td className="num">{eur(r.price)}</td>
-                <td className="num">{eur(r.mid)}<div className="small muted">{keur(r.low)} – {keur(r.high)}</div></td>
+                <td className="num">{eur(r.mid)}<div className="small muted">{r.strategy === 'global' ? 'valeur globale' : `${keur(r.low)} – ${keur(r.high)}`}</div></td>
                 <td className={'num ' + (r.ecart > 0 ? 'pos' : 'neg')}>{eur(r.ecart)}</td>
                 <td className={'num ' + (r.gain > 0 ? 'pos' : 'neg')}><b>{eur(r.gain)}</b><div className="small muted">{keur(r.gainLow)} – {keur(r.gainHigh)}</div></td>
                 <td className={'num ' + (r.gainPct > 0 ? 'pos' : 'neg')}>{pct(r.gainPct)}<div className="small muted">ratio {r.ratio.toFixed(2)}</div></td>

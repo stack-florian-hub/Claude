@@ -41,7 +41,7 @@ function rows() {
 function Weekly() {
   const c = S.data?.meta.collecte;
   if (!c) return null;
-  const alerts = c.alerts.filter((a) => allListings().some((l) => l.id === a.id)).slice(0, 8);
+  const alerts = c.alerts.filter((a) => { const l = allListings().find((x) => x.id === a.id); return l && analysisOf(l).flagged; }).slice(0, 8);
   const drops = c.drops.filter((d) => d.to < d.from).slice(0, 8);
   if (!alerts.length && !drops.length) return null;
   return (

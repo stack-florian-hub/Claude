@@ -135,7 +135,10 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
   const blocking = specials.some((x) => x.blocking);
   if (blocking) score = Math.min(score, 20);
   // pas d'alerte sur une estimation trop fragile (comparables départementaux, valeurs par défaut…)
-  const flagged = !blocking && confidence >= 0.3 && gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100);
+  // maison / terrain : valeur d'ensemble (bâti + terrain au €/m² DVF), pas une revente par lots de copropriété
+  const strategy: Analysis['strategy'] = l.lots.every((x) => x.type === 'maison' || x.type === 'terrain') ? 'global' : 'lots';
+  if (strategy === 'global') warnings.unshift('Maison : estimation globale (bâti + terrain au €/m² DVF des maisons voisines), sans valeur séparée du terrain ni revente par lots. Hors stratégie lots de copropriété : pas d’alerte');
+  const flagged = strategy === 'lots' && !blocking && confidence >= 0.3 && gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100);
   if (confidence < 0.3 && gain.mid > 0) warnings.push('Confiance trop faible pour une alerte : compléter l’adresse ou forcer la valeur des lots');
 
   // Prix plafond (offre ou enchère maximale) : gain(prix) = Σ×(1−agence) − prix×(1+frais%) − coûts fixes hors frais d'acquisition
@@ -147,7 +150,7 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
   const priceCaps = { breakEven, forMinGain, forMinPct, max: Math.max(forMinGain, forMinPct) };
 
   return {
-    listingId: l.id, lots, total, costs: c, priceCaps, gain, gainPct, ratio, ecart: total.mid - l.price, score: Math.round(score),
+    listingId: l.id, lots, total, costs: c, priceCaps, strategy, gain, gainPct, ratio, ecart: total.mid - l.price, score: Math.round(score),
     confidence, flagged, signals, warnings, cashNeeded: Math.round(cn.cash), resaleMonths: months,
   };
 }
