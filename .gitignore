@@ -1,2 +1,4 @@
 veille/cache/
 __pycache__/
+pea/.env
+pea/data/cron.log

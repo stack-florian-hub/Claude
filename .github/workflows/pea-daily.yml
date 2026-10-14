@@ -1,0 +1,64 @@
+name: Radar PEA - mise à jour 6h00
+
+on:
+  schedule:
+    # GitHub Actions planifie en UTC. 6h00 à Paris = 04:00 UTC (heure d'été) ou 05:00 UTC (heure d'hiver).
+    # Les deux créneaux sont déclarés ; --paris-gate n'exécute que celui qui tombe à partir de 6h, une fois par jour.
+    # Du mardi au samedi : on traite les clôtures du lundi au vendredi.
+    - cron: "0 4 * * 2-6"
+    - cron: "0 5 * * 2-6"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Ignorer le contrôle 6h00 / run déjà fait"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: radar-pea
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Récupérer les cours, recalculer les scores, régénérer le tableau de bord
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          PEA_DASHBOARD_URL: ${{ vars.PEA_DASHBOARD_URL }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force }}" = "true" ]; then
+            python3 pea/scripts/update_pea.py
+          else
+            python3 pea/scripts/update_pea.py --paris-gate
+          fi
+
+      - name: Publier les données dans le dépôt
+        run: |
+          git config user.name "radar-pea-bot"
+          git config user.email "radar-pea-bot@users.noreply.github.com"
+          git add pea/data pea/dist
+          if git diff --cached --quiet; then
+            echo "Aucun changement."
+          else
+            git commit -m "Radar PEA : données du $(date -u +%Y-%m-%d)"
+            git push
+          fi

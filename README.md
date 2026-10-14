@@ -8,3 +8,4 @@ Base de travail pour l'outil de prospection et d'aide à la décision (SASU Fina
 - `ressources/ressources.md` : livre, vidéos, banque (chèque de banque, caution bancaire).
 - `ressources/email_banquier_caution.md` : email prêt à envoyer au Crédit Mutuel.
 - `tour-de-controle/index.html` : tour de contrôle publiée (https://claude.ai/artifact/GrV2qEzNMXTVEWXnjwUQvY). Les données vivent dans la base de l'artefact.
+- `pea/` : Radar PEA Buy & Hold (tableau de bord, script quotidien de 6h00, alertes). Voir `pea/README.md`. Artefact : https://claude.ai/artifact/916Yzq1rTeLFd5AoAAknZM

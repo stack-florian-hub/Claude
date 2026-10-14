@@ -1,0 +1,64 @@
+{
+ "2026-10-14": {
+  "RMS.PA": {
+   "score": 100.0,
+   "class": "green",
+   "price": 1303.5
+  },
+  "MC.PA": {
+   "score": 100.0,
+   "class": "green",
+   "price": 387.55
+  },
+  "EL.PA": {
+   "score": 97.5,
+   "class": "green",
+   "price": 149.5
+  },
+  "SAN.PA": {
+   "score": 93.4,
+   "class": "green",
+   "price": 70.75
+  },
+  "DG.PA": {
+   "score": 83.5,
+   "class": "green",
+   "price": 107.15
+  },
+  "AIR.PA": {
+   "score": 57.4,
+   "class": "yellow",
+   "price": 187.86
+  },
+  "OR.PA": {
+   "score": 42.7,
+   "class": "yellow",
+   "price": 390.2
+  },
+  "AI.PA": {
+   "score": 39.4,
+   "class": "yellow",
+   "price": 169.44
+  },
+  "SAF.PA": {
+   "score": 37.7,
+   "class": "yellow",
+   "price": 316.4
+  },
+  "SU.PA": {
+   "score": 33.0,
+   "class": "yellow",
+   "price": 265.45
+  },
+  "TTE.PA": {
+   "score": 19.1,
+   "class": "red",
+   "price": 79.62
+  },
+  "ASML.AS": {
+   "score": 12.6,
+   "class": "red",
+   "price": 1546.2
+  }
+ }
+}

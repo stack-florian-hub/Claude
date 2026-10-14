@@ -1,0 +1,808 @@
+<title>Radar PEA Buy &amp; Hold</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    corePlugins: { preflight: true },
+    theme: { extend: {
+      colors: {
+        bg: 'var(--bg)', surface: 'var(--surface)', surface2: 'var(--surface-2)', ink: 'var(--ink)',
+        muted: 'var(--muted)', line: 'var(--line)', accent: 'var(--accent)',
+        good: 'var(--good)', warn: 'var(--warn)', bad: 'var(--bad)'
+      },
+      fontFamily: {
+        display: ['"IBM Plex Sans Condensed"', '"Arial Narrow"', 'sans-serif'],
+        sans: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace']
+      }
+    } }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style>
+  /* Layout : bandeau de synthèse, puis onglets façon terminal de courtier ; tableaux denses, chiffres en mono tabulaire. */
+  :root {
+    --bg: #F2F4F5; --surface: #FFFFFF; --surface-2: #E8EDF0; --ink: #13202A; --muted: #5B6C79; --line: #D3DCE2;
+    --accent: #23488F; --accent-soft: #DCE5F6;
+    --good: #19744A; --good-bg: #DDF1E6; --warn: #9A6408; --warn-bg: #F8EBCF; --bad: #B0281A; --bad-bg: #F8DEDA;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #0D1419; --surface: #141E25; --surface-2: #1B2731; --ink: #E4EAEE; --muted: #91A2AF; --line: #283844;
+    --accent: #8DAEF5; --accent-soft: #1F2E4A;
+    --good: #4FC48B; --good-bg: #143024; --warn: #E2B04A; --warn-bg: #352812; --bad: #F57A6C; --bad-bg: #3A1B18; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #0D1419; --surface: #141E25; --surface-2: #1B2731; --ink: #E4EAEE; --muted: #91A2AF; --line: #283844;
+    --accent: #8DAEF5; --accent-soft: #1F2E4A;
+    --good: #4FC48B; --good-bg: #143024; --warn: #E2B04A; --warn-bg: #352812; --bad: #F57A6C; --bad-bg: #3A1B18; color-scheme: dark; }
+  body { background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", system-ui, sans-serif; font-size: 14px; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 48px; }
+  .num { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  h1, h2, h3 { font-family: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif; text-wrap: balance; }
+  .label { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px 2px 7px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .c-green { color: var(--good); background: var(--good-bg); }
+  .c-yellow { color: var(--warn); background: var(--warn-bg); }
+  .c-red { color: var(--bad); background: var(--bad-bg); }
+  .stripe-green { box-shadow: inset 3px 0 0 var(--good); }
+  .stripe-yellow { box-shadow: inset 3px 0 0 var(--warn); }
+  .stripe-red { box-shadow: inset 3px 0 0 var(--bad); }
+  .tab { padding: 9px 14px; border-bottom: 2px solid transparent; color: var(--muted); font-weight: 600; white-space: nowrap; display: inline-flex; gap: 7px; align-items: center; }
+  .tab[aria-selected="true"] { color: var(--ink); border-color: var(--accent); }
+  .tab:hover { color: var(--ink); }
+  table.grid { width: 100%; border-collapse: collapse; }
+  table.grid th { text-align: left; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; background: var(--surface); }
+  table.grid td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; white-space: nowrap; }
+  table.grid tfoot td { white-space: normal; }
+  table.grid tbody tr.clickable { cursor: pointer; }
+  table.grid tbody tr.clickable:hover td { background: var(--surface-2); }
+  table.grid tbody tr.selected td { background: var(--accent-soft); }
+  .r { text-align: right !important; }
+  .scorebar { width: 92px; height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+  .scorebar > i { display: block; height: 100%; border-radius: 3px; }
+  input[type="number"], input[type="text"], select, textarea { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 6px 8px; color: var(--ink); width: 100%; }
+  textarea { font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+  input[type="range"] { width: 100%; accent-color: var(--accent); }
+  input[type="checkbox"] { accent-color: var(--accent); width: 15px; height: 15px; }
+  .btn { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border-radius: 4px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-weight: 600; font-size: 13px; }
+  .btn:hover { background: var(--surface-2); }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+  .btn-primary:hover { background: var(--accent); filter: brightness(1.08); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px dashed var(--line); }
+  .kv:last-child { border-bottom: 0; }
+  .note { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .progress { height: 10px; background: var(--surface-2); border-radius: 5px; overflow: hidden; }
+  .progress > i { display: block; height: 100%; background: var(--accent); }
+  svg.spark { display: block; }
+  [data-lucide] { width: 16px; height: 16px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="flex flex-wrap items-end justify-between gap-4 pb-4 border-b border-line">
+    <div class="min-w-0">
+      <div class="label">PEA · Euronext · stratégie Buy &amp; Hold</div>
+      <h1 class="text-3xl font-bold tracking-tight mt-1">Radar PEA</h1>
+      <p class="note mt-1" id="asof"></p>
+    </div>
+    <div class="flex flex-wrap gap-2 items-center">
+      <span class="btn" style="cursor:default"><i data-lucide="wallet"></i><span class="num" id="hdr-budget"></span></span>
+      <span class="btn" style="cursor:default"><i data-lucide="clock-3"></i>Mise à jour 6h00 Paris</span>
+    </div>
+  </header>
+
+  <section id="summary" class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5"></section>
+
+  <nav class="flex gap-1 mt-6 border-b border-line scroll-x" role="tablist" id="tabs">
+    <button class="tab" role="tab" data-tab="ranking"><i data-lucide="list-ordered"></i>Classement</button>
+    <button class="tab" role="tab" data-tab="allocation"><i data-lucide="pie-chart"></i>Allocation 150 k€</button>
+    <button class="tab" role="tab" data-tab="airliquide"><i data-lucide="droplets"></i>Air Liquide</button>
+    <button class="tab" role="tab" data-tab="lombard"><i data-lucide="landmark"></i>Nantissement</button>
+    <button class="tab" role="tab" data-tab="fees"><i data-lucide="receipt"></i>Frais Bourse Direct</button>
+    <button class="tab" role="tab" data-tab="universe"><i data-lucide="sliders-horizontal"></i>Univers &amp; réglages</button>
+  </nav>
+
+  <main class="mt-5">
+    <!-- ================= CLASSEMENT ================= -->
+    <section data-pane="ranking">
+      <div class="grid lg:grid-cols-[minmax(0,1fr)_380px] gap-5">
+        <div class="panel min-w-0">
+          <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-line">
+            <h2 class="text-lg font-semibold">Score d'opportunité d'achat</h2>
+            <div class="flex gap-2 flex-wrap" id="filter-bar"></div>
+          </div>
+          <div class="scroll-x"><table class="grid" id="rank-table"></table></div>
+          <p class="note px-4 py-3">Cliquez une ligne pour le détail. Score = (technique × poids + valorisation × poids) × coefficient Buy &amp; Hold (0,85 à 1,15 selon moat, régularité du dividende, résilience).</p>
+        </div>
+        <aside class="panel p-4 min-w-0" id="detail"></aside>
+      </div>
+    </section>
+
+    <!-- ================= ALLOCATION ================= -->
+    <section data-pane="allocation" hidden>
+      <div class="grid lg:grid-cols-[300px_minmax(0,1fr)] gap-5">
+        <div class="panel p-4 flex flex-col gap-4">
+          <h2 class="text-lg font-semibold">Paramètres</h2>
+          <div class="field"><label for="al-budget">Capital à investir (€)</label><input type="number" id="al-budget" step="1000" min="0"></div>
+          <div class="field"><label for="al-maxline">Poids maximum par ligne : <b class="num" id="al-maxline-v"></b></label><input type="range" id="al-maxline" min="8" max="40" step="1"></div>
+          <div class="field"><label for="al-floor">Score plancher (en dessous, pas d'achat) : <b class="num" id="al-floor-v"></b></label><input type="range" id="al-floor" min="0" max="70" step="1"></div>
+          <div class="field"><label for="al-minorder">Taille minimale d'un ordre (€)</label><input type="number" id="al-minorder" step="100" min="0"></div>
+          <label class="flex gap-2 items-center"><input type="checkbox" id="al-red"> Inclure les valeurs 🔴 « Attendre »</label>
+          <label class="flex gap-2 items-start"><input type="checkbox" id="al-ai" class="mt-0.5"> <span>Compléter Air Liquide jusqu'au prochain palier (100 puis 1 000 actions)</span></label>
+          <p class="note">Les 🟢 s'achètent en un ordre. Les 🟡 sont découpées en tranches mensuelles d'au moins la taille minimale (4 au plus). Plafond de versements PEA : 150 000 €. Frais et TTF sont prélevés sur ce capital.</p>
+        </div>
+        <div class="flex flex-col gap-5 min-w-0">
+          <div class="grid md:grid-cols-[minmax(0,1fr)_300px] gap-5">
+            <div class="grid grid-cols-2 gap-3 content-start" id="al-kpis"></div>
+            <div class="panel p-4"><div class="label mb-2">Répartition</div><div style="position:relative;height:220px"><canvas id="al-chart" aria-label="Répartition du capital"></canvas></div></div>
+          </div>
+          <div class="panel min-w-0"><div class="scroll-x"><table class="grid" id="al-table"></table></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= AIR LIQUIDE ================= -->
+    <section data-pane="airliquide" hidden>
+      <div class="grid lg:grid-cols-[320px_minmax(0,1fr)] gap-5">
+        <div class="panel p-4 flex flex-col gap-4">
+          <h2 class="text-lg font-semibold">Ma ligne Air Liquide</h2>
+          <div class="field"><label for="ai-held">Actions détenues au nominatif</label><input type="number" id="ai-held" min="0" step="1"></div>
+          <div class="field"><label for="ai-reg">Année d'inscription au nominatif</label><input type="number" id="ai-reg" min="1990" max="2100" step="1"></div>
+          <div class="field"><label for="ai-next">Année de la prochaine attribution gratuite</label><input type="number" id="ai-next" min="2024" max="2100" step="1"></div>
+          <div class="field"><label for="ai-monthly">Achat mensuel programmé (€)</label><input type="number" id="ai-monthly" min="0" step="50"></div>
+          <label class="flex gap-2 items-center"><input type="checkbox" id="ai-reinvest"> Réinvestir les dividendes</label>
+          <p class="note">Prime de fidélité : actions au nominatif depuis au moins 2 années civiles pleines (inscrites au 31/12 de N−3 pour un dividende versé en N). Elle majore de 10 % le dividende et les attributions gratuites, dans la limite de 0,5 % du capital par actionnaire. Les rompus sont arrondis à l'entier inférieur dans la projection. Calendrier d'attribution à vérifier sur airliquide.com.</p>
+        </div>
+        <div class="flex flex-col gap-5 min-w-0">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="ai-kpis"></div>
+          <div class="panel p-4" id="ai-milestones"></div>
+          <div class="panel p-4"><div class="label mb-2">Projection du nombre d'actions sur 12 ans (cours constant)</div><div style="position:relative;height:260px"><canvas id="ai-chart" aria-label="Projection du nombre d'actions Air Liquide"></canvas></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NANTISSEMENT ================= -->
+    <section data-pane="lombard" hidden>
+      <div class="grid lg:grid-cols-[320px_minmax(0,1fr)] gap-5">
+        <div class="panel p-4 flex flex-col gap-4">
+          <h2 class="text-lg font-semibold">Prêt in fine adossé au PEA</h2>
+          <div class="field"><label for="lb-value">Valeur liquidative du portefeuille (€)</label><input type="number" id="lb-value" step="1000" min="0"></div>
+          <button class="btn" id="lb-from-alloc"><i data-lucide="arrow-down-to-line"></i>Reprendre l'allocation proposée</button>
+          <div class="field"><label for="lb-ltv">Quotité de nantissement (actions) : <b class="num" id="lb-ltv-v"></b></label><input type="range" id="lb-ltv" min="40" max="70" step="1"></div>
+          <div class="field"><label for="lb-loan">Montant emprunté (€, vide = 60 % de la capacité)</label><input type="number" id="lb-loan" step="1000" min="0"></div>
+          <div class="field"><label for="lb-rate">Taux nominal annuel (%)</label><input type="number" id="lb-rate" step="0.05" min="0"></div>
+          <div class="field"><label for="lb-years">Durée (années)</label><input type="number" id="lb-years" step="1" min="1" max="30"></div>
+          <p class="note">Décote usuelle sur un PEA d'actions de grandes capitalisations : 50 à 60 % de la valeur retenue. Quotité, taux et appel de marge sont fixés par l'établissement prêteur : à confirmer avec lui.</p>
+        </div>
+        <div class="flex flex-col gap-5 min-w-0">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="lb-kpis"></div>
+          <div class="grid md:grid-cols-2 gap-5">
+            <div class="panel p-4" id="lb-detail"></div>
+            <div class="panel p-4"><div class="label mb-2">Résistance à une baisse des marchés</div><div style="position:relative;height:240px"><canvas id="lb-chart" aria-label="Valeur de gage selon la baisse du portefeuille"></canvas></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FRAIS ================= -->
+    <section data-pane="fees" hidden>
+      <div class="grid lg:grid-cols-[320px_minmax(0,1fr)] gap-5">
+        <div class="panel p-4 flex flex-col gap-4">
+          <h2 class="text-lg font-semibold">Grille Bourse Direct</h2>
+          <div class="field"><label for="fe-grid">Grille appliquée</label>
+            <select id="fe-grid">
+              <option value="full">Officielle 5 paliers (0,99 / 1,90 / 2,90 / 3,80 € puis 0,09 %)</option>
+              <option value="simple">Simplifiée 3 paliers (0,99 / 1,90 € puis 0,09 %)</option>
+            </select></div>
+          <div class="field"><label for="fe-ttf">Taxe sur les transactions financières (%)</label><input type="number" id="fe-ttf" step="0.05" min="0"></div>
+          <div class="field"><label for="fe-amount">Simuler un ordre (€)</label><input type="number" id="fe-amount" step="100" min="0"></div>
+          <div id="fe-sim"></div>
+          <p class="note">La TTF s'applique aux achats d'actions françaises de plus d'un milliard d'euros de capitalisation, PEA compris. ASML (Pays-Bas) en est exonérée. La grille simplifiée rend un ordre de 1 001 € moins cher qu'un ordre de 999 € : la grille officielle évite cet effet de seuil.</p>
+        </div>
+        <div class="flex flex-col gap-5 min-w-0">
+          <div class="panel min-w-0"><div class="scroll-x"><table class="grid" id="fe-table"></table></div></div>
+          <div class="panel p-4"><div class="label mb-2">Coût du courtage en % du montant de l'ordre</div><div style="position:relative;height:250px"><canvas id="fe-chart" aria-label="Frais en pourcentage selon la taille d'ordre"></canvas></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= UNIVERS ================= -->
+    <section data-pane="universe" hidden>
+      <div class="grid lg:grid-cols-2 gap-5">
+        <div class="panel p-4 flex flex-col gap-4 min-w-0">
+          <h2 class="text-lg font-semibold">Pondérations du score</h2>
+          <div class="field"><label for="st-tech">Technique (DMA 200, drawdown) : <b class="num" id="st-tech-v"></b> · Valorisation : <b class="num" id="st-val-v"></b></label><input type="range" id="st-tech" min="0" max="100" step="5"></div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="field"><label for="st-green">Seuil 🟢 (score ≥)</label><input type="number" id="st-green" min="0" max="100"></div>
+            <div class="field"><label for="st-red">Seuil 🔴 (score &lt;)</label><input type="number" id="st-red" min="0" max="100"></div>
+            <div class="field"><label for="st-peakdd">« Au plus haut » : drawdown ≤ (%)</label><input type="number" id="st-peakdd" min="0" max="30" step="0.5"></div>
+            <div class="field"><label for="st-peakgap">et écart DMA 200 ≥ (%)</label><input type="number" id="st-peakgap" min="0" max="50" step="0.5"></div>
+          </div>
+          <p class="note">🟢 exige aussi un cours sous la DMA 200 ou à plus de 10 % de son plus haut 52 semaines. Une valeur proche de son plus haut et nettement au-dessus de sa DMA 200 passe 🔴 quel que soit son score.</p>
+          <div><button class="btn" id="st-reset"><i data-lucide="rotate-ccw"></i>Revenir aux réglages du script</button></div>
+          <h2 class="text-lg font-semibold mt-2">Valeurs suivies</h2>
+          <div class="scroll-x"><table class="grid" id="un-table"></table></div>
+        </div>
+        <div class="flex flex-col gap-5 min-w-0">
+          <form class="panel p-4 flex flex-col gap-3" id="un-form">
+            <h2 class="text-lg font-semibold">Ajouter un ticker Euronext</h2>
+            <p class="note">Saisie manuelle, conservée dans ce navigateur. Pour un suivi automatique, copiez ensuite le fichier universe.json ci-dessous dans <span class="num">pea/config/universe.json</span> : le script de 6h00 récupérera ses cours.</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div class="field"><label for="nf-ticker">Ticker Yahoo</label><input type="text" id="nf-ticker" placeholder="CAP.PA" required></div>
+              <div class="field"><label for="nf-name">Nom</label><input type="text" id="nf-name" placeholder="Capgemini" required></div>
+              <div class="field"><label for="nf-sector">Secteur</label><input type="text" id="nf-sector" placeholder="Services IT"></div>
+              <div class="field"><label for="nf-price">Cours (€)</label><input type="number" id="nf-price" step="0.01" required></div>
+              <div class="field"><label for="nf-dma">DMA 200 (€)</label><input type="number" id="nf-dma" step="0.01" required></div>
+              <div class="field"><label for="nf-high">Plus haut 52 s (€)</label><input type="number" id="nf-high" step="0.01" required></div>
+              <div class="field"><label for="nf-eps">BPA 12 mois (€)</label><input type="number" id="nf-eps" step="0.01"></div>
+              <div class="field"><label for="nf-pehist">PER historique</label><input type="number" id="nf-pehist" step="0.1"></div>
+              <div class="field"><label for="nf-pesector">PER secteur</label><input type="number" id="nf-pesector" step="0.1"></div>
+              <div class="field"><label for="nf-div">Dividende annuel (€)</label><input type="number" id="nf-div" step="0.01"></div>
+              <div class="field"><label for="nf-yhist">Rendement historique (%)</label><input type="number" id="nf-yhist" step="0.1"></div>
+              <div class="field"><label for="nf-ttf">Soumis à la TTF</label><select id="nf-ttf"><option value="1">Oui (FR &gt; 1 Md€)</option><option value="0">Non</option></select></div>
+              <div class="field"><label for="nf-moat">Moat (1-5)</label><input type="number" id="nf-moat" min="1" max="5" value="4"></div>
+              <div class="field"><label for="nf-reg">Régularité dividende (1-5)</label><input type="number" id="nf-reg" min="1" max="5" value="4"></div>
+              <div class="field"><label for="nf-res">Résilience (1-5)</label><input type="number" id="nf-res" min="1" max="5" value="4"></div>
+            </div>
+            <div class="flex gap-2 items-center"><button class="btn btn-primary" type="submit"><i data-lucide="plus"></i>Ajouter</button><span class="note" id="nf-msg"></span></div>
+          </form>
+          <div class="panel p-4 flex flex-col gap-3 min-w-0">
+            <div class="flex items-center justify-between gap-3 flex-wrap"><h2 class="text-lg font-semibold">universe.json pour le script</h2><button class="btn" id="ex-copy"><i data-lucide="copy"></i>Copier</button></div>
+            <textarea id="ex-json" rows="12" readonly></textarea>
+            <span class="note" id="ex-msg"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="note mt-10 pt-4 border-t border-line" id="footer"></footer>
+</div>
+
+<script id="pea-data" type="application/json">__PEA_DATA__</script>
+<script>
+(function () {
+  "use strict";
+  const DATA = JSON.parse(document.getElementById("pea-data").textContent);
+  const S0 = DATA.settings;
+  const LABEL = { green: "Forte opportunité", yellow: "Accumulation", red: "Attendre" };
+  const EMOJI = { green: "🟢", yellow: "🟡", red: "🔴" };
+  const GRIDS = {
+    full: [{ max: 500, fee: 0.99 }, { max: 1000, fee: 1.90 }, { max: 2000, fee: 2.90 }, { max: 4400, fee: 3.80 }],
+    simple: [{ max: 500, fee: 0.99 }, { max: 1000, fee: 1.90 }]
+  };
+  const PCT_ABOVE = 0.09;
+
+  // ---------------------------------------------------------------- état (localStorage)
+  const KEY = "radar-pea-v1";
+  const defaults = () => ({
+    tab: "ranking", filter: "all", selected: null,
+    weights: { tech: S0.weights.tech, valuation: S0.weights.valuation },
+    thresholds: Object.assign({ peak_dd: 0.05, peak_gap: 0.08 }, S0.thresholds),
+    alloc: { budget: S0.budget || 150000, maxLine: 20, floor: 30, minOrder: 4400, includeRed: false, aiTarget: true },
+    fees: { grid: "full", ttf: 0.4, amount: 5000 },
+    ai: { held: 0, regYear: 2026, nextAttr: 2028, monthly: 500, reinvest: true },
+    lombard: { value: null, ltv: 55, loan: null, rate: 4.0, years: 7 },
+    custom: [], hidden: []
+  });
+  let st = defaults();
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || "null");
+    if (saved) { for (const k of Object.keys(st)) if (saved[k] !== undefined) st[k] = (typeof st[k] === "object" && !Array.isArray(st[k]) && st[k]) ? Object.assign(st[k], saved[k]) : saved[k]; }
+  } catch (e) { /* stockage indisponible */ }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} };
+  const hashTab = (location.hash || "").slice(1);
+  if (["ranking", "allocation", "airliquide", "lombard", "fees", "universe"].includes(hashTab)) st.tab = hashTab;
+
+  // ---------------------------------------------------------------- utilitaires
+  const $ = (id) => document.getElementById(id);
+  const eur = (v, d = 0) => (v == null || isNaN(v)) ? "–" : v.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }) + " €";
+  const pct = (v, d = 1, sign = false) => (v == null || isNaN(v)) ? "–" : (sign && v > 0 ? "+" : "") + (v * 100).toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }) + " %";
+  const nf = (v, d = 1) => (v == null || isNaN(v)) ? "–" : v.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d });
+  const clamp = (x, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, x));
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const classColor = (c) => css(c === "green" ? "--good" : c === "yellow" ? "--warn" : "--bad");
+
+  // ---------------------------------------------------------------- moteur (miroir de compute_score() du script Python)
+  function computeScore(s, w, t) {
+    const gap = s.dma200 ? s.price / s.dma200 - 1 : 0;
+    const dd = s.high52 ? Math.max(0, 1 - s.price / s.high52) : 0;
+    const sDma = clamp(50 - gap * 200), sDd = clamp(dd / 0.35 * 100);
+    const tech = 0.5 * sDma + 0.5 * sDd;
+    const pe = s.pe;
+    const sPeHist = pe && s.pe_hist ? clamp(50 + (1 - pe / s.pe_hist) * 150) : 50;
+    const sPeSector = pe && s.pe_sector ? clamp(50 + (1 - pe / s.pe_sector) * 100) : 50;
+    const sYield = s.yield_hist ? clamp(50 + ((s.yield || 0) / s.yield_hist - 1) * 100) : 50;
+    const val = 0.45 * sPeHist + 0.25 * sPeSector + 0.30 * sYield;
+    const quality = ((s.moat + s.div_regularity + s.resilience) / 3 - 1) / 4 * 100;
+    const coef = 0.85 + 0.30 * quality / 100;
+    const raw = (w.tech * tech + w.valuation * val) * coef;
+    const score = clamp(raw);
+    let cls = "yellow";
+    if (score >= t.green && (dd >= 0.10 || gap < 0)) cls = "green";
+    else if (score < t.red || (dd <= t.peak_dd && gap >= t.peak_gap)) cls = "red";
+    return { gap_dma200: gap, drawdown: dd, s_dma: sDma, s_dd: sDd, s_tech: tech, s_pe_hist: sPeHist, s_pe_sector: sPeSector, s_yield: sYield, s_val: val, s_quality: quality, coef, score_raw: raw, score, class: cls };
+  }
+
+  function customToStock(c) {
+    const s = Object.assign({}, c, { custom: true, eps_source: "saisie", date: c.added || DATA.as_of });
+    s.pe = c.eps > 0 ? c.price / c.eps : null;
+    s.yield = c.div_ttm ? c.div_ttm / c.price * 100 : 0;
+    s.low52 = null; s.history = null;
+    return s;
+  }
+
+  function stocks() {
+    const list = DATA.stocks.filter((s) => !st.hidden.includes(s.ticker)).map((s) => Object.assign({}, s));
+    st.custom.forEach((c) => { if (!list.some((s) => s.ticker === c.ticker)) list.push(customToStock(c)); });
+    list.forEach((s) => Object.assign(s, computeScore(s, st.weights, st.thresholds)));
+    return list.sort((a, b) => b.score_raw - a.score_raw);
+  }
+
+  // ---------------------------------------------------------------- frais
+  function brokerage(amount) {
+    if (amount <= 0) return 0;
+    for (const t of GRIDS[st.fees.grid]) if (amount <= t.max) return t.fee;
+    return Math.round(amount * PCT_ABOVE) / 100;
+  }
+  const ttfOf = (s, amount) => s.ttf ? amount * st.fees.ttf / 100 : 0;
+
+  // ---------------------------------------------------------------- allocation
+  function aiNextMilestone(held) { return held < 100 ? 100 : held < 1000 ? 1000 : null; }
+
+  function allocate(list) {
+    const A = st.alloc, budget = Math.max(0, +A.budget || 0), cap = A.maxLine / 100;
+    let pool = list.filter((s) => (A.includeRed || s.class !== "red") && s.score > A.floor);
+    const lines = new Map();
+    let fixed = 0;
+
+    // palier Air Liquide
+    const ai = pool.find((s) => s.special === "air_liquide");
+    if (A.aiTarget && ai) {
+      const target = aiNextMilestone(+st.ai.held || 0);
+      if (target) {
+        const need = target - (+st.ai.held || 0), gross = need * ai.price;
+        const cost = gross + brokerage(gross) + ttfOf(ai, gross);
+        if (cost <= budget * Math.max(cap * 1.5, 0.25)) { lines.set(ai.ticker, { s: ai, shares: need, forced: target }); fixed = cost; pool = pool.filter((s) => s !== ai); }
+      }
+    }
+
+    // poids convexes sur l'excès de score, plafonnés par ligne (remplissage itératif)
+    const solve = (p, money) => {
+      let w = new Map(p.map((s) => [s.ticker, Math.pow(Math.max(0, s.score_raw - A.floor), 1.5)]));
+      const capAmt = budget * cap;
+      let free = new Set(p.map((s) => s.ticker)), amounts = new Map(), left = money;
+      for (let it = 0; it < 20 && free.size && left > 0.5; it++) {
+        const tot = [...free].reduce((a, k) => a + w.get(k), 0);
+        if (!tot) break;
+        let capped = false;
+        for (const k of [...free]) {
+          const share = left * w.get(k) / tot, cur = amounts.get(k) || 0;
+          if (cur + share >= capAmt) { amounts.set(k, capAmt); free.delete(k); capped = true; }
+        }
+        if (!capped) { for (const k of free) amounts.set(k, (amounts.get(k) || 0) + left * w.get(k) / tot); left = 0; break; }
+        left = money - [...amounts.values()].reduce((a, b) => a + b, 0);
+      }
+      return amounts;
+    };
+    let amounts = solve(pool, budget - fixed);
+    for (let it = 0; it < 10; it++) {
+      const small = pool.filter((s) => (amounts.get(s.ticker) || 0) < A.minOrder);
+      if (!small.length || small.length === pool.length) break;
+      pool = pool.filter((s) => !small.includes(s));
+      amounts = solve(pool, budget - fixed);
+    }
+
+    const plan = (s, shares) => {
+      const gross = shares * s.price;
+      const n = s.class === "green" || lines.get(s.ticker)?.forced ? 1 : Math.max(1, Math.min(4, Math.floor(gross / Math.max(1, A.minOrder))));
+      const fees = brokerage(gross / n) * n;
+      return { gross, n, fees, ttf: ttfOf(s, gross), total: gross + brokerage(gross / n) * n + ttfOf(s, gross) };
+    };
+    for (const s of pool) {
+      const amt = amounts.get(s.ticker) || 0;
+      const unit = s.price * (1 + (s.ttf ? st.fees.ttf / 100 : 0) + PCT_ABOVE / 100);
+      const shares = Math.floor(amt / unit);
+      if (shares > 0) lines.set(s.ticker, { s, shares });
+    }
+    const totalCost = () => [...lines.values()].reduce((a, l) => a + plan(l.s, l.shares).total, 0);
+    // complète le reliquat action par action, meilleurs scores d'abord, sans dépasser le plafond
+    const order = [...lines.values()].filter((l) => !l.forced).sort((a, b) => b.s.score_raw - a.s.score_raw);
+    for (let guard = 0; guard < 500 && order.length; guard++) {
+      let added = false;
+      for (const l of order) {
+        const before = totalCost();
+        l.shares++;
+        const after = totalCost();
+        if (after > budget || l.shares * l.s.price > budget * cap + l.s.price) { l.shares--; continue; }
+        if (after > before) { added = true; break; }
+      }
+      if (!added) break;
+    }
+    const rows = [...lines.values()].map((l) => Object.assign({ s: l.s, shares: l.shares, forced: l.forced }, plan(l.s, l.shares))).sort((a, b) => b.total - a.total);
+    const invested = rows.reduce((a, r) => a + r.gross, 0);
+    const fees = rows.reduce((a, r) => a + r.fees, 0), ttf = rows.reduce((a, r) => a + r.ttf, 0);
+    const income = rows.reduce((a, r) => a + r.shares * (r.s.div_ttm || 0), 0);
+    return { rows, invested, fees, ttf, cash: budget - invested - fees - ttf, income, budget };
+  }
+
+  // ---------------------------------------------------------------- rendu : synthèse
+  function kpi(label, value, sub, cls) {
+    return `<div class="panel p-3 min-w-0 ${cls ? "stripe-" + cls : ""}"><div class="label">${label}</div><div class="num text-xl font-medium mt-1 truncate">${value}</div>${sub ? `<div class="note mt-0.5">${sub}</div>` : ""}</div>`;
+  }
+
+  function renderSummary(list, alloc) {
+    const c = { green: 0, yellow: 0, red: 0 };
+    list.forEach((s) => c[s.class]++);
+    const top = list[0];
+    $("summary").innerHTML =
+      kpi("Fortes opportunités", `${EMOJI.green} ${c.green}`, `${c.yellow} en accumulation · ${c.red} à attendre`, "green") +
+      kpi("Meilleur score du jour", top ? esc(top.name) : "–", top ? `${nf(top.score, 0)}/100 · ${pct(top.drawdown)} sous le plus haut 52 s` : "", top && top.class) +
+      kpi("Allocation proposée", eur(alloc.invested), `${alloc.rows.length} lignes · frais + TTF ${eur(alloc.fees + alloc.ttf)}`) +
+      kpi("Capacité in fine", eur(alloc.invested * st.lombard.ltv / 100), `nantissement à ${st.lombard.ltv} % de l'allocation`);
+  }
+
+  // ---------------------------------------------------------------- rendu : classement
+  function spark(hist, cls) {
+    if (!hist || hist.length < 2) return `<span class="note">saisie</span>`;
+    const pts = hist.slice(-252).map((h) => h[1]);
+    const W = 80, H = 26, mn = Math.min(...pts), mx = Math.max(...pts), k = (mx - mn) || 1;
+    const xy = pts.map((v, i) => [i / (pts.length - 1) * W, H - 2 - (v - mn) / k * (H - 4)]);
+    const d = xy.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join("");
+    const last = xy[xy.length - 1];
+    return `<svg class="spark" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true"><path d="${d}" fill="none" stroke="var(--muted)" stroke-width="1.2"/><circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="2.5" fill="${classColor(cls)}"/></svg>`;
+  }
+
+  function renderRanking(list) {
+    const counts = { all: list.length, green: 0, yellow: 0, red: 0 };
+    list.forEach((s) => counts[s.class]++);
+    $("filter-bar").innerHTML = ["all", "green", "yellow", "red"].map((f) =>
+      `<button class="btn ${st.filter === f ? "btn-primary" : ""}" data-filter="${f}">${f === "all" ? "Toutes" : EMOJI[f] + " " + LABEL[f]} <span class="num">${counts[f]}</span></button>`).join("");
+    const shown = list.filter((s) => st.filter === "all" || s.class === st.filter);
+    if (!st.selected || !list.some((s) => s.ticker === st.selected)) st.selected = list[0] && list[0].ticker;
+    $("rank-table").innerHTML = `<thead><tr><th>#</th><th>Valeur</th><th>Signal</th><th>Score</th><th class="r">Cours</th><th class="r">vs DMA 200</th><th class="r">Drawdown 52 s</th><th class="r">PER / hist.</th><th class="r">Rendement</th><th>1 an</th></tr></thead><tbody>` +
+      shown.map((s) => `<tr class="clickable ${s.ticker === st.selected ? "selected" : ""}" data-ticker="${esc(s.ticker)}" tabindex="0">
+        <td class="num note">${list.indexOf(s) + 1}</td>
+        <td><div class="font-semibold">${esc(s.name)}</div><div class="note num">${esc(s.ticker)} · ${esc(s.sector || "")}</div></td>
+        <td><span class="pill c-${s.class}">${LABEL[s.class]}</span></td>
+        <td><div class="flex items-center gap-2"><span class="num font-medium" style="min-width:2.2em">${nf(s.score, 0)}</span><div class="scorebar"><i style="width:${s.score}%;background:${classColor(s.class)}"></i></div></div></td>
+        <td class="r num">${nf(s.price, 2)}</td>
+        <td class="r num" style="color:${s.gap_dma200 < 0 ? "var(--good)" : "var(--ink)"}">${pct(s.gap_dma200, 1, true)}</td>
+        <td class="r num" style="color:${s.drawdown >= 0.10 ? "var(--good)" : "var(--ink)"}">${pct(-s.drawdown)}</td>
+        <td class="r num">${s.pe ? nf(s.pe, 1) : "–"} <span class="note">/ ${nf(s.pe_hist, 0)}</span></td>
+        <td class="r num">${nf(s.yield, 2)} %${s.special === "air_liquide" ? `<div class="note">${nf(s.yield * 1.1, 2)} % fidélité</div>` : ""}</td>
+        <td>${spark(s.history, s.class)}</td></tr>`).join("") + `</tbody>`;
+    renderDetail(list.find((s) => s.ticker === st.selected));
+  }
+
+  let detailChart = null;
+  function breakdownRow(label, v, hint) {
+    return `<div class="kv"><span>${label}${hint ? `<div class="note">${hint}</div>` : ""}</span><span class="flex items-center gap-2"><span class="num">${nf(v, 0)}</span><span class="scorebar" style="width:60px"><i style="width:${clamp(v)}%;background:var(--accent)"></i></span></span></div>`;
+  }
+  function renderDetail(s) {
+    const el = $("detail");
+    if (!s) { el.innerHTML = `<p class="note">Aucune valeur.</p>`; return; }
+    const hist = DATA.score_history || {}, days = Object.keys(hist).sort();
+    const sh = days.map((d) => hist[d][s.ticker]).filter((v) => v != null);
+    el.innerHTML = `
+      <div class="flex items-start justify-between gap-3"><div class="min-w-0"><div class="label">${esc(s.ticker)} · ${esc(s.sector || "")}</div><h3 class="text-xl font-semibold">${esc(s.name)}</h3></div><span class="pill c-${s.class}">${LABEL[s.class]}</span></div>
+      <div class="flex items-baseline gap-3 mt-2"><span class="num text-3xl">${nf(s.score, 0)}</span><span class="note">/ 100 · cours ${nf(s.price, 2)} € au ${esc(s.date)}</span></div>
+      ${s.thesis ? `<p class="mt-2 leading-relaxed">${esc(s.thesis)}</p>` : ""}
+      ${s.history ? `<div style="position:relative;height:190px" class="mt-3"><canvas id="detail-chart" aria-label="Cours, DMA 200 et plus haut 52 semaines"></canvas></div>` : ""}
+      <div class="mt-3">
+        ${breakdownRow("Technique", s.s_tech, `DMA 200 ${pct(s.gap_dma200, 1, true)} · drawdown ${pct(s.drawdown)}`)}
+        ${breakdownRow("Valorisation", s.s_val, `PER ${s.pe ? nf(s.pe, 1) : "–"} vs ${nf(s.pe_hist, 0)} hist. et ${nf(s.pe_sector, 0)} secteur · rdt ${nf(s.yield, 2)} % vs ${nf(s.yield_hist, 1)} %`)}
+        ${breakdownRow("Qualité Buy & Hold", s.s_quality, `moat ${s.moat}/5 · dividende ${s.div_regularity}/5 · résilience ${s.resilience}/5 → × ${nf(s.coef, 2)}`)}
+      </div>
+      <div class="note mt-3">BPA ${s.eps ? nf(s.eps, 2) + " €" : "–"} (source : ${esc(s.eps_source || "config")})${s.forward_pe ? ` · PER prévisionnel ${nf(s.forward_pe, 1)}` : ""} · dividendes 12 mois ${s.div_ttm ? nf(s.div_ttm, 2) + " €" : "–"}${s.low52 ? ` · plus bas 52 s ${nf(s.low52, 2)} €` : ""}${sh.length >= 2 ? ` · score sur ${sh.length} jours : ${sh.map((v) => nf(v, 0)).join(" → ")}` : ""}</div>`;
+    if (detailChart) { detailChart.destroy(); detailChart = null; }
+    if (s.history && window.Chart) {
+      const h = s.history, n = h.length, from = Math.max(0, n - 252);
+      const dma = [];
+      for (let i = from; i < n; i++) { const w = h.slice(Math.max(0, i - 199), i + 1); dma.push(w.length >= 200 ? w.reduce((a, b) => a + b[1], 0) / w.length : null); }
+      const labels = h.slice(from).map((x) => x[0]);
+      detailChart = new Chart($("detail-chart"), {
+        type: "line",
+        data: { labels, datasets: [
+          { label: "Cours", data: h.slice(from).map((x) => x[1]), borderColor: css("--ink"), borderWidth: 1.4, pointRadius: 0, fill: { target: "origin", above: css("--accent-soft") }, tension: 0.1 },
+          { label: "DMA 200", data: dma, borderColor: css("--accent"), borderWidth: 1.4, borderDash: [4, 3], pointRadius: 0 },
+          { label: "Plus haut 52 s", data: labels.map(() => s.high52), borderColor: css("--bad"), borderWidth: 1, borderDash: [2, 3], pointRadius: 0 }
+        ] },
+        options: chartOpts({ legend: true, yTicks: (v) => nf(v, 0) })
+      });
+    }
+  }
+
+  function chartOpts(o) {
+    const ink = css("--muted"), line = css("--line");
+    return {
+      responsive: true, maintainAspectRatio: false, animation: false, interaction: { mode: "index", intersect: false },
+      plugins: { legend: { display: !!o.legend, position: "bottom", labels: { color: ink, boxWidth: 12, font: { family: "IBM Plex Sans", size: 11 } } },
+        tooltip: { callbacks: o.tooltip || {} } },
+      scales: o.noScales ? undefined : {
+        x: { ticks: { color: ink, maxTicksLimit: 6, font: { family: "IBM Plex Mono", size: 10 } }, grid: { display: false }, border: { color: line } },
+        y: { ticks: { color: ink, font: { family: "IBM Plex Mono", size: 10 }, callback: o.yTicks }, grid: { color: line }, border: { display: false }, beginAtZero: !!o.zero }
+      }
+    };
+  }
+
+  // ---------------------------------------------------------------- rendu : allocation
+  let allocChart = null;
+  function renderAllocation(list, a) {
+    const A = st.alloc;
+    $("al-budget").value = A.budget; $("al-maxline").value = A.maxLine; $("al-maxline-v").textContent = A.maxLine + " %";
+    $("al-floor").value = A.floor; $("al-floor-v").textContent = A.floor; $("al-minorder").value = A.minOrder;
+    $("al-red").checked = A.includeRed; $("al-ai").checked = A.aiTarget;
+    const y = a.invested ? a.income / a.invested : 0;
+    $("al-kpis").innerHTML =
+      kpi("Investi", eur(a.invested), `${a.rows.length} lignes`) +
+      kpi("Courtage + TTF", eur(a.fees + a.ttf, 2), `${eur(a.fees, 2)} + ${eur(a.ttf, 2)} TTF`) +
+      kpi("Cash résiduel", eur(a.cash, 2), a.budget ? pct(a.cash / a.budget, 2) + " du capital" : "") +
+      kpi("Dividendes / an", eur(a.income), `rendement ${pct(y, 2)} (hors prime AI)`);
+    $("al-table").innerHTML = `<thead><tr><th>Valeur</th><th>Signal</th><th class="r">Poids</th><th class="r">Actions</th><th class="r">Montant</th><th class="r">Courtage</th><th class="r">TTF</th><th>Exécution</th></tr></thead><tbody>` +
+      (a.rows.length ? a.rows.map((r) => `<tr class="stripe-${r.s.class}">
+        <td><div class="font-semibold">${esc(r.s.name)}</div><div class="note num">${esc(r.s.ticker)} · ${nf(r.s.price, 2)} €</div></td>
+        <td><span class="pill c-${r.s.class}">${nf(r.s.score, 0)}</span></td>
+        <td class="r num">${pct(r.gross / a.budget, 1)}</td>
+        <td class="r num">${r.shares}</td>
+        <td class="r num">${eur(r.gross)}</td>
+        <td class="r num">${eur(r.fees, 2)}</td>
+        <td class="r num">${eur(r.ttf, 2)}</td>
+        <td>${r.forced ? `Palier ${r.forced} actions : 1 ordre` : r.n === 1 ? "Achat immédiat : 1 ordre" : `${r.n} tranches mensuelles de ${eur(r.gross / r.n)}`}</td></tr>`).join("")
+        : `<tr><td colspan="8" class="note">Aucune valeur au-dessus du score plancher. Baissez le plancher ou incluez les valeurs 🔴.</td></tr>`) + `</tbody>`;
+    if (allocChart) { allocChart.destroy(); allocChart = null; }
+    if (window.Chart && a.rows.length) {
+      const palette = [css("--accent"), css("--good"), css("--warn"), css("--bad"), css("--muted"), css("--ink")];
+      allocChart = new Chart($("al-chart"), {
+        type: "doughnut",
+        data: { labels: a.rows.map((r) => r.s.name).concat(a.cash > 1 ? ["Cash"] : []), datasets: [{ data: a.rows.map((r) => Math.round(r.gross)).concat(a.cash > 1 ? [Math.round(a.cash)] : []), backgroundColor: a.rows.map((r, i) => palette[i % palette.length]).concat([css("--surface-2")]), borderColor: css("--surface"), borderWidth: 2 }] },
+        options: Object.assign(chartOpts({ legend: true, noScales: true, tooltip: { label: (c) => ` ${c.label} : ${eur(c.raw)}` } }), { cutout: "62%" })
+      });
+    }
+  }
+
+  // ---------------------------------------------------------------- rendu : Air Liquide
+  let aiChart = null;
+  // Cohortes d'actions au nominatif : une cohorte devient « fidèle » le 1er janvier de son année d'inscription + 3.
+  // Ordre dans l'année : maturation, dividende (mai), achats programmés, attribution gratuite (juin).
+  // Les actions gratuites reçues au titre d'actions fidèles sont considérées fidèles immédiatement.
+  function aiProjection(ai) {
+    const A = st.ai, start = new Date(DATA.as_of).getFullYear(), held = +A.held || 0;
+    const price = ai.price, div = ai.div_ttm || 0, yearly = (+A.monthly || 0) * 12;
+    let cohorts = held ? [{ year: +A.regYear || start, n: held }] : [];
+    let std = held, cash = 0, cashStd = 0;
+    const loyalOf = (y) => cohorts.reduce((a, c) => a + (y >= c.year + 3 ? c.n : 0), 0);
+    const total = () => cohorts.reduce((a, c) => a + c.n, 0);
+    const out = [{ y: start, nominatif: held, std: held }];
+    for (let y = start + 1; y <= start + 12; y++) {
+      const loyal = loyalOf(y), tot = total();
+      cash += (A.reinvest ? tot * div + loyal * div * 0.10 : 0) + yearly;
+      cashStd += (A.reinvest ? std * div : 0) + yearly;
+      const buy = Math.floor(cash / price), buyStd = Math.floor(cashStd / price);
+      cash -= buy * price; cashStd -= buyStd * price;
+      if (buy) cohorts.push({ year: y, n: buy });
+      std += buyStd;
+      if (y >= A.nextAttr && (y - A.nextAttr) % 2 === 0) {
+        const t = total(), l = loyalOf(y);
+        const loyalFree = Math.floor(l / 10) + Math.floor(l / 100);
+        const otherFree = Math.floor(t / 10) - Math.floor(l / 10);
+        if (loyalFree) cohorts.push({ year: -Infinity, n: loyalFree });
+        if (otherFree > 0) { const oldest = cohorts.filter((c) => y < c.year + 3).sort((a, b) => a.year - b.year)[0]; cohorts.push({ year: oldest ? oldest.year : y, n: otherFree }); }
+        std += Math.floor(std / 10);
+      }
+      out.push({ y, nominatif: total(), loyal: loyalOf(y + 1), std });
+    }
+    return out;
+  }
+
+  function renderAI(list) {
+    const ai = DATA.stocks.find((s) => s.special === "air_liquide") || list.find((s) => s.special === "air_liquide");
+    const A = st.ai;
+    $("ai-held").value = A.held; $("ai-reg").value = A.regYear; $("ai-next").value = A.nextAttr; $("ai-monthly").value = A.monthly; $("ai-reinvest").checked = A.reinvest;
+    if (!ai) { $("ai-kpis").innerHTML = `<p class="note">Air Liquide n'est pas dans l'univers.</p>`; return; }
+    const scored = list.find((s) => s.ticker === ai.ticker) || Object.assign({}, ai, computeScore(ai, st.weights, st.thresholds));
+    const held = +A.held || 0, now = new Date(DATA.as_of).getFullYear();
+    const eligible = held > 0 && now >= (+A.regYear) + 3;
+    const div = ai.div_ttm || 0;
+    $("ai-kpis").innerHTML =
+      kpi("Valeur de la ligne", eur(held * ai.price), `${held} actions × ${nf(ai.price, 2)} €`, scored.class) +
+      kpi("Dividende annuel", eur(held * div * (eligible ? 1.1 : 1), 2), eligible ? "prime de fidélité incluse" : `prime à partir de ${(+A.regYear) + 3}`) +
+      kpi("Signal du jour", `${EMOJI[scored.class]} ${nf(scored.score, 0)}/100`, LABEL[scored.class]) +
+      kpi("Rendement fidélité", pct(div * 1.1 / ai.price, 2), `vs ${pct(div / ai.price, 2)} au porteur`);
+    const ms = [100, 1000].map((m) => {
+      const missing = Math.max(0, m - held), gross = missing * ai.price, cost = gross + brokerage(gross) + ttfOf(ai, gross);
+      return `<div class="flex flex-col gap-2">
+        <div class="flex justify-between gap-3 flex-wrap"><span class="font-semibold">Palier ${m.toLocaleString("fr-FR")} actions</span><span class="num">${Math.min(held, m)} / ${m}</span></div>
+        <div class="progress"><i style="width:${Math.min(100, held / m * 100)}%"></i></div>
+        <div class="note">${missing ? `Manque ${missing} actions, soit ${eur(cost)} frais et TTF compris. ` : "Palier atteint. "}${m === 100 ? "À 100 actions fidèles, la majoration de 10 % donne 1 action gratuite de plus à chaque attribution (11 pour 100)." : "À 1 000 actions fidèles : 110 actions gratuites par attribution et +10 % sur un dividende d'environ " + eur(1000 * div) + " par an."}</div></div>`;
+    });
+    $("ai-milestones").innerHTML = `<div class="grid md:grid-cols-2 gap-5">${ms.join("")}</div>`;
+    const proj = aiProjection(ai);
+    if (aiChart) { aiChart.destroy(); aiChart = null; }
+    if (window.Chart) {
+      aiChart = new Chart($("ai-chart"), {
+        type: "line",
+        data: { labels: proj.map((p) => p.y), datasets: [
+          { label: "Nominatif (prime de fidélité)", data: proj.map((p) => p.nominatif), borderColor: css("--accent"), backgroundColor: css("--accent"), borderWidth: 2, pointRadius: 2.5, stepped: false },
+          { label: "Au porteur (sans prime)", data: proj.map((p) => p.std), borderColor: css("--muted"), backgroundColor: css("--muted"), borderWidth: 1.5, borderDash: [4, 3], pointRadius: 2 },
+          { label: "Palier 100", data: proj.map(() => 100), borderColor: css("--good"), borderWidth: 1, borderDash: [2, 3], pointRadius: 0 }
+        ] },
+        options: chartOpts({ legend: true, zero: true, yTicks: (v) => nf(v, 0) })
+      });
+    }
+  }
+
+  // ---------------------------------------------------------------- rendu : nantissement
+  let lbChart = null;
+  function renderLombard(alloc) {
+    const L = st.lombard;
+    const value = L.value != null && L.value !== "" ? +L.value : alloc.invested;
+    $("lb-value").value = Math.round(value); $("lb-ltv").value = L.ltv; $("lb-ltv-v").textContent = L.ltv + " %";
+    $("lb-loan").value = L.loan == null ? "" : L.loan; $("lb-rate").value = L.rate; $("lb-years").value = L.years;
+    const pledge = value * L.ltv / 100;
+    const loan = L.loan == null || L.loan === "" ? Math.round(pledge * 0.6 / 1000) * 1000 : +L.loan;
+    const interest = loan * L.rate / 100, total = interest * L.years;
+    const yieldPf = alloc.invested ? alloc.income / alloc.invested : 0.025;
+    const divs = value * yieldPf;
+    const cushion = pledge > 0 ? 1 - loan / pledge : 0;
+    $("lb-kpis").innerHTML =
+      kpi("Valeur de nantissement", eur(pledge), `${L.ltv} % de ${eur(value)}`) +
+      kpi("Capital emprunté", eur(loan), `remboursé en une fois dans ${L.years} ans`, loan > pledge ? "red" : null) +
+      kpi("Intérêts annuels", eur(interest), `${eur(total)} sur la durée`) +
+      kpi("Baisse tolérée", cushion > 0 ? pct(cushion, 0) : "0 %", "avant que le gage ne couvre plus le prêt", cushion < 0.2 ? "red" : cushion < 0.35 ? "yellow" : "green");
+    $("lb-detail").innerHTML = `<div class="label mb-1">Lecture</div>
+      <div class="kv"><span>Dividendes annuels estimés du PEA</span><span class="num">${eur(divs)}</span></div>
+      <div class="kv"><span>Couverture des intérêts par les dividendes</span><span class="num">${interest ? pct(divs / interest, 0) : "–"}</span></div>
+      <div class="kv"><span>Rendement nécessaire pour payer les intérêts</span><span class="num">${value ? pct(interest / value, 2) : "–"}</span></div>
+      <div class="kv"><span>Seuil de valeur du PEA déclenchant un appel de marge</span><span class="num">${eur(loan / (L.ltv / 100))}</span></div>
+      <p class="note mt-3">Les dividendes restent dans le PEA : les intérêts se paient hors PEA (revenus, trésorerie de la SASU, etc.). Un retrait du PEA avant 5 ans entraîne sa clôture.</p>`;
+    if (lbChart) { lbChart.destroy(); lbChart = null; }
+    if (window.Chart) {
+      const drops = [0, 10, 20, 30, 40, 50, 60];
+      lbChart = new Chart($("lb-chart"), {
+        type: "bar",
+        data: { labels: drops.map((d) => (d ? "−" + d : "0") + " %"), datasets: [
+          { type: "bar", label: "Valeur de gage", data: drops.map((d) => Math.round(pledge * (1 - d / 100))), backgroundColor: drops.map((d) => pledge * (1 - d / 100) >= loan ? css("--accent") : css("--bad")), borderRadius: 3 },
+          { type: "line", label: "Capital emprunté", data: drops.map(() => Math.round(loan)), borderColor: css("--ink"), borderWidth: 1.5, borderDash: [4, 3], pointRadius: 0 }
+        ] },
+        options: chartOpts({ legend: true, zero: true, yTicks: (v) => nf(v / 1000, 0) + " k" , tooltip: { label: (c) => ` ${c.dataset.label} : ${eur(c.raw)}` } })
+      });
+    }
+  }
+
+  // ---------------------------------------------------------------- rendu : frais
+  let feChart = null;
+  function renderFees(list) {
+    const F = st.fees;
+    $("fe-grid").value = F.grid; $("fe-ttf").value = F.ttf; $("fe-amount").value = F.amount;
+    const amt = +F.amount || 0, b = brokerage(amt), t = amt * F.ttf / 100;
+    $("fe-sim").innerHTML = `<div class="kv"><span>Courtage</span><span class="num">${eur(b, 2)} · ${amt ? pct(b / amt, 3) : "–"}</span></div><div class="kv"><span>TTF (valeur française)</span><span class="num">${eur(t, 2)}</span></div><div class="kv"><span>Coût total</span><span class="num">${eur(b + t, 2)} · ${amt ? pct((b + t) / amt, 3) : "–"}</span></div>`;
+    const grid = GRIDS[F.grid];
+    const rows = grid.map((g, i) => ({ range: `${i ? grid[i - 1].max.toLocaleString("fr-FR") : "0"} – ${g.max.toLocaleString("fr-FR")} €`, fee: eur(g.fee, 2), eff: `${pct(g.fee / g.max, 3)} à ${pct(g.fee / (i ? grid[i - 1].max + 0.01 : 100), 2)}` }));
+    rows.push({ range: `> ${grid[grid.length - 1].max.toLocaleString("fr-FR")} €`, fee: `${nf(PCT_ABOVE, 2)} %`, eff: pct(PCT_ABOVE / 100, 3) });
+    const breakEven = grid[grid.length - 1].max;
+    $("fe-table").innerHTML = `<thead><tr><th>Montant de l'ordre</th><th class="r">Courtage</th><th class="r">Coût effectif</th></tr></thead><tbody>` +
+      rows.map((r) => `<tr><td class="num">${r.range}</td><td class="r num">${r.fee}</td><td class="r num">${r.eff}</td></tr>`).join("") +
+      `</tbody><tfoot><tr><td colspan="3" class="note" style="padding:10px">Taille d'ordre conseillée : au moins ${eur(breakEven)} (${pct(brokerage(breakEven) / breakEven, 3)}). Un achat progressif de 500 € par mois coûte ${pct(0.99 / 500, 2)} par ordre, soit plus du double d'un ordre de ${eur(breakEven)}. Exemple sur votre univers : ${list.slice(0, 1).map((s) => `${esc(s.name)} à ${nf(s.price, 2)} € → ${Math.ceil(breakEven / s.price)} actions minimum par ordre`).join("")}.</td></tr></tfoot>`;
+    if (feChart) { feChart.destroy(); feChart = null; }
+    if (window.Chart) {
+      const xs = []; for (let x = 200; x <= 15000; x += x < 2000 ? 50 : 200) xs.push(x);
+      feChart = new Chart($("fe-chart"), {
+        type: "line",
+        data: { labels: xs, datasets: [{ label: "Courtage", data: xs.map((x) => +(brokerage(x) / x * 100).toFixed(4)), borderColor: css("--accent"), borderWidth: 1.8, pointRadius: 0, stepped: false },
+          { label: "Plancher 0,09 %", data: xs.map(() => PCT_ABOVE), borderColor: css("--good"), borderWidth: 1, borderDash: [3, 3], pointRadius: 0 }] },
+        options: chartOpts({ legend: true, zero: true, yTicks: (v) => nf(v, 2) + " %", tooltip: { title: (c) => eur(+c[0].label), label: (c) => ` ${c.dataset.label} : ${nf(c.raw, 3)} %` } })
+      });
+      feChart.options.scales.x.ticks.callback = function (v) { const x = xs[v]; return x >= 1000 ? nf(x / 1000, 0) + " k€" : x + " €"; };
+      feChart.update();
+    }
+  }
+
+  // ---------------------------------------------------------------- rendu : univers
+  function exportJson() {
+    const keep = ["ticker", "name", "sector", "country", "ttf", "eps_ttm", "prefer_config_eps", "pe_hist", "pe_sector", "yield_hist", "moat", "div_regularity", "resilience", "special", "thesis"];
+    const tick = DATA.stocks.filter((s) => !st.hidden.includes(s.ticker)).map((s) => { const o = {}; keep.forEach((k) => { if (s[k] !== undefined) o[k] = s[k]; }); return o; });
+    st.custom.forEach((c) => { if (!tick.some((t) => t.ticker === c.ticker)) tick.push({ ticker: c.ticker, name: c.name, sector: c.sector, country: c.ttf ? "FR" : "", ttf: !!c.ttf, eps_ttm: c.eps || null, pe_hist: c.pe_hist || null, pe_sector: c.pe_sector || null, yield_hist: c.yield_hist || null, moat: c.moat, div_regularity: c.div_regularity, resilience: c.resilience }); });
+    return JSON.stringify({ settings: { budget: st.alloc.budget, weights: st.weights, thresholds: st.thresholds, alert_top_n: S0.alert_top_n || 3 }, tickers: tick }, null, 2);
+  }
+  function renderUniverse(list) {
+    $("st-tech").value = Math.round(st.weights.tech * 100); $("st-tech-v").textContent = Math.round(st.weights.tech * 100) + " %"; $("st-val-v").textContent = Math.round(st.weights.valuation * 100) + " %";
+    $("st-green").value = st.thresholds.green; $("st-red").value = st.thresholds.red;
+    $("st-peakdd").value = +(st.thresholds.peak_dd * 100).toFixed(1); $("st-peakgap").value = +(st.thresholds.peak_gap * 100).toFixed(1);
+    const all = DATA.stocks.map((s) => ({ ticker: s.ticker, name: s.name, custom: false })).concat(st.custom.map((c) => ({ ticker: c.ticker, name: c.name, custom: true })));
+    $("un-table").innerHTML = `<thead><tr><th>Valeur</th><th>Source</th><th class="r">Action</th></tr></thead><tbody>` + all.map((s) => {
+      const hidden = st.hidden.includes(s.ticker);
+      return `<tr><td><span class="font-semibold" style="${hidden ? "opacity:.5;text-decoration:line-through" : ""}">${esc(s.name)}</span> <span class="note num">${esc(s.ticker)}</span></td><td class="note">${s.custom ? "saisie manuelle" : "script 6h00"}</td>
+        <td class="r">${s.custom ? `<button class="btn" data-remove="${esc(s.ticker)}"><i data-lucide="trash-2"></i>Supprimer</button>` : `<button class="btn" data-toggle="${esc(s.ticker)}"><i data-lucide="${hidden ? "eye" : "eye-off"}"></i>${hidden ? "Réafficher" : "Masquer"}</button>`}</td></tr>`;
+    }).join("") + `</tbody>`;
+    $("ex-json").value = exportJson();
+  }
+
+  // ---------------------------------------------------------------- orchestration
+  if (window.Chart) { Chart.defaults.font.family = '"IBM Plex Sans", system-ui, sans-serif'; }
+
+  function render() {
+    const list = stocks();
+    const alloc = allocate(list);
+    renderSummary(list, alloc);
+    document.querySelectorAll("#tabs .tab").forEach((b) => b.setAttribute("aria-selected", b.dataset.tab === st.tab ? "true" : "false"));
+    document.querySelectorAll("[data-pane]").forEach((p) => { p.hidden = p.dataset.pane !== st.tab; });
+    ({ ranking: () => renderRanking(list), allocation: () => renderAllocation(list, alloc), airliquide: () => renderAI(list), lombard: () => renderLombard(alloc), fees: () => renderFees(list), universe: () => renderUniverse(list) })[st.tab]();
+    if (window.lucide) lucide.createIcons();
+    save();
+  }
+
+  const hdr = DATA.generated_at ? new Date(DATA.generated_at) : null;
+  $("asof").textContent = `Cours au ${new Date(DATA.as_of).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })} · généré ${hdr ? hdr.toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" }) : "–"} · ${DATA.stocks.length} valeurs suivies`;
+  $("hdr-budget").textContent = eur(st.alloc.budget);
+  $("footer").innerHTML = `Source : ${esc(DATA.source)} · BPA : ${DATA.fundamentals_source === "yahoo" ? "Yahoo Finance (BPA 12 mois glissants), sauf exceptions indiquées" : "fichier de configuration"} · PER historiques, PER sectoriels et notes qualité : références de départ à affiner dans universe.json.${DATA.errors && DATA.errors.length ? " Erreurs : " + esc(DATA.errors.join(" ; ")) : ""}<br>Outil d'aide à la décision, pas un conseil en investissement. Les signaux reposent sur des données différées et des hypothèses modifiables.`;
+
+  // ---------------------------------------------------------------- événements
+  $("tabs").addEventListener("click", (e) => { const b = e.target.closest(".tab"); if (b) { st.tab = b.dataset.tab; render(); } });
+  $("filter-bar").addEventListener("click", (e) => { const b = e.target.closest("[data-filter]"); if (b) { st.filter = b.dataset.filter; render(); } });
+  const pick = (e) => { const tr = e.target.closest("tr[data-ticker]"); if (tr) { st.selected = tr.dataset.ticker; render(); } };
+  $("rank-table").addEventListener("click", pick);
+  $("rank-table").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(e); } });
+
+  const bind = (id, fn, ev = "input") => $(id).addEventListener(ev, (e) => { fn(e.target); render(); });
+  bind("al-budget", (t) => st.alloc.budget = Math.max(0, +t.value || 0), "change");
+  bind("al-maxline", (t) => st.alloc.maxLine = +t.value);
+  bind("al-floor", (t) => st.alloc.floor = +t.value);
+  bind("al-minorder", (t) => st.alloc.minOrder = Math.max(0, +t.value || 0), "change");
+  bind("al-red", (t) => st.alloc.includeRed = t.checked, "change");
+  bind("al-ai", (t) => st.alloc.aiTarget = t.checked, "change");
+  bind("ai-held", (t) => st.ai.held = Math.max(0, Math.floor(+t.value || 0)), "change");
+  bind("ai-reg", (t) => st.ai.regYear = +t.value || st.ai.regYear, "change");
+  bind("ai-next", (t) => st.ai.nextAttr = +t.value || st.ai.nextAttr, "change");
+  bind("ai-monthly", (t) => st.ai.monthly = Math.max(0, +t.value || 0), "change");
+  bind("ai-reinvest", (t) => st.ai.reinvest = t.checked, "change");
+  bind("lb-value", (t) => st.lombard.value = t.value === "" ? null : +t.value, "change");
+  bind("lb-ltv", (t) => st.lombard.ltv = +t.value);
+  bind("lb-loan", (t) => st.lombard.loan = t.value === "" ? null : Math.max(0, +t.value), "change");
+  bind("lb-rate", (t) => st.lombard.rate = Math.max(0, +t.value || 0), "change");
+  bind("lb-years", (t) => st.lombard.years = Math.max(1, +t.value || 1), "change");
+  $("lb-from-alloc").addEventListener("click", () => { st.lombard.value = null; render(); });
+  bind("fe-grid", (t) => st.fees.grid = t.value, "change");
+  bind("fe-ttf", (t) => st.fees.ttf = Math.max(0, +t.value || 0), "change");
+  bind("fe-amount", (t) => st.fees.amount = Math.max(0, +t.value || 0), "change");
+  bind("st-tech", (t) => { st.weights.tech = +t.value / 100; st.weights.valuation = +(1 - st.weights.tech).toFixed(2); });
+  bind("st-green", (t) => st.thresholds.green = +t.value, "change");
+  bind("st-red", (t) => st.thresholds.red = +t.value, "change");
+  bind("st-peakdd", (t) => st.thresholds.peak_dd = (+t.value || 0) / 100, "change");
+  bind("st-peakgap", (t) => st.thresholds.peak_gap = (+t.value || 0) / 100, "change");
+  $("st-reset").addEventListener("click", () => { const d = defaults(); st.weights = d.weights; st.thresholds = d.thresholds; render(); });
+  $("un-table").addEventListener("click", (e) => {
+    const t = e.target.closest("[data-toggle]"), r = e.target.closest("[data-remove]");
+    if (t) { const k = t.dataset.toggle; st.hidden = st.hidden.includes(k) ? st.hidden.filter((x) => x !== k) : st.hidden.concat(k); render(); }
+    if (r) { st.custom = st.custom.filter((c) => c.ticker !== r.dataset.remove); render(); }
+  });
+  $("un-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const v = (id) => $(id).value.trim(), n = (id) => v(id) === "" ? null : +v(id);
+    const ticker = v("nf-ticker").toUpperCase();
+    if ([...DATA.stocks, ...st.custom].some((s) => s.ticker === ticker)) { $("nf-msg").textContent = `${ticker} est déjà suivi.`; return; }
+    st.custom.push({ ticker, name: v("nf-name"), sector: v("nf-sector"), price: n("nf-price"), dma200: n("nf-dma"), high52: n("nf-high"), eps: n("nf-eps"), pe_hist: n("nf-pehist"), pe_sector: n("nf-pesector"), div_ttm: n("nf-div"), yield_hist: n("nf-yhist"), ttf: v("nf-ttf") === "1", moat: clamp(n("nf-moat") || 3, 1, 5), div_regularity: clamp(n("nf-reg") || 3, 1, 5), resilience: clamp(n("nf-res") || 3, 1, 5), added: new Date().toISOString().slice(0, 10) });
+    e.target.reset();
+    $("nf-msg").textContent = `${ticker} ajouté au classement.`;
+    render();
+  });
+  $("ex-copy").addEventListener("click", () => {
+    const ta = $("ex-json");
+    const ok = () => { $("ex-msg").textContent = "Copié. Collez-le dans pea/config/universe.json."; };
+    const fallback = () => { ta.focus(); ta.select(); $("ex-msg").textContent = "Texte sélectionné : copiez-le avec Ctrl+C / Cmd+C."; };
+    try { navigator.clipboard.writeText(ta.value).then(ok, fallback); } catch (err) { fallback(); }
+  });
+  if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  render();
+})();
+</script>
