@@ -115,8 +115,8 @@ export function detectMainType(t: string): LotType {
 }
 
 const DEP_RE = /\b(un|une|deux|trois|quatre|cinq|six|\d)?\s*(garages?|box(?:es)?|parkings?|places? de (?:parking|stationnement)|emplacements? de (?:parking|stationnement)|caves?|celliers?)\b/gi;
-const NEG_BEFORE = /(proche|proximit[ée]|possibilit[ée]|en option|en sus|non (?:inclus|compris)|sans|pas de|[àa] louer|location|acc[eè]s|dans la rue|facile|ext[ée]rieur au lot)[^.\n]{0,20}$/i;
-const NEG_AFTER = /^[^.\n]{0,12}(visiteurs?|public|gratuit|[àa] proximit|en sus|en option|possible|[àa] louer|collectif)/i;
+const NEG_BEFORE = /(proche|proximit[ée]|possibilit[ée]|en option|en sus|non (?:inclus|compris)|sans|pas de|[àa] louer|location|acc[eè]s|dans la rue|facile|ext[ée]rieur au lot|d'autres|d’autres|[ée]galement disponibles?|possibilit[ée] d'acqu[ée]rir|en plus du prix)[^.\n]{0,20}$/i;
+const NEG_AFTER = /^[^.\n]{0,12}(visiteurs?|public|gratuit|[àa] proximit|en sus|en option|possible|[àa] louer|collectif|ext[ée]rieur(?! priv)|sont (?:aussi |[ée]galement )?(?:disponibles|[àa] vendre|propos[ée]s)|disponibles? (?:[àa] la vente|en sus|en plus|s[ée]par[ée]ment)|[àa] vendre s[ée]par[ée]ment|en suppl[ée]ment|[àa] acqu[ée]rir)/i;
 
 /** Détecte les dépendances vendues avec le bien (garage, parking, cave) et leur nombre. */
 export function detectDependencies(text: string): { type: LotType; count: number }[] {
@@ -224,6 +224,8 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
     const m = text.match(new RegExp(STREET.source.replace(')?[,\\s]*', ')[,\\s]+'), 'i'));
     streetM = m;
   }
+  // « place de stationnement », « résidence principale… », fragments de phrase : pas une adresse
+  if (streetM && (/stationnement|parking|investissement|[ée]tage|\bpour\b|\bavec\b|principale|s[ée]curis|proximit|commerces|calme|standing|services|seniors?/i.test(streetM[2]) || streetM[2].split(/\s+/).length > 7)) streetM = null;
   const dpeM = text.match(/(?:DPE|classe [ée]nerg(?:[ée]tique|ie)|consommation [ée]nerg[ée]tique|[ée]tiquette [ée]nergie|diagnostic de performance [ée]nerg[ée]tique(?:\s*\(DPE\))?)[)\s:]*(?:classe\s*)?([A-G])\b/i);
   const chM = text.match(/charges?[^\d\n]{0,30}(\d[\d\s .]*)\s*€\s*(?:\/|par)?\s*(an|mois|trimestre)?/i);
   let chargesAnnual: number | undefined;

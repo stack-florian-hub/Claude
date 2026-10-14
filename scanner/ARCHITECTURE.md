@@ -69,6 +69,10 @@ alerte          = gain brut > 30 000 € OU gain brut / prix > 25 %
 score 0-100     = 35 × marge % (plafonnée à 40 %) + 35 × gain € (plafonné à 100 k€)
                 + 10 × confiance DVF + 10 × signaux (lot groupé, baisse de prix, vente judiciaire, ancienneté)
                 + 10 × liquidité (ville tendue, petits lots faciles à revendre)
+                − 4 par red flag grave (max 12)
+                × budget : 1,15 si prix + frais + travaux ≤ budget.confort (150 k€), 1 → 0,85 jusqu'à budget.elargi (250 k€), 0,6 au-delà
+travaux auto    = détail dans Analysis.travauxDetail : niveau annoncé (lourd / léger), sinon remise au goût du jour (fees.travauxDecoM2)
+                  sauf bien refait (detectRenovated), + coût indicatif des red flags chiffrables (detectRedFlags)
 ```
 
 Valeur d'un lot, par ordre de préférence :
@@ -88,7 +92,7 @@ Indicateur de marché clé (écran Marchés) : **prime de vente séparée** = m�
 ## 5. Connecteurs futurs
 
 - `ListingProvider` : collage de texte, CSV, JSON, saisie manuelle, bookmarklet (capture de la page affichée, déclenchée par l'utilisateur).
-- Collecteurs (`src/lib/collect/`) : **AJP Immobilier** (`npm run collect`). Les réseaux reconnus sont listés dans `src/lib/networks.ts` ; un nouveau collecteur = un module qui renvoie des `ListingInput` (vérifier d'abord le robots.txt du réseau).
+- Collecteurs (`src/lib/collect/`, outils communs dans `http.ts`) : **AJP Immobilier**, **Century 21**, **Laforêt**, **Immonot** (`npm run collect`, exécutés en parallèle ; un réseau en erreur ne retire pas ses annonces). Les réseaux reconnus sont listés dans `src/lib/networks.ts` ; un nouveau collecteur = un module qui renvoie des `ListingInput` (vérifier d'abord le robots.txt du réseau).
 
 ## 6. Artefact
 

@@ -3,13 +3,13 @@
 Outil de travail du groupe TUÉ et Fils : il croise les **annonces de vente des agences et des notaires** avec l’**historique des ventes réelles (DVF)** pour repérer les biens dont la **somme des lots revendus séparément** dépasse nettement le prix affiché (le modèle du coup New Port, résidence New Port à Saint-Gilles-Croix-de-Vie : appartement + garage + parking + cave vendus en un seul lot).
 
 Deux façons de l’utiliser :
-- **L’artefact** (page claude.ai, rien à installer) : mis à jour **chaque lundi matin** en autonomie (nouvelles annonces AJP, baisses de prix, annonces retirées, nouvelles ventes DVF dès leur publication). Vos statuts, notes, checklist, pipeline et réglages sont gardés dans la base de l’artefact.
+- **L’artefact** (page claude.ai, rien à installer) : mis à jour **chaque lundi matin** en autonomie (nouvelles annonces AJP, Century 21, Laforêt et Immonot, baisses de prix, annonces retirées, nouvelles ventes DVF dès leur publication). Vos statuts, notes, checklist, pipeline et réglages sont gardés dans la base de l’artefact.
 - **L’application locale** (ce dossier) : même interface, plus la collecte à la demande, le géocodage et l’import de fichiers DVF.
 
-- **Réseaux** : 15 grands réseaux d’agences à pignon sur rue (AJP, Century 21, Orpi, Laforêt, Guy Hoquet, ERA, Stéphane Plaza, Square Habitat, Nestenn, Citya, Foncia, Arthurimmo, L’Adresse, CIMM, La Résidence) et 3 canaux notariaux (Immonot, Immobilier.notaires.fr, 36h immo). **AJP est collecté automatiquement** (41 agences dans le 44 / 85 / 49 / 37) ; les autres sont reconnus quand vous collez ou capturez une de leurs annonces. Écart médian au marché DVF par réseau et par agence.
+- **Réseaux** : 15 grands réseaux d’agences à pignon sur rue (AJP, Century 21, Orpi, Laforêt, Guy Hoquet, ERA, Stéphane Plaza, Square Habitat, Nestenn, Citya, Foncia, Arthurimmo, L’Adresse, CIMM, La Résidence) et 3 canaux notariaux (Immonot, Immobilier.notaires.fr, 36h immo). **Collecte automatique : AJP** (41 agences dans le 44 / 85 / 49 / 37), **Century 21**, **Laforêt** et **Immonot** (offices notariaux), sur les pages autorisées par leur robots.txt ; les autres sont reconnus quand vous collez ou capturez une de leurs annonces. Écart médian au marché DVF par réseau et par agence.
 
 - **Marchés** : vos communes comparées sur la DVF (€/m², tendance 2023→2025, liquidité, dépendances, **prime de revente séparée**) pour savoir où chasser les lots groupés.
-- **Opportunités** : liste triée par score d’anomalie, filtres (département, ville, budget 70 k€ ou élargi, type de lot, gain minimal, ancienneté), export CSV.
+- **Opportunités** : liste triée par score d’anomalie, filtres (département, ville, budget 70 k€ ou élargi, type de lot, gain minimal, ancienneté), export CSV. Les annonces dont le prix dépasse la valeur estimée (écart négatif) sont masquées par défaut. Chaque annonce affiche ses **red flags** (toiture, infiltrations, humidité, fissures, mérule, amiante, assainissement, zone inondable, procédure en copropriété…).
 - **Fiche opportunité** : valeur de revente lot par lot (bas / moyen / haut), calcul détaillé du gain, comparables DVF de la rue et de la commune, historique des baisses de prix, checklist achat-revente, simulateur (cash-flow mensuel, TRI, BFR, rotation possible avec la trésorerie).
 - **Pipeline** : repéré → visité → offre → signé → revente lot par lot → clos, cash engagé, gains prévus vs réalisés.
 - **Trésorerie** : cash disponible, cash bloqué par phase, ventes à venir (impact de chaque sortie, ex. garage New Port), trajectoire 12-36 mois selon scénarios.
@@ -73,7 +73,7 @@ Pour désactiver complètement la démo : Paramètres → décocher « Utiliser 
 
 Chaque import affiche un aperçu analysé avant enregistrement. Une annonce **déjà connue** (même URL, ou même code postal + même type + surface à ±3 %, y compris vue sur un autre site) n’est pas dupliquée : si son prix a changé, le nouveau prix entre dans l’historique (signal de baisse) et le site supplémentaire est noté. Recoller régulièrement les annonces suivies suffit donc à suivre leurs baisses.
 
-5. **Collecte automatique AJP** : `npm run collect` parcourt les 41 agences AJP de vos départements (robots.txt sans restriction, 1 requête par seconde environ, fiches en cache), ajoute les nouvelles annonces, enregistre les changements de prix et marque les annonces disparues (« retirées du marché »). Compter une dizaine de minutes au premier passage. Les adresses sont géocodées (Base Adresse Nationale, gratuite) pour trouver les ventes à moins de 300 m. Tout se corrige ensuite dans la fiche : lots, surfaces, valeur forcée d’un lot (offre reçue), baisses de prix, estimation externe.
+5. **Collecte automatique** : `npm run collect` parcourt en parallèle les 41 agences AJP, les listes départementales Century 21 et Laforêt et les annonces notariales Immonot (pages autorisées par robots.txt, 1 requête par seconde et par site, fiches en cache ; `--networks ajp,immonot` pour en choisir), ajoute les nouvelles annonces, enregistre les changements de prix et marque les annonces disparues (« retirées du marché »). Compter 30 à 60 minutes au premier passage. Les adresses sont géocodées (Base Adresse Nationale, gratuite) pour trouver les ventes à moins de 300 m. Tout se corrige ensuite dans la fiche : lots, surfaces, valeur forcée d’un lot (offre reçue), baisses de prix, estimation externe.
 
 ## Comment le score est calculé
 
@@ -91,9 +91,12 @@ La fiche donne aussi l’**offre maximale** (ou l’enchère maximale) : le prix
 gain brut = Σ lots × (1 − agence 4 %) − prix − frais d’acquisition (7,5 %) − travaux − diagnostics − division éventuelle − portage
 alerte    = gain brut > 30 000 € ou > 25 % du prix affiché
 score     = marge % (35) + gain € (35) + confiance DVF (10) + signaux (10 : lot groupé, baisse de prix, vente judiciaire, ancienneté, vendeur pressé) + liquidité (10)
+            − 4 par red flag grave (max 12), × 1,15 si le projet (prix + frais + travaux) ≤ 150 k€, × 0,85 à 1 entre 150 et 250 k€, × 0,6 au-delà
+travaux   = saisis, sinon estimés : rénovation complète 1 000 €/m², rafraîchissement 300 €/m², remise au goût du jour 150 €/m² par défaut
+            (sauf bien annoncé refait), + toiture, électricité, humidité, assainissement cités dans l’annonce
 ```
 
-Tous les seuils et frais se règlent dans Paramètres (dont le régime marchand de biens à ~2,5 % de frais, à n’activer qu’une fois l’objet social formalisé).
+Tous les seuils et frais se règlent dans Paramètres (dont le régime marchand de biens à ~2,5 % de frais : l’achat-revente est porté par la Financière TUÉ et Fils, dont les statuts prévoient l’activité).
 
 ## Artefact et mise à jour du lundi
 

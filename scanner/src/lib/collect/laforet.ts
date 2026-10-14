@@ -48,7 +48,8 @@ export function laforetToInput(c: LaforetCard, dept: string, detail?: string): L
     source: 'reseau', network: 'laforet', sourceRef: c.id, url: c.url, price: c.price, seller: 'agence',
     surface: c.surface ?? p.surface, landSurface: c.land ?? p.landSurface,
     agency: `Laforêt ${c.url.split('/agence-immobiliere/')[1]?.split('/')[0] ?? ''}`.trim(),
-    address: { ...p.address, postalCode: c.cp ?? '', city: c.city.replace(/\b\w/g, (x) => x.toUpperCase()).replace(/\B\w+/g, (x) => x.toLowerCase()), dept },
+    // la fiche cite l'adresse de l'agence, pas celle du bien : commune seulement
+    address: { postalCode: c.cp ?? '', city: c.city.replace(/\b\w/g, (x) => x.toUpperCase()).replace(/\B\w+/g, (x) => x.toLowerCase()), dept },
     lots,
   };
 }

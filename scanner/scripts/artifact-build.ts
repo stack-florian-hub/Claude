@@ -1,5 +1,6 @@
 // Construit l'artefact publiable : artifact/dist/index.html (application) + artifact/dist/data.json (données de la semaine).
 // Usage : npm run artifact:build   (après npm run collect et npm run dvf:fetch)
+import { detectLand, detectRedFlags, detectRenovated, detectRenovation, detectSpecial } from '../src/lib/detect';
 import fs from 'node:fs';
 import path from 'node:path';
 import { build } from 'esbuild';
@@ -10,6 +11,14 @@ import { valueLots } from '../src/lib/scoring';
 import { marketStats } from '../src/lib/dvf-query';
 import type { LotValuation } from '../src/lib/types';
 import { addMonths } from '../src/lib/util';
+
+/** 1 200 premiers caractères + les phrases suivantes qui changent l'analyse (red flags, cas spéciaux, travaux, terrain),
+ *  car le navigateur rejoue la détection sur ce texte. */
+function shortDescription(d: string, max = 1200) {
+  if (d.length <= max) return d;
+  const keep = d.slice(max).split(/(?<=[.!?\n])/).filter((x) => detectRedFlags(x).length || detectSpecial(x).length || detectRenovation(x) || detectRenovated(x) || detectLand(x));
+  return d.slice(0, max) + (keep.length ? ' […] ' + keep.join(' ').slice(0, 1500) : ' […]');
+}
 import type { ArtifactData, CompactMut } from '../artifact/state';
 
 const ROOT = process.cwd();
@@ -41,7 +50,7 @@ const dvf = dvfSource(settings);
 const valuations: Record<string, LotValuation[]> = {};
 const stats: Record<string, ReturnType<typeof marketStats>> = {};
 for (const l of listings) {
-  valuations[l.id] = valueLots(l, settings, zones, dvf).map((v) => ({ ...v, comparables: v.comparables.slice(0, 8) }));
+  valuations[l.id] = valueLots(l, settings, zones, dvf).map((v) => ({ ...v, comparables: v.comparables.slice(0, 4) }));
   const k = l.address.insee || l.address.postalCode;
   if (k && !stats[k]) stats[k] = marketStats(dvf.slice(l.address), settings);
 }
@@ -57,7 +66,8 @@ const data: ArtifactData = {
     collecte,
     nextUpdate: nextMonday.toISOString().slice(0, 10),
   },
-  listings: listings.map((l) => ({ ...l, description: l.description.slice(0, 2500) })),
+  // taille limitée à 16 Mo : descriptions tronquées, en gardant les phrases utiles au calcul
+  listings: listings.map((l) => ({ ...l, description: l.offMarketAt ? l.description.slice(0, 200) : shortDescription(l.description) })),
   valuations,
   stats,
   dvf: { refDates, byInsee },

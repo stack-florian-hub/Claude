@@ -42,7 +42,8 @@ export function c21ToInput(c: C21Card, detail?: string): ListingInput | null {
     title: `${c.label}${c.surface ? ` – ${c.surface} m²` : ''}`,
     source: 'reseau', network: 'century21', sourceRef: c.id, url: c.url, price: c.price, seller: 'agence',
     surface: c.surface ?? p.surface,
-    address: p.address.postalCode.startsWith(c.dept) ? { ...p.address, dept: c.dept } : { number: p.address.number, street: p.address.street, postalCode: '', city: c.city, dept: c.dept },
+    // la fiche cite l'adresse de l'agence, pas celle du bien : commune seulement (valorisation prudente à l'échelle de la commune)
+    address: { postalCode: '', city: c.city, dept: c.dept },
     lots,
   };
 }

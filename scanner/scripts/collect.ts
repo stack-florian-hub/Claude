@@ -11,6 +11,8 @@ import { collectImmonot } from '../src/lib/collect/immonot';
 import { DiskCache } from '../src/lib/collect/http';
 import type { ListingInput } from '../src/lib/types';
 import { analyzeAll, geocode } from '../src/lib/server';
+import { loadDept } from '../src/lib/dvf';
+import { normCity } from '../src/lib/util';
 
 const args = process.argv.slice(2);
 const opt = (k: string) => (args.includes(k) ? args[args.indexOf(k) + 1] : undefined);
@@ -49,16 +51,28 @@ const log = (m: string) => { console.log(m); fs.appendFileSync(logFile, m + '\n'
     if (old.offMarketAt) patch.offMarketAt = undefined;
     if (Object.keys(patch).length) updateListing(old.id, patch);
   }
-  // annonces disparues du site de leur réseau : vendues ou retirées (seulement pour les réseaux collectés sans incident)
+  // annonces disparues du site de leur réseau : vendues ou retirées (seulement pour les réseaux collectés sans aucune erreur : une page manquée ne doit pas retirer ses annonces)
   const live = new Set(r.inputs.map((i) => i.url));
-  const okNets = new Set(ran.filter((x) => x.errors.length < 5 && x.cards > 0).map((x) => x.network));
+  const okNets = new Set(ran.filter((x) => x.errors.length === 0 && x.cards > 0).map((x) => x.network));
   const gone = getListings().filter((l) => l.network && okNets.has(l.network) && !l.demo && l.url && !live.has(l.url) && !l.offMarketAt && depts.includes(l.address.dept));
   for (const l of gone) updateListing(l.id, { offMarketAt: today });
 
   // code postal / INSEE des nouvelles annonces (commune seulement : pas de coordonnées sans rue)
   let geo = 0;
+  // commune seule (pas de rue) : code INSEE lu dans l'index DVF local, sans appel réseau
+  const communes = new Map<string, Map<string, string>>();
+  const localInsee = (dept: string, city: string) => {
+    if (!communes.has(dept)) communes.set(dept, new Map(Object.entries(loadDept(dept, false)?.idx.communes ?? {}).map(([insee, name]) => [normCity(name), insee])));
+    return communes.get(dept)!.get(normCity(city));
+  };
   for (const l of added) {
     if (l.address.insee) continue;
+    const local = !l.address.street && l.address.city ? localInsee(l.address.dept, l.address.city) : undefined;
+    if (local) {
+      updateListing(l.id, { address: { ...l.address, insee: local } });
+      geo++;
+      continue;
+    }
     const g = await geocode(l);
     if (g && g.postcode?.startsWith(l.address.dept)) {
       updateListing(l.id, { address: { ...l.address, city: g.city || l.address.city, insee: g.insee, postalCode: /^\d{5}$/.test(l.address.postalCode) ? l.address.postalCode : g.postcode, lat: g.precise ? g.lat : undefined, lon: g.precise ? g.lon : undefined } });
