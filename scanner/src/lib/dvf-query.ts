@@ -117,7 +117,8 @@ function valueBuilt(lot: SubLot, listing: Listing, pool: DvfSlice, s: Settings):
     const spread = p.low > 0 ? p.high / p.low : 1;
     if ((tier.source === 'dvf-commune' || tier.source === 'dvf-environs') && spread > 1.45) {
       // quartier inconnu dans une commune hétérogène : on se place en bas de fourchette (P15 / P35 / P60)
-      conf *= 0.7;
+      // sous le seuil d'alerte : sans quartier, l'écart de prix peut venir d'un secteur moins cher (QPV, bord de rocade…)
+      conf = Math.min(conf * 0.7, 0.29);
       p.low = Math.round(quantile(ppm, 0.15)); p.mid = Math.round(quantile(ppm, 0.35)); p.high = Math.round(quantile(ppm, 0.6));
       if (surf) Object.assign(val, { low: round(p.low * surf), mid: round(p.mid * surf), high: round(p.high * surf) });
       notes.push(`Commune hétérogène (écart P75/P25 de ${Math.round((spread - 1) * 100)} %) et adresse imprécise : estimation en bas de fourchette (P15/P35/P60). Préciser l’adresse pour comparer au quartier`);

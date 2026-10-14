@@ -176,8 +176,15 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
   if (at) warnings.unshift(`Travaux estimés automatiquement : ${at.items.map((x) => `${x.label.split(' (')[0].toLowerCase()} ${Math.round(x.amount / 1000)} k€`).join(' + ')} → ${Math.round(at.amount / 1000)} k€ (ordre de grandeur, à remplacer par un devis)`);
   const land = l.landSurface ?? detectLand(l.description);
   if (strategy === 'global' && land && land >= 1000) signals.push(`Terrain de ${land.toLocaleString('fr-FR')} m² : piste de division parcellaire à étudier (PLU, certificat d’urbanisme, accès, réseaux)`);
-  const flagged = !blocking && confidence >= 0.3 && gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100);
-  if (confidence < 0.3 && gain.mid > 0) warnings.push('Confiance trop faible pour une alerte : compléter l’adresse ou forcer la valeur des lots');
+  // le logement porte l'essentiel de la valeur : sa propre estimation doit être fiable (les dépendances ne compensent pas)
+  const mainWeak = lots.some((v) => (v.type === 'appartement' || v.type === 'maison') && v.source !== 'force' && v.confidence < 0.3);
+  // « maison 1 pièce » de grande surface : grange, hangar ou plateau non aménagé le plus souvent
+  const surfMain = l.surface ?? l.lots.find((x) => x.type === 'maison')?.surface ?? 0;
+  const oddHouse = strategy === 'global' && surfMain >= 60 && /\b(?:T1|F1|1 pi[eè]ces?)\b/i.test(`${l.title}\n${l.description}`);
+  if (oddHouse) warnings.unshift(`Maison d’une seule pièce pour ${surfMain} m² : probablement grange, hangar ou plateau non aménagé, à vérifier sur la fiche`);
+  if (mainWeak || oddHouse) score = Math.min(score, 30);
+  const flagged = !blocking && !mainWeak && !oddHouse && confidence >= 0.3 && gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100);
+  if ((confidence < 0.3 || mainWeak) && gain.mid > 0) warnings.push('Confiance trop faible pour une alerte : compléter l’adresse ou forcer la valeur des lots');
 
   // Prix plafond (offre ou enchère maximale) : gain(prix) = Σ×(1−agence) − prix×(1+frais%) − coûts fixes hors frais d'acquisition
   const netResale = total.mid * (1 - agency) - (c.travaux + c.diagnostics + c.division + c.carrying);

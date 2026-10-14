@@ -12,9 +12,9 @@ import { marketStats } from '../src/lib/dvf-query';
 import type { LotValuation } from '../src/lib/types';
 import { addMonths } from '../src/lib/util';
 
-/** 1 200 premiers caractères + les phrases suivantes qui changent l'analyse (red flags, cas spéciaux, travaux, terrain),
+/** 900 premiers caractères + les phrases suivantes qui changent l'analyse (red flags, cas spéciaux, travaux, terrain),
  *  car le navigateur rejoue la détection sur ce texte. */
-function shortDescription(d: string, max = 1200) {
+function shortDescription(d: string, max = 900) {
   if (d.length <= max) return d;
   const keep = d.slice(max).split(/(?<=[.!?\n])/).filter((x) => detectRedFlags(x).length || detectSpecial(x).length || detectRenovation(x) || detectRenovated(x) || detectLand(x));
   return d.slice(0, max) + (keep.length ? ' […] ' + keep.join(' ').slice(0, 1500) : ' […]');
@@ -29,7 +29,9 @@ fs.mkdirSync(OUT, { recursive: true });
 const settings = getSettings();
 settings.dvf.useDemo = false;
 const zones = getZones();
-const listings = getListings().filter((l) => !l.demo);
+// annonces retirées depuis plus de 4 mois et jamais suivies : plus publiées (taille du data.json)
+const oldGone = addMonths(new Date().toISOString().slice(0, 10), -4);
+const listings = getListings().filter((l) => !l.demo && !(l.offMarketAt && l.offMarketAt < oldGone && l.status === 'nouveau'));
 // DVF embarquée : communes des zones seulement (annonces collées à la main dans l'artefact)
 const communes = new Set<string>(zones.flatMap((z) => z.communes.filter((c) => /^\d{5}$/.test(c))));
 const depts = [...new Set([...zones.map((z) => z.dept), ...listings.map((l) => l.address.dept)])].filter((d) => /^\d{2}$/.test(d)).sort();
@@ -50,7 +52,7 @@ const dvf = dvfSource(settings);
 const valuations: Record<string, LotValuation[]> = {};
 const stats: Record<string, ReturnType<typeof marketStats>> = {};
 for (const l of listings) {
-  valuations[l.id] = valueLots(l, settings, zones, dvf).map((v) => ({ ...v, comparables: v.comparables.slice(0, 4) }));
+  valuations[l.id] = valueLots(l, settings, zones, dvf).map((v) => ({ ...v, comparables: v.comparables.slice(0, 3) }));
   const k = l.address.insee || l.address.postalCode;
   if (k && !stats[k]) stats[k] = marketStats(dvf.slice(l.address), settings);
 }
@@ -76,6 +78,7 @@ const data: ArtifactData = {
 const json = JSON.stringify(data);
 fs.writeFileSync(path.join(OUT, 'data.json'), json);
 console.log(`data.json : ${listings.length} annonces, ${Object.keys(byInsee).length} communes DVF, ${(json.length / 1e6).toFixed(1)} Mo`);
+if (json.length > 15.5e6) console.warn(`⚠ data.json proche de la limite de 16 Mo de l’artefact : réduire les descriptions ou les comparables`);
 
 // ---------- application (React chargé depuis cdnjs, le reste empaqueté)
 const reactGlobals: Plugin = {

@@ -40,6 +40,11 @@ const log = (m: string) => { console.log(m); fs.appendFileSync(logFile, m + '\n'
   for (const x of ran) log(`${x.label} : ${x.cards} biens lus, ${x.inputs.length} retenus, ${x.details} fiches détaillées, ${x.errors.length} erreur(s)`);
   const r = { inputs: ran.flatMap((x) => x.inputs), cards: ran.reduce((a, x) => a + x.cards, 0), agencies: ran.find((x) => x.network === 'ajp')?.pages ?? 0, errors: ran.flatMap((x) => x.errors) };
 
+  // prix mal lu (loyer, « à partir de », frais) : un logement sous 15 k€ ou une dépendance sous 1 k€ est écarté
+  const sane = (i: ListingInput) => i.price >= (i.lots.some((x) => x.type === 'maison' || x.type === 'appartement') ? 15000 : 1000);
+  const rejected = r.inputs.filter((i) => !sane(i));
+  if (rejected.length) log(`${rejected.length} annonce(s) au prix aberrant écartée(s) : ${rejected.slice(0, 5).map((i) => `${i.title} (${i.price} €)`).join(' ; ')}`);
+  r.inputs = r.inputs.filter(sane);
   const { added, priceUpdates } = addListings(r.inputs);
   // fiches enrichies (description lue après coup) et retours sur le marché
   for (const i of r.inputs) {

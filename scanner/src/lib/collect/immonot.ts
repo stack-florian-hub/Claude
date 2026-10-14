@@ -39,7 +39,7 @@ export function productToInput(p: Product, dept: string): ListingInput | null {
   const desc = decodeEntities(p.description || '');
   const parsed = parseListingText(`${name}\n${m[3]} ${m[2]}\nPrix : ${price} €\n${desc}`, p.url);
   const { parseNotes: _n, ...rest } = parsed;
-  const lots = parsed.lots.length && parsed.lots[0].type === type ? parsed.lots : [{ id: `l${p.sku}`, type, surface: parsed.surface }, ...parsed.lots.filter((l) => l.type !== type && type !== 'maison')];
+  const lots = parsed.lots.length && parsed.lots[0].type === type ? parsed.lots : [{ id: `l${p.sku}`, type, surface: parsed.surface }, ...parsed.lots.filter((l) => l.type !== type && l.type !== 'maison' && l.type !== 'appartement' && type !== 'maison')]; // un seul logement : la description peut dire « maison » pour un bien classé appartement
   return {
     ...rest,
     title: name.replace(/ en vente /i, ' à vendre – '),

@@ -4,13 +4,14 @@ import { uid } from './util';
 import { detectNetwork } from './networks';
 
 /** Situations où le prix affiché n'est pas comparable à une vente libre (ou demande une décote). */
-export interface Special { id: 'residence' | 'viager' | 'nue' | 'loue' | 'local' | 'rehab'; label: string; blocking: boolean }
+export interface Special { id: 'residence' | 'viager' | 'nue' | 'loue' | 'local' | 'rehab' | 'batiment'; label: string; blocking: boolean }
 const SPECIALS: [Special, RegExp][] = [
   [{ id: 'residence', label: 'Résidence gérée / services (seniors, étudiants, tourisme, LMNP) : prix d’investissement locatif, non comparable', blocking: true },
     /r[ée]sidences?[- ](?:de )?(?:services?|seniors?|s[ée]niors?|[ée]tudiante|de tourisme|g[ée]r[ée]e|h[ôo]teli[eè]re|affaires)|\bEHPAD\b|\bLMNP\b|bail commercial|garantie de (?:loyer|rentabilit)|loyers? (?:mensuels? )?garantis?|rentabilit[ée] garantie/i],
   [{ id: 'viager', label: 'Viager : prix hors rente, non comparable', blocking: true }, /\bviager|\bbouquet\b|rente viag/i],
   [{ id: 'nue', label: 'Nue-propriété / usufruit : non comparable', blocking: true }, /nue[- ]propri[ée]t[ée]|usufruit/i],
   [{ id: 'local', label: 'Local commercial ou professionnel : à valoriser comme local, pas comme logement', blocking: true }, /local commercial|local professionnel|ancienne agence (?:bancaire)?|fonds de commerce|murs commerciaux/i],
+  [{ id: 'batiment', label: 'Bâtiment non habitable (hangar, grange, atelier, entrepôt) : la valeur DVF d’une maison ne s’applique pas', blocking: true }, /\b(?:ce|cet|cette)\s+(?:ancien(?:ne)?\s+|bel(?:le)?\s+|jolie?\s+|grande?\s+|vaste\s+)?(?:hangar|grange|atelier|entrep[ôo]t|b[âa]timent agricole|ruine|chai)s?\b(?!\s+(?:attenant|accol|ind[ée]pendant|de jardin))(?![^.\n]{0,45}(?:r[ée]nov|am[ée]nag|transform|r[ée]habilit|excellent [ée]tat|habitable))/i],
   [{ id: 'loue', label: 'Vendu loué : décote de 10 à 15 % et délai jusqu’à la libération', blocking: false }, /locataire en place|vendu lou[ée]|actuellement lou[ée]|bail en cours|\blou[ée] (?:\d|jusqu|depuis|meubl)/i],
   [{ id: 'rehab', label: 'Bien à réhabiliter (atelier, plateau, grange) : travaux lourds à chiffrer', blocking: false }, /atelier [àa] r[ée]habiliter|[àa] r[ée]habiliter|plateau [àa] am[ée]nager|non soumis [àa] DPE/i],
 ];
