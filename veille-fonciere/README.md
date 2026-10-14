@@ -179,6 +179,13 @@ urbanisme de la mairie / intercommunalité (calendrier de révision du PLUi), dr
   le navigateur sinon.
 - **Exclues** : annonces écartées avec leur motif, pour vérifier le filtrage.
 
+### Version publiée (artefact claude.ai)
+
+`artifact/` produit une page autonome publiée sur https://claude.ai/artifact/4zgfqzSN1R2JKTnwhpZT4W :
+`python3 artifact/build_artifact.py` après un `python -m vf exporter`, puis republier le fichier
+`artifact/veille-fonciere.html`. Les tuiles et photos externes étant bloquées dans un artefact, la carte affiche les
+contours des départements ; les notes sont enregistrées dans la base de l'artefact (collection `notes`).
+
 ## 6. Base de données
 
 `backend/schema.sql` (SQLite ; portable sur PostgreSQL en remplaçant la colonne générée `prix_m2`) :

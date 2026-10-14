@@ -1,0 +1,560 @@
+<title>Veille foncière 85·44·49·37</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+__LEAFLET_CSS__
+/* Layout : bandeau de synthèse, barre de filtres, puis carte + liste (ou tableau) avec la fiche en panneau latéral. */
+:root {
+  --bg: #f2f4f1; --surface: #ffffff; --sunken: #e7ebe6; --line: #d5dbd3; --ink: #18201b; --muted: #5d6a61; --faint: #8b968e;
+  --accent: #1f5b45; --accent-ink: #ffffff; --focus: #c77d1a;
+  --land: #e9ede6; --land-focus: #dfe6da; --sea: #d6e3ea; --dep-line: #9aa89d;
+  /* Couleurs conventionnelles des zonages d'urbanisme */
+  --z-u: #c8323a; --z-au: #e08a1e; --z-a: #d9b51c; --z-n: #3f8a43; --z-x: #8b968e;
+  /* Rampe séquentielle du score (bleu, clair -> foncé) */
+  --s1: #86b6ef; --s2: #3987e5; --s3: #1c5cab; --s4: #0d366b; --ring: #ffffff;
+  --f-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121714; --surface: #19201c; --sunken: #212923; --line: #2f3933; --ink: #e6ebe7; --muted: #9eaaa2; --faint: #6f7b73;
+  --accent: #7cc4a4; --accent-ink: #0f1a14; --focus: #e2a24a;
+  --land: #1e2621; --land-focus: #26302a; --sea: #142027; --dep-line: #4a574f;
+  --z-u: #e2646a; --z-au: #eda252; --z-a: #e3c64f; --z-n: #6cb36f; --z-x: #6f7b73;
+  --s1: #184f95; --s2: #2a78d6; --s3: #6da7ec; --s4: #b7d3f6; --ring: #19201c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121714; --surface: #19201c; --sunken: #212923; --line: #2f3933; --ink: #e6ebe7; --muted: #9eaaa2; --faint: #6f7b73;
+  --accent: #7cc4a4; --accent-ink: #0f1a14; --focus: #e2a24a;
+  --land: #1e2621; --land-focus: #26302a; --sea: #142027; --dep-line: #4a574f;
+  --z-u: #e2646a; --z-au: #eda252; --z-a: #e3c64f; --z-n: #6cb36f; --z-x: #6f7b73;
+  --s1: #184f95; --s2: #2a78d6; --s3: #6da7ec; --s4: #b7d3f6; --ring: #19201c; color-scheme: dark }
+
+html, body { height: 100%; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 14px; line-height: 1.45; }
+.app { height: 100%; display: flex; flex-direction: column; }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--f-mono); font-size: 12px; }
+
+/* Bandeau */
+header { background: var(--surface); border-bottom: 1px solid var(--line); padding-block: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px; }
+h1 { font-family: var(--f-display); font-stretch: 80%; font-weight: 750; font-size: 22px; letter-spacing: .01em; margin: 0; line-height: 1.1; text-wrap: balance; }
+h1 span { color: var(--accent); }
+.sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.kpis { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.kpi { display: flex; flex-direction: column; }
+.kpi b { font-family: var(--f-display); font-stretch: 85%; font-size: 22px; font-weight: 700; line-height: 1; }
+.kpi small { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.tabs { margin-left: auto; display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.tabs button { background: transparent; border: 0; padding: 6px 14px; font-size: 13px; }
+.tabs button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+/* Filtres */
+.filters { background: var(--bg); border-bottom: 1px solid var(--line); padding-block: 8px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-size: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 2px 9px; font-size: 12px; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.field { display: flex; align-items: center; gap: 5px; color: var(--muted); }
+.field input, .field select { width: 78px; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px; font-size: 12px; color: var(--ink); }
+.field select { width: auto; }
+.field input[type="range"] { width: 100px; padding: 0; border: 0; accent-color: var(--accent); }
+.field input[type="checkbox"] { width: auto; accent-color: var(--accent); }
+.field input.search { width: 170px; }
+.link { background: none; border: 0; color: var(--muted); text-decoration: underline; padding: 0; font-size: 12px; }
+
+/* Corps */
+main { flex: 1; min-height: 0; display: flex; position: relative; }
+.view { flex: 1; min-width: 0; min-height: 0; display: flex; }
+.mapcol { flex: 1.3; min-width: 0; position: relative; }
+#map { position: absolute; inset: 0; background: var(--sea); }
+.listcol { flex: 1; min-width: 0; max-width: 460px; overflow-y: auto; border-left: 1px solid var(--line); background: var(--surface); }
+.card { display: grid; grid-template-columns: 44px 1fr auto; gap: 2px 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); cursor: pointer; background: var(--surface); width: 100%; text-align: left; border-left: 0; border-right: 0; border-top: 0; }
+.card:hover { background: var(--sunken); }
+.card[aria-current="true"] { background: var(--land-focus); box-shadow: inset 3px 0 0 var(--focus); }
+.score-badge { grid-row: span 2; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-display); font-stretch: 85%; font-weight: 700; font-size: 15px; color: #fff; }
+.card .t { font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.card .p { font-weight: 600; text-align: right; }
+.card .m { color: var(--muted); font-size: 12px; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
+.card .r { color: var(--muted); font-size: 12px; text-align: right; }
+.zone { display: inline-flex; align-items: center; gap: 4px; font-family: var(--f-mono); font-size: 11px; }
+.zone i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+.empty { padding: 32px 18px; color: var(--muted); }
+
+.legend { position: absolute; left: max(12px, env(safe-area-inset-left, 0px)); bottom: 14px; z-index: 500; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 11px; display: grid; gap: 3px; }
+.legend b { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+.legend div { display: flex; align-items: center; gap: 6px; }
+.dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; box-shadow: 0 0 0 2px var(--ring); }
+.dot.approx { background: transparent !important; border: 1.5px dashed var(--muted); box-shadow: none; }
+.leaflet-container { font-family: var(--f-body); }
+.leaflet-tooltip { background: var(--surface); color: var(--ink); border: 1px solid var(--line); box-shadow: 0 2px 8px rgba(0,0,0,.15); font-size: 12px; }
+.leaflet-tooltip-top:before { border-top-color: var(--line); }
+.leaflet-control-zoom a { background: var(--surface) !important; color: var(--ink) !important; border-color: var(--line) !important; }
+.dep-label { font-family: var(--f-display); font-stretch: 80%; font-weight: 700; color: var(--faint); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; background: none; border: 0; box-shadow: none; }
+.dep-label:before, .city-label:before { display: none; }
+.city-label { font-size: 11px; color: var(--muted); white-space: nowrap; background: none; border: 0; box-shadow: none; }
+
+/* Tableau */
+.tablewrap { flex: 1; overflow: auto; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 12px; }
+th { position: sticky; top: 0; background: var(--surface); text-align: left; font-weight: 600; color: var(--muted); padding: 8px; border-bottom: 1px solid var(--line); white-space: nowrap; cursor: pointer; user-select: none; z-index: 1; }
+th.r, td.r { text-align: right; }
+td { padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: var(--sunken); }
+tbody tr[aria-current="true"] { background: var(--land-focus); }
+.sdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
+.star { background: none; border: 0; padding: 0 2px; font-size: 15px; color: var(--line); line-height: 1; }
+.star[aria-pressed="true"] { color: var(--focus); }
+
+/* Fiche */
+.fiche { width: 440px; max-width: 100%; flex-shrink: 0; overflow-y: auto; background: var(--surface); border-left: 1px solid var(--line); padding-bottom: 32px; }
+.fiche-head { position: sticky; top: 0; background: var(--surface); padding-block: 12px 10px; border-bottom: 1px solid var(--line); display: flex; gap: 8px; align-items: flex-start; z-index: 2; }
+.fiche-head .eyebrow { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.fiche-head h2 { font-family: var(--f-display); font-stretch: 82%; font-size: 21px; font-weight: 700; margin: 2px 0 0; line-height: 1.15; text-wrap: balance; }
+.close { background: none; border: 0; font-size: 22px; color: var(--muted); line-height: 1; padding: 0 2px; }
+.headline { display: flex; align-items: flex-end; gap: 12px; padding-block: 14px 10px; }
+.headline .price { font-family: var(--f-display); font-stretch: 85%; font-size: 30px; font-weight: 750; line-height: 1; }
+.headline .score { margin-left: auto; text-align: right; }
+.headline .score b { font-family: var(--f-display); font-stretch: 85%; font-size: 36px; font-weight: 800; line-height: 1; }
+.small { font-size: 12px; color: var(--muted); }
+.cta { display: block; text-align: center; background: var(--accent); color: var(--accent-ink); text-decoration: none; border-radius: 6px; padding: 9px; font-weight: 600; }
+.sec { border-top: 1px solid var(--line); padding-block: 12px; }
+.sec h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 8px; font-weight: 600; }
+.bar { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; margin-bottom: 7px; font-size: 12px; }
+.bar .track { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--sunken); overflow: hidden; }
+.bar .fill { height: 100%; border-radius: 3px; }
+ul.why { margin: 8px 0 0; padding-left: 18px; font-size: 12px; color: var(--muted); display: grid; gap: 3px; }
+.kv { display: grid; grid-template-columns: minmax(0, 42%) minmax(0, 1fr); gap: 3px 10px; font-size: 12px; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
+.tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tag { border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; font-size: 11px; }
+.hint { background: var(--sunken); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--muted); margin-block: 6px; }
+.dvf { overflow-x: auto; margin-top: 8px; }
+.dvf table { font-size: 11px; }
+.dvf td, .dvf th { padding: 4px 6px; position: static; cursor: default; }
+textarea { width: 100%; box-sizing: border-box; min-height: 96px; resize: vertical; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 8px; font-size: 13px; }
+.note-row { display: flex; gap: 10px; align-items: center; margin-top: 6px; flex-wrap: wrap; }
+.btn { background: var(--ink); color: var(--bg); border: 0; border-radius: 5px; padding: 6px 12px; font-size: 12px; font-weight: 600; }
+.sel { background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 5px 8px; font-size: 12px; width: 100%; margin-bottom: 6px; }
+.desc { font-size: 12px; color: var(--muted); white-space: pre-line; }
+.links { display: grid; gap: 4px; font-size: 12px; }
+.links a { color: var(--accent); }
+
+/* Exclues */
+.excl { flex: 1; overflow: auto; padding-block: 16px; }
+.excl .chips { margin-bottom: 12px; }
+.excl a { color: var(--ink); }
+
+.ftoggle { display: none; }
+@media (max-width: 860px) {
+  html, body, .app { height: auto; }
+  main { display: block; }
+  .view.carte { flex-direction: column; }
+  .mapcol { flex: none; height: 52vh; min-height: 280px; }
+  .listcol { max-width: none; border-left: 0; border-top: 1px solid var(--line); overflow: visible; }
+  .tablewrap { max-height: 80vh; }
+  .fiche { position: fixed; inset: 0; width: auto; z-index: 1200; border-left: 0; padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)); }
+  .fiche-head { padding-top: calc(12px + env(safe-area-inset-top, 0px)); }
+  .tabs { margin-left: 0; }
+  .kpi b { font-size: 19px; }
+  .ftoggle { display: inline-block; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; font-size: 13px; }
+  .filters:not(.open) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="app">
+  <header class="wrap">
+    <div>
+      <h1>Veille foncière <span>85 · 44 · 49 · 37</span></h1>
+      <div class="sub" id="sub"></div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <button class="ftoggle" id="f-toggle" aria-expanded="false" aria-controls="filters">Filtres</button>
+    <div class="tabs" role="group" aria-label="Vue">
+      <button id="tab-carte" aria-pressed="true">Carte</button>
+      <button id="tab-tableau" aria-pressed="false">Tableau</button>
+      <button id="tab-exclues" aria-pressed="false">Exclues</button>
+    </div>
+  </header>
+  <div class="filters wrap" id="filters"></div>
+  <main>
+    <div class="view carte" id="v-carte">
+      <div class="mapcol"><div id="map" aria-label="Carte des terrains"></div><div class="legend" id="legend"></div></div>
+      <div class="listcol" id="list"></div>
+    </div>
+    <div class="view" id="v-tableau" hidden><div class="tablewrap" id="table"></div></div>
+    <div class="view" id="v-exclues" hidden><div class="excl wrap" id="excl"></div></div>
+    <aside class="fiche wrap" id="fiche" hidden></aside>
+  </main>
+</div>
+
+<script type="application/json" id="data">__DATA__</script>
+<script type="application/json" id="deps">__DEPS__</script>
+<script>
+(() => {
+const DATA = JSON.parse(document.getElementById("data").textContent);
+const DEPS_GEO = JSON.parse(document.getElementById("deps").textContent);
+const A = DATA.annonces;
+
+const DEPS = { "85": "Vendée", "44": "Loire-Atlantique", "49": "Maine-et-Loire", "37": "Indre-et-Loire" };
+const TYPOS = { loisir: "Loisir", bois: "Bois", agricole: "Agricole", etang: "Étang", constructible: "Constructible", autre: "Autre" };
+const SUIVIS = { "": "Statut de suivi…", a_voir: "À voir", contacte: "Contacté", visite: "Visité", offre: "Offre faite", abandon: "Abandonné" };
+const SOURCES = { notaires: "Notaires", bienici: "Bien'Ici", leboncoin: "LeBonCoin", seloger: "SeLoger", logicimmo: "Logic-Immo",
+  figaro: "Figaro Immo", paruvendu: "ParuVendu", greenacres: "Green-Acres", proprietes_rurales: "Propriétés rurales", agorastore: "Agorastore", import: "Import" };
+const PRECISIONS = { parcelle: "Parcelle exacte", adresse: "Adresse", approx: "Approximative (quelques centaines de m)", commune: "Centre de la commune" };
+const MOTIFS = { prix_plancher: "Prix < 300 € (prix d'appel)", prix_plafond: "Prix > plafond", prix_absent: "Prix absent",
+  prix_reel_texte: "Vrai prix dans le texte", viager: "Viager", gff_parts: "Parts de groupement", indivision: "Parts indivises",
+  demembrement: "Nue-propriété / usufruit", location: "Location", recherche: "Annonce de recherche", pas_un_terrain: "Pas un terrain",
+  surface_hors_bornes: "Surface hors bornes", prix_m2_trop_eleve: "Prix/m² > 15 €", hors_zone: "Hors départements" };
+const CITIES = [["Nantes", 47.218, -1.554], ["Angers", 47.478, -0.563], ["Tours", 47.394, 0.685], ["La Roche-sur-Yon", 46.670, -1.426],
+  ["Saint-Nazaire", 47.273, -2.214], ["Cholet", 47.060, -0.879], ["Saumur", 47.260, -0.077], ["Les Sables-d'Olonne", 46.497, -1.783]];
+
+const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const tier = (s) => (s ?? 0) >= 65 ? 4 : s >= 50 ? 3 : s >= 35 ? 2 : 1;
+const scoreColor = (s) => css(`--s${tier(s)}`);
+// Texte lisible sur une pastille : sombre sur les bleus clairs, blanc sur les bleus foncés
+const inkOn = (hex) => { const n = parseInt(hex.slice(1), 16); const l = (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255; return l > 0.55 ? "#0d1b2e" : "#ffffff"; };
+const zoneVar = (tz) => { tz = (tz || "").toUpperCase(); return tz.startsWith("AU") ? "--z-au" : tz.startsWith("U") ? "--z-u" : tz.startsWith("A") ? "--z-a" : tz.startsWith("N") ? "--z-n" : "--z-x"; };
+const nf0 = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 });
+const nf2 = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 2 });
+const eur = (v) => v == null ? "—" : `${nf0.format(v)} €`;
+const eurm2 = (v) => v == null ? "—" : `${nf2.format(v)} €/m²`;
+const surf = (v) => v == null ? "—" : v >= 10000 ? `${nf2.format(v / 10000)} ha` : `${nf0.format(v)} m²`;
+const dist = (v) => v == null ? "—" : v >= 9999 ? "> 400 m" : v >= 1000 ? `${nf2.format(v / 1000)} km` : `${nf0.format(v)} m`;
+const dfr = (s) => s ? new Date(s).toLocaleDateString("fr-FR") : "—";
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const ratio = (a) => a.prix_m2 && a.dvf?.mediane_m2 ? a.prix_m2 / a.dvf.mediane_m2 : null;
+const dUAU = (a) => Math.min(a.urbanisme?.dist_zone_u_m ?? 1e9, a.urbanisme?.dist_zone_au_m ?? 1e9);
+
+// ---- Notes : base de l'artefact si disponible, sinon ce navigateur ----
+const notes = {};
+let db = null;
+const docId = (id) => id.replace(/[^A-Za-z0-9_-]/g, "_");
+try { Object.assign(notes, JSON.parse(localStorage.getItem("vf-notes") || "{}")); } catch (e) {}
+const note = (id) => notes[id] || { texte: "", suivi: "", favori: false };
+async function saveNote(id, patch) {
+  notes[id] = { ...note(id), ...patch, id, maj_le: new Date().toISOString() };
+  try { localStorage.setItem("vf-notes", JSON.stringify(notes)); } catch (e) {}
+  if (db) { try { await db.collection("notes").doc(docId(id)).set(notes[id]); return "base"; } catch (e) { return "navigateur"; } }
+  return "navigateur";
+}
+
+// ---- État ----
+const S = { vue: "carte", sel: null, deps: [], typos: [], sources: [], prixMax: "", surfMin: "", pm2Max: "", scoreMin: 0,
+  conf: "", suivi: "", fav: false, hideAb: true, q: "", tri: { col: "score", desc: true }, motif: "" };
+try { const v = localStorage.getItem("vf-vue"); if (v) S.vue = v; } catch (e) {}
+
+function visibles() {
+  const q = S.q.trim().toLowerCase();
+  const n = (v) => v === "" ? null : Number(v);
+  return A.filter((a) => {
+    const nt = note(a.id);
+    return (!S.deps.length || S.deps.includes(a.departement)) && (!S.typos.length || S.typos.includes(a.typologie)) &&
+      (!S.sources.length || S.sources.includes(a.source)) && (n(S.prixMax) == null || a.prix <= n(S.prixMax)) &&
+      (n(S.surfMin) == null || (a.surface_m2 || 0) >= n(S.surfMin)) && (n(S.pm2Max) == null || (a.prix_m2 != null && a.prix_m2 <= n(S.pm2Max))) &&
+      (a.score ?? 0) >= S.scoreMin && (!S.conf || a.confiance === S.conf) && (!S.fav || nt.favori) &&
+      (!S.suivi || nt.suivi === S.suivi) && (!S.hideAb || nt.suivi !== "abandon") &&
+      (!q || `${a.commune} ${a.titre} ${a.description} ${nt.texte}`.toLowerCase().includes(q));
+  });
+}
+
+// ---- Bandeau ----
+function renderHeader(v) {
+  const genere = dfr(DATA.genere_le);
+  document.getElementById("sub").textContent = `Collecte du ${genere} · ${A.length} terrains retenus sur ${A.length + Object.values(DATA.motifs_exclusion || {}).reduce((s, x) => s + x, 0)} annonces lues`;
+  const best = v.filter((a) => (a.score ?? 0) >= 65).length;
+  const fav = A.filter((a) => note(a.id).favori).length;
+  document.getElementById("kpis").innerHTML = [
+    [v.length, "affichés"], [best, "score ≥ 65"],
+    ...Object.keys(DEPS).map((d) => [v.filter((a) => a.departement === d).length, `en ${d}`]), [fav, "favoris"]
+  ].map(([n, l]) => `<div class="kpi"><b class="num">${n}</b><small>${l}</small></div>`).join("");
+  for (const k of ["carte", "tableau", "exclues"]) {
+    document.getElementById(`tab-${k}`).setAttribute("aria-pressed", S.vue === k);
+    document.getElementById(`v-${k}`).hidden = S.vue !== k;
+  }
+  document.getElementById("tab-exclues").textContent = `Exclues (${(DATA.exclues || []).length})`;
+  document.getElementById("filters").hidden = S.vue === "exclues";
+  const actifs = S.deps.length + S.typos.length + S.sources.length + [S.prixMax, S.surfMin, S.pm2Max, S.conf, S.suivi, S.q].filter(Boolean).length + (S.scoreMin ? 1 : 0) + (S.fav ? 1 : 0);
+  document.getElementById("f-toggle").textContent = actifs ? `Filtres (${actifs})` : "Filtres";
+}
+
+// ---- Filtres ----
+function chips(opts, key, fmt = (k, l) => l) {
+  return `<div class="chips">${Object.entries(opts).map(([k, l]) =>
+    `<button class="chip" data-chip="${key}" data-v="${k}" aria-pressed="${S[key].includes(k)}">${esc(fmt(k, l))}</button>`).join("")}</div>`;
+}
+function renderFilters() {
+  const srcs = Object.fromEntries(Object.entries(SOURCES).filter(([k]) => A.some((a) => a.source === k)));
+  document.getElementById("filters").innerHTML =
+    chips(DEPS, "deps", (k) => k) + chips(TYPOS, "typos") + chips(srcs, "sources") +
+    `<label class="field">Prix ≤ <input id="f-prix" inputmode="numeric" placeholder="€" value="${esc(S.prixMax)}"></label>
+     <label class="field">Surface ≥ <input id="f-surf" inputmode="numeric" placeholder="m²" value="${esc(S.surfMin)}"></label>
+     <label class="field">€/m² ≤ <input id="f-pm2" inputmode="decimal" placeholder="ex. 3" value="${esc(S.pm2Max)}"></label>
+     <label class="field">Score ≥ <b class="num" id="f-score-v">${S.scoreMin}</b><input id="f-score" type="range" min="0" max="90" step="5" value="${S.scoreMin}"></label>
+     <label class="field"><select id="f-conf" aria-label="Confiance"><option value="">Toute confiance</option><option value="haute">Confiance haute</option><option value="moyenne">Moyenne</option><option value="faible">Faible</option></select></label>
+     <label class="field"><select id="f-suivi" aria-label="Suivi"><option value="">Tout suivi</option>${Object.entries(SUIVIS).filter(([k]) => k).map(([k, l]) => `<option value="${k}">${l}</option>`).join("")}</select></label>
+     <label class="field"><input id="f-fav" type="checkbox" ${S.fav ? "checked" : ""}> Favoris</label>
+     <label class="field"><input id="f-ab" type="checkbox" ${S.hideAb ? "checked" : ""}> Masquer abandonnés</label>
+     <label class="field"><input id="f-q" class="search" placeholder="Commune, mot-clé, note…" value="${esc(S.q)}"></label>
+     <button class="link" id="f-reset">Réinitialiser</button>`;
+  document.getElementById("f-conf").value = S.conf;
+  document.getElementById("f-suivi").value = S.suivi;
+}
+document.getElementById("filters").addEventListener("click", (e) => {
+  const c = e.target.closest("[data-chip]");
+  if (c) { const k = c.dataset.chip, v = c.dataset.v; S[k] = S[k].includes(v) ? S[k].filter((x) => x !== v) : [...S[k], v]; c.setAttribute("aria-pressed", S[k].includes(v)); render(); }
+  if (e.target.id === "f-reset") { Object.assign(S, { deps: [], typos: [], sources: [], prixMax: "", surfMin: "", pm2Max: "", scoreMin: 0, conf: "", suivi: "", fav: false, hideAb: true, q: "" }); renderFilters(); render(); }
+});
+document.getElementById("filters").addEventListener("input", (e) => {
+  const map = { "f-prix": "prixMax", "f-surf": "surfMin", "f-pm2": "pm2Max", "f-q": "q", "f-conf": "conf", "f-suivi": "suivi" };
+  if (map[e.target.id]) S[map[e.target.id]] = e.target.value;
+  if (e.target.id === "f-score") { S.scoreMin = Number(e.target.value); document.getElementById("f-score-v").textContent = S.scoreMin; }
+  if (e.target.id === "f-fav") S.fav = e.target.checked;
+  if (e.target.id === "f-ab") S.hideAb = e.target.checked;
+  render();
+});
+
+// ---- Carte (Leaflet, fond vectoriel : départements, villes) ----
+let map = null, layer = null;
+function initMap() {
+  if (map || typeof L === "undefined") return;
+  map = L.map("map", { zoomControl: true, attributionControl: false, zoomSnap: 0.25 }).setView([47.05, -0.75], 7.6);
+  const fc = { type: "FeatureCollection", features: DEPS_GEO.map((d) => ({ type: "Feature", properties: { c: d.c, n: d.n }, geometry: d.g })) };
+  L.geoJSON(fc, {
+    style: (f) => ({ color: css("--dep-line"), weight: DEPS[f.properties.c] ? 1.4 : 0.7, fillColor: DEPS[f.properties.c] ? css("--land-focus") : css("--land"), fillOpacity: 1 }),
+    onEachFeature: (f, l) => { if (DEPS[f.properties.c]) l.bindTooltip(`${f.properties.n} (${f.properties.c})`, { permanent: true, direction: "center", className: "dep-label", opacity: .9 }); },
+    interactive: false,
+  }).addTo(map);
+  for (const [n, la, lo] of CITIES) {
+    L.circleMarker([la, lo], { radius: 2.5, color: css("--muted"), weight: 0, fillColor: css("--muted"), fillOpacity: 1, interactive: false })
+      .bindTooltip(n, { permanent: true, direction: "right", offset: [4, 0], className: "city-label" }).addTo(map);
+  }
+  layer = L.layerGroup().addTo(map);
+  const zone = L.geoJSON({ type: "FeatureCollection", features: fc.features.filter((f) => DEPS[f.properties.c]) });
+  map.fitBounds(zone.getBounds(), { padding: [12, 12] });
+  document.getElementById("legend").innerHTML = `<b>Score d'opportunité</b>` +
+    [["--s4", "≥ 65"], ["--s3", "50 – 65"], ["--s2", "35 – 50"], ["--s1", "< 35"]].map(([v, l]) => `<div><span class="dot" style="background:var(${v})"></span>${l}</div>`).join("") +
+    `<div><span class="dot approx"></span>Centre de commune</div>`;
+}
+function renderMap(v) {
+  initMap();
+  if (!map) { document.getElementById("map").innerHTML = `<p class="empty">La carte n'a pas pu se charger. La liste reste utilisable.</p>`; return; }
+  layer.clearLayers();
+  const pts = v.filter((a) => a.lat != null).sort((a, b) => (a.score ?? 0) - (b.score ?? 0));
+  for (const a of pts) {
+    const approx = a.precision_geo === "commune", on = a.id === S.sel;
+    L.circleMarker([a.lat, a.lon], { radius: on ? 11 : 7.5, color: on ? css("--focus") : css("--ring"), weight: on ? 3 : 2,
+      fillColor: scoreColor(a.score), fillOpacity: approx ? 0.4 : 0.95, dashArray: approx ? "3 3" : null })
+      .bindTooltip(`<b>${esc(a.commune)}</b> · score ${a.score ?? "—"}<br>${eur(a.prix)} · ${surf(a.surface_m2)} · ${TYPOS[a.typologie] || ""}`, { direction: "top", offset: [0, -6] })
+      .on("click", () => select(a.id)).addTo(layer);
+  }
+  setTimeout(() => map.invalidateSize(), 0);
+}
+
+// ---- Liste ----
+function renderList(v) {
+  const el = document.getElementById("list");
+  if (!v.length) { el.innerHTML = `<p class="empty">Aucun terrain ne correspond aux filtres. Baissez le score minimum ou retirez un filtre.</p>`; return; }
+  el.innerHTML = [...v].sort((a, b) => (b.score ?? 0) - (a.score ?? 0)).map((a) => {
+    const u = a.urbanisme || {}, r = ratio(a), nt = note(a.id);
+    const zone = a.precision_geo === "commune" ? `<span class="zone"><i style="background:var(--z-x)"></i>zone ?</span>`
+      : `<span class="zone"><i style="background:var(${zoneVar(u.type_zone)})"></i>${esc(u.zone_plu || u.type_zone || "?")}</span>`;
+    return `<button class="card" data-id="${esc(a.id)}" aria-current="${a.id === S.sel}">
+      <span class="score-badge num" style="background:${scoreColor(a.score)};color:${inkOn(scoreColor(a.score))}">${Math.round(a.score ?? 0)}</span>
+      <span class="t">${nt.favori ? "★ " : ""}${esc(a.commune)} <span class="small">(${a.departement})</span></span>
+      <span class="p num">${eur(a.prix)}</span>
+      <span class="m">${TYPOS[a.typologie] || ""} · ${surf(a.surface_m2)} ${zone}${nt.suivi ? ` · ${SUIVIS[nt.suivi]}` : ""}</span>
+      <span class="r num">${r != null ? `${Math.round(r * 100)} % DVF` : eurm2(a.prix_m2)}</span>
+    </button>`;
+  }).join("");
+}
+document.getElementById("list").addEventListener("click", (e) => { const c = e.target.closest(".card"); if (c) select(c.dataset.id); });
+
+// ---- Tableau ----
+const COLS = [["fav", "★", (a) => note(a.id).favori ? 1 : 0], ["score", "Score", (a) => a.score ?? -1, "r"], ["commune", "Commune", (a) => a.commune || ""],
+  ["dep", "Dép.", (a) => a.departement], ["typo", "Type", (a) => a.typologie || ""], ["prix", "Prix", (a) => a.prix ?? 0, "r"],
+  ["surf", "Surface", (a) => a.surface_m2 ?? 0, "r"], ["pm2", "€/m²", (a) => a.prix_m2 ?? Infinity, "r"], ["dvf", "vs DVF", (a) => ratio(a) ?? Infinity, "r"],
+  ["zone", "Zone PLU", (a) => a.urbanisme?.zone_plu || ""], ["du", "→ U/AU", dUAU, "r"], ["src", "Source", (a) => a.source],
+  ["suivi", "Suivi", (a) => note(a.id).suivi], ["vu", "Vu le", (a) => a.premiere_vue || ""]];
+function renderTable(v) {
+  const col = COLS.find((c) => c[0] === S.tri.col), get = col[2];
+  const rows = [...v].sort((a, b) => { const x = get(a), y = get(b); const r = typeof x === "string" ? x.localeCompare(y, "fr") : x - y; return S.tri.desc ? -r : r; });
+  document.getElementById("table").innerHTML = `<table><thead><tr>${COLS.map(([k, l, , c]) =>
+    `<th class="${c || ""}" data-col="${k}" aria-sort="${S.tri.col === k ? (S.tri.desc ? "descending" : "ascending") : "none"}">${l}${S.tri.col === k ? (S.tri.desc ? " ↓" : " ↑") : ""}</th>`).join("")}</tr></thead><tbody>${
+    rows.map((a) => { const u = a.urbanisme || {}, r = ratio(a), d = dUAU(a), nt = note(a.id); return `<tr data-id="${esc(a.id)}" aria-current="${a.id === S.sel}">
+      <td><button class="star" data-star="${esc(a.id)}" aria-pressed="${nt.favori}" aria-label="Favori">★</button></td>
+      <td class="r num"><span class="sdot" style="background:${scoreColor(a.score)}"></span>${a.score ?? "—"}${a.confiance === "faible" ? ' <span class="small" title="Confiance faible">?</span>' : ""}</td>
+      <td>${esc(a.commune)}</td><td>${a.departement}</td><td>${TYPOS[a.typologie] || ""}</td><td class="r num">${eur(a.prix)}</td>
+      <td class="r num">${surf(a.surface_m2)}</td><td class="r num">${eurm2(a.prix_m2)}</td><td class="r num">${r != null ? Math.round(r * 100) + " %" : "—"}</td>
+      <td><span class="zone"><i style="background:var(${a.precision_geo === "commune" ? "--z-x" : zoneVar(u.type_zone)})"></i>${a.precision_geo === "commune" ? "?" : esc(u.zone_plu || u.type_zone || "—")}</span></td>
+      <td class="r num">${a.precision_geo === "commune" ? "?" : d < 1e9 ? nf0.format(d) + " m" : "> 1,5 km"}</td>
+      <td>${SOURCES[a.source] || a.source}</td><td>${nt.suivi ? SUIVIS[nt.suivi] : "—"}</td><td class="small">${dfr(a.premiere_vue)}</td></tr>`; }).join("")
+  }</tbody></table>${rows.length ? "" : '<p class="empty">Aucun terrain ne correspond aux filtres.</p>'}`;
+}
+document.getElementById("table").addEventListener("click", async (e) => {
+  const th = e.target.closest("th[data-col]");
+  if (th) { S.tri = { col: th.dataset.col, desc: S.tri.col === th.dataset.col ? !S.tri.desc : true }; return render(); }
+  const st = e.target.closest("[data-star]");
+  if (st) { e.stopPropagation(); await saveNote(st.dataset.star, { favori: !note(st.dataset.star).favori }); return render(); }
+  const tr = e.target.closest("tr[data-id]"); if (tr) select(tr.dataset.id);
+});
+
+// ---- Exclues ----
+function renderExclues() {
+  const ex = (DATA.exclues || []).filter((x) => !S.motif || x.motif_exclusion === S.motif);
+  const counts = DATA.motifs_exclusion || {};
+  const total = Object.values(counts).reduce((s, n) => s + n, 0);
+  document.getElementById("excl").innerHTML = `<p class="small">Annonces écartées par le filtrage, avec leur motif. Vérifiez ici qu'aucune vraie opportunité n'a été perdue.</p>
+    <div class="chips"><button class="chip" data-motif="" aria-pressed="${!S.motif}">Toutes (${total})</button>${
+    Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([k, n]) => `<button class="chip" data-motif="${k}" aria-pressed="${S.motif === k}">${esc(MOTIFS[k] || k)} (${n})</button>`).join("")}</div>
+    <div style="overflow-x:auto"><table><thead><tr><th>Motif</th><th>Annonce</th><th>Commune</th><th class="r">Prix</th><th class="r">Surface</th><th>Source</th></tr></thead><tbody>${
+    ex.map((x) => `<tr><td>${esc(MOTIFS[x.motif_exclusion] || x.motif_exclusion)}</td><td><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc((x.titre || x.id).slice(0, 60))}</a></td>
+      <td>${esc(x.commune)} (${x.departement})</td><td class="r num">${eur(x.prix)}</td><td class="r num">${surf(x.surface_m2)}</td><td>${SOURCES[x.source] || x.source}</td></tr>`).join("")}</tbody></table></div>`;
+}
+document.getElementById("excl").addEventListener("click", (e) => { const c = e.target.closest("[data-motif]"); if (c) { S.motif = c.dataset.motif; renderExclues(); } });
+
+// ---- Fiche ----
+const kv = (rows) => `<dl class="kv">${rows.filter(Boolean).map(([k, v]) => `<dt>${k}</dt><dd>${v ?? "—"}</dd>`).join("")}</dl>`;
+const yn = (v) => v == null ? "non vérifié" : v ? "Oui" : "Non";
+function links(a) {
+  const l = [];
+  if (a.lat != null) {
+    l.push(["Géoportail : photo aérienne + cadastre", `https://www.geoportail.gouv.fr/carte?c=${a.lon},${a.lat}&z=17&l0=ORTHOIMAGERY.ORTHOPHOTOS::GEOPORTAIL:OGC:WMTS(1)&l1=CADASTRALPARCELS.PARCELLAIRE_EXPRESS::GEOPORTAIL:OGC:WMTS(1)&permalink=yes`]);
+    l.push(["Géoportail de l'urbanisme (PLU)", `https://www.geoportail-urbanisme.gouv.fr/map/#tile=1&lon=${a.lon}&lat=${a.lat}&zoom=17`]);
+  }
+  if (a.code_insee) {
+    l.push(["Géorisques : rapport de la commune", `https://www.georisques.gouv.fr/mes-risques/connaitre-les-risques-pres-de-chez-moi/rapport2?form-commune=true&codeInsee=${a.code_insee}`]);
+    l.push(["DVF : carte des ventes", `https://app.dvf.etalab.gouv.fr/?commune=${a.code_insee}`]);
+  }
+  return l;
+}
+function renderFiche() {
+  const el = document.getElementById("fiche");
+  const a = A.find((x) => x.id === S.sel);
+  if (!a || S.vue === "exclues") { el.hidden = true; return; }
+  el.hidden = false;
+  const u = a.urbanisme || {}, env = a.environnement || {}, d = a.dvf || {}, nt = note(a.id), r = ratio(a);
+  const bars = [["s_decote", "Décote vs DVF", 30], ["s_mutation", "Potentiel de mutation PLU", 35], ["s_acces", "Accessibilité & usage", 20], ["s_rarete", "Rareté / emplacement", 15]];
+  const baisse = a.prix_initial && a.prix < a.prix_initial;
+  el.innerHTML = `
+    <div class="fiche-head">
+      <div style="flex:1;min-width:0"><div class="eyebrow">${SOURCES[a.source] || a.source} · ${TYPOS[a.typologie] || ""} · ${DEPS[a.departement] || a.departement}</div>
+      <h2>${esc(a.commune)}, ${surf(a.surface_m2)}</h2></div>
+      <button class="star" style="font-size:22px" data-fstar aria-pressed="${nt.favori}" aria-label="Favori">★</button>
+      <button class="close" data-close aria-label="Fermer la fiche">×</button>
+    </div>
+    <div class="headline">
+      <div><div class="price num">${eur(a.prix)}</div><div class="small num">${eurm2(a.prix_m2)}${baisse ? ` · baisse depuis ${eur(a.prix_initial)}` : ""}</div></div>
+      <div class="score"><b class="num" style="color:${scoreColor(a.score)}">${a.score ?? "—"}</b><div class="small">/ 100 · confiance ${a.confiance || "—"}</div></div>
+    </div>
+    <a class="cta" href="${esc(a.url)}" target="_blank" rel="noopener">Voir l'annonce source ↗</a>
+    ${a.mode_vente !== "gre_a_gre" ? `<p class="small">Mode de vente : ${a.mode_vente === "encheres" ? "enchères" : "vente interactive (enchères en ligne)"}</p>` : ""}
+    <div class="sec"><h3>Décomposition du score</h3>
+      ${bars.map(([k, l, m]) => `<div class="bar"><span>${l}</span><span class="num">${a[k] ?? 0} / ${m}</span><div class="track"><div class="fill" style="width:${((a[k] ?? 0) / m) * 100}%;background:${scoreColor(a.score)}"></div></div></div>`).join("")}
+      <ul class="why">${(a.explications || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    </div>
+    ${a.alertes?.length ? `<div class="sec"><h3>Relevé dans l'annonce</h3><div class="tags">${a.alertes.map((x) => `<span class="tag">${esc(x.libelle)}</span>`).join("")}</div></div>` : ""}
+    <div class="sec"><h3>Urbanisme</h3>
+      ${a.precision_geo === "commune" ? `<div class="hint">Position connue à la commune seulement : le zonage et les distances ne sont pas fiables. Une fois la parcelle trouvée (photos, Géoportail, vendeur), lancez <span class="mono">python -m vf localiser "${esc(a.id)}" &lt;IDU&gt;</span>.</div>` : ""}
+      ${kv([["Localisation", PRECISIONS[a.precision_geo] || a.precision_geo],
+        [a.precision_geo === "approx" ? "Parcelle au point approché" : "Parcelle", u.parcelle_idu ? `<span class="mono">${esc(u.parcelle_idu)}</span>` : a.ref_cadastrale ? `<span class="mono">${esc(a.ref_cadastrale)}</span>` : null],
+        u.contenance_m2 ? ["Contenance cadastrale", surf(u.contenance_m2)] : null,
+        ["Zone", u.zone_plu || u.type_zone ? `<span class="zone"><i style="background:var(${zoneVar(u.type_zone)})"></i>${esc(u.zone_plu || u.type_zone)}${u.doc_urbanisme ? ` · ${esc(u.doc_urbanisme)}` : ""}</span>` : null],
+        ["Zone U la plus proche", dist(u.dist_zone_u_m)], ["Zone AU la plus proche", dist(u.dist_zone_au_m)],
+        ["OAP à proximité", u.oap_proche_m != null ? dist(u.oap_proche_m) : "aucune à moins de 600 m"],
+        u.prescriptions?.length ? ["Prescriptions", esc(u.prescriptions.join(", "))] : null,
+        u.servitudes?.length ? ["Servitudes", esc(u.servitudes.join(", "))] : null])}
+    </div>
+    <div class="sec"><h3>Risques et environnement</h3>
+      ${kv([["Natura 2000", yn(env.natura2000)], ["ZNIEFF", yn(env.znieff)],
+        ["PPR inondation (commune)", env.ppr_inondation?.length ? esc(env.ppr_inondation.join(", ")) : "Aucun"],
+        env.azi?.length ? ["Atlas des zones inondables", esc(env.azi.join(", "))] : null,
+        env.risques_commune?.length ? ["Risques recensés", esc([...new Set(env.risques_commune)].slice(0, 6).join(", "))] : null,
+        ["Route publique", env.dist_route_m != null ? `${dist(env.dist_route_m)}${env.nature_route ? ` (${esc(env.nature_route.toLowerCase())})` : ""}` : null],
+        env.dist_littoral_km != null ? ["Littoral", `${nf0.format(env.dist_littoral_km)} km`] : null,
+        ["Agglomération", env.agglo_proche ? `${esc(env.agglo_proche)} à ${nf0.format(env.dist_agglo_km)} km` : null]])}
+    </div>
+    <div class="sec"><h3>Ventes réelles comparables (DVF)</h3>
+      ${kv([["Référence", { section: "même section cadastrale", commune: "commune", departement: "département", repere_regional: "repère régional" }[d.niveau] || "—"],
+        ["Ventes retenues", d.n], ["€/m² p25 · médiane · p75", d.mediane_m2 != null ? `${nf2.format(d.p25_m2)} · <b>${nf2.format(d.mediane_m2)}</b> · ${nf2.format(d.p75_m2)}` : null],
+        ["Ce terrain", r != null ? `${Math.round(r * 100)} % de la médiane` : null]])}
+      ${d.ventes?.length ? `<div class="dvf"><table><thead><tr><th>Date</th><th class="r">Prix</th><th class="r">Surface</th><th class="r">€/m²</th><th>Nature</th></tr></thead><tbody>${
+        d.ventes.slice(0, 8).map((x) => `<tr><td>${dfr(x.date)}</td><td class="r num">${eur(x.valeur)}</td><td class="r num">${surf(x.surface_m2)}</td><td class="r num">${nf2.format(x.prix_m2)}</td><td>${esc(x.nature)}${x.section ? ` <span class="mono">${esc(x.section)}</span>` : ""}</td></tr>`).join("")}</tbody></table></div>` : ""}
+    </div>
+    ${a.historique_prix?.length > 1 ? `<div class="sec"><h3>Historique du prix</h3>${kv(a.historique_prix.map((h) => [dfr(h.date), eur(h.prix)]))}</div>` : ""}
+    <div class="sec"><h3>Note personnelle</h3>
+      <select class="sel" id="n-suivi" aria-label="Statut de suivi">${Object.entries(SUIVIS).map(([k, l]) => `<option value="${k}" ${nt.suivi === k ? "selected" : ""}>${l}</option>`).join("")}</select>
+      <textarea id="n-texte" placeholder="Appel mairie, visite, avis du voisin, prix négocié…">${esc(nt.texte)}</textarea>
+      <div class="note-row"><button class="btn" id="n-save">Enregistrer la note</button><span class="small" id="n-etat">${nt.maj_le ? `Modifiée le ${dfr(nt.maj_le)}` : ""}</span></div>
+    </div>
+    <div class="sec"><h3>Vérifier sur les sites officiels</h3><div class="links">${links(a).map(([l, h]) => `<a href="${esc(h)}" target="_blank" rel="noopener">${l} ↗</a>`).join("")}</div></div>
+    <div class="sec"><h3>Texte de l'annonce</h3><p class="desc">${esc((a.description || "").replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]+>/g, ""))}</p>
+      <p class="small">Vue pour la première fois le ${dfr(a.premiere_vue)} · publiée le ${dfr(a.date_publication)}</p></div>`;
+  el.scrollTop = 0;
+}
+document.getElementById("fiche").addEventListener("click", async (e) => {
+  if (e.target.closest("[data-close]")) { S.sel = null; return render(); }
+  if (e.target.closest("[data-fstar]")) { await saveNote(S.sel, { favori: !note(S.sel).favori }); return render(); }
+  if (e.target.id === "n-save") {
+    const where = await saveNote(S.sel, { texte: document.getElementById("n-texte").value });
+    document.getElementById("n-etat").textContent = where === "base" ? "Enregistrée" : "Enregistrée dans ce navigateur";
+    renderList(visibles());
+  }
+});
+document.getElementById("fiche").addEventListener("change", async (e) => {
+  if (e.target.id === "n-suivi") { await saveNote(S.sel, { suivi: e.target.value }); renderList(visibles()); renderHeader(visibles()); }
+});
+
+document.getElementById("f-toggle").addEventListener("click", (e) => {
+  const open = document.getElementById("filters").classList.toggle("open");
+  e.currentTarget.setAttribute("aria-expanded", open);
+});
+
+// ---- Navigation ----
+function select(id) {
+  S.sel = id; render();
+  const a = A.find((x) => x.id === id);
+  if (map && a?.lat != null && S.vue === "carte") map.flyTo([a.lat, a.lon], Math.max(map.getZoom(), 10), { duration: matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 0.6 });
+}
+for (const k of ["carte", "tableau", "exclues"]) document.getElementById(`tab-${k}`).addEventListener("click", () => {
+  S.vue = k; try { localStorage.setItem("vf-vue", k); } catch (e) {} render();
+});
+function render() {
+  const v = visibles();
+  renderHeader(v);
+  if (S.vue === "carte") { renderMap(v); renderList(v); }
+  if (S.vue === "tableau") renderTable(v);
+  if (S.vue === "exclues") renderExclues();
+  renderFiche();
+}
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { if (map) { map.remove(); map = null; } render(); });
+new MutationObserver(() => { if (map) { map.remove(); map = null; } render(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+renderFilters();
+if (A.length && !matchMedia("(max-width: 860px)").matches) S.sel = [...A].sort((a, b) => (b.score ?? 0) - (a.score ?? 0))[0].id;
+render();
+
+// Notes partagées : chargées depuis la base de l'artefact quand elle répond
+(async () => {
+  try {
+    db = window.claude?.use ? await window.claude.use("db") : null;
+    if (!db) return;
+    db.collection("notes").onSnapshot((snap) => {
+      for (const doc of snap.docs) { const x = doc.data(); if (x?.id) notes[x.id] = x; }
+      const editing = document.activeElement?.id === "n-texte";
+      renderHeader(visibles());
+      if (S.vue === "carte") renderList(visibles()); else if (S.vue === "tableau") renderTable(visibles());
+      if (!editing) renderFiche();
+    }, () => {});
+  } catch (e) { db = null; }
+})();
+})();
+</script>

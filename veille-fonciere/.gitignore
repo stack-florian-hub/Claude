@@ -2,3 +2,4 @@ backend/data/
 frontend/node_modules/
 frontend/dist/
 __pycache__/
+artifact/veille-fonciere.html
