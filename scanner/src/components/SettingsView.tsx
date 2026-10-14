@@ -52,6 +52,7 @@ export default function SettingsView({ settings, zones, dvf }: { settings: Setti
             <label className="field">Division / lot €{n(s.fees.divisionParLot, (x) => sec('fees', { divisionParLot: x }), 100)}</label>
             <label className="field">Travaux auto : rénovation complète €/m²{n(s.fees.travauxLourdsM2 ?? 1000, (x) => sec('fees', { travauxLourdsM2: x }), 50)}</label>
             <label className="field">Travaux auto : rafraîchissement €/m²{n(s.fees.travauxLegersM2 ?? 300, (x) => sec('fees', { travauxLegersM2: x }), 50)}</label>
+            <label className="field">Travaux auto : remise au goût du jour €/m² (par défaut, sauf bien refait){n(s.fees.travauxDecoM2 ?? 150, (x) => sec('fees', { travauxDecoM2: x }), 25)}</label>
             <label className="field">Charges par défaut €/mois{n(s.fees.chargesMensuellesDefaut, (x) => sec('fees', { chargesMensuellesDefaut: x }), 10)}</label>
             <label className="field">Taxe foncière / lot €/an{n(s.fees.taxeFonciereAnnuelleParLot, (x) => sec('fees', { taxeFonciereAnnuelleParLot: x }), 50)}</label>
             <label className="field">Alerte : gain min €{n(s.thresholds.minGain, (x) => sec('thresholds', { minGain: x }), 1000)}</label>
@@ -64,7 +65,8 @@ export default function SettingsView({ settings, zones, dvf }: { settings: Setti
           <h2>Budget, financement, fiscalité</h2>
           <div className="formgrid">
             <label className="field">Trésorerie (budget) €{n(s.budget.cash, (x) => sec('budget', { cash: x }), 1000)}</label>
-            <label className="field">Budget élargi €{n(s.budget.elargi, (x) => sec('budget', { elargi: x }), 5000)}</label>
+            <label className="field">Projet confortable ≤ € (score remonté){n(s.budget.confort ?? 150000, (x) => sec('budget', { confort: x }), 5000)}</label>
+            <label className="field">Projet maximum € (au-delà, score abaissé){n(s.budget.elargi, (x) => sec('budget', { elargi: x }), 5000)}</label>
             <label className="field">Réserve (simulateur) €{n(s.budget.reserve, (x) => sec('budget', { reserve: x }), 1000)}</label>
             <label className="field">Apport bancaire %{n(s.financing.apportPct, (x) => sec('financing', { apportPct: x }))}</label>
             <label className="field">Taux crédit %{n(s.financing.rate, (x) => sec('financing', { rate: x }), 0.1)}</label>

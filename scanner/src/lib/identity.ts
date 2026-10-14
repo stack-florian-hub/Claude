@@ -1,7 +1,7 @@
 // Rapprochement d'annonces : même bien vu deux fois (re-collage, autre site). Pur, utilisable côté navigateur.
 import type { Listing, ListingInput } from './types';
 
-/** Même bien ? même URL, ou même code postal + même type principal + surface à ±3 % + prix à ±25 %. */
+/** Même bien ? même URL, ou (entre deux sites) même code postal + même type principal + surface à 1 m² près + prix à ±10 %. */
 export function findSameProperty(all: Listing[], i: ListingInput): Listing | undefined {
   const host = (u?: string) => { try { return u ? new URL(u).host : ''; } catch { return ''; } };
   if (i.url) {
@@ -16,8 +16,9 @@ export function findSameProperty(all: Listing[], i: ListingInput): Listing | und
     if (sameSite(l) || l.address.postalCode !== i.address.postalCode || !i.address.postalCode || !i.price || !l.price) return false;
     const ml = main(l);
     if (ml.type !== mi.type || l.lots.length !== i.lots.length) return false;
-    const priceClose = Math.abs(l.price - i.price) / l.price <= 0.25;
-    if (ml.surface && mi.surface) return Math.abs(ml.surface - mi.surface) / ml.surface <= 0.03 && priceClose;
+    // même bien publié par deux enseignes : même surface au m² près, prix à 10 % près
+    const priceClose = Math.abs(l.price - i.price) / l.price <= 0.1;
+    if (ml.surface && mi.surface) return Math.abs(ml.surface - mi.surface) <= 1 && priceClose;
     return l.title === i.title && priceClose;
   });
 }

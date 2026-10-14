@@ -9,18 +9,18 @@ export interface OppRow {
   id: string; title: string; url?: string; source: string; network?: string; networkName?: string; agency?: string; offMarket?: boolean; strategy?: 'lots' | 'global'; seller: string; city: string; cp: string; dept: string; zone?: string; tension: number;
   lots: { type: string; surface?: number }[]; price: number; low: number; mid: number; high: number; ecart: number;
   gain: number; gainLow: number; gainHigh: number; gainPct: number; ratio: number; score: number; confidence: number; flagged: boolean;
-  cash: number; priceMax: number; age: number; status: string; signals: string[]; warnings: string[]; dpe?: string; drop: number; demo?: boolean;
+  cash: number; priceMax: number; age: number; status: string; signals: string[]; warnings: string[]; dpe?: string; drop: number; demo?: boolean; redFlags?: string[]; travaux?: number;
 }
 
 type Key = keyof OppRow;
 const scoreColor = (s: number) => (s >= 65 ? 'var(--good)' : s >= 45 ? 'var(--warn)' : 'var(--muted)');
-const PREF_KEY = 'scanner.filtres.v3';
+const PREF_KEY = 'scanner.filtres.v4';
 
 export default function OpportunitiesTable({ rows, budget, elargi, minGain, minGainPct }: { rows: OppRow[]; budget: number; elargi: number; minGain: number; minGainPct: number }) {
   const router = useRouter();
   const depts = [...new Set(rows.map((r) => r.dept))].sort();
   const networks = [...new Map(rows.filter((r) => r.network).map((r) => [r.network!, r.networkName || r.network!])).entries()].sort((a, b) => a[1].localeCompare(b[1]));
-  const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, nego: false, status: 'actifs', source: '', seller: '', q: '' });
+  const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, nego: false, negEcart: false, status: 'actifs', source: '', seller: '', q: '' });
   const [sort, setSort] = useState<{ k: Key; dir: 1 | -1 }>({ k: 'score', dir: -1 });
 
   useEffect(() => {
@@ -50,6 +50,8 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
       if (f.gainMin && r.gain < +f.gainMin) return false;
       if (f.ageMax && r.age > +f.ageMax) return false;
       if (f.flagged && !r.flagged) return false;
+      // écart négatif (prix affiché au-dessus de la valeur estimée) : masqué sauf demande explicite
+      if (!f.negEcart && r.ecart <= 0) return false;
       if (f.nego && (r.flagged || r.priceMax >= r.price || r.priceMax < r.price * 0.8 || r.confidence < 0.3)) return false;
       if (f.source === 'sans' && r.network) return false;
       if (f.source && f.source !== 'sans' && r.network !== f.source) return false;
@@ -77,7 +79,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
     downloadCsv('opportunites', list.map((r) => ({
       score: r.score, alerte: r.flagged ? 'oui' : '', titre: r.title, ville: r.city, cp: r.cp, zone: r.zone, reseau: r.networkName || SOURCE_LABELS[r.source], agence: r.agency, vendeur: SELLER_LABELS[r.seller],
       lots: r.lots.map((l) => LOT_LABELS[l.type] + (l.surface ? ` ${l.surface}m²` : '')).join(' + '), prix: r.price, estimation_basse: r.low, estimation_moyenne: r.mid, estimation_haute: r.high,
-      ecart: r.ecart, gain_brut: r.gain, gain_pct: +(r.gainPct * 100).toFixed(1), ratio: +r.ratio.toFixed(2), offre_max: r.priceMax, cash_necessaire: r.cash, confiance: +(r.confidence * 100).toFixed(0), anciennete_j: r.age, statut: r.status, url: r.url,
+      ecart: r.ecart, travaux: r.travaux, red_flags: (r.redFlags || []).join(' | '), gain_brut: r.gain, gain_pct: +(r.gainPct * 100).toFixed(1), ratio: +r.ratio.toFixed(2), offre_max: r.priceMax, cash_necessaire: r.cash, confiance: +(r.confidence * 100).toFixed(0), anciennete_j: r.age, statut: r.status, url: r.url,
     })));
   }
 
@@ -125,7 +127,8 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
         </label>
         <label className="row" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 4 }}><input type="checkbox" checked={f.nego} onChange={(e) => setF({ ...f, nego: e.target.checked })} /> À négocier (≤ 20 %)</label>
         <label className="row" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 4 }}><input type="checkbox" checked={f.flagged} onChange={(e) => setF({ ...f, flagged: e.target.checked })} /> Alertes seulement</label>
-        <button onClick={() => setF({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, nego: false, status: 'actifs', source: '', seller: '', q: '' })}>Réinitialiser</button>
+        <label className="row" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 4 }} title="Prix affiché au-dessus de la valeur estimée : masqués par défaut"><input type="checkbox" checked={f.negEcart} onChange={(e) => setF({ ...f, negEcart: e.target.checked })} /> Afficher les écarts négatifs ({rows.filter((r) => r.ecart <= 0).length})</label>
+        <button onClick={() => setF({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, nego: false, negEcart: false, status: 'actifs', source: '', seller: '', q: '' })}>Réinitialiser</button>
         <button onClick={exportCsv}>Export CSV</button>
       </div>
 
@@ -157,13 +160,14 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
                 <td className="wrap" style={{ minWidth: 240, maxWidth: 340 }}>
                   {r.title}
                   <div className="small muted">{r.networkName ? <b>{r.networkName}</b> : SOURCE_LABELS[r.source]}{r.agency && r.networkName ? ` · ${r.agency.replace(/^AJP Immobilier /, '')}` : ''} · {SELLER_LABELS[r.seller]}{r.dpe ? ` · DPE ${r.dpe}` : ''}{r.status !== 'nouveau' ? ` · ${r.status}` : ''}{r.offMarket ? ' · retirée' : ''}{r.demo ? ' · démo' : ''}</div>
+                  {!!r.redFlags?.length && <div>{r.redFlags.map((x) => <span key={x} className="tag bad" title="Red flag cité dans l’annonce">⚑ {x}</span>)}</div>}
                 </td>
                 <td>{r.city}<div className="small muted">{r.cp} · {r.zone ? `T${r.tension}` : 'hors zone'}</div></td>
                 <td className="wrap" style={{ maxWidth: 200 }}>{r.lots.map((l, i) => <span key={i} className={'tag' + (r.lots.length > 1 ? ' good' : '')}>{LOT_LABELS[l.type]}{l.surface ? ` ${l.surface}` : ''}</span>)}</td>
                 <td className="num">{eur(r.price)}</td>
                 <td className="num">{eur(r.mid)}<div className="small muted">{r.strategy === 'global' ? 'valeur globale' : `${keur(r.low)} – ${keur(r.high)}`}</div></td>
                 <td className={'num ' + (r.ecart > 0 ? 'pos' : 'neg')}>{eur(r.ecart)}</td>
-                <td className={'num ' + (r.gain > 0 ? 'pos' : 'neg')}><b>{eur(r.gain)}</b><div className="small muted">{keur(r.gainLow)} – {keur(r.gainHigh)}</div></td>
+                <td className={'num ' + (r.gain > 0 ? 'pos' : 'neg')}><b>{eur(r.gain)}</b><div className="small muted">{keur(r.gainLow)} – {keur(r.gainHigh)}</div>{!!r.travaux && <div className="small muted">dont travaux −{keur(r.travaux)}</div>}</td>
                 <td className={'num ' + (r.gainPct > 0 ? 'pos' : 'neg')}>{pct(r.gainPct)}<div className="small muted">ratio {r.ratio.toFixed(2)}</div></td>
                 <td className={'num ' + (r.priceMax >= r.price ? 'pos' : 'muted')}>{keur(r.priceMax)}<div className="small muted">{r.priceMax >= r.price ? `prix ${Math.round((1 - r.price / r.priceMax) * 100)} % sous` : `${Math.round((r.priceMax / r.price - 1) * 100)} %`}</div></td>
                 <td className={'num' + (r.cash > budget ? ' neg' : '')}>{keur(r.cash)}</td>

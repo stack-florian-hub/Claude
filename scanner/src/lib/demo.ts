@@ -224,12 +224,12 @@ export function demoDeals(listingIdByTitle: (startsWith: string) => string | und
       demo: true,
     },
     {
-      id: 'd-bellamy', name: 'Garage rue Paul Bellamy – Nantes', listingId: listingIdByTitle('Garage fermé centre-ville Nantes'), company: 'immobiliere', stage: 'offre', city: 'Nantes',
+      id: 'd-bellamy', name: 'Garage rue Paul Bellamy – Nantes', listingId: listingIdByTitle('Garage fermé centre-ville Nantes'), company: 'financiere', stage: 'offre', city: 'Nantes',
       purchasePrice: 11000, acquisitionFees: 1300, travaux: 0, loanAmount: 0, loanRate: 0, loanRepayment: 'in_fine', createdAt: now,
       lots: [{ id: 'b1', label: 'Box 14 m²', type: 'garage', plannedResale: 19000, plannedMonth: 3, status: 'a_vendre' }], notes: 'Offre à 11 000 € envoyée.', demo: true,
     },
     {
-      id: 'd-boxes', name: '3 boxes – Les Sables (Rosa Bonheur)', listingId: listingIdByTitle('Lot de 3 boxes'), company: 'immobiliere', stage: 'visite', city: 'Les Sables-d’Olonne',
+      id: 'd-boxes', name: '3 boxes – Les Sables (Rosa Bonheur)', listingId: listingIdByTitle('Lot de 3 boxes'), company: 'financiere', stage: 'visite', city: 'Les Sables-d’Olonne',
       purchasePrice: 31000, acquisitionFees: 2800, travaux: 1500, loanAmount: 0, loanRate: 0, loanRepayment: 'in_fine', createdAt: now,
       lots: [
         { id: 'x1', label: 'Box 1', type: 'garage', plannedResale: 18000, plannedMonth: 3, status: 'a_vendre' },

@@ -120,6 +120,8 @@ export interface Analysis {
   confidence: number; // 0..1
   flagged: boolean;
   signals: string[];
+  redFlags?: string[]; // défauts cités dans l'annonce (toiture, infiltrations…)
+  travauxDetail?: { label: string; amount: number }[]; // détail des travaux estimés automatiquement
   warnings: string[];
   cashNeeded: number; // apport + frais + travaux si financé, sinon prix + frais + travaux
   resaleMonths: number;
@@ -188,10 +190,11 @@ export interface Settings {
     chargesMensuellesDefaut: number;
     travauxLourdsM2?: number; // rénovation complète annoncée, €/m² habitable
     travauxLegersM2?: number; // rafraîchissement annoncé, €/m²
+    travauxDecoM2?: number; // remise au goût du jour par défaut, €/m²
     taxeFonciereAnnuelleParLot: number;
   };
   thresholds: { minGain: number; minGainPct: number };
-  budget: { cash: number; reserve: number; elargi: number };
+  budget: { cash: number; reserve: number; elargi: number; confort?: number }; // confort : projets remontés au score ; elargi : au-delà, note abaissée
   financing: { enabled: boolean; apportPct: number; rate: number };
   tax: { isReducedRate: number; isReducedCap: number; isRate: number; tvaSurMarge: boolean };
   defaults: Record<1 | 2 | 3, DependanceDefaults>;

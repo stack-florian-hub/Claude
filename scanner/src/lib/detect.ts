@@ -21,6 +21,51 @@ export function detectRenovation(text: string): 'lourd' | 'leger' | undefined {
   return undefined;
 }
 
+/** Bien annoncé refait ou récent : pas de remise au goût du jour à prévoir. */
+export function detectRenovated(text: string): boolean {
+  return /refait(?:e|s|es)? [àa] neuf|enti[eè]rement (?:r[ée]nov[ée]|refait)|r[ée]nov[ée](?:e|s|es)? (?:avec go[ûu]t|r[ée]cemment|en 20\d\d)|r[ée]cemment r[ée]nov|r[ée]novation r[ée]cente|aucuns? travaux|sans travaux|(?:prestations|finitions) haut de gamme|construction r[ée]cente|r[ée]sidence r[ée]cente|\bvefa\b|\bneuf\b(?! pi[eè]ces)/i.test(text);
+}
+
+export interface RedFlag { id: string; label: string; severe?: boolean; cost?: (surf: number) => number }
+
+// Défauts lourds cités dans l'annonce, avec un ordre de grandeur de coût quand il ne fait pas partie d'une rénovation complète.
+const RED_FLAGS: [RedFlag, RegExp][] = [
+  [{ id: 'toiture', label: 'Toiture / couverture à reprendre', severe: true, cost: (m) => Math.max(15000, m * 120) }, /(?:toiture|couverture|charpente|toit)[^.\n]{0,30}(?:[àa] (?:refaire|reprendre|r[ée]viser|pr[ée]voir|changer)|ab[îi]m[ée]e|vieillissante|fuyarde|en mauvais [ée]tat|d[ée]fectueuse)|pr[ée]voir (?:la |une )?(?:r[ée]fection|reprise) (?:de la |du )?(?:toiture|couverture|charpente)/i],
+  [{ id: 'infiltration', label: 'Infiltrations / dégât des eaux', severe: true, cost: () => 5000 }, /infiltrations?|d[ée]g[âa]ts? des eaux|fuites? (?:d'eau|en toiture|au plafond)/i],
+  [{ id: 'humidite', label: 'Humidité / salpêtre', cost: (m) => m * 40 }, /humidit[ée]|remont[ée]es? capillaires?|salp[êe]tre|moisissures?/i],
+  [{ id: 'fissures', label: 'Fissures / mouvement de structure', severe: true }, /fissures?|l[ée]zardes?|affaissement|tassement|mouvements? de terrain|reprise (?:en sous-[œo]euvre|de structure)/i],
+  [{ id: 'xylophages', label: 'Mérule / termites / insectes xylophages', severe: true }, /m[ée]rule|termites?|capricornes?|xylophages?|vrillettes?/i],
+  [{ id: 'amiante', label: 'Présence d’amiante ou de plomb', severe: true }, /pr[ée]sence (?:d'|d’)?(?:amiante|plomb)|amiante (?:d[ée]tect[ée]e|pr[ée]sente|rep[ée]r[ée]e)|crep positif|plomb (?:d[ée]tect[ée]|au-dessus)/i],
+  [{ id: 'assainissement', label: 'Assainissement non conforme', cost: () => 10000 }, /assainissement[^.\n]{0,25}non[- ]conforme|fosse (?:septique )?[àa] (?:refaire|changer|mettre aux normes)|mise aux normes de l'assainissement|spanc[^.\n]{0,30}non/i],
+  [{ id: 'electricite', label: 'Électricité à refaire', cost: (m) => m * 80 }, /[ée]lectricit[ée][^.\n]{0,20}[àa] (?:refaire|reprendre|revoir|mettre aux normes)|installation [ée]lectrique[^.\n]{0,25}(?:non conforme|v[ée]tuste|[àa] refaire)/i],
+  [{ id: 'inondable', label: 'Zone inondable / submersion', severe: true }, /zone inondable|risque (?:d'|d’)?(?:inondation|submersion)|\bppri\b|submersion marine/i],
+  [{ id: 'procedure', label: 'Copropriété en difficulté / procédure', severe: true }, /administrateur provisoire|syndic judiciaire|copropri[ée]t[ée] en difficult[ée]|proc[ée]dures? en cours|plan de sauvegarde/i],
+  [{ id: 'gros-travaux-copro', label: 'Gros travaux votés en copropriété', cost: () => 8000 }, /(?:ravalement|travaux)[^.\n]{0,30}vot[ée]e?s?(?![a-z])|appel de fonds (?:travaux|exceptionnel)/i],
+  [{ id: 'servitude', label: 'Servitude / enclave' }, /servitudes?(?! de cours)|terrain enclav[ée]|droit de passage/i],
+  [{ id: 'occupe', label: 'Bien occupé / squat', severe: true }, /squatt?[ée]?s?\b|occup[ée] sans droit|occupant sans titre/i],
+  [{ id: 'nuisances', label: 'Nuisances (route, voie ferrée, aéroport)' }, /nuisances? sonores?|bord de (?:la )?(?:nationale|route passante|voie ferr[ée]e)|proximit[ée] (?:imm[ée]diate )?(?:de la )?(?:voie ferr[ée]e|rocade|autoroute)/i],
+  [{ id: 'etat', label: 'Vendu en l’état, sans garantie' }, /vendu(?:e)? en l'[ée]tat|sans garantie des vices/i],
+];
+
+/** Red flags de l'annonce (les tournures niées — « aucune humidité », « pas de fissure » — sont ignorées). */
+export function detectRedFlags(text: string): RedFlag[] {
+  const out: RedFlag[] = [];
+  for (const [rf, re] of RED_FLAGS) {
+    const g = new RegExp(re.source, 'gi');
+    for (const m of text.matchAll(g)) {
+      const before = text.slice(Math.max(0, m.index! - 30), m.index!).toLowerCase();
+      const after = text.slice(m.index! + m[0].length, m.index! + m[0].length + 30).toLowerCase();
+      if (/(?:pas|aucune?|sans|ni|absence|exempte?|z[ée]ro|non)\s+(?:de |d'|d’)?(?:\S+\s+){0,2}$/.test(before)) continue;
+      if (/^\s*[:=-]\s*(?:aucune?|non|n[ée]ant|sans objet|0\b)/.test(after)) continue;
+      // défaut déjà traité (« toiture refaite », « réfection toiture 2 ans », « traitement termites en 2019 »)
+      if (!/[àa] (?:refaire|reprendre|pr[ée]voir|changer)/.test(m[0].toLowerCase()) && /^\W*(?:\S+\s+){0,2}?(?:refaite?s?|neuve?s?|r[ée]vis[ée]e?s?|trait[ée]e?s?|saine?s?|r[ée]cente?s?|faite?s?|effectu[ée]e?s?|r[ée]alis[ée]e?s?|(?:il y a |de )?\d+ ans|en 20\d\d)\b/.test(after)) continue;
+      out.push(rf);
+      break;
+    }
+  }
+  return out;
+}
+
 /** Surface de terrain citée dans le texte. */
 export function detectLand(text: string): number | undefined {
   const m = text.match(/(?:terrain|parcelle|jardin)[^.\n]{0,40}?(\d[\d\s\u00a0.]{1,7})\s*m(?:²|2)(?![a-z0-9])/i);
@@ -139,8 +184,19 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
   const firstLine = lines.slice(0, 8).find((x) => /\b(appartement|maison|studio|duplex|[tf]\d|garage|box|parking|local|immeuble|terrain|lot de)\b/i.test(x) && x.length < 160) || lines[0] || 'Annonce';
   const price = pickPrice(text);
   if (!price) notes.push('Prix non trouvé');
-  const surfM = text.match(/(\d{1,4}(?:[,.]\d{1,2})?)\s*m(?:²|2)(?![a-z0-9])/i);
-  const surface = surfM ? toNum(surfM[1]) : undefined;
+  // surface habitable : d'abord une mention explicite, sinon le premier « N m² » qui n'est pas un terrain, jardin, garage…
+  const habM = text.match(/(\d{1,4}(?:[,.]\d{1,2})?)\s*m(?:²|2)\s*(?:habitables?|carrez|de surface habitable)/i)
+    || text.match(/surface (?:habitable|carrez)[^\d\n]{0,20}(\d{1,4}(?:[,.]\d{1,2})?)\s*m(?:²|2)/i);
+  let surface = habM ? toNum(habM[1]) : undefined;
+  if (surface == null) {
+    for (const m of text.matchAll(/(\d{1,4}(?:[,.]\d{1,2})?)\s*m(?:²|2)(?![a-z0-9])/gi)) {
+      const start = Math.max(text.lastIndexOf('.', m.index! - 1), text.lastIndexOf('\n', m.index! - 1), text.lastIndexOf(',', m.index! - 1), m.index! - 60);
+      const before = text.slice(Math.max(0, start), m.index!).toLowerCase();
+      if (/terrain|parcelle|jardin|garage|cave|balcon|terrasse|grenier|hangar|d[ée]pendance|cour|piscine|sous-sol|grange/.test(before)) continue;
+      surface = toNum(m[1]);
+      break;
+    }
+  }
   const roomsM = text.match(/(\d{1,2})\s*pi[eè]ces?/i) || text.match(/\b[TF](\d)\b/);
   const rooms = roomsM ? parseInt(roomsM[1], 10) : undefined;
   let cpM = text.match(/\b((?:0[1-9]|[1-8]\d|9[0-5])\d{3})\s+(?!euros?\b|eur\b|€|ttc\b|ht\b|hai\b)([A-ZÀ-Ýa-zà-ÿ][A-Za-zÀ-ÿ'’ -]{1,40})/i);
@@ -175,7 +231,7 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
     const v = toNum(chM[1]);
     chargesAnnual = chM[2] === 'mois' ? v * 12 : chM[2] === 'trimestre' ? v * 4 : v < 400 && !chM[2] ? v * 12 : v;
   }
-  const coproM = text.match(/copropri[ée]t[ée][^\n.]{0,20}?(\d{1,4})\s*lots/i) || text.match(/(\d{1,4})\s*lots[^\n.]{0,20}copropri/i);
+  const coproM = text.match(/copropri[ée]t[ée][^\n.]{0,20}?(\d{1,4})\s*lots/i) || text.match(/(\d{1,4})\s*lots[^\n.]{0,20}copropri/i) || text.match(/nombre de lots\s*:?\s*(\d{1,4})/i);
   const procedure = /proc[ée]dure (?:en cours|d'alerte)|copropri[ée]t[ée] en difficult|administrateur provisoire|plan de sauvegarde/i.test(text);
   const main = detectMainType(firstLine + '\n' + text.slice(0, 400));
   const lots = buildLots(main, surface, rooms, text);

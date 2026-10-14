@@ -155,7 +155,8 @@ export default function ListingDetail({ listing: l, analysis: a, zone, tension, 
               <tr><td>− Agence à la revente ({s.fees.agenceRevPct} %)</td><td className="num neg">−{eur(c.resaleAgency)}</td></tr>
               <tr><td>− Prix d’achat affiché</td><td className="num neg">−{eur(l.price)}</td></tr>
               <tr><td>− Frais d’acquisition ({s.fees.useMdbRegime ? `régime MdB ${s.fees.notaireMdbPct}` : `droit commun ${s.fees.notaireDroitCommunPct}`} %)</td><td className="num neg">−{eur(c.acquisitionFees)}</td></tr>
-              <tr><td>− Travaux</td><td className="num neg">−{eur(c.travaux)}</td></tr>
+              <tr><td>− Travaux{a.travauxDetail ? ' (estimation automatique, ordre de grandeur)' : ''}</td><td className="num neg">−{eur(c.travaux)}</td></tr>
+              {a.travauxDetail?.map((x) => <tr key={x.label}><td className="small muted" style={{ paddingLeft: 18 }}>{x.label}</td><td className="num small muted">{eur(x.amount)}</td></tr>)}
               <tr><td>− Diagnostics ({l.lots.length} lot{l.lots.length > 1 ? 's' : ''})</td><td className="num neg">−{eur(c.diagnostics)}</td></tr>
               {c.division > 0 && <tr><td>− Division / modificatif EDD</td><td className="num neg">−{eur(c.division)}</td></tr>}
               <tr><td>− Portage {a.resaleMonths} mois (charges, taxe foncière, intérêts)</td><td className="num neg">−{eur(c.carrying)}</td></tr>
@@ -166,6 +167,7 @@ export default function ListingDetail({ listing: l, analysis: a, zone, tension, 
             </tbody>
           </table>
           <p className="small muted">Fourchette : bas {eur(a.gain.low)} · haut {eur(a.gain.high)} (scénarios sur la valeur des lots ; agence {pct(agency)} appliquée à chaque scénario).</p>
+          {!!a.redFlags?.length && <div style={{ marginTop: 6 }}><b className="small">Red flags de l’annonce : </b>{a.redFlags.map((x) => <span key={x} className="tag bad">⚑ {x}</span>)}<div className="small muted">À vérifier à la visite et dans les diagnostics ; chaque défaut grave retire 4 points au score.</div></div>}
           {a.signals.length > 0 && <div style={{ marginTop: 6 }}>{a.signals.map((x) => <span key={x} className="tag good">{x}</span>)}</div>}
           {a.warnings.length > 0 && <div style={{ marginTop: 4 }}>{a.warnings.map((x) => <span key={x} className="tag warn">{x}</span>)}</div>}
         </div>

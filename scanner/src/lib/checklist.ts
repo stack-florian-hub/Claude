@@ -10,8 +10,8 @@ export function buildChecklist(l: Listing, a: Analysis, s: Settings): CheckItem[
   const mdb = Math.round((l.price * s.fees.notaireMdbPct) / 100);
   const deps = l.lots.filter((x) => ['garage', 'parking', 'cave'].includes(x.type));
   const items: CheckItem[] = [
-    { id: 'objet', group: 'Structure', critical: true, label: 'Objet social marchand de biens de l’Immobilière TUÉ et Fils formalisé (AGE, statuts, Kbis) avant l’acte', detail: 'Sans cela, droits réduits refusés et risque de requalification (activité réputée exercée par la holding).' },
-    { id: 'societe', group: 'Structure', label: 'Société acquéreuse décidée (Immobilière pour l’A/R ; SCI pour un lot conservé en locatif)' },
+    { id: 'objet', group: 'Structure', critical: true, label: 'Achat par la Financière TUÉ et Fils (objet social marchand de biens prévu aux statuts) : Kbis à jour avec l’activité déclarée, à fournir au notaire', detail: 'Pour le régime MdB (droits réduits) : engagement de revendre sous 5 ans dans l’acte. Tenir l’activité MdB séparée du conseil en comptabilité analytique (stock par opération, TVA sur marge).' },
+    { id: 'societe', group: 'Structure', label: 'Société acquéreuse décidée (Financière TUÉ et Fils pour l’achat-revente ; SCI du Hameau de la Vie pour un lot conservé en locatif)' },
     { id: 'notaire', group: 'Frais', label: `Frais d’acquisition : droit commun ${s.fees.notaireDroitCommunPct} % = ${eur(dc)} ; régime MdB (engagement de revendre sous 5 ans, droits 0,715 %) ≈ ${s.fees.notaireMdbPct} % = ${eur(mdb)}`, detail: `Retenu dans le calcul : ${eur(a.costs.acquisitionFees)}. Économie potentielle : ${eur(dc - mdb)}.` },
     { id: 'agence', group: 'Frais', label: `Commission d’agence à la revente ~${s.fees.agenceRevPct} % par lot = ${eur(a.costs.resaleAgency)}`, detail: 'Garages/parkings/caves : vente directe possible (voisins de la copropriété, annonces locales) → 0 %.' },
     { id: 'travaux', group: 'Frais', label: `Travaux : ${eur(a.costs.travaux)} — devis signés, planning, attestation décennale si gros œuvre` },
@@ -41,5 +41,6 @@ export function buildChecklist(l: Listing, a: Analysis, s: Settings): CheckItem[
     );
   if (l.dpe === 'F' || l.dpe === 'G') items.push({ id: 'dpe', group: 'Revente', critical: true, label: `DPE ${l.dpe} : chiffrer la rénovation énergétique (l’acquéreur investisseur ne pourra pas louer en l’état)` });
   if (l.needsDivision) items.push({ id: 'division', group: 'Copropriété', critical: true, label: 'Division à créer : géomètre, règlement de copropriété, EDD, éventuelle déclaration préalable (compter 3-4 mois)' });
+  for (const rf of a.redFlags ?? []) items.unshift({ id: 'rf-' + rf, group: 'Red flags', critical: true, label: `${rf} (cité dans l’annonce) : vérifier à la visite et faire chiffrer avant l’offre`, detail: 'Diagnostics, devis d’artisan, PV d’AG ; à intégrer dans l’offre (négociation) ou à écarter.' });
   return items;
 }

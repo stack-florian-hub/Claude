@@ -2,8 +2,8 @@
 import fsx from 'node:fs';
 import { DEFAULT_SETTINGS, DEFAULT_ZONES } from '../src/lib/defaults';
 import { demoDvf, demoListings } from '../src/lib/demo';
-import { analyze } from '../src/lib/scoring';
-import { parseListingText } from '../src/lib/detect';
+import { analyze, budgetFactor } from '../src/lib/scoring';
+import { detectRedFlags, parseListingText } from '../src/lib/detect';
 import { simulate } from '../src/lib/simulation';
 import type { DvfSource } from '../src/lib/dvf-query';
 import type { Listing } from '../src/lib/types';
@@ -71,5 +71,9 @@ import('node:fs').then(async (fs) => {
     const m = parseListingText('Maison 5 pièces 120 m² avec garage et cave\n12 rue Nationale 85300 Challans\nPrix : 250 000 €');
     check(m.lots.length === 1 && m.lots[0].type === 'maison', `Maison : garage et cave non séparés (${m.lots.map((x) => x.type).join(',')})`);
   } else console.log('· DVF réelle de la Vendée absente : tests sur données réelles ignorés (npm run dvf:fetch -- 85)');
+  // red flags (négations ignorées) et budget
+  const rf = detectRedFlags('Toiture à refaire. Aucune humidité. Pas de procédure en cours. Réfection toiture 2 ans. Infiltrations en sous-sol.').map((x) => x.id);
+  check(rf.join(',') === 'toiture,infiltration', `Red flags : ${rf.join(',')}`);
+  check(budgetFactor(120000, DEFAULT_SETTINGS).k > 1 && budgetFactor(300000, DEFAULT_SETTINGS).k < 0.7, 'Budget : projet < 150 k€ remonté, > 250 k€ abaissé');
   process.exit(fails ? 1 : 0);
 });

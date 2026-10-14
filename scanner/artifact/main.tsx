@@ -49,7 +49,7 @@ function Weekly() {
   if (!alerts.length && !drops.length) return null;
   return (
     <div className="panel">
-      <div className="row between"><h2>Nouveautés de la collecte du {frDate(c.date)}</h2><span className="small muted">{c.added} nouvelles annonces · {c.gone} retirées · {c.agencies} agences AJP parcourues</span></div>
+      <div className="row between"><h2>Nouveautés de la collecte du {frDate(c.date)}</h2><span className="small muted">{c.added} nouvelles annonces · {c.gone} retirées · {c.networks?.length ? c.networks.map((n) => `${n.label} ${n.retenus}`).join(' · ') : `${c.agencies} agences AJP parcourues`}</span></div>
       <div className="grid g2">
         <div>
           <h3>{best ? 'Meilleures alertes en cours' : 'Nouvelles alertes'}</h3>

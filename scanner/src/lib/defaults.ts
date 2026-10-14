@@ -22,7 +22,7 @@ export const DEFAULT_ZONES: Zone[] = [
 export const DEFAULT_GROUP: GroupData = {
   activities: [
     { id: 'conseil', name: 'Conseil en achats', company: 'financiere', revenue: 60000, margin: 70, capital: 0, marketGrowth: 3, relativeShare: 1.4, role: 'Cash-flow récurrent, sans immobilisation' },
-    { id: 'ar', name: 'Revente de lots (A/R)', company: 'immobiliere', revenue: 30000, margin: 35, capital: 50000, marketGrowth: 8, relativeShare: 1.2, role: 'Marchand de biens, rotation rapide' },
+    { id: 'ar', name: 'Revente de lots (A/R)', company: 'financiere', revenue: 30000, margin: 35, capital: 50000, marketGrowth: 8, relativeShare: 1.2, role: 'Marchand de biens, rotation rapide' },
     { id: 'lcd', name: 'Location courte durée', company: 'immobiliere', revenue: 40000, margin: 30, capital: 150000, marketGrowth: 2, relativeShare: 1.1, role: 'Cash-flow, immobilisation d’actif' },
     { id: 'conciergerie', name: 'Conciergerie', company: 'financiere', revenue: 7500, margin: 40, capital: 3000, marketGrowth: 10, relativeShare: 0.2, role: 'Projet à tester' },
     { id: 'coloc', name: 'Colocation', company: 'sci', revenue: 20000, margin: 25, capital: 200000, marketGrowth: 5, relativeShare: 0.8, role: 'Rendement locatif long terme' },
@@ -36,9 +36,9 @@ export const DEFAULT_GROUP: GroupData = {
   ],
   swot: {
     strengths: ['Œil sur les anomalies de prix (preuve : coup New Port, ~180 k€ de sous-évaluation)', '70 k€ de trésorerie disponible, en hausse', 'Structure holding + filiales déjà en place', 'Revenu de conseil récurrent (60 k€) qui finance le temps de prospection', 'Expérience de la revente lot par lot (garage revendu ~30 k€)'],
-    weaknesses: ['Objet social marchand de biens non formalisé (droits réduits et sécurité fiscale en jeu)', 'Trésorerie limitée : 1 à 2 coups en parallèle au mieux', 'Dépendance au fondateur (temps, réseau, décision)', 'Pas d’historique bancaire « marchand de biens » pour le crédit', 'Outils et données encore manuels'],
+    weaknesses: ['Conseil et marchand de biens dans la même société (Financière) : comptabilité de stock et TVA sur marge à tenir par opération', 'Trésorerie limitée : 1 à 2 coups en parallèle au mieux', 'Dépendance au fondateur (temps, réseau, décision)', 'Pas d’historique bancaire « marchand de biens » pour le crédit', 'Outils et données encore manuels'],
     opportunities: ['Lots groupés mal évalués par les agences (prix global sans détail)', 'Ventes judiciaires et successions dans le 44/85/49/37', 'Marché garage/parking tendu dans les villes et le littoral', 'Remontée des prix sur le littoral vendéen', 'Synergies : conciergerie au service de la LCD et des acquéreurs'],
-    threats: ['Concurrence d’autres chasseurs équipés des mêmes données', 'Remontée des taux et durcissement du crédit des acquéreurs', 'Réglementation LCD (quotas, loi Le Meur) et DPE (interdiction de louer G puis F)', 'Requalification fiscale si l’activité MdB reste portée par la holding', 'Allongement des délais de revente (stock qui immobilise le cash)'],
+    threats: ['Concurrence d’autres chasseurs équipés des mêmes données', 'Remontée des taux et durcissement du crédit des acquéreurs', 'Réglementation LCD (quotas, loi Le Meur) et DPE (interdiction de louer G puis F)', 'Holding devenue opérationnelle (MdB) : vérifier l’impact sur l’intégration fiscale et la transmission (Dutreil) avec l’expert-comptable', 'Allongement des délais de revente (stock qui immobilise le cash)'],
   },
   scenarios: [
     { id: 'prudent', label: 'Prudent', dealsPerYear: 2, avgGainPerDeal: 15000, cashPerDeal: 40000, monthsPerDeal: 7, recurringFactor: 0.9, color: 'var(--c2)' },
@@ -59,10 +59,11 @@ export const DEFAULT_SETTINGS: Settings = {
     chargesMensuellesDefaut: 120,
     travauxLourdsM2: 1000,
     travauxLegersM2: 300,
+    travauxDecoM2: 150,
     taxeFonciereAnnuelleParLot: 700,
   },
   thresholds: { minGain: 30000, minGainPct: 25 },
-  budget: { cash: 70000, reserve: 10000, elargi: 250000 },
+  budget: { cash: 70000, reserve: 10000, confort: 150000, elargi: 250000 },
   financing: { enabled: true, apportPct: 20, rate: 4.8 },
   tax: { isReducedRate: 15, isReducedCap: 42500, isRate: 25, tvaSurMarge: false },
   defaults: {

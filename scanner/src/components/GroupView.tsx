@@ -206,7 +206,7 @@ export default function GroupView({ settings, deals }: { settings: Settings; dea
               <li>L’<b>A/R</b> est l’étoile : meilleur rendement par euro, à condition de tourner vite. Priorité aux petits lots et aux lots groupés dont un lot liquide (garage, parking) rembourse vite une partie de la mise.</li>
               <li>La <b>LCD</b> et la <b>colocation</b> immobilisent beaucoup de capital pour un rendement moyen : ne pas y injecter de cash nouveau tant que l’A/R n’a pas tourné 2-3 fois.</li>
               <li>La <b>conciergerie</b> se teste sans cash (temps + clients LCD existants), critère de go : 10 k€ de CA récurrent à 12 mois.</li>
-              <li>Formaliser l’<b>objet marchand de biens</b> de l’Immobilière avant d’enchaîner : droits réduits et sécurité fiscale.</li>
+              <li>Le <b>marchand de biens</b> est porté par la <b>Financière TUÉ et Fils</b> (objet social prévu aux statuts) : stock et résultat suivis par opération, distincts du conseil ; l’Immobilière garde la LCD, la SCI la colocation.</li>
             </ul>
           </div>
         </div>

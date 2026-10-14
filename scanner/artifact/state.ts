@@ -15,7 +15,7 @@ export interface ArtifactData {
   meta: {
     generatedAt: string;
     dvf: { dept: string; refDate: string; n: number; years: number[] }[];
-    collecte?: { date: string; agencies: number; cards: number; added: number; drops: { title: string; from: number; to: number }[]; gone: number; alerts: { id: string; title: string; score: number; gain: number }[] };
+    collecte?: { date: string; agencies: number; cards: number; networks?: { network: string; label: string; cards: number; retenus: number; errors: number }[]; added: number; drops: { title: string; from: number; to: number }[]; gone: number; alerts: { id: string; title: string; score: number; gain: number }[] };
     nextUpdate: string;
   };
   listings: Listing[];

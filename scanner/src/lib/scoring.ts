@@ -3,7 +3,7 @@ import type { Analysis, CostBreakdown, Listing, LotValuation, Range, Settings, Z
 import type { DvfSource } from './dvf-query';
 import { valueLot } from './providers/valuation';
 import { clamp, daysBetween, normCity, round } from './util';
-import { detectLand, detectRenovation, detectSpecial } from './detect';
+import { detectLand, detectRedFlags, detectRenovated, detectRenovation, detectSpecial } from './detect';
 
 export function zoneFor(l: Listing, zones: Zone[]): Zone | undefined {
   const c = normCity(l.address.city);
@@ -32,14 +32,32 @@ function costs(l: Listing, s: Settings, resaleTotal: number, months: number): Co
   return { acquisitionFees, travaux, resaleAgency, diagnostics, division, carrying, total: acquisitionFees + travaux + resaleAgency + diagnostics + division + carrying };
 }
 
-/** Travaux estimés d'après la description quand ils ne sont pas saisis (rénovation complète / rafraîchissement). */
+/** Travaux estimés quand ils ne sont pas saisis : niveau annoncé (rénovation complète / rafraîchissement), sinon remise
+ *  aux standards déco du moment, plus un ordre de grandeur pour les red flags chiffrables (toiture, assainissement…). */
 export function autoTravaux(l: Listing, s: Settings) {
   if (l.travaux != null) return undefined;
-  const level = detectRenovation(`${l.title}\n${l.description}`);
-  const surf = l.surface ?? l.lots.find((x) => x.type === 'maison' || x.type === 'appartement')?.surface;
-  if (!level || !surf) return undefined;
-  const rate = level === 'lourd' ? s.fees.travauxLourdsM2 ?? 1000 : s.fees.travauxLegersM2 ?? 300;
-  return { level, rate, amount: Math.round((surf * rate) / 1000) * 1000 };
+  const text = `${l.title}\n${l.description}`;
+  const habitable = l.lots.filter((x) => x.type === 'maison' || x.type === 'appartement');
+  if (!habitable.length) return undefined;
+  const surf = l.surface ?? (habitable.reduce((a, x) => a + (x.surface || 0), 0) || undefined);
+  if (!surf) return undefined;
+  const announced = detectRenovation(text);
+  const level: 'lourd' | 'leger' | 'deco' | undefined = announced ?? (detectRenovated(text) ? undefined : 'deco');
+  const rate = level === 'lourd' ? s.fees.travauxLourdsM2 ?? 1000 : level === 'leger' ? s.fees.travauxLegersM2 ?? 300 : level === 'deco' ? s.fees.travauxDecoM2 ?? 150 : 0;
+  const items: { label: string; amount: number }[] = [];
+  if (level) items.push({ label: level === 'lourd' ? 'Rénovation complète annoncée' : level === 'leger' ? 'Rafraîchissement annoncé' : 'Remise au goût du jour (peintures, sols, luminaires, cuisine et salle d’eau relookées)', amount: Math.round((surf * rate) / 500) * 500 });
+  // une rénovation complète couvre déjà ces postes
+  if (level !== 'lourd') for (const rf of detectRedFlags(text)) if (rf.cost) items.push({ label: rf.label, amount: Math.round(rf.cost(surf) / 500) * 500 });
+  if (!items.length) return undefined;
+  return { level, rate, items, amount: Math.round(items.reduce((a, x) => a + x.amount, 0) / 1000) * 1000 };
+}
+
+/** Coefficient de score selon la taille du projet (prix + frais + travaux) face à l'apport disponible. */
+export function budgetFactor(project: number, s: Settings) {
+  const comfort = s.budget.confort ?? 150000, max = s.budget.elargi || 250000;
+  if (project <= comfort) return { k: 1.15, label: `Projet de ${Math.round(project / 1000)} k€ : taille compatible avec ${Math.round(s.budget.cash / 1000)} k€ d’apport` };
+  if (project <= max) return { k: 1 - (0.15 * (project - comfort)) / Math.max(1, max - comfort), label: '' };
+  return { k: project > max * 1.6 ? 0.45 : 0.6, label: `Projet de ${Math.round(project / 1000)} k€ > ${Math.round(max / 1000)} k€ : trop lourd pour l’apport actuel (note abaissée)` };
 }
 
 export function cashNeed(l: Listing, s: Settings, fees: number, travaux: number) {
@@ -133,10 +151,16 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
   if (lots.some((v) => v.mid === 0)) warnings.push('Au moins un lot sans valeur');
 
   const cn = cashNeed(l, s, c.acquisitionFees, c.travaux);
+  const redFlags = detectRedFlags(`${l.title}\n${l.description}`);
   if (cn.cash > s.budget.cash) warnings.push(`Cash nécessaire ${Math.round(cn.cash / 1000)} k€ > trésorerie ${Math.round(s.budget.cash / 1000)} k€`);
 
   const liquidity = (tension / 3) * 6 + (l.lots.some((x) => ['garage', 'parking', 'cave'].includes(x.type)) || l.price < 150000 ? 4 : 1);
   let score = clamp(gainPct / 0.4, 0, 1) * 35 + clamp(gain.mid / 100000, 0, 1) * 35 + confidence * 10 + Math.min(10, sig) + Math.min(10, liquidity);
+  score -= Math.min(12, redFlags.filter((x) => x.severe).length * 4);
+  const bf = budgetFactor(l.price + c.acquisitionFees + c.travaux, s);
+  score = Math.min(100, Math.max(0, score * bf.k));
+  if (bf.k > 1) signals.push(bf.label);
+  else if (bf.label) warnings.push(bf.label);
   if (gain.mid <= 0) score = Math.min(score, 15);
   // une estimation fragile ne doit pas remonter en tête
   score *= 0.4 + 0.6 * Math.min(1, confidence / 0.5);
@@ -149,7 +173,7 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
   const strategy: Analysis['strategy'] = l.lots.every((x) => x.type === 'maison' || x.type === 'terrain') ? 'global' : 'lots';
   if (strategy === 'global') warnings.unshift('Maison : estimation globale (bâti + terrain au €/m² DVF des maisons voisines), sans revente par lots ni valeur séparée du terrain : alerte « décote maison » à confirmer par la visite');
   const at = autoTravaux(l, s);
-  if (at) warnings.unshift(`Travaux estimés automatiquement : ${at.level === 'lourd' ? 'rénovation complète annoncée' : 'rafraîchissement annoncé'}, ${at.rate} €/m² → ${Math.round(at.amount / 1000)} k€ (à remplacer par un devis)`);
+  if (at) warnings.unshift(`Travaux estimés automatiquement : ${at.items.map((x) => `${x.label.split(' (')[0].toLowerCase()} ${Math.round(x.amount / 1000)} k€`).join(' + ')} → ${Math.round(at.amount / 1000)} k€ (ordre de grandeur, à remplacer par un devis)`);
   const land = l.landSurface ?? detectLand(l.description);
   if (strategy === 'global' && land && land >= 1000) signals.push(`Terrain de ${land.toLocaleString('fr-FR')} m² : piste de division parcellaire à étudier (PLU, certificat d’urbanisme, accès, réseaux)`);
   const flagged = !blocking && confidence >= 0.3 && gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100);
@@ -165,6 +189,6 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
 
   return {
     listingId: l.id, lots, total, costs: c, priceCaps, strategy, gain, gainPct, ratio, ecart: total.mid - l.price, score: Math.round(score),
-    confidence, flagged, signals, warnings, cashNeeded: Math.round(cn.cash), resaleMonths: months,
+    confidence, flagged, signals, warnings, redFlags: redFlags.map((x) => x.label), travauxDetail: at?.items, cashNeeded: Math.round(cn.cash), resaleMonths: months,
   };
 }

@@ -12,7 +12,7 @@ import { eur, frDate, keur, pct, uid } from '@/lib/util';
 const LOT_STATUS: Record<DealLot['status'], string> = { a_vendre: 'À vendre', en_vente: 'En vente', sous_compromis: 'Sous compromis', vendu: 'Vendu', conserve: 'Conservé' };
 
 const blank = (): Deal => ({
-  id: uid('d'), name: 'Nouvelle opération', company: 'immobiliere', stage: 'repere', city: '', purchasePrice: 0, acquisitionFees: 0, travaux: 0,
+  id: uid('d'), name: 'Nouvelle opération', company: 'financiere', stage: 'repere', city: '', purchasePrice: 0, acquisitionFees: 0, travaux: 0,
   loanAmount: 0, loanRate: 0, loanRepayment: 'prorata', createdAt: new Date().toISOString().slice(0, 10), lots: [],
 });
 

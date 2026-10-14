@@ -13,7 +13,7 @@ export function dealFromListing(l: Listing, a: Analysis, s: Settings): Deal {
     id: uid('d'),
     name: `${l.title.slice(0, 60)} – ${l.address.city}`,
     listingId: l.id,
-    company: 'immobiliere',
+    company: 'financiere',
     stage: 'repere',
     city: l.address.city,
     purchasePrice: l.price,
