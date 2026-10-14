@@ -1,0 +1,36 @@
+{
+  "departements": ["85", "44", "49", "37"],
+  "prix": {
+    "plancher": 300,
+    "plafond": 10000,
+    "plafond_par_typologie": {
+      "constructible": 15000
+    },
+    "prix_m2_max": 15
+  },
+  "surface": {
+    "min_m2": 200,
+    "max_m2": 500000
+  },
+  "dvf": {
+    "annees": [2021, 2022, 2023, 2024, 2025],
+    "min_ventes_section": 5,
+    "min_ventes_commune": 5
+  },
+  "scoring": {
+    "poids": {"decote": 30, "mutation": 35, "acces": 20, "rarete": 15},
+    "distance_zone_u_ideale_m": 50,
+    "distance_zone_u_max_m": 1500,
+    "littoral_km_max": 25,
+    "agglo_km_max": 40
+  },
+  "collecte": {
+    "delai_entre_requetes_s": 3.0,
+    "delai_api_s": 0.3,
+    "max_pages_par_source": 10,
+    "user_agent": "VeilleFonciere/1.0 (usage personnel; contact: a-renseigner@example.com)",
+    "respecter_robots_txt": true,
+    "navigateur_visible": true
+  },
+  "sources_actives": ["notaires", "bienici", "paruvendu", "greenacres", "proprietes_rurales", "agorastore", "figaro", "leboncoin", "seloger", "logicimmo", "import"]
+}

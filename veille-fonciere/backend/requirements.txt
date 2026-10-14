@@ -1,0 +1,4 @@
+requests>=2.31
+beautifulsoup4>=4.12
+# Optionnel : sites protégés par JavaScript (LeBonCoin, SeLoger, Logic-Immo, Figaro, Agorastore)
+# pip install playwright && playwright install chromium
