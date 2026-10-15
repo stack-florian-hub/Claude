@@ -4,7 +4,7 @@ import logging
 import os
 from collections import Counter
 
-from . import db, scoring
+from . import contacts, db, scoring
 from .collectors import COLLECTEURS, ImportManuel
 from .db import annonce_from_row, now
 from .enrich import Enrichisseur, sauver
@@ -85,6 +85,8 @@ def enrichir(con, http, cfg, tout=False, ids=None):
         con.execute("UPDATE annonces SET lat=?, lon=?, precision_geo=?, code_insee=?, ref_cadastrale=? WHERE id=?",
                     (a.lat, a.lon, a.precision_geo, a.code_insee, a.ref_cadastrale, a.id))
         sauver(con, e)
+        if not con.execute("SELECT 1 FROM contacts WHERE annonce_id=?", (a.id,)).fetchone():
+            contacts.recuperer(con, http, a, a.brut)
         con.commit()
         log.info("enrichi %d/%d %s (%s, zone %s)", i, len(rows), a.id, a.precision_geo, e.get("zone_plu"))
     return len(rows)
@@ -113,6 +115,36 @@ def scorer(con, cfg):
     return len(rows)
 
 
+def recuperer_contacts(con, http, tout=False):
+    sql = "SELECT a.* FROM annonces a LEFT JOIN contacts c ON c.annonce_id=a.id WHERE a.statut='active'"
+    if not tout:
+        sql += " AND c.annonce_id IS NULL"
+    n = 0
+    for r in con.execute(sql).fetchall():
+        a = annonce_from_row(r)
+        n += bool(contacts.recuperer(con, http, a, json.loads(r["brut_json"] or "{}")))
+        con.commit()
+    return n
+
+
+def localiser_adresse(con, http, annonce_id, adresse):
+    """Géocode l'adresse exacte (API Adresse, Base adresse nationale) et fixe la position de l'annonce."""
+    r = con.execute("SELECT code_insee, code_postal FROM annonces WHERE id=?", (annonce_id,)).fetchone()
+    if r is None:
+        raise ValueError(f"annonce inconnue : {annonce_id}")
+    params = {"q": adresse, "limit": 1}
+    if r["code_insee"]:
+        params["citycode"] = r["code_insee"]
+    res = http.get_json("https://api-adresse.data.gouv.fr/search/", params=params, ttl_h=24 * 30)
+    feats = res.get("features") or []
+    if not feats or feats[0]["properties"].get("score", 0) < 0.4:
+        raise ValueError(f"adresse introuvable : {adresse}")
+    lon, lat = feats[0]["geometry"]["coordinates"]
+    con.execute("UPDATE annonces SET lat=?, lon=?, precision_geo='adresse', ref_cadastrale=NULL WHERE id=?", (lat, lon, annonce_id))
+    db.save_note(con, annonce_id, adresse=adresse)
+    return feats[0]["properties"].get("label")
+
+
 def localiser(con, annonce_id, idu):
     """Saisie manuelle de la parcelle (IDU 14 caractères, ex. 85147000ZK0123) puis ré-enrichissement."""
     idu = idu.replace(" ", "").upper()
@@ -125,7 +157,7 @@ def localiser(con, annonce_id, idu):
 def exporter(con, chemin):
     actives = []
     q = """SELECT a.*, s.score, s.s_decote, s.s_mutation, s.s_acces, s.s_rarete, s.confiance, s.explications,
-                  n.texte AS note, n.suivi, n.favori
+                  n.texte AS note, n.suivi, n.favori, n.adresse AS adresse_saisie
            FROM annonces a LEFT JOIN scores s ON s.annonce_id=a.id LEFT JOIN notes n ON n.annonce_id=a.id
            WHERE a.statut='active' ORDER BY s.score DESC NULLS LAST"""
     for r in con.execute(q).fetchall():
@@ -149,7 +181,8 @@ def exporter(con, chemin):
                                                      "dist_littoral_km", "agglo_proche", "dist_agglo_km", "dist_route_m", "nature_route")},
             "dvf": e.get("dvf"),
             "erreurs_enrichissement": e.get("erreurs") or [],
-            "note": r["note"] or "", "suivi": r["suivi"] or "", "favori": bool(r["favori"]),
+            "note": r["note"] or "", "suivi": r["suivi"] or "", "favori": bool(r["favori"]), "adresse_saisie": r["adresse_saisie"] or "",
+            "contact": json.loads(c[0]) if (c := con.execute("SELECT contact_json FROM contacts WHERE annonce_id=?", (r["id"],)).fetchone()) else None,
         })
     exclues = [dict(r) for r in con.execute(
         "SELECT id, source, url, titre, prix, surface_m2, departement, commune, motif_exclusion FROM annonces "

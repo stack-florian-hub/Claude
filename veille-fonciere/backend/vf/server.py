@@ -42,7 +42,7 @@ def serve(con, port=8765):
                     return self._json(json.load(f))
             if self.path.startswith("/api/notes"):
                 rows = con.execute("SELECT * FROM notes").fetchall()
-                return self._json({r["annonce_id"]: {"texte": r["texte"], "suivi": r["suivi"], "favori": bool(r["favori"]),
+                return self._json({r["annonce_id"]: {"texte": r["texte"], "adresse": r["adresse"], "suivi": r["suivi"], "favori": bool(r["favori"]),
                                                      "maj_le": r["maj_le"]} for r in rows})
             return super().do_GET()
 
@@ -52,7 +52,7 @@ def serve(con, port=8765):
             aid = unquote(self.path[len("/api/notes/"):])
             n = int(self.headers.get("Content-Length") or 0)
             d = json.loads(self.rfile.read(n) or b"{}")
-            return self._json(save_note(con, aid, d.get("texte"), d.get("suivi"), d.get("favori")))
+            return self._json(save_note(con, aid, d.get("texte"), d.get("suivi"), d.get("favori"), d.get("adresse")))
 
     print(f"Dashboard : http://localhost:{port}  (API : /api/opportunites, /api/notes)")
     HTTPServer(("127.0.0.1", port), H).serve_forever()  # mono-thread : la connexion SQLite est partagée

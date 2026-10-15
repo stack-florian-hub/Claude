@@ -17,6 +17,9 @@ def connect(path=DB_PATH):
     con.row_factory = sqlite3.Row
     with open(os.path.join(BACKEND_DIR, "schema.sql"), encoding="utf-8") as f:
         con.executescript(f.read())
+    # Migration des bases créées avant l'ajout de la colonne adresse
+    if "adresse" not in {r[1] for r in con.execute("PRAGMA table_info(notes)")}:
+        con.execute("ALTER TABLE notes ADD COLUMN adresse TEXT NOT NULL DEFAULT ''")
     return con
 
 
@@ -63,11 +66,13 @@ def annonce_from_row(r) -> Annonce:
         mode_vente=r["mode_vente"], photo_url=r["photo_url"], date_publication=r["date_publication"])
 
 
-def save_note(con, annonce_id, texte=None, suivi=None, favori=None):
-    cur = con.execute("SELECT texte, suivi, favori FROM notes WHERE annonce_id=?", (annonce_id,)).fetchone()
+def save_note(con, annonce_id, texte=None, suivi=None, favori=None, adresse=None):
+    cur = con.execute("SELECT texte, suivi, favori, adresse FROM notes WHERE annonce_id=?", (annonce_id,)).fetchone()
     texte = texte if texte is not None else (cur["texte"] if cur else "")
     suivi = suivi if suivi is not None else (cur["suivi"] if cur else "")
     favori = int(favori) if favori is not None else (cur["favori"] if cur else 0)
-    con.execute("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?)", (annonce_id, texte, suivi, favori, now()))
+    adresse = adresse if adresse is not None else (cur["adresse"] if cur else "")
+    con.execute("INSERT OR REPLACE INTO notes (annonce_id, texte, adresse, suivi, favori, maj_le) VALUES (?,?,?,?,?,?)",
+                (annonce_id, texte, adresse, suivi, favori, now()))
     con.commit()
-    return {"annonce_id": annonce_id, "texte": texte, "suivi": suivi, "favori": bool(favori)}
+    return {"annonce_id": annonce_id, "texte": texte, "adresse": adresse, "suivi": suivi, "favori": bool(favori)}

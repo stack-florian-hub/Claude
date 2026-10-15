@@ -116,10 +116,18 @@ CREATE TABLE IF NOT EXISTS prix_historique (
     PRIMARY KEY (annonce_id, date)
 );
 
+-- Coordonnées de l'annonceur (agent, notaire, agence, particulier) publiées sur l'annonce
+CREATE TABLE IF NOT EXISTS contacts (
+    annonce_id   TEXT PRIMARY KEY REFERENCES annonces(id) ON DELETE CASCADE,
+    contact_json TEXT NOT NULL,                -- {type, nom, agence, telephone, email, adresse, site, remarque}
+    maj_le       TEXT NOT NULL
+);
+
 -- Notes personnelles (saisies dans le dashboard)
 CREATE TABLE IF NOT EXISTS notes (
     annonce_id TEXT PRIMARY KEY,
     texte      TEXT NOT NULL DEFAULT '',
+    adresse    TEXT NOT NULL DEFAULT '',       -- adresse exacte obtenue auprès du vendeur
     suivi      TEXT NOT NULL DEFAULT '',       -- '' | a_voir | contacte | visite | offre | abandon
     favori     INTEGER NOT NULL DEFAULT 0,
     maj_le     TEXT NOT NULL

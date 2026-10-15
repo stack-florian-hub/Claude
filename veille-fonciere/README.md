@@ -56,6 +56,8 @@ serveur Python). Sans serveur Python, le dashboard fonctionne aussi en statique 
 | `python -m vf scorer` / `exporter` | recalcule les scores / régénère le JSON du dashboard |
 | `python -m vf tout` | les quatre étapes à la suite |
 | `python -m vf localiser "bienici:xxx" 85147000ZK0123` | fixe la parcelle exacte (IDU cadastral) puis ré-enrichit et ré-exporte |
+| `python -m vf localiser "bienici:xxx" --adresse "12 chemin du Canal"` | fixe l'adresse exacte (API Adresse), puis ré-enrichit et ré-exporte |
+| `python -m vf contacts [--tout]` | coordonnées publiées par l'annonceur : agent et téléphone (Bien'Ici), négociateur, téléphone et email de l'étude (notaires), nom de l'agence (ParuVendu) |
 | `python -m vf serve [-p 8765]` | dashboard + API des notes (`GET /api/opportunites`, `GET/PUT /api/notes/<id>`) |
 
 ### Automatiser

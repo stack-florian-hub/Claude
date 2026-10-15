@@ -123,6 +123,16 @@ tbody tr[aria-current="true"] { background: var(--land-focus); }
 .headline .score { margin-left: auto; text-align: right; }
 .headline .score b { font-family: var(--f-display); font-stretch: 85%; font-size: 36px; font-weight: 800; line-height: 1; }
 .small { font-size: 12px; color: var(--muted); }
+.contact { background: var(--sunken); border-radius: 8px; padding: 10px 12px; margin-top: 12px; display: grid; gap: 6px; }
+.contact .who { font-weight: 600; }
+.contact .who small { font-weight: 400; color: var(--muted); }
+.contact .tel { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.contact .tel a { font-family: var(--f-display); font-stretch: 85%; font-size: 20px; font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: .02em; user-select: all; }
+.mini { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 2px 8px; font-size: 11px; }
+.contact .line { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.contact .line a { color: var(--accent); }
+.addr { display: flex; gap: 6px; }
+.addr input { flex: 1; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 5px; padding: 6px 8px; font-size: 13px; }
 .cta { display: block; text-align: center; background: var(--accent); color: var(--accent-ink); text-decoration: none; border-radius: 6px; padding: 9px; font-weight: 600; }
 .sec { border-top: 1px solid var(--line); padding-block: 12px; }
 .sec h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 8px; font-weight: 600; }
@@ -258,7 +268,7 @@ const notes = {};
 let db = null;
 const docId = (id) => id.replace(/[^A-Za-z0-9_-]/g, "_");
 try { Object.assign(notes, JSON.parse(localStorage.getItem("vf-notes") || "{}")); } catch (e) {}
-const note = (id) => notes[id] || { texte: "", suivi: "", favori: false };
+const note = (id) => notes[id] || { texte: "", suivi: "", favori: false, adresse: "" };
 async function saveNote(id, patch) {
   notes[id] = { ...note(id), ...patch, id, maj_le: new Date().toISOString() };
   try { localStorage.setItem("vf-notes", JSON.stringify(notes)); } catch (e) {}
@@ -281,7 +291,7 @@ function visibles() {
       (n(S.surfMin) == null || (a.surface_m2 || 0) >= n(S.surfMin)) && (n(S.pm2Max) == null || (a.prix_m2 != null && a.prix_m2 <= n(S.pm2Max))) &&
       (a.score ?? 0) >= S.scoreMin && (!S.conf || a.confiance === S.conf) && (!S.fav || nt.favori) &&
       (!S.suivi || nt.suivi === S.suivi) && (!S.hideAb || nt.suivi !== "abandon") &&
-      (!q || `${a.commune} ${a.titre} ${a.description} ${nt.texte}`.toLowerCase().includes(q));
+      (!q || `${a.commune} ${a.titre} ${a.description} ${nt.texte} ${nt.adresse || ""} ${a.contact?.nom || ""} ${a.contact?.agence || ""}`.toLowerCase().includes(q));
   });
 }
 
@@ -457,6 +467,24 @@ function links(a) {
   }
   return l;
 }
+const TYPE_CONTACT = { pro: "Professionnel", particulier: "Particulier", notaire: "Notaire" };
+function contactBlock(a, nt) {
+  const c = a.contact;
+  const q = encodeURIComponent(`${nt.adresse || ""} ${a.code_postal || ""} ${a.commune || ""}`.trim());
+  const ident = c ? [c.nom, c.agence].filter(Boolean).map(esc).join(" · ") : "";
+  return `<div class="contact">
+    <div class="who">${ident || "Annonceur non identifié"} ${c?.type ? `<small>· ${TYPE_CONTACT[c.type] || c.type}</small>` : ""}</div>
+    ${c?.telephone ? `<div class="tel"><a href="tel:${esc(c.telephone.replace(/\s/g, ""))}">${esc(c.telephone)}</a><button class="mini" data-copy="${esc(c.telephone)}">Copier</button></div>` : ""}
+    ${c?.email ? `<div class="line">${esc(c.email)} <button class="mini" data-copy="${esc(c.email)}">Copier</button></div>` : ""}
+    ${c?.adresse ? `<div class="line">${c.type === "notaire" ? "Étude" : "Agence"} : ${esc(c.adresse)}</div>` : ""}
+    ${c?.remarque ? `<div class="line">${esc(c.remarque)}</div>` : ""}
+    ${!c ? `<div class="line">Coordonnées non publiées par la source : passez par le bouton de contact de l'annonce.</div>` : ""}
+    <label class="line" for="n-adresse">Adresse exacte du terrain</label>
+    <div class="addr"><input id="n-adresse" placeholder="ex. 12 chemin de la Rivière, lieu-dit…" value="${esc(nt.adresse || "")}"><button class="btn" id="n-adresse-save">Enregistrer</button></div>
+    <div class="line" id="n-adresse-etat">${nt.adresse ? `<a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">Voir sur Google Maps ↗</a> · <a href="https://www.geoportail.gouv.fr/carte?c=${a.lon},${a.lat}&z=15&l0=ORTHOIMAGERY.ORTHOPHOTOS::GEOPORTAIL:OGC:WMTS(1)&l1=CADASTRALPARCELS.PARCELLAIRE_EXPRESS::GEOPORTAIL:OGC:WMTS(1)&permalink=yes" target="_blank" rel="noopener">Cadastre ↗</a> · Le score sera recalculé à cette adresse au prochain passage de l'analyse.` : "Une fois l'adresse obtenue, saisissez-la ici : le zonage, les distances et le score seront recalculés au prochain passage de l'analyse."}</div>
+  </div>`;
+}
+
 function renderFiche() {
   const el = document.getElementById("fiche");
   const a = A.find((x) => x.id === S.sel);
@@ -472,6 +500,7 @@ function renderFiche() {
       <button class="star" style="font-size:22px" data-fstar aria-pressed="${nt.favori}" aria-label="Favori">★</button>
       <button class="close" data-close aria-label="Fermer la fiche">×</button>
     </div>
+    ${contactBlock(a, nt)}
     <div class="headline">
       <div><div class="price num">${eur(a.prix)}</div><div class="small num">${eurm2(a.prix_m2)}${baisse ? ` · baisse depuis ${eur(a.prix_initial)}` : ""}</div></div>
       <div class="score"><b class="num" style="color:${scoreColor(a.score)}">${a.score ?? "—"}</b><div class="small">/ 100 · confiance ${a.confiance || "—"}</div></div>
@@ -531,6 +560,18 @@ function renderFiche() {
 document.getElementById("fiche").addEventListener("click", async (e) => {
   if (e.target.closest("[data-close]")) { S.sel = null; return render(); }
   if (e.target.closest("[data-fstar]")) { await saveNote(S.sel, { favori: !note(S.sel).favori }); return render(); }
+  const cp = e.target.closest("[data-copy]");
+  if (cp) {
+    try { await navigator.clipboard.writeText(cp.dataset.copy); cp.textContent = "Copié"; }
+    catch (err) { const r = document.createRange(); r.selectNodeContents(cp.previousElementSibling || cp); getSelection().removeAllRanges(); getSelection().addRange(r); cp.textContent = "Sélectionné"; }
+    return;
+  }
+  if (e.target.id === "n-adresse-save") {
+    const where = await saveNote(S.sel, { adresse: document.getElementById("n-adresse").value.trim() });
+    renderFiche();
+    if (where !== "base") document.getElementById("n-adresse-etat").textContent = "Enregistrée dans ce navigateur seulement (base de la page indisponible).";
+    return;
+  }
   if (e.target.id === "n-save") {
     const where = await saveNote(S.sel, { texte: document.getElementById("n-texte").value });
     document.getElementById("n-etat").textContent = where === "base" ? "Enregistrée" : "Enregistrée dans ce navigateur";
@@ -577,7 +618,7 @@ render();
     if (!db) return;
     db.collection("notes").onSnapshot((snap) => {
       for (const doc of snap.docs) { const x = doc.data(); if (x?.id) notes[x.id] = x; }
-      const editing = document.activeElement?.id === "n-texte";
+      const editing = ["n-texte", "n-adresse"].includes(document.activeElement?.id);
       renderHeader(visibles());
       if (S.vue === "carte") renderList(visibles()); else if (S.vue === "tableau") renderTable(visibles());
       if (!editing) renderFiche();

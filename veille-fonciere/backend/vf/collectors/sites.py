@@ -127,7 +127,7 @@ class LeBonCoin(CollecteurHtml):
                     precision_geo="commune" if loc.get("is_shape") is False or not loc.get("lat") else "approx",
                     photo_url=((x.get("images") or {}).get("urls") or [None])[0],
                     date_publication=(x.get("first_publication_date") or "")[:10],
-                    brut={"owner_type": (x.get("owner") or {}).get("type")})
+                    brut={"owner": {"type": (x.get("owner") or {}).get("type"), "name": (x.get("owner") or {}).get("name")}})
 
 
 class ImportManuel:

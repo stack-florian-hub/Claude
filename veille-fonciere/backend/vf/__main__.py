@@ -9,6 +9,8 @@
   exporter [-o chemin.json]     JSON lu par le dashboard
   tout [-s ...] [-d ...]        collecter + enrichir + scorer + exporter
   localiser ID IDU              fixe la parcelle (ex. 85147000ZK0123) puis ré-enrichit
+  localiser ID --adresse "..."  fixe l'adresse exacte (géocodée par l'API Adresse) puis ré-enrichit
+  contacts [--tout]             coordonnées des annonceurs (agent, notaire, agence)
   serve [-p 8765]               API locale (notes) + dashboard compilé
 """
 import argparse
@@ -41,7 +43,10 @@ def main(argv=None):
     sp.add_argument("-o", "--out", default=EXPORT_PATH)
     sp = sub.add_parser("localiser")
     sp.add_argument("id")
-    sp.add_argument("idu")
+    sp.add_argument("idu", nargs="?")
+    sp.add_argument("--adresse")
+    sp = sub.add_parser("contacts")
+    sp.add_argument("--tout", action="store_true", help="rafraîchir aussi les contacts déjà connus")
     sp = sub.add_parser("serve")
     sp.add_argument("-p", "--port", type=int, default=8765)
     a = p.parse_args(argv)
@@ -72,11 +77,19 @@ def main(argv=None):
         elif a.cmd == "exporter":
             print(f"{pipeline.exporter(con, a.out)} opportunités exportées vers {a.out}")
         elif a.cmd == "localiser":
-            pipeline.localiser(con, a.id, a.idu)
+            if a.adresse:
+                print(f"Adresse trouvée : {pipeline.localiser_adresse(con, http, a.id, a.adresse)}")
+            elif a.idu:
+                pipeline.localiser(con, a.id, a.idu)
+            else:
+                p.error("localiser : donnez une référence cadastrale (IDU) ou --adresse")
             pipeline.enrichir(con, http, cfg, ids=[a.id])
             pipeline.scorer(con, cfg)
             pipeline.exporter(con, EXPORT_PATH)
-            print("Parcelle enregistrée, annonce ré-enrichie et export mis à jour.")
+            print("Position enregistrée, annonce ré-enrichie et export mis à jour.")
+        elif a.cmd == "contacts":
+            print(f"{pipeline.recuperer_contacts(con, http, a.tout)} contacts récupérés")
+            pipeline.exporter(con, EXPORT_PATH)
         elif a.cmd == "serve":
             from .server import serve
             serve(con, a.port)

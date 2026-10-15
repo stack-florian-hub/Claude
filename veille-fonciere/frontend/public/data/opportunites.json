@@ -1,5 +1,5 @@
 {
- "genere_le": "2026-10-14T09:03:11+00:00",
+ "genere_le": "2026-10-15T17:05:17+00:00",
  "annonces": [
   {
    "id": "bienici:iad-france-877884",
@@ -228,7 +228,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": "Stéphanie PEUGEOT",
+    "agence": "IAD France",
+    "telephone": "06 87 64 43 95",
+    "email": null,
+    "adresse": "44860 SAINT-AIGNAN-GRANDLIEU",
+    "site": "https://bareme.iadfrance.fr/detail/65208"
+   }
   },
   {
    "id": "bienici:immo-facile-57516602",
@@ -467,7 +477,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "ABL Immobilier",
+    "telephone": "02 40 03 84 29",
+    "email": null,
+    "adresse": "44140 Aigrefeuille sur Maine",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
+   }
   },
   {
    "id": "bienici:immo-facile-57170933",
@@ -708,7 +728,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "ABL Immobilier",
+    "telephone": "02 40 03 84 29",
+    "email": null,
+    "adresse": "44140 Aigrefeuille sur Maine",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
+   }
   },
   {
    "id": "bienici:hektor-chantimmo85-8540",
@@ -806,7 +836,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "CHANTIMMO CHANTONNAY",
+    "telephone": "02 51 46 93 58",
+    "email": null,
+    "adresse": "85110 chantonnay",
+    "site": null
+   }
   },
   {
    "id": "notaires:2091774",
@@ -1047,7 +1087,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "notaire",
+    "nom": "François-Xavier LAGUERIE",
+    "agence": "Office notarial (CRPCEN 85048)",
+    "telephone": "02 51 30 20 06",
+    "email": "francois-xavier.laguerie@notaires.fr",
+    "adresse": "63, rue des Roseaux, 85460 L'Aiguillon-sur-Mer",
+    "site": null
+   }
   },
   {
    "id": "bienici:dr-house-immo-1-1145430",
@@ -1222,7 +1272,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "DR HOUSE - Leclercq Vincent",
+    "telephone": "06 14 94 08 65",
+    "email": null,
+    "adresse": "37340 Savigné-sur-Lathan",
+    "site": "https://www.ledoc.immo/medias/baremes/248.pdf"
+   }
   },
   {
    "id": "bienici:immo-facile-59356553",
@@ -1474,7 +1534,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "ABL Immobilier",
+    "telephone": "02 40 03 84 29",
+    "email": null,
+    "adresse": "44140 Aigrefeuille sur Maine",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
+   }
   },
   {
    "id": "bienici:laforet-immo-facile-21707104",
@@ -1557,7 +1627,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "Laforêt CHOLET",
+    "telephone": "02 41 49 42 42",
+    "email": null,
+    "adresse": "49300 CHOLET",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/403808.pdf"
+   }
   },
   {
    "id": "bienici:safti-1-1711909",
@@ -1708,7 +1788,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "SAFTI - Monsieur Maxime TURQUAND",
+    "telephone": "06 32 08 29 95",
+    "email": null,
+    "adresse": "85120 SAINT-PIERRE-DU-CHEMIN",
+    "site": "https://bareme.safti.fr/"
+   }
   },
   {
    "id": "bienici:guy-hoquet-18-GT0130-6749",
@@ -1864,7 +1954,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "Guy Hoquet FONTENAY LE COMTE",
+    "telephone": "02 51 50 43 93",
+    "email": null,
+    "adresse": "85200 Fontenay-le-Comte",
+    "site": null
+   }
   },
   {
    "id": "bienici:safti-1-1694794",
@@ -1970,7 +2070,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "SAFTI - Monsieur Romain MORVAN",
+    "telephone": "06 74 38 00 86",
+    "email": null,
+    "adresse": "37160 DESCARTES",
+    "site": "https://bareme.safti.fr/"
+   }
   },
   {
    "id": "notaires:1949960",
@@ -2124,7 +2234,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "notaire",
+    "nom": "Alexandre DOBRE",
+    "agence": "Office notarial (CRPCEN 37034)",
+    "telephone": "02 47 43 40 96",
+    "email": "negociation.cormery@ant.notaires.fr",
+    "adresse": "58 bis rue nationale, 37320 CORMERY",
+    "site": null
+   }
   },
   {
    "id": "bienici:citya-1-134-TTER103291",
@@ -2363,7 +2483,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "Citya Planchon",
+    "telephone": null,
+    "email": null,
+    "adresse": "37500 Chinon",
+    "site": "https://www.citya.com/agences-immobilieres/Chinon-37500/134"
+   }
   },
   {
    "id": "bienici:netty-company54266xoj-land-140",
@@ -2486,7 +2616,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "BELIS IMMO - Sylvie SZABO",
+    "telephone": "07 77 91 01 30",
+    "email": null,
+    "adresse": "37270 MONTLOUIS-SUR-LOIRE",
+    "site": "https://files.netty.immo/file/company54266xoj/2233/ZxEOR/tarif_belismmo_2025_1.pdf"
+   }
   },
   {
    "id": "bienici:iad-france-1973992",
@@ -2626,7 +2766,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": "Gaël Grousset",
+    "agence": "IAD France",
+    "telephone": "07 67 02 66 59",
+    "email": null,
+    "adresse": "85210 Sainte-Hermine",
+    "site": "https://bareme.iadfrance.fr/detail/74060"
+   }
   },
   {
    "id": "notaires:79287",
@@ -2739,7 +2889,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "notaire",
+    "nom": "Isabelle ARHAB",
+    "agence": "Office notarial (CRPCEN 37034)",
+    "telephone": "02 47 43 40 96",
+    "email": "negociation.cormery@ant.notaires.fr",
+    "adresse": "58 bis rue nationale, 37320 CORMERY",
+    "site": null
+   }
   },
   {
    "id": "bienici:immo-facile-61358258",
@@ -2938,7 +3098,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "ABL Immobilier",
+    "telephone": "02 40 03 84 29",
+    "email": null,
+    "adresse": "44140 Aigrefeuille sur Maine",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
+   }
   },
   {
    "id": "bienici:safti-1-1708764",
@@ -3069,7 +3239,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "SAFTI - Monsieur Sébastien RISPAL",
+    "telephone": "06 51 95 25 93",
+    "email": null,
+    "adresse": "85120 LA CHATAIGNERAIE",
+    "site": "https://bareme.safti.fr/"
+   }
   },
   {
    "id": "notaires:1897261",
@@ -3216,7 +3396,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "notaire",
+    "nom": "Renan JOUVE",
+    "agence": "Office notarial (CRPCEN 85093)",
+    "telephone": "02 51 57 54 96",
+    "email": "renan.jouve@85093.notaires.fr",
+    "adresse": "11, Avenue des Sables, 85700 Pouzauges",
+    "site": null
+   }
   },
   {
    "id": "bienici:century-21-202_3580_1585",
@@ -3453,7 +3643,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "CENTURY 21 Solution Immobilière",
+    "telephone": "02 28 14 20 99",
+    "email": null,
+    "adresse": "85400 LUCON",
+    "site": "https://www.century21-si-lucon.com/mentions_legales/"
+   }
   },
   {
    "id": "bienici:iad-france-1024437",
@@ -3640,7 +3840,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": "Amandine Gandemer",
+    "agence": "IAD France",
+    "telephone": "06 44 00 34 80",
+    "email": null,
+    "adresse": "85120 La Châtaigneraie",
+    "site": "https://bareme.iadfrance.fr/detail/74899"
+   }
   },
   {
    "id": "bienici:immo-facile-57170856",
@@ -3836,7 +4046,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "ABL Immobilier",
+    "telephone": "02 40 03 84 29",
+    "email": null,
+    "adresse": "44140 Aigrefeuille sur Maine",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
+   }
   },
   {
    "id": "bienici:ag440414-542383610",
@@ -3938,7 +4158,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "Proprietes Privees - Yannick PERCHERON",
+    "telephone": "07 43 01 31 24",
+    "email": null,
+    "adresse": "44120 VERTOU",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/354079.pdf"
+   }
   },
   {
    "id": "bienici:nestenn-1-99939622933",
@@ -4183,7 +4413,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "NESTENN DOUE - VIHIERS - NESTENN Doué-la-Fontaine",
+    "telephone": "02 41 40 10 02",
+    "email": null,
+    "adresse": "49700 Doué-en-Anjou",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/18008.pdf"
+   }
   },
   {
    "id": "bienici:iad-france-993828",
@@ -4288,7 +4528,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "EIRL CLAUDIE PIHEE ",
+    "telephone": "06 16 50 22 47",
+    "email": null,
+    "adresse": "49400 Saumur",
+    "site": "https://bareme.iadfrance.fr/detail/43194"
+   }
   },
   {
    "id": "bienici:ag340369-540715148",
@@ -4466,7 +4716,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "CAPIFRANCE - François GIANGRASSO",
+    "telephone": "07 68 89 37 80",
+    "email": null,
+    "adresse": "85150 LANDERONDE",
+    "site": "http://assets.digitregroup.io/capifrance/capifrance_baremes_agence_B2026-A.pdf"
+   }
   },
   {
    "id": "bienici:iad-france-957372",
@@ -4661,7 +4921,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": "Vincent QUELEN",
+    "agence": "IAD France",
+    "telephone": "06 16 62 09 82",
+    "email": null,
+    "adresse": "85120 Vouvant",
+    "site": "https://bareme.iadfrance.fr/detail/11640"
+   }
   },
   {
    "id": "bienici:guy-hoquet-18-GT0130-6687",
@@ -4747,7 +5017,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "Guy Hoquet FONTENAY LE COMTE",
+    "telephone": "02 51 50 43 93",
+    "email": null,
+    "adresse": "85200 Fontenay-le-Comte",
+    "site": null
+   }
   },
   {
    "id": "bienici:safti-1-1699666",
@@ -4991,7 +5271,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "SAFTI - Monsieur Bruno GRUSON",
+    "telephone": "06 60 90 52 26",
+    "email": null,
+    "adresse": "29100 DOUARNENEZ",
+    "site": "https://bareme.safti.fr/"
+   }
   },
   {
    "id": "bienici:immo-facile-61352863",
@@ -5190,7 +5480,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "ABL Immobilier",
+    "telephone": "02 40 03 84 29",
+    "email": null,
+    "adresse": "44140 Aigrefeuille sur Maine",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
+   }
   },
   {
    "id": "bienici:safti-1-1688539",
@@ -5435,7 +5735,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "SAFTI - Monsieur Jean-Marc DENAVEAU",
+    "telephone": "06 86 25 28 10",
+    "email": null,
+    "adresse": "37500 CHINON",
+    "site": "https://bareme.safti.fr/"
+   }
   },
   {
    "id": "bienici:safti-1-1580392",
@@ -5674,7 +5984,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "SAFTI - Monsieur Jean-Marc DENAVEAU",
+    "telephone": "06 86 25 28 10",
+    "email": null,
+    "adresse": "37500 CHINON",
+    "site": "https://bareme.safti.fr/"
+   }
   },
   {
    "id": "paruvendu:1287846637A1KIVHTE000",
@@ -5915,7 +6235,18 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "L'ADRESSE MOUTIERS LES MAUXFAITS",
+    "telephone": null,
+    "email": null,
+    "adresse": null,
+    "site": "https://www.ladresse.com/",
+    "remarque": "Téléphone affiché au clic sur l'annonce ParuVendu"
+   }
   },
   {
    "id": "bienici:iad-france-910924",
@@ -6089,7 +6420,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": "Frédéric Lucas",
+    "agence": "IAD France",
+    "telephone": "06 27 64 39 27",
+    "email": null,
+    "adresse": "85500 Beaurepaire",
+    "site": "https://bareme.iadfrance.fr/detail/23238"
+   }
   },
   {
    "id": "bienici:hektor-ligeria37-2400",
@@ -6170,7 +6511,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "LIGERIA IMMOBILIER - HAZLEWOOD Aurélien",
+    "telephone": "06 66 57 37 31",
+    "email": null,
+    "adresse": "37420 AVOINE",
+    "site": "http://www.ligeria.fr/images/documents/honoraires-ligeria-2019.pdf"
+   }
   },
   {
    "id": "paruvendu:1286061218A1KIVHTE000",
@@ -6410,7 +6761,18 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "L'ADRESSE BEAUVOIR SUR MER",
+    "telephone": null,
+    "email": null,
+    "adresse": null,
+    "site": "https://www.ladresse.com/",
+    "remarque": "Téléphone affiché au clic sur l'annonce ParuVendu"
+   }
   },
   {
    "id": "bienici:iad-france-995417",
@@ -6645,7 +7007,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": "Nathalie Humeau",
+    "agence": "IAD France",
+    "telephone": "06 69 46 70 03",
+    "email": null,
+    "adresse": "85150 Saint-Julien-des-Landes",
+    "site": "https://bareme.iadfrance.fr/detail/85777"
+   }
   },
   {
    "id": "paruvendu:1293220858A1KIVHTE000",
@@ -6886,7 +7258,18 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "Capifrance",
+    "telephone": null,
+    "email": null,
+    "adresse": null,
+    "site": "http://www.capifrance.fr",
+    "remarque": "Téléphone affiché au clic sur l'annonce ParuVendu"
+   }
   },
   {
    "id": "bienici:hektor-coimmobilierlege-10463",
@@ -7051,7 +7434,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "CO IMMOBILIER Legé - BOURGAULT Matthieu",
+    "telephone": "07 86 22 50 63",
+    "email": null,
+    "adresse": "44650 lege",
+    "site": "http://www.coimmobilier.fr/i/redac/honoraires?honofor=24"
+   }
   },
   {
    "id": "notaires:1892059",
@@ -7183,7 +7576,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "notaire",
+    "nom": "Florence BIARD",
+    "agence": "Office notarial (CRPCEN 44037)",
+    "telephone": "02 40 78 57 44",
+    "email": "florence.biard.44037@notaires.fr",
+    "adresse": "Place de la Gare, 44270 MACHECOUL-SAINT MEME",
+    "site": null
+   }
   },
   {
    "id": "bienici:iad-france-923013",
@@ -7427,7 +7830,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": "Karen Baudry",
+    "agence": "IAD France",
+    "telephone": "06 73 47 45 89",
+    "email": null,
+    "adresse": "85170 LES LUCS-SUR-BOULOGNE",
+    "site": "https://bareme.iadfrance.fr/detail/79900"
+   }
   },
   {
    "id": "bienici:safti-1-1573164",
@@ -7596,7 +8009,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "SAFTI - Monsieur Jean-Marc DENAVEAU",
+    "telephone": "06 86 25 28 10",
+    "email": null,
+    "adresse": "37500 CHINON",
+    "site": "https://bareme.safti.fr/"
+   }
   },
   {
    "id": "notaires:1910161",
@@ -7834,7 +8257,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "notaire",
+    "nom": "Georges BOUHIER",
+    "agence": "Office notarial (CRPCEN 85019)",
+    "telephone": "02 51 94 01 30",
+    "email": "negociation.85019@notaires.fr",
+    "adresse": "1 rue de la Brèche, 85600 Montaigu-Vendée",
+    "site": null
+   }
   },
   {
    "id": "bienici:square-habitat-immo-facile-43484800",
@@ -8017,7 +8450,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "Square Habitat SAINT BRANCHS - MONTS",
+    "telephone": "02 53 78 71 02",
+    "email": null,
+    "adresse": "37320 SAINT BRANCHS",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/372650.pdf"
+   }
   },
   {
    "id": "bienici:safti-1-1688834",
@@ -8252,7 +8695,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "SAFTI - Monsieur Jean-Marc DENAVEAU",
+    "telephone": "06 86 25 28 10",
+    "email": null,
+    "adresse": "37500 CHINON",
+    "site": "https://bareme.safti.fr/"
+   }
   },
   {
    "id": "notaires:2041832",
@@ -8479,7 +8932,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "notaire",
+    "nom": "Céline MARECHAU",
+    "agence": "Office notarial (CRPCEN 37082)",
+    "telephone": "06 45 83 85 88",
+    "email": "negociation@37082.notaires.fr",
+    "adresse": "3, impasse Marc Chagall, 37160 Descartes",
+    "site": null
+   }
   },
   {
    "id": "bienici:century-21-202_2754_13558",
@@ -8715,7 +9178,17 @@
    "erreurs_enrichissement": [],
    "note": "",
    "suivi": "",
-   "favori": false
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "CENTURY 21 Bleu Marine",
+    "telephone": "02 51 95 66 30",
+    "email": null,
+    "adresse": "85340 OLONNE SUR MER",
+    "site": "https://www.century21-bm-olonne.com/mentions_legales/"
+   }
   }
  ],
  "exclues": [
