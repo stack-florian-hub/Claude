@@ -89,3 +89,13 @@ class TestHonoraires(unittest.TestCase):
         self.assertEqual((h["pct"], h["net"], h["charge"]), (8.0, 7500, "acquereur"))
         self.assertEqual(analyser(5900, "Honoraires d'agence à la charge du vendeur.")["charge"], "vendeur")
         self.assertIsNone(analyser(5000, "Beau terrain de loisir."))
+
+
+class TestIndicesTerrain(unittest.TestCase):
+    def test_zone_inondable_et_acces(self):
+        _, al = qualifier(A(3000, "Situé en bordure de la Sèvre. Accessible UNIQUEMENT à pied. Terrain classé en zone NSI du PLU."), CFG)
+        codes = {x["code"] for x in al}
+        self.assertTrue({"bord_eau", "acces_pied", "zone_annoncee", "inondable"} <= codes)
+        self.assertEqual(next(x["zone"] for x in al if x["code"] == "zone_annoncee"), "NSI")
+        _, al = qualifier(A(3000, "Terrain classé en zone NS du PLU."), CFG)
+        self.assertNotIn("inondable", {x["code"] for x in al})

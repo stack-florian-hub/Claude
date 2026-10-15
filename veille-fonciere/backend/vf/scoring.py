@@ -41,11 +41,45 @@ def mutation(a, e, cfg, why):
     if "zone_rouge" in _codes(e):
         why.append("Mutation : zone rouge d'un plan de prévention des risques annoncée, inconstructibilité durable.")
         return 0.0
+    f = _mutation_brute(a, e, cfg, why)
+    return _freins_texte(e, f, why)
+
+
+def _freins_texte(e, f, why):
+    """Indices de l'annonce qui rendent un passage en zone constructible très improbable."""
+    codes = _codes(e)
+    freins = []
+    if "inondable" in codes:
+        f *= 0.3
+        freins.append("zone inondable signalée par l'annonce")
+    elif "bord_eau" in codes and (e.get("ppr_inondation") or e.get("azi")):
+        f *= 0.3
+        freins.append("bord de cours d'eau dans une commune couverte par un PPRi / atlas des zones inondables")
+    if freins:
+        why.append("Mutation freinée : " + ", ".join(freins) + ".")
+    return f
+
+
+def _mutation_brute(a, e, cfg, why):
     precis = a.precision_geo in ("parcelle", "adresse", "approx")
     tz = (e.get("type_zone") or "").upper()
     if not precis:
+        za = next((x.get("zone") for x in e.get("alertes") or [] if x.get("code") == "zone_annoncee"), None)
+        if za and za[:1] in ("N", "A") and not za.startswith("AU"):
+            why.append(f"Mutation : zone {za} annoncée par le vendeur, position connue à la commune seulement (distance aux zones constructibles inconnue).")
+            return 0.15 if za.startswith("N") else 0.2
+        if za and (za.startswith("U") or za.startswith("AU")):
+            why.append(f"Mutation : zone {za} annoncée par le vendeur (à vérifier sur le Géoportail de l'urbanisme).")
+            return 0.4 if a.typologie == "constructible" else 0.7
         why.append("Mutation : position connue à la commune seulement, facteur neutre (localiser la parcelle pour affiner).")
         return 0.3
+    za = next((x.get("zone") for x in e.get("alertes") or [] if x.get("code") == "zone_annoncee"), None)
+    annonce_non_constr = "non_constructible" in _codes(e) or (za and za[:1] in ("N", "A") and not za.startswith("AU"))
+    if tz.startswith("U") and annonce_non_constr and a.precision_geo != "parcelle":
+        # Le point (approximatif) tombe en zone U mais l'annonce dit le contraire : le terrain est en bordure de zone U
+        why.append(f"Mutation : le point approché tombe en zone {e.get('zone_plu') or 'U'}, mais l'annonce indique "
+                   f"{'une zone ' + za if za else 'un terrain non constructible'} : terrain probablement en limite de zone urbanisée.")
+        return _flou(a, 0.6 * (0.85 if (za or "").startswith("N") else 1.0), why)
     if tz.startswith("U"):
         if a.typologie == "constructible":
             why.append(f"Mutation : déjà en zone {e.get('zone_plu') or 'U'} et vendu comme constructible — plus-value d'urbanisation déjà dans le prix.")
@@ -139,12 +173,15 @@ def acces(a, e, why):
     if "zone_rouge" in codes:
         contraintes -= 5
         motifs.append("zone rouge de PPR")
+    if "bord_eau" in codes and "inondable" not in codes and (e.get("ppr_inondation") or e.get("azi")):
+        contraintes -= 3
+        motifs.append("bord de cours d'eau en commune à PPRi")
     if "inondable" in codes or any("inondable" in p.lower() for p in e.get("prescriptions") or []):
         contraintes -= 3
         motifs.append("zone inondable mentionnée")
-    if "enclave" in codes:
+    if "enclave" in codes or "acces_pied" in codes:
         contraintes -= 4
-        motifs.append("risque d'enclavement")
+        motifs.append("accès à pied uniquement" if "acces_pied" in codes else "risque d'enclavement")
     if any("humide" in p for p in e.get("prescriptions") or []):
         contraintes -= 3
         motifs.append("zone humide")

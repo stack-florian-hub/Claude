@@ -1,5 +1,5 @@
 {
- "genere_le": "2026-10-15T17:18:02+00:00",
+ "genere_le": "2026-10-15T17:23:07+00:00",
  "annonces": [
   {
    "id": "bienici:iad-france-877884",
@@ -244,521 +244,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
-   }
-  },
-  {
-   "id": "bienici:immo-facile-57516602",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/immo-facile-57516602",
-   "titre": "Parcelles de bois 2395m²",
-   "description": "Maisdon sur Sèvre en campagne, ensemble de plusieurs parcelles de bois non attenante les unes entre elles, 6 parcelles d'une surface allant de 220 à 750m².  Proximité du village la Bigotière.<br>Terrain non constructible situé en zone ND du plu sans eau ni électricité.",
-   "prix": 4950.0,
-   "surface_m2": 2395.0,
-   "prix_m2": 2.07,
-   "departement": "44",
-   "commune": "Maisdon-sur-Sèvre",
-   "code_insee": "44088",
-   "code_postal": "44690",
-   "lat": 47.10031043336587,
-   "lon": -1.38706208371833,
-   "precision_geo": "approx",
-   "ref_cadastrale": null,
-   "typologie": "bois",
-   "mode_vente": "gre_a_gre",
-   "photo_url": "https://file.bienici.com/photo/immo-facile-57516602_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_5_7_5_1_6_6_0_2_57516602a.jpg_DATEMAJ_21_03_2025-06_23_38",
-   "date_publication": "1970-01-01",
-   "premiere_vue": "2026-10-14T08:53:47+00:00",
-   "derniere_vue": "2026-10-14T08:53:47+00:00",
-   "prix_initial": 4950.0,
-   "historique_prix": [
-    {
-     "date": "2026-10-14",
-     "prix": 4950.0
-    }
-   ],
-   "score": 70.2,
-   "s_decote": 16.1,
-   "s_mutation": 25.2,
-   "s_acces": 19.0,
-   "s_rarete": 9.9,
-   "confiance": "moyenne",
-   "explications": [
-    "Décote : 2.07 €/m² contre une médiane DVF de 2.19 €/m² (commune, 9 ventes) soit 94 % du marché.",
-    "Mutation : en zone UB (constructible) mais vendu comme bois — à vérifier au règlement.",
-    "Mutation : position approximative (rayon de quelques centaines de mètres), facteur atténué.",
-    "Accès : voie publique (route à 1 chaussée) à 12 m.",
-    "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
-    "Contraintes : PPRi sur la commune.",
-    "Rareté : Nantes à 18 km."
-   ],
-   "alertes": [
-    {
-     "code": "non_constructible",
-     "libelle": "Annoncé non constructible"
-    }
-   ],
-   "urbanisme": {
-    "parcelle_idu": "44088000AZ0456",
-    "section": "AZ",
-    "contenance_m2": 626.0,
-    "zone_plu": "UB",
-    "type_zone": "U",
-    "doc_urbanisme": "PLU",
-    "dist_zone_u_m": 0.0,
-    "dist_zone_au_m": 109.0,
-    "oap_proche_m": 102,
-    "prescriptions": [],
-    "servitudes": []
-   },
-   "environnement": {
-    "natura2000": 0,
-    "znieff": 0,
-    "ppr_inondation": [
-     "PPRi-Sèvre Nantaise",
-     "PPRi-Sèvre nantaise 44 révision"
-    ],
-    "azi": [],
-    "risques_commune": [
-     "Inondation",
-     "Par une crue à débordement lent de cours d'eau",
-     "Par ruissellement et coulée de boue",
-     "Par remontées de nappes naturelles",
-     "Mouvement de terrain",
-     "Affaissements et effondrements d'origine anthropique (anciennes carrières souterraines, hors mines)",
-     "Affaissements et effondrements d'origine naturelle (cavités souterraines)",
-     "Eboulement ou chutes de pierres et de blocs",
-     "Glissement de terrain",
-     "Avancée dunaire",
-     "Tassements différentiels",
-     "Séisme",
-     "Phénomène lié à l'atmosphère",
-     "Tempête et grains (vent)",
-     "Foudre",
-     "Grêle",
-     "Neige et pluies verglaçantes",
-     "Radon",
-     "Rupture de barrage"
-    ],
-    "dist_littoral_km": 46.6,
-    "agglo_proche": "Nantes",
-    "dist_agglo_km": 18.2,
-    "dist_route_m": 12.0,
-    "nature_route": "Route à 1 chaussée"
-   },
-   "dvf": {
-    "niveau": "commune",
-    "n": 9,
-    "p25_m2": 0.6,
-    "mediane_m2": 2.19,
-    "p75_m2": 3.79,
-    "ventes": [
-     {
-      "id_mutation": "2025-580277",
-      "code_insee": "44088",
-      "date": "2025-11-17",
-      "valeur": 400.0,
-      "surface_m2": 101.0,
-      "prix_m2": 3.96,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "BN",
-      "id_parcelle": "44088000BN0071",
-      "lat": 47.105236,
-      "lon": -1.410479
-     },
-     {
-      "id_mutation": "2025-564113",
-      "code_insee": "44088",
-      "date": "2025-01-17",
-      "valeur": 700.0,
-      "surface_m2": 541.0,
-      "prix_m2": 1.294,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "AO",
-      "id_parcelle": "44088000AO0076",
-      "lat": 47.122752,
-      "lon": -1.362769
-     },
-     {
-      "id_mutation": "2024-539139",
-      "code_insee": "44088",
-      "date": "2024-05-28",
-      "valeur": 652.8,
-      "surface_m2": 172.0,
-      "prix_m2": 3.795,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "AP",
-      "id_parcelle": "44088000AP0068",
-      "lat": 47.116776,
-      "lon": -1.364689
-     },
-     {
-      "id_mutation": "2023-608801",
-      "code_insee": "44088",
-      "date": "2023-09-26",
-      "valeur": 4000.0,
-      "surface_m2": 15072.0,
-      "prix_m2": 0.265,
-      "typologie": "bois",
-      "nature": "taillis simples,vignes",
-      "section": "AN",
-      "id_parcelle": "44088000AN0193",
-      "lat": 47.123238,
-      "lon": -1.361027
-     },
-     {
-      "id_mutation": "2023-595838",
-      "code_insee": "44088",
-      "date": "2023-02-06",
-      "valeur": 1058.4,
-      "surface_m2": 1764.0,
-      "prix_m2": 0.6,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "AS",
-      "id_parcelle": "44088000AS0192",
-      "lat": 47.112348,
-      "lon": -1.376918
-     },
-     {
-      "id_mutation": "2022-741133",
-      "code_insee": "44088",
-      "date": "2022-04-28",
-      "valeur": 10388.62,
-      "surface_m2": 158.0,
-      "prix_m2": 65.751,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "AL",
-      "id_parcelle": "44088000AL0032",
-      "lat": 47.124441,
-      "lon": -1.376197
-     },
-     {
-      "id_mutation": "2021-758419",
-      "code_insee": "44088",
-      "date": "2021-07-22",
-      "valeur": 1226.28,
-      "surface_m2": 560.0,
-      "prix_m2": 2.19,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "CD",
-      "id_parcelle": "44088000CD0206",
-      "lat": 47.12414,
-      "lon": -1.391231
-     },
-     {
-      "id_mutation": "2021-758455",
-      "code_insee": "44088",
-      "date": "2021-07-22",
-      "valeur": 1773.72,
-      "surface_m2": 810.0,
-      "prix_m2": 2.19,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "CD",
-      "id_parcelle": "44088000CD0514",
-      "lat": 47.124017,
-      "lon": -1.391258
-     },
-     {
-      "id_mutation": "2021-750287",
-      "code_insee": "44088",
-      "date": "2021-04-01",
-      "valeur": 6000.0,
-      "surface_m2": 17124.0,
-      "prix_m2": 0.35,
-      "typologie": "bois",
-      "nature": "futaies feuillues,jardins,taillis simples",
-      "section": "AB",
-      "id_parcelle": "44088000AB0083",
-      "lat": 47.142823,
-      "lon": -1.378486
-     }
-    ]
-   },
-   "erreurs_enrichissement": [],
-   "note": "",
-   "suivi": "",
-   "favori": false,
-   "adresse_saisie": "",
-   "contact": {
-    "type": "pro",
-    "nom": null,
-    "agence": "ABL Immobilier",
-    "telephone": "02 40 03 84 29",
-    "email": null,
-    "adresse": "44140 Aigrefeuille sur Maine",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
-    "frais_charge": "seller"
-   },
-   "honoraires": {
-    "pct": null,
-    "montant": null,
-    "net": null,
-    "charge": "vendeur"
-   }
-  },
-  {
-   "id": "bienici:immo-facile-57170933",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/immo-facile-57170933",
-   "titre": "Parcelles de bois 1650m²",
-   "description": "Maisdon sur Sèvre en campagne, ensemble de plusieurs parcelles de bois non attenante les unes entre elles, 5 parcelles d'une surface allant de 150 à 700m².  Proximité du village l'alouette.<br>Terrain non constructible sans eau ni électricité. <br>",
-   "prix": 3500.0,
-   "surface_m2": 1650.0,
-   "prix_m2": 2.12,
-   "departement": "44",
-   "commune": "Maisdon-sur-Sèvre",
-   "code_insee": "44088",
-   "code_postal": "44690",
-   "lat": 47.09828109867792,
-   "lon": -1.3837420870526924,
-   "precision_geo": "approx",
-   "ref_cadastrale": null,
-   "typologie": "bois",
-   "mode_vente": "gre_a_gre",
-   "photo_url": "https://file.bienici.com/photo/immo-facile-57170933_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_5_7_1_7_0_9_3_3_57170933a.jpg_DATEMAJ_21_03_2025-06_20_31",
-   "date_publication": "1970-01-01",
-   "premiere_vue": "2026-10-14T08:53:47+00:00",
-   "derniere_vue": "2026-10-14T08:53:47+00:00",
-   "prix_initial": 3500.0,
-   "historique_prix": [
-    {
-     "date": "2026-10-14",
-     "prix": 3500.0
-    }
-   ],
-   "score": 67.6,
-   "s_decote": 15.6,
-   "s_mutation": 25.2,
-   "s_acces": 17.0,
-   "s_rarete": 9.8,
-   "confiance": "moyenne",
-   "explications": [
-    "Décote : 2.12 €/m² contre une médiane DVF de 2.19 €/m² (commune, 9 ventes) soit 97 % du marché.",
-    "Mutation : en zone UA (constructible) mais vendu comme bois — à vérifier au règlement.",
-    "Mutation : position approximative (rayon de quelques centaines de mètres), facteur atténué.",
-    "Accès : voie publique (route à 1 chaussée) à 48 m.",
-    "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
-    "Contraintes : PPRi sur la commune.",
-    "Rareté : Nantes à 18 km."
-   ],
-   "alertes": [
-    {
-     "code": "non_constructible",
-     "libelle": "Annoncé non constructible"
-    }
-   ],
-   "urbanisme": {
-    "parcelle_idu": "44088000BE0070",
-    "section": "BE",
-    "contenance_m2": 5658.0,
-    "zone_plu": "UA",
-    "type_zone": "U",
-    "doc_urbanisme": "PLU",
-    "dist_zone_u_m": 0.0,
-    "dist_zone_au_m": 100.0,
-    "oap_proche_m": 154,
-    "prescriptions": [
-     "Espace boisé classé (EBC)"
-    ],
-    "servitudes": []
-   },
-   "environnement": {
-    "natura2000": 0,
-    "znieff": 0,
-    "ppr_inondation": [
-     "PPRi-Sèvre Nantaise",
-     "PPRi-Sèvre nantaise 44 révision"
-    ],
-    "azi": [],
-    "risques_commune": [
-     "Inondation",
-     "Par une crue à débordement lent de cours d'eau",
-     "Par ruissellement et coulée de boue",
-     "Par remontées de nappes naturelles",
-     "Mouvement de terrain",
-     "Affaissements et effondrements d'origine anthropique (anciennes carrières souterraines, hors mines)",
-     "Affaissements et effondrements d'origine naturelle (cavités souterraines)",
-     "Eboulement ou chutes de pierres et de blocs",
-     "Glissement de terrain",
-     "Avancée dunaire",
-     "Tassements différentiels",
-     "Séisme",
-     "Phénomène lié à l'atmosphère",
-     "Tempête et grains (vent)",
-     "Foudre",
-     "Grêle",
-     "Neige et pluies verglaçantes",
-     "Radon",
-     "Rupture de barrage"
-    ],
-    "dist_littoral_km": 46.8,
-    "agglo_proche": "Nantes",
-    "dist_agglo_km": 18.5,
-    "dist_route_m": 48.0,
-    "nature_route": "Route à 1 chaussée"
-   },
-   "dvf": {
-    "niveau": "commune",
-    "n": 9,
-    "p25_m2": 0.6,
-    "mediane_m2": 2.19,
-    "p75_m2": 3.79,
-    "ventes": [
-     {
-      "id_mutation": "2025-580277",
-      "code_insee": "44088",
-      "date": "2025-11-17",
-      "valeur": 400.0,
-      "surface_m2": 101.0,
-      "prix_m2": 3.96,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "BN",
-      "id_parcelle": "44088000BN0071",
-      "lat": 47.105236,
-      "lon": -1.410479
-     },
-     {
-      "id_mutation": "2025-564113",
-      "code_insee": "44088",
-      "date": "2025-01-17",
-      "valeur": 700.0,
-      "surface_m2": 541.0,
-      "prix_m2": 1.294,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "AO",
-      "id_parcelle": "44088000AO0076",
-      "lat": 47.122752,
-      "lon": -1.362769
-     },
-     {
-      "id_mutation": "2024-539139",
-      "code_insee": "44088",
-      "date": "2024-05-28",
-      "valeur": 652.8,
-      "surface_m2": 172.0,
-      "prix_m2": 3.795,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "AP",
-      "id_parcelle": "44088000AP0068",
-      "lat": 47.116776,
-      "lon": -1.364689
-     },
-     {
-      "id_mutation": "2023-608801",
-      "code_insee": "44088",
-      "date": "2023-09-26",
-      "valeur": 4000.0,
-      "surface_m2": 15072.0,
-      "prix_m2": 0.265,
-      "typologie": "bois",
-      "nature": "taillis simples,vignes",
-      "section": "AN",
-      "id_parcelle": "44088000AN0193",
-      "lat": 47.123238,
-      "lon": -1.361027
-     },
-     {
-      "id_mutation": "2023-595838",
-      "code_insee": "44088",
-      "date": "2023-02-06",
-      "valeur": 1058.4,
-      "surface_m2": 1764.0,
-      "prix_m2": 0.6,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "AS",
-      "id_parcelle": "44088000AS0192",
-      "lat": 47.112348,
-      "lon": -1.376918
-     },
-     {
-      "id_mutation": "2022-741133",
-      "code_insee": "44088",
-      "date": "2022-04-28",
-      "valeur": 10388.62,
-      "surface_m2": 158.0,
-      "prix_m2": 65.751,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "AL",
-      "id_parcelle": "44088000AL0032",
-      "lat": 47.124441,
-      "lon": -1.376197
-     },
-     {
-      "id_mutation": "2021-758419",
-      "code_insee": "44088",
-      "date": "2021-07-22",
-      "valeur": 1226.28,
-      "surface_m2": 560.0,
-      "prix_m2": 2.19,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "CD",
-      "id_parcelle": "44088000CD0206",
-      "lat": 47.12414,
-      "lon": -1.391231
-     },
-     {
-      "id_mutation": "2021-758455",
-      "code_insee": "44088",
-      "date": "2021-07-22",
-      "valeur": 1773.72,
-      "surface_m2": 810.0,
-      "prix_m2": 2.19,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "CD",
-      "id_parcelle": "44088000CD0514",
-      "lat": 47.124017,
-      "lon": -1.391258
-     },
-     {
-      "id_mutation": "2021-750287",
-      "code_insee": "44088",
-      "date": "2021-04-01",
-      "valeur": 6000.0,
-      "surface_m2": 17124.0,
-      "prix_m2": 0.35,
-      "typologie": "bois",
-      "nature": "futaies feuillues,jardins,taillis simples",
-      "section": "AB",
-      "id_parcelle": "44088000AB0083",
-      "lat": 47.142823,
-      "lon": -1.378486
-     }
-    ]
-   },
-   "erreurs_enrichissement": [],
-   "note": "",
-   "suivi": "",
-   "favori": false,
-   "adresse_saisie": "",
-   "contact": {
-    "type": "pro",
-    "nom": null,
-    "agence": "ABL Immobilier",
-    "telephone": "02 40 03 84 29",
-    "email": null,
-    "adresse": "44140 Aigrefeuille sur Maine",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
-    "frais_charge": "seller"
-   },
-   "honoraires": {
-    "pct": null,
-    "montant": null,
-    "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": "Barème IAD : jusqu'à 10 000 € TTC pour un prix inférieur à 20 000 €",
+    "site_bareme": "https://bareme.iadfrance.fr/detail/65208"
    }
   },
   {
@@ -1059,275 +547,6 @@
    "honoraires": null
   },
   {
-   "id": "bienici:immo-facile-59356553",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/immo-facile-59356553",
-   "titre": "Terrain agricole 4969m²",
-   "description": "NOUVEAUTE, à Maisdon sur Sèvre, terrain en zone Agricole d'une surface de 4969m²  ni eau et électricité. Idéal pour planter verger, jardin ou animaux. Accès facile par une route de campagne. Une question? contactez-moi Anthony BLAIS",
-   "prix": 6500.0,
-   "surface_m2": 4969.0,
-   "prix_m2": 1.31,
-   "departement": "44",
-   "commune": "Maisdon-sur-Sèvre",
-   "code_insee": "44088",
-   "code_postal": "44690",
-   "lat": 47.097217165,
-   "lon": -1.383861702,
-   "precision_geo": "adresse",
-   "ref_cadastrale": null,
-   "typologie": "agricole",
-   "mode_vente": "gre_a_gre",
-   "photo_url": "https://file.bienici.com/photo/immo-facile-59356553_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_5_9_3_5_6_5_5_3_59356553a.jpg_DATEMAJ_13_10_2025-16_40_51",
-   "date_publication": "1970-01-01",
-   "premiere_vue": "2026-10-14T08:53:47+00:00",
-   "derniere_vue": "2026-10-14T08:53:47+00:00",
-   "prix_initial": 6500.0,
-   "historique_prix": [
-    {
-     "date": "2026-10-14",
-     "prix": 6500.0
-    }
-   ],
-   "score": 63.7,
-   "s_decote": 0.0,
-   "s_mutation": 35.0,
-   "s_acces": 19.0,
-   "s_rarete": 9.7,
-   "confiance": "haute",
-   "explications": [
-    "Décote : 1.31 €/m² contre une médiane DVF de 0.49 €/m² (commune, 123 ventes) soit 267 % du marché.",
-    "Mutation : en zone UA (constructible) mais vendu comme agricole — à vérifier au règlement.",
-    "Accès : voie publique (route à 1 chaussée) à 7 m.",
-    "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
-    "Contraintes : PPRi sur la commune.",
-    "Rareté : Nantes à 19 km."
-   ],
-   "alertes": [
-    {
-     "code": "viabilise",
-     "libelle": "Réseaux à proximité"
-    }
-   ],
-   "urbanisme": {
-    "parcelle_idu": null,
-    "section": null,
-    "contenance_m2": null,
-    "zone_plu": "UA",
-    "type_zone": "U",
-    "doc_urbanisme": "PLU",
-    "dist_zone_u_m": 0.0,
-    "dist_zone_au_m": 61.0,
-    "oap_proche_m": 61,
-    "prescriptions": [],
-    "servitudes": []
-   },
-   "environnement": {
-    "natura2000": 0,
-    "znieff": 0,
-    "ppr_inondation": [
-     "PPRi-Sèvre Nantaise",
-     "PPRi-Sèvre nantaise 44 révision"
-    ],
-    "azi": [],
-    "risques_commune": [
-     "Inondation",
-     "Par une crue à débordement lent de cours d'eau",
-     "Par ruissellement et coulée de boue",
-     "Par remontées de nappes naturelles",
-     "Mouvement de terrain",
-     "Affaissements et effondrements d'origine anthropique (anciennes carrières souterraines, hors mines)",
-     "Affaissements et effondrements d'origine naturelle (cavités souterraines)",
-     "Eboulement ou chutes de pierres et de blocs",
-     "Glissement de terrain",
-     "Avancée dunaire",
-     "Tassements différentiels",
-     "Séisme",
-     "Phénomène lié à l'atmosphère",
-     "Tempête et grains (vent)",
-     "Foudre",
-     "Grêle",
-     "Neige et pluies verglaçantes",
-     "Radon",
-     "Rupture de barrage"
-    ],
-    "dist_littoral_km": 46.8,
-    "agglo_proche": "Nantes",
-    "dist_agglo_km": 18.6,
-    "dist_route_m": 7.0,
-    "nature_route": "Route à 1 chaussée"
-   },
-   "dvf": {
-    "niveau": "commune",
-    "n": 123,
-    "p25_m2": 0.25,
-    "mediane_m2": 0.49,
-    "p75_m2": 0.86,
-    "ventes": [
-     {
-      "id_mutation": "2025-583276",
-      "code_insee": "44088",
-      "date": "2025-12-24",
-      "valeur": 1700.0,
-      "surface_m2": 5583.0,
-      "prix_m2": 0.304,
-      "typologie": "agricole",
-      "nature": "vignes",
-      "section": "CH",
-      "id_parcelle": "44088000CH0072",
-      "lat": 47.137892,
-      "lon": -1.388164
-     },
-     {
-      "id_mutation": "2025-582367",
-      "code_insee": "44088",
-      "date": "2025-12-22",
-      "valeur": 300.0,
-      "surface_m2": 2046.0,
-      "prix_m2": 0.147,
-      "typologie": "agricole",
-      "nature": "prÃ©s,terres",
-      "section": "AT",
-      "id_parcelle": "44088000AT0060",
-      "lat": 47.115674,
-      "lon": -1.388625
-     },
-     {
-      "id_mutation": "2025-582464",
-      "code_insee": "44088",
-      "date": "2025-12-16",
-      "valeur": 1250.0,
-      "surface_m2": 4647.0,
-      "prix_m2": 0.269,
-      "typologie": "agricole",
-      "nature": "terres",
-      "section": "AR",
-      "id_parcelle": "44088000AR0165",
-      "lat": 47.108373,
-      "lon": -1.367577
-     },
-     {
-      "id_mutation": "2025-575395",
-      "code_insee": "44088",
-      "date": "2025-08-14",
-      "valeur": 8000.0,
-      "surface_m2": 3521.0,
-      "prix_m2": 2.272,
-      "typologie": "agricole",
-      "nature": "terres",
-      "section": "BZ",
-      "id_parcelle": "44088000BZ0271",
-      "lat": 47.11882,
-      "lon": -1.392152
-     },
-     {
-      "id_mutation": "2025-575050",
-      "code_insee": "44088",
-      "date": "2025-08-12",
-      "valeur": 3500.0,
-      "surface_m2": 3574.0,
-      "prix_m2": 0.979,
-      "typologie": "agricole",
-      "nature": "prÃ©s,taillis simples,terres",
-      "section": "AL",
-      "id_parcelle": "44088000AL0017",
-      "lat": 47.125687,
-      "lon": -1.377125
-     },
-     {
-      "id_mutation": "2025-574720",
-      "code_insee": "44088",
-      "date": "2025-07-31",
-      "valeur": 2160.0,
-      "surface_m2": 8641.0,
-      "prix_m2": 0.25,
-      "typologie": "agricole",
-      "nature": "vignes",
-      "section": "AX",
-      "id_parcelle": "44088000AX0015",
-      "lat": 47.106384,
-      "lon": -1.379402
-     },
-     {
-      "id_mutation": "2025-574461",
-      "code_insee": "44088",
-      "date": "2025-07-30",
-      "valeur": 238.0,
-      "surface_m2": 2380.0,
-      "prix_m2": 0.1,
-      "typologie": "agricole",
-      "nature": "terres,vignes",
-      "section": "BX",
-      "id_parcelle": "44088000BX0440",
-      "lat": 47.126719,
-      "lon": -1.411142
-     },
-     {
-      "id_mutation": "2025-574468",
-      "code_insee": "44088",
-      "date": "2025-07-30",
-      "valeur": 618.6,
-      "surface_m2": 2062.0,
-      "prix_m2": 0.3,
-      "typologie": "agricole",
-      "nature": "terres,vignes",
-      "section": "BX",
-      "id_parcelle": "44088000BX0441",
-      "lat": 47.12657,
-      "lon": -1.41127
-     },
-     {
-      "id_mutation": "2025-574318",
-      "code_insee": "44088",
-      "date": "2025-07-24",
-      "valeur": 2537.0,
-      "surface_m2": 5335.0,
-      "prix_m2": 0.476,
-      "typologie": "agricole",
-      "nature": "vignes",
-      "section": "BR",
-      "id_parcelle": "44088000BR0051",
-      "lat": 47.113458,
-      "lon": -1.395722
-     },
-     {
-      "id_mutation": "2025-574167",
-      "code_insee": "44088",
-      "date": "2025-07-17",
-      "valeur": 1885.0,
-      "surface_m2": 7539.0,
-      "prix_m2": 0.25,
-      "typologie": "agricole",
-      "nature": "vignes",
-      "section": "BS",
-      "id_parcelle": "44088000BS0079",
-      "lat": 47.115765,
-      "lon": -1.396558
-     }
-    ]
-   },
-   "erreurs_enrichissement": [],
-   "note": "",
-   "suivi": "",
-   "favori": false,
-   "adresse_saisie": "",
-   "contact": {
-    "type": "pro",
-    "nom": null,
-    "agence": "ABL Immobilier",
-    "telephone": "02 40 03 84 29",
-    "email": null,
-    "adresse": "44140 Aigrefeuille sur Maine",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
-    "frais_charge": "seller"
-   },
-   "honoraires": {
-    "pct": null,
-    "montant": null,
-    "net": null,
-    "charge": "vendeur"
-   }
-  },
-  {
    "id": "bienici:laforet-immo-facile-21707104",
    "source": "bienici",
    "url": "https://www.bienici.com/annonce/vente/laforet-immo-facile-21707104",
@@ -1592,7 +811,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": "https://bareme.safti.fr/"
    }
   },
   {
@@ -1765,7 +986,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": null
    }
   },
   {
@@ -1888,7 +1111,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": "https://bareme.safti.fr/"
    }
   },
   {
@@ -1933,7 +1158,12 @@
     "Accès : distance à la voie inconnue.",
     "Rareté : Tours à 24 km."
    ],
-   "alertes": [],
+   "alertes": [
+    {
+     "code": "bord_eau",
+     "libelle": "En bord de cours d'eau : souvent en zone inondable"
+    }
+   ],
    "urbanisme": {
     "parcelle_idu": null,
     "section": null,
@@ -2059,6 +1289,269 @@
     "montant": 600.0,
     "net": 7500.0,
     "charge": "acquereur"
+   }
+  },
+  {
+   "id": "bienici:immo-facile-57516602",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/immo-facile-57516602",
+   "titre": "Parcelles de bois 2395m²",
+   "description": "Maisdon sur Sèvre en campagne, ensemble de plusieurs parcelles de bois non attenante les unes entre elles, 6 parcelles d'une surface allant de 220 à 750m².  Proximité du village la Bigotière.<br>Terrain non constructible situé en zone ND du plu sans eau ni électricité.",
+   "prix": 4950.0,
+   "surface_m2": 2395.0,
+   "prix_m2": 2.07,
+   "departement": "44",
+   "commune": "Maisdon-sur-Sèvre",
+   "code_insee": "44088",
+   "code_postal": "44690",
+   "lat": 47.10031043336587,
+   "lon": -1.38706208371833,
+   "precision_geo": "approx",
+   "ref_cadastrale": null,
+   "typologie": "bois",
+   "mode_vente": "gre_a_gre",
+   "photo_url": "https://file.bienici.com/photo/immo-facile-57516602_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_5_7_5_1_6_6_0_2_57516602a.jpg_DATEMAJ_21_03_2025-06_23_38",
+   "date_publication": "1970-01-01",
+   "premiere_vue": "2026-10-14T08:53:47+00:00",
+   "derniere_vue": "2026-10-14T08:53:47+00:00",
+   "prix_initial": 4950.0,
+   "historique_prix": [
+    {
+     "date": "2026-10-14",
+     "prix": 4950.0
+    }
+   ],
+   "score": 59.9,
+   "s_decote": 16.1,
+   "s_mutation": 14.9,
+   "s_acces": 19.0,
+   "s_rarete": 9.9,
+   "confiance": "moyenne",
+   "explications": [
+    "Décote : 2.07 €/m² contre une médiane DVF de 2.19 €/m² (commune, 9 ventes) soit 94 % du marché.",
+    "Mutation : le point approché tombe en zone UB, mais l'annonce indique une zone ND : terrain probablement en limite de zone urbanisée.",
+    "Mutation : position approximative (rayon de quelques centaines de mètres), facteur atténué.",
+    "Accès : voie publique (route à 1 chaussée) à 12 m.",
+    "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
+    "Contraintes : PPRi sur la commune.",
+    "Rareté : Nantes à 18 km."
+   ],
+   "alertes": [
+    {
+     "code": "non_constructible",
+     "libelle": "Annoncé non constructible"
+    },
+    {
+     "code": "zone_annoncee",
+     "libelle": "Zone Nd annoncée au PLU",
+     "zone": "ND"
+    }
+   ],
+   "urbanisme": {
+    "parcelle_idu": "44088000AZ0456",
+    "section": "AZ",
+    "contenance_m2": 626.0,
+    "zone_plu": "UB",
+    "type_zone": "U",
+    "doc_urbanisme": "PLU",
+    "dist_zone_u_m": 0.0,
+    "dist_zone_au_m": 109.0,
+    "oap_proche_m": 102,
+    "prescriptions": [],
+    "servitudes": []
+   },
+   "environnement": {
+    "natura2000": 0,
+    "znieff": 0,
+    "ppr_inondation": [
+     "PPRi-Sèvre Nantaise",
+     "PPRi-Sèvre nantaise 44 révision"
+    ],
+    "azi": [],
+    "risques_commune": [
+     "Inondation",
+     "Par une crue à débordement lent de cours d'eau",
+     "Par ruissellement et coulée de boue",
+     "Par remontées de nappes naturelles",
+     "Mouvement de terrain",
+     "Affaissements et effondrements d'origine anthropique (anciennes carrières souterraines, hors mines)",
+     "Affaissements et effondrements d'origine naturelle (cavités souterraines)",
+     "Eboulement ou chutes de pierres et de blocs",
+     "Glissement de terrain",
+     "Avancée dunaire",
+     "Tassements différentiels",
+     "Séisme",
+     "Phénomène lié à l'atmosphère",
+     "Tempête et grains (vent)",
+     "Foudre",
+     "Grêle",
+     "Neige et pluies verglaçantes",
+     "Radon",
+     "Rupture de barrage"
+    ],
+    "dist_littoral_km": 46.6,
+    "agglo_proche": "Nantes",
+    "dist_agglo_km": 18.2,
+    "dist_route_m": 12.0,
+    "nature_route": "Route à 1 chaussée"
+   },
+   "dvf": {
+    "niveau": "commune",
+    "n": 9,
+    "p25_m2": 0.6,
+    "mediane_m2": 2.19,
+    "p75_m2": 3.79,
+    "ventes": [
+     {
+      "id_mutation": "2025-580277",
+      "code_insee": "44088",
+      "date": "2025-11-17",
+      "valeur": 400.0,
+      "surface_m2": 101.0,
+      "prix_m2": 3.96,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "BN",
+      "id_parcelle": "44088000BN0071",
+      "lat": 47.105236,
+      "lon": -1.410479
+     },
+     {
+      "id_mutation": "2025-564113",
+      "code_insee": "44088",
+      "date": "2025-01-17",
+      "valeur": 700.0,
+      "surface_m2": 541.0,
+      "prix_m2": 1.294,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "AO",
+      "id_parcelle": "44088000AO0076",
+      "lat": 47.122752,
+      "lon": -1.362769
+     },
+     {
+      "id_mutation": "2024-539139",
+      "code_insee": "44088",
+      "date": "2024-05-28",
+      "valeur": 652.8,
+      "surface_m2": 172.0,
+      "prix_m2": 3.795,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "AP",
+      "id_parcelle": "44088000AP0068",
+      "lat": 47.116776,
+      "lon": -1.364689
+     },
+     {
+      "id_mutation": "2023-608801",
+      "code_insee": "44088",
+      "date": "2023-09-26",
+      "valeur": 4000.0,
+      "surface_m2": 15072.0,
+      "prix_m2": 0.265,
+      "typologie": "bois",
+      "nature": "taillis simples,vignes",
+      "section": "AN",
+      "id_parcelle": "44088000AN0193",
+      "lat": 47.123238,
+      "lon": -1.361027
+     },
+     {
+      "id_mutation": "2023-595838",
+      "code_insee": "44088",
+      "date": "2023-02-06",
+      "valeur": 1058.4,
+      "surface_m2": 1764.0,
+      "prix_m2": 0.6,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "AS",
+      "id_parcelle": "44088000AS0192",
+      "lat": 47.112348,
+      "lon": -1.376918
+     },
+     {
+      "id_mutation": "2022-741133",
+      "code_insee": "44088",
+      "date": "2022-04-28",
+      "valeur": 10388.62,
+      "surface_m2": 158.0,
+      "prix_m2": 65.751,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "AL",
+      "id_parcelle": "44088000AL0032",
+      "lat": 47.124441,
+      "lon": -1.376197
+     },
+     {
+      "id_mutation": "2021-758419",
+      "code_insee": "44088",
+      "date": "2021-07-22",
+      "valeur": 1226.28,
+      "surface_m2": 560.0,
+      "prix_m2": 2.19,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "CD",
+      "id_parcelle": "44088000CD0206",
+      "lat": 47.12414,
+      "lon": -1.391231
+     },
+     {
+      "id_mutation": "2021-758455",
+      "code_insee": "44088",
+      "date": "2021-07-22",
+      "valeur": 1773.72,
+      "surface_m2": 810.0,
+      "prix_m2": 2.19,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "CD",
+      "id_parcelle": "44088000CD0514",
+      "lat": 47.124017,
+      "lon": -1.391258
+     },
+     {
+      "id_mutation": "2021-750287",
+      "code_insee": "44088",
+      "date": "2021-04-01",
+      "valeur": 6000.0,
+      "surface_m2": 17124.0,
+      "prix_m2": 0.35,
+      "typologie": "bois",
+      "nature": "futaies feuillues,jardins,taillis simples",
+      "section": "AB",
+      "id_parcelle": "44088000AB0083",
+      "lat": 47.142823,
+      "lon": -1.378486
+     }
+    ]
+   },
+   "erreurs_enrichissement": [],
+   "note": "",
+   "suivi": "",
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "ABL Immobilier",
+    "telephone": "02 40 03 84 29",
+    "email": null,
+    "adresse": "44140 Aigrefeuille sur Maine",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur",
+    "bareme": "Barème ABL (terrains) : 10 % TTC, minimum 5 000 € TTC",
+    "site_bareme": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
    }
   },
   {
@@ -2314,7 +1807,269 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": "https://www.citya.com/agences-immobilieres/Chinon-37500/134"
+   }
+  },
+  {
+   "id": "bienici:immo-facile-57170933",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/immo-facile-57170933",
+   "titre": "Parcelles de bois 1650m²",
+   "description": "Maisdon sur Sèvre en campagne, ensemble de plusieurs parcelles de bois non attenante les unes entre elles, 5 parcelles d'une surface allant de 150 à 700m².  Proximité du village l'alouette.<br>Terrain non constructible sans eau ni électricité. <br>",
+   "prix": 3500.0,
+   "surface_m2": 1650.0,
+   "prix_m2": 2.12,
+   "departement": "44",
+   "commune": "Maisdon-sur-Sèvre",
+   "code_insee": "44088",
+   "code_postal": "44690",
+   "lat": 47.09828109867792,
+   "lon": -1.3837420870526924,
+   "precision_geo": "approx",
+   "ref_cadastrale": null,
+   "typologie": "bois",
+   "mode_vente": "gre_a_gre",
+   "photo_url": "https://file.bienici.com/photo/immo-facile-57170933_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_5_7_1_7_0_9_3_3_57170933a.jpg_DATEMAJ_21_03_2025-06_20_31",
+   "date_publication": "1970-01-01",
+   "premiere_vue": "2026-10-14T08:53:47+00:00",
+   "derniere_vue": "2026-10-14T08:53:47+00:00",
+   "prix_initial": 3500.0,
+   "historique_prix": [
+    {
+     "date": "2026-10-14",
+     "prix": 3500.0
+    }
+   ],
+   "score": 59.2,
+   "s_decote": 15.6,
+   "s_mutation": 16.8,
+   "s_acces": 17.0,
+   "s_rarete": 9.8,
+   "confiance": "moyenne",
+   "explications": [
+    "Décote : 2.12 €/m² contre une médiane DVF de 2.19 €/m² (commune, 9 ventes) soit 97 % du marché.",
+    "Mutation : le point approché tombe en zone UA, mais l'annonce indique un terrain non constructible : terrain probablement en limite de zone urbanisée.",
+    "Mutation : position approximative (rayon de quelques centaines de mètres), facteur atténué.",
+    "Accès : voie publique (route à 1 chaussée) à 48 m.",
+    "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
+    "Contraintes : PPRi sur la commune.",
+    "Rareté : Nantes à 18 km."
+   ],
+   "alertes": [
+    {
+     "code": "non_constructible",
+     "libelle": "Annoncé non constructible"
+    }
+   ],
+   "urbanisme": {
+    "parcelle_idu": "44088000BE0070",
+    "section": "BE",
+    "contenance_m2": 5658.0,
+    "zone_plu": "UA",
+    "type_zone": "U",
+    "doc_urbanisme": "PLU",
+    "dist_zone_u_m": 0.0,
+    "dist_zone_au_m": 100.0,
+    "oap_proche_m": 154,
+    "prescriptions": [
+     "Espace boisé classé (EBC)"
+    ],
+    "servitudes": []
+   },
+   "environnement": {
+    "natura2000": 0,
+    "znieff": 0,
+    "ppr_inondation": [
+     "PPRi-Sèvre Nantaise",
+     "PPRi-Sèvre nantaise 44 révision"
+    ],
+    "azi": [],
+    "risques_commune": [
+     "Inondation",
+     "Par une crue à débordement lent de cours d'eau",
+     "Par ruissellement et coulée de boue",
+     "Par remontées de nappes naturelles",
+     "Mouvement de terrain",
+     "Affaissements et effondrements d'origine anthropique (anciennes carrières souterraines, hors mines)",
+     "Affaissements et effondrements d'origine naturelle (cavités souterraines)",
+     "Eboulement ou chutes de pierres et de blocs",
+     "Glissement de terrain",
+     "Avancée dunaire",
+     "Tassements différentiels",
+     "Séisme",
+     "Phénomène lié à l'atmosphère",
+     "Tempête et grains (vent)",
+     "Foudre",
+     "Grêle",
+     "Neige et pluies verglaçantes",
+     "Radon",
+     "Rupture de barrage"
+    ],
+    "dist_littoral_km": 46.8,
+    "agglo_proche": "Nantes",
+    "dist_agglo_km": 18.5,
+    "dist_route_m": 48.0,
+    "nature_route": "Route à 1 chaussée"
+   },
+   "dvf": {
+    "niveau": "commune",
+    "n": 9,
+    "p25_m2": 0.6,
+    "mediane_m2": 2.19,
+    "p75_m2": 3.79,
+    "ventes": [
+     {
+      "id_mutation": "2025-580277",
+      "code_insee": "44088",
+      "date": "2025-11-17",
+      "valeur": 400.0,
+      "surface_m2": 101.0,
+      "prix_m2": 3.96,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "BN",
+      "id_parcelle": "44088000BN0071",
+      "lat": 47.105236,
+      "lon": -1.410479
+     },
+     {
+      "id_mutation": "2025-564113",
+      "code_insee": "44088",
+      "date": "2025-01-17",
+      "valeur": 700.0,
+      "surface_m2": 541.0,
+      "prix_m2": 1.294,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "AO",
+      "id_parcelle": "44088000AO0076",
+      "lat": 47.122752,
+      "lon": -1.362769
+     },
+     {
+      "id_mutation": "2024-539139",
+      "code_insee": "44088",
+      "date": "2024-05-28",
+      "valeur": 652.8,
+      "surface_m2": 172.0,
+      "prix_m2": 3.795,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "AP",
+      "id_parcelle": "44088000AP0068",
+      "lat": 47.116776,
+      "lon": -1.364689
+     },
+     {
+      "id_mutation": "2023-608801",
+      "code_insee": "44088",
+      "date": "2023-09-26",
+      "valeur": 4000.0,
+      "surface_m2": 15072.0,
+      "prix_m2": 0.265,
+      "typologie": "bois",
+      "nature": "taillis simples,vignes",
+      "section": "AN",
+      "id_parcelle": "44088000AN0193",
+      "lat": 47.123238,
+      "lon": -1.361027
+     },
+     {
+      "id_mutation": "2023-595838",
+      "code_insee": "44088",
+      "date": "2023-02-06",
+      "valeur": 1058.4,
+      "surface_m2": 1764.0,
+      "prix_m2": 0.6,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "AS",
+      "id_parcelle": "44088000AS0192",
+      "lat": 47.112348,
+      "lon": -1.376918
+     },
+     {
+      "id_mutation": "2022-741133",
+      "code_insee": "44088",
+      "date": "2022-04-28",
+      "valeur": 10388.62,
+      "surface_m2": 158.0,
+      "prix_m2": 65.751,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "AL",
+      "id_parcelle": "44088000AL0032",
+      "lat": 47.124441,
+      "lon": -1.376197
+     },
+     {
+      "id_mutation": "2021-758419",
+      "code_insee": "44088",
+      "date": "2021-07-22",
+      "valeur": 1226.28,
+      "surface_m2": 560.0,
+      "prix_m2": 2.19,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "CD",
+      "id_parcelle": "44088000CD0206",
+      "lat": 47.12414,
+      "lon": -1.391231
+     },
+     {
+      "id_mutation": "2021-758455",
+      "code_insee": "44088",
+      "date": "2021-07-22",
+      "valeur": 1773.72,
+      "surface_m2": 810.0,
+      "prix_m2": 2.19,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "CD",
+      "id_parcelle": "44088000CD0514",
+      "lat": 47.124017,
+      "lon": -1.391258
+     },
+     {
+      "id_mutation": "2021-750287",
+      "code_insee": "44088",
+      "date": "2021-04-01",
+      "valeur": 6000.0,
+      "surface_m2": 17124.0,
+      "prix_m2": 0.35,
+      "typologie": "bois",
+      "nature": "futaies feuillues,jardins,taillis simples",
+      "section": "AB",
+      "id_parcelle": "44088000AB0083",
+      "lat": 47.142823,
+      "lon": -1.378486
+     }
+    ]
+   },
+   "erreurs_enrichissement": [],
+   "note": "",
+   "suivi": "",
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "ABL Immobilier",
+    "telephone": "02 40 03 84 29",
+    "email": null,
+    "adresse": "44140 Aigrefeuille sur Maine",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur",
+    "bareme": "Barème ABL (terrains) : 10 % TTC, minimum 5 000 € TTC",
+    "site_bareme": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
    }
   },
   {
@@ -2611,7 +2366,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": "Barème IAD : jusqu'à 10 000 € TTC pour un prix inférieur à 20 000 €",
+    "site_bareme": "https://bareme.iadfrance.fr/detail/74060"
    }
   },
   {
@@ -2741,222 +2498,6 @@
     "montant": 780.0,
     "net": 13000.0,
     "charge": "acquereur"
-   }
-  },
-  {
-   "id": "bienici:immo-facile-61358258",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/immo-facile-61358258",
-   "titre": "TERRAIN DE LOISIRS BOISÉ EN BORD DE MAINE  1 337 m²",
-   "description": "Terrain en pente boisé situé à proximité immédiate d'un village découvrez ce terrain de loisirs boisé d'une superficie de 1337 m². Idéal pour profiter des beaux jours, organiser un pique-nique, <br>Le terrain est accessible uniquement à pied,<br>Terrain classé en zone NS du PLU.<br>",
-   "prix": 3000.0,
-   "surface_m2": 1337.0,
-   "prix_m2": 2.24,
-   "departement": "44",
-   "commune": "Saint-Fiacre-sur-Maine",
-   "code_insee": "44159",
-   "code_postal": "44690",
-   "lat": 47.141533548155394,
-   "lon": -1.4103869225086694,
-   "precision_geo": "commune",
-   "ref_cadastrale": null,
-   "typologie": "bois",
-   "mode_vente": "gre_a_gre",
-   "photo_url": "https://file.bienici.com/photo/immo-facile-61358258_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_6_1_3_5_8_2_5_8_61358258a.jpg_DATEMAJ_17_08_2026-22_57_24",
-   "date_publication": "2026-08-18",
-   "premiere_vue": "2026-10-14T08:53:46+00:00",
-   "derniere_vue": "2026-10-14T08:53:46+00:00",
-   "prix_initial": 3000.0,
-   "historique_prix": [
-    {
-     "date": "2026-10-14",
-     "prix": 3000.0
-    }
-   ],
-   "score": 56.6,
-   "s_decote": 19.0,
-   "s_mutation": 10.5,
-   "s_acces": 15.0,
-   "s_rarete": 12.1,
-   "confiance": "faible",
-   "explications": [
-    "Décote : 2.24 €/m² contre une médiane DVF de 2.80 €/m² (commune, 7 ventes) soit 80 % du marché.",
-    "Mutation : position connue à la commune seulement, facteur neutre (localiser la parcelle pour affiner).",
-    "Accès : distance à la voie inconnue.",
-    "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
-    "Contraintes : PPRi sur la commune.",
-    "Rareté : Nantes à 14 km."
-   ],
-   "alertes": [],
-   "urbanisme": {
-    "parcelle_idu": null,
-    "section": null,
-    "contenance_m2": null,
-    "zone_plu": null,
-    "type_zone": null,
-    "doc_urbanisme": null,
-    "dist_zone_u_m": 25.0,
-    "dist_zone_au_m": 291.0,
-    "oap_proche_m": 341,
-    "prescriptions": [],
-    "servitudes": []
-   },
-   "environnement": {
-    "natura2000": null,
-    "znieff": null,
-    "ppr_inondation": [
-     "PPRi-Sèvre Nantaise",
-     "PPRi-Sèvre nantaise 44 révision"
-    ],
-    "azi": [],
-    "risques_commune": [
-     "Inondation",
-     "Par une crue à débordement lent de cours d'eau",
-     "Par ruissellement et coulée de boue",
-     "Par remontées de nappes naturelles",
-     "Mouvement de terrain",
-     "Tassements différentiels",
-     "Séisme",
-     "Phénomène lié à l'atmosphère",
-     "Tempête et grains (vent)",
-     "Foudre",
-     "Grêle",
-     "Neige et pluies verglaçantes",
-     "Rupture de barrage"
-    ],
-    "dist_littoral_km": 45.4,
-    "agglo_proche": "Nantes",
-    "dist_agglo_km": 13.8,
-    "dist_route_m": null,
-    "nature_route": null
-   },
-   "dvf": {
-    "niveau": "commune",
-    "n": 7,
-    "p25_m2": 1.2,
-    "mediane_m2": 2.8,
-    "p75_m2": 8.01,
-    "ventes": [
-     {
-      "id_mutation": "2024-545042",
-      "code_insee": "44159",
-      "date": "2024-10-08",
-      "valeur": 5000.0,
-      "surface_m2": 485.0,
-      "prix_m2": 10.309,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "0C",
-      "id_parcelle": "441590000C0101",
-      "lat": 47.145851,
-      "lon": -1.398143
-     },
-     {
-      "id_mutation": "2022-733335",
-      "code_insee": "44159",
-      "date": "2022-02-02",
-      "valeur": 500.0,
-      "surface_m2": 357.0,
-      "prix_m2": 1.401,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "0C",
-      "id_parcelle": "441590000C0489",
-      "lat": 47.142023,
-      "lon": -1.395595
-     },
-     {
-      "id_mutation": "2022-734287",
-      "code_insee": "44159",
-      "date": "2022-02-02",
-      "valeur": 120.0,
-      "surface_m2": 150.0,
-      "prix_m2": 0.8,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "0C",
-      "id_parcelle": "441590000C0485",
-      "lat": 47.14196,
-      "lon": -1.395509
-     },
-     {
-      "id_mutation": "2021-769819",
-      "code_insee": "44159",
-      "date": "2021-12-21",
-      "valeur": 1250.0,
-      "surface_m2": 447.0,
-      "prix_m2": 2.796,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "0C",
-      "id_parcelle": "441590000C0406",
-      "lat": 47.141647,
-      "lon": -1.396464
-     },
-     {
-      "id_mutation": "2021-769837",
-      "code_insee": "44159",
-      "date": "2021-12-21",
-      "valeur": 1600.0,
-      "surface_m2": 280.0,
-      "prix_m2": 5.714,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "0C",
-      "id_parcelle": "441590000C0415",
-      "lat": 47.141628,
-      "lon": -1.397109
-     },
-     {
-      "id_mutation": "2021-761391",
-      "code_insee": "44159",
-      "date": "2021-09-01",
-      "valeur": 300.0,
-      "surface_m2": 303.0,
-      "prix_m2": 0.99,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "0B",
-      "id_parcelle": "441590000B0113",
-      "lat": 47.151902,
-      "lon": -1.411
-     },
-     {
-      "id_mutation": "2021-750287",
-      "code_insee": "44159",
-      "date": "2021-04-01",
-      "valeur": 6000.0,
-      "surface_m2": 140.0,
-      "prix_m2": 42.857,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "0C",
-      "id_parcelle": "441590000C1013",
-      "lat": 47.13362,
-      "lon": -1.398348
-     }
-    ]
-   },
-   "erreurs_enrichissement": [],
-   "note": "",
-   "suivi": "",
-   "favori": false,
-   "adresse_saisie": "",
-   "contact": {
-    "type": "pro",
-    "nom": null,
-    "agence": "ABL Immobilier",
-    "telephone": "02 40 03 84 29",
-    "email": null,
-    "adresse": "44140 Aigrefeuille sur Maine",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
-    "frais_charge": "seller"
-   },
-   "honoraires": {
-    "pct": null,
-    "montant": null,
-    "net": null,
-    "charge": "vendeur"
    }
   },
   {
@@ -3104,7 +2645,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": "https://bareme.safti.fr/"
    }
   },
   {
@@ -3720,7 +3263,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": "Barème IAD : jusqu'à 10 000 € TTC pour un prix inférieur à 20 000 €",
+    "site_bareme": "https://bareme.iadfrance.fr/detail/74899"
    }
   },
   {
@@ -3933,7 +3478,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": "Barème ABL (terrains) : 10 % TTC, minimum 5 000 € TTC",
+    "site_bareme": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
    }
   },
   {
@@ -4052,7 +3599,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": "Barème Propriétés Privées : 6 000 € TTC jusqu'à 50 000 €",
+    "site_bareme": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/354079.pdf"
    }
   },
   {
@@ -4436,7 +3985,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": "https://bareme.iadfrance.fr/detail/43194"
    }
   },
   {
@@ -4632,6 +4183,282 @@
     "montant": 3000.0,
     "net": 5500,
     "charge": "acquereur"
+   }
+  },
+  {
+   "id": "bienici:immo-facile-59356553",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/immo-facile-59356553",
+   "titre": "Terrain agricole 4969m²",
+   "description": "NOUVEAUTE, à Maisdon sur Sèvre, terrain en zone Agricole d'une surface de 4969m²  ni eau et électricité. Idéal pour planter verger, jardin ou animaux. Accès facile par une route de campagne. Une question? contactez-moi Anthony BLAIS",
+   "prix": 6500.0,
+   "surface_m2": 4969.0,
+   "prix_m2": 1.31,
+   "departement": "44",
+   "commune": "Maisdon-sur-Sèvre",
+   "code_insee": "44088",
+   "code_postal": "44690",
+   "lat": 47.097217165,
+   "lon": -1.383861702,
+   "precision_geo": "adresse",
+   "ref_cadastrale": null,
+   "typologie": "agricole",
+   "mode_vente": "gre_a_gre",
+   "photo_url": "https://file.bienici.com/photo/immo-facile-59356553_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_5_9_3_5_6_5_5_3_59356553a.jpg_DATEMAJ_13_10_2025-16_40_51",
+   "date_publication": "1970-01-01",
+   "premiere_vue": "2026-10-14T08:53:47+00:00",
+   "derniere_vue": "2026-10-14T08:53:47+00:00",
+   "prix_initial": 6500.0,
+   "historique_prix": [
+    {
+     "date": "2026-10-14",
+     "prix": 6500.0
+    }
+   ],
+   "score": 49.7,
+   "s_decote": 0.0,
+   "s_mutation": 21.0,
+   "s_acces": 19.0,
+   "s_rarete": 9.7,
+   "confiance": "haute",
+   "explications": [
+    "Décote : 1.31 €/m² contre une médiane DVF de 0.49 €/m² (commune, 123 ventes) soit 267 % du marché.",
+    "Mutation : le point approché tombe en zone UA, mais l'annonce indique une zone A : terrain probablement en limite de zone urbanisée.",
+    "Accès : voie publique (route à 1 chaussée) à 7 m.",
+    "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
+    "Contraintes : PPRi sur la commune.",
+    "Rareté : Nantes à 19 km."
+   ],
+   "alertes": [
+    {
+     "code": "viabilise",
+     "libelle": "Réseaux à proximité"
+    },
+    {
+     "code": "zone_annoncee",
+     "libelle": "Zone A annoncée au PLU",
+     "zone": "A"
+    }
+   ],
+   "urbanisme": {
+    "parcelle_idu": null,
+    "section": null,
+    "contenance_m2": null,
+    "zone_plu": "UA",
+    "type_zone": "U",
+    "doc_urbanisme": "PLU",
+    "dist_zone_u_m": 0.0,
+    "dist_zone_au_m": 61.0,
+    "oap_proche_m": 61,
+    "prescriptions": [],
+    "servitudes": []
+   },
+   "environnement": {
+    "natura2000": 0,
+    "znieff": 0,
+    "ppr_inondation": [
+     "PPRi-Sèvre Nantaise",
+     "PPRi-Sèvre nantaise 44 révision"
+    ],
+    "azi": [],
+    "risques_commune": [
+     "Inondation",
+     "Par une crue à débordement lent de cours d'eau",
+     "Par ruissellement et coulée de boue",
+     "Par remontées de nappes naturelles",
+     "Mouvement de terrain",
+     "Affaissements et effondrements d'origine anthropique (anciennes carrières souterraines, hors mines)",
+     "Affaissements et effondrements d'origine naturelle (cavités souterraines)",
+     "Eboulement ou chutes de pierres et de blocs",
+     "Glissement de terrain",
+     "Avancée dunaire",
+     "Tassements différentiels",
+     "Séisme",
+     "Phénomène lié à l'atmosphère",
+     "Tempête et grains (vent)",
+     "Foudre",
+     "Grêle",
+     "Neige et pluies verglaçantes",
+     "Radon",
+     "Rupture de barrage"
+    ],
+    "dist_littoral_km": 46.8,
+    "agglo_proche": "Nantes",
+    "dist_agglo_km": 18.6,
+    "dist_route_m": 7.0,
+    "nature_route": "Route à 1 chaussée"
+   },
+   "dvf": {
+    "niveau": "commune",
+    "n": 123,
+    "p25_m2": 0.25,
+    "mediane_m2": 0.49,
+    "p75_m2": 0.86,
+    "ventes": [
+     {
+      "id_mutation": "2025-583276",
+      "code_insee": "44088",
+      "date": "2025-12-24",
+      "valeur": 1700.0,
+      "surface_m2": 5583.0,
+      "prix_m2": 0.304,
+      "typologie": "agricole",
+      "nature": "vignes",
+      "section": "CH",
+      "id_parcelle": "44088000CH0072",
+      "lat": 47.137892,
+      "lon": -1.388164
+     },
+     {
+      "id_mutation": "2025-582367",
+      "code_insee": "44088",
+      "date": "2025-12-22",
+      "valeur": 300.0,
+      "surface_m2": 2046.0,
+      "prix_m2": 0.147,
+      "typologie": "agricole",
+      "nature": "prÃ©s,terres",
+      "section": "AT",
+      "id_parcelle": "44088000AT0060",
+      "lat": 47.115674,
+      "lon": -1.388625
+     },
+     {
+      "id_mutation": "2025-582464",
+      "code_insee": "44088",
+      "date": "2025-12-16",
+      "valeur": 1250.0,
+      "surface_m2": 4647.0,
+      "prix_m2": 0.269,
+      "typologie": "agricole",
+      "nature": "terres",
+      "section": "AR",
+      "id_parcelle": "44088000AR0165",
+      "lat": 47.108373,
+      "lon": -1.367577
+     },
+     {
+      "id_mutation": "2025-575395",
+      "code_insee": "44088",
+      "date": "2025-08-14",
+      "valeur": 8000.0,
+      "surface_m2": 3521.0,
+      "prix_m2": 2.272,
+      "typologie": "agricole",
+      "nature": "terres",
+      "section": "BZ",
+      "id_parcelle": "44088000BZ0271",
+      "lat": 47.11882,
+      "lon": -1.392152
+     },
+     {
+      "id_mutation": "2025-575050",
+      "code_insee": "44088",
+      "date": "2025-08-12",
+      "valeur": 3500.0,
+      "surface_m2": 3574.0,
+      "prix_m2": 0.979,
+      "typologie": "agricole",
+      "nature": "prÃ©s,taillis simples,terres",
+      "section": "AL",
+      "id_parcelle": "44088000AL0017",
+      "lat": 47.125687,
+      "lon": -1.377125
+     },
+     {
+      "id_mutation": "2025-574720",
+      "code_insee": "44088",
+      "date": "2025-07-31",
+      "valeur": 2160.0,
+      "surface_m2": 8641.0,
+      "prix_m2": 0.25,
+      "typologie": "agricole",
+      "nature": "vignes",
+      "section": "AX",
+      "id_parcelle": "44088000AX0015",
+      "lat": 47.106384,
+      "lon": -1.379402
+     },
+     {
+      "id_mutation": "2025-574461",
+      "code_insee": "44088",
+      "date": "2025-07-30",
+      "valeur": 238.0,
+      "surface_m2": 2380.0,
+      "prix_m2": 0.1,
+      "typologie": "agricole",
+      "nature": "terres,vignes",
+      "section": "BX",
+      "id_parcelle": "44088000BX0440",
+      "lat": 47.126719,
+      "lon": -1.411142
+     },
+     {
+      "id_mutation": "2025-574468",
+      "code_insee": "44088",
+      "date": "2025-07-30",
+      "valeur": 618.6,
+      "surface_m2": 2062.0,
+      "prix_m2": 0.3,
+      "typologie": "agricole",
+      "nature": "terres,vignes",
+      "section": "BX",
+      "id_parcelle": "44088000BX0441",
+      "lat": 47.12657,
+      "lon": -1.41127
+     },
+     {
+      "id_mutation": "2025-574318",
+      "code_insee": "44088",
+      "date": "2025-07-24",
+      "valeur": 2537.0,
+      "surface_m2": 5335.0,
+      "prix_m2": 0.476,
+      "typologie": "agricole",
+      "nature": "vignes",
+      "section": "BR",
+      "id_parcelle": "44088000BR0051",
+      "lat": 47.113458,
+      "lon": -1.395722
+     },
+     {
+      "id_mutation": "2025-574167",
+      "code_insee": "44088",
+      "date": "2025-07-17",
+      "valeur": 1885.0,
+      "surface_m2": 7539.0,
+      "prix_m2": 0.25,
+      "typologie": "agricole",
+      "nature": "vignes",
+      "section": "BS",
+      "id_parcelle": "44088000BS0079",
+      "lat": 47.115765,
+      "lon": -1.396558
+     }
+    ]
+   },
+   "erreurs_enrichissement": [],
+   "note": "",
+   "suivi": "",
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "ABL Immobilier",
+    "telephone": "02 40 03 84 29",
+    "email": null,
+    "adresse": "44140 Aigrefeuille sur Maine",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur",
+    "bareme": "Barème ABL (terrains) : 10 % TTC, minimum 5 000 € TTC",
+    "site_bareme": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
    }
   },
   {
@@ -4946,268 +4773,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
-   }
-  },
-  {
-   "id": "bienici:safti-1-1699666",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/safti-1-1699666",
-   "titre": "2 parcelles de bois",
-   "description": "TERRAINS NON CONSTRUCTIBLE <br> <br>E484 en zone A  <br>                                     <br>B153 en zone  Nf<br> <br>Les informations sur les risques auxquels ce bien est exposé sont disponibles sur le site Géorisques : www.georisques.gouv.fr<br>Prix de vente : 8 700 €<br>Honoraires charge vendeur<br> <br>Contactez votre conseiller SAFTI : Bruno GRUSON, Tél. : <span class=\"importDescriptionDecorator\" data-type=\"phone\">06 60 90 52 26</span>, E-mail : <span class=\"importDescriptionDecorator\" data-type=\"email\">bruno.gruson@safti.fr</span> - EI - Agent commercial immatriculé au RSAC de Quimper  sous le numéro 539653410",
-   "prix": 8700.0,
-   "surface_m2": 11575.0,
-   "prix_m2": 0.75,
-   "departement": "37",
-   "commune": "Huismes",
-   "code_insee": "37118",
-   "code_postal": "37420",
-   "lat": 47.23663797312544,
-   "lon": 0.24845084757296756,
-   "precision_geo": "approx",
-   "ref_cadastrale": null,
-   "typologie": "bois",
-   "mode_vente": "gre_a_gre",
-   "photo_url": "https://file.bienici.com/photo/safti-1-1699666_cdn.safti.fr_bien-photo_61_99_1699666_ebed5f851babd1f5947254107c5558988d4879f0_rg.jpg",
-   "date_publication": "1970-01-01",
-   "premiere_vue": "2026-10-14T08:53:52+00:00",
-   "derniere_vue": "2026-10-14T08:53:52+00:00",
-   "prix_initial": 8700.0,
-   "historique_prix": [
-    {
-     "date": "2026-10-14",
-     "prix": 8700.0
-    }
-   ],
-   "score": 48.0,
-   "s_decote": 0.0,
-   "s_mutation": 25.2,
-   "s_acces": 19.0,
-   "s_rarete": 3.8,
-   "confiance": "moyenne",
-   "explications": [
-    "Décote : 0.75 €/m² contre une médiane DVF de 0.15 €/m² (commune, 37 ventes) soit 501 % du marché.",
-    "Mutation : en zone UBb (constructible) mais vendu comme bois — à vérifier au règlement.",
-    "Mutation : position approximative (rayon de quelques centaines de mètres), facteur atténué.",
-    "Accès : voie publique (route à 1 chaussée) à 13 m.",
-    "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
-    "Contraintes : PPRi sur la commune.",
-    "Rareté : Tours à 37 km."
-   ],
-   "alertes": [
-    {
-     "code": "non_constructible",
-     "libelle": "Annoncé non constructible"
-    }
-   ],
-   "urbanisme": {
-    "parcelle_idu": "371180000E0946",
-    "section": "0E",
-    "contenance_m2": 4880.0,
-    "zone_plu": "UBb",
-    "type_zone": "U",
-    "doc_urbanisme": "PLUI",
-    "dist_zone_u_m": 0.0,
-    "dist_zone_au_m": 321.0,
-    "oap_proche_m": 93,
-    "prescriptions": [
-     "Élément de paysage / patrimoine protégé"
-    ],
-    "servitudes": [
-     "Abords de monument historique"
-    ]
-   },
-   "environnement": {
-    "natura2000": 0,
-    "znieff": 0,
-    "ppr_inondation": [
-     "PPRI - Vals de Bréhémont - Langeais",
-     "PPRI - Vals de Bréhémont - Langeais (révision)"
-    ],
-    "azi": [
-     "Vallée de la Loire"
-    ],
-    "risques_commune": [
-     "Inondation",
-     "Mouvement de terrain",
-     "Séisme",
-     "Rupture de barrage"
-    ],
-    "dist_littoral_km": null,
-    "agglo_proche": "Tours",
-    "dist_agglo_km": 37.3,
-    "dist_route_m": 13.0,
-    "nature_route": "Route à 1 chaussée"
-   },
-   "dvf": {
-    "niveau": "commune",
-    "n": 37,
-    "p25_m2": 0.12,
-    "mediane_m2": 0.15,
-    "p75_m2": 0.26,
-    "ventes": [
-     {
-      "id_mutation": "2025-492184",
-      "code_insee": "37118",
-      "date": "2025-12-23",
-      "valeur": 783.0,
-      "surface_m2": 6285.0,
-      "prix_m2": 0.125,
-      "typologie": "bois",
-      "nature": "peupleraies,terres",
-      "section": "0A",
-      "id_parcelle": "371180000A0508",
-      "lat": 47.250805,
-      "lon": 0.269548
-     },
-     {
-      "id_mutation": "2025-492201",
-      "code_insee": "37118",
-      "date": "2025-12-23",
-      "valeur": 2005.0,
-      "surface_m2": 14205.0,
-      "prix_m2": 0.141,
-      "typologie": "bois",
-      "nature": "prÃ©s,taillis simples",
-      "section": "0A",
-      "id_parcelle": "371180000A0426",
-      "lat": 47.254931,
-      "lon": 0.275179
-     },
-     {
-      "id_mutation": "2025-491409",
-      "code_insee": "37118",
-      "date": "2025-12-11",
-      "valeur": 700.0,
-      "surface_m2": 9740.0,
-      "prix_m2": 0.072,
-      "typologie": "bois",
-      "nature": "peupleraies,taillis simples",
-      "section": "0A",
-      "id_parcelle": "371180000A0604",
-      "lat": 47.247395,
-      "lon": 0.271928
-     },
-     {
-      "id_mutation": "2025-491476",
-      "code_insee": "37118",
-      "date": "2025-11-27",
-      "valeur": 1615.0,
-      "surface_m2": 8995.0,
-      "prix_m2": 0.18,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "0B",
-      "id_parcelle": "371180000B0183",
-      "lat": 47.239846,
-      "lon": 0.261169
-     },
-     {
-      "id_mutation": "2025-490887",
-      "code_insee": "37118",
-      "date": "2025-11-20",
-      "valeur": 1050.0,
-      "surface_m2": 4220.0,
-      "prix_m2": 0.249,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "0F",
-      "id_parcelle": "371180000F0759",
-      "lat": 47.21275,
-      "lon": 0.22419
-     },
-     {
-      "id_mutation": "2025-490074",
-      "code_insee": "37118",
-      "date": "2025-10-27",
-      "valeur": 780.0,
-      "surface_m2": 6750.0,
-      "prix_m2": 0.116,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "0B",
-      "id_parcelle": "371180000B0184",
-      "lat": 47.239653,
-      "lon": 0.26091
-     },
-     {
-      "id_mutation": "2025-490079",
-      "code_insee": "37118",
-      "date": "2025-10-27",
-      "valeur": 1387.0,
-      "surface_m2": 5185.0,
-      "prix_m2": 0.268,
-      "typologie": "bois",
-      "nature": "futaies feuillues,taillis simples",
-      "section": "0D",
-      "id_parcelle": "371180000D0695",
-      "lat": 47.22253,
-      "lon": 0.247306
-     },
-     {
-      "id_mutation": "2025-488947",
-      "code_insee": "37118",
-      "date": "2025-10-07",
-      "valeur": 3957.0,
-      "surface_m2": 25955.0,
-      "prix_m2": 0.152,
-      "typologie": "bois",
-      "nature": "peupleraies",
-      "section": "0A",
-      "id_parcelle": "371180000A0643",
-      "lat": 47.248029,
-      "lon": 0.259997
-     },
-     {
-      "id_mutation": "2025-486128",
-      "code_insee": "37118",
-      "date": "2025-07-22",
-      "valeur": 500.0,
-      "surface_m2": 8850.0,
-      "prix_m2": 0.056,
-      "typologie": "bois",
-      "nature": "peupleraies",
-      "section": "0E",
-      "id_parcelle": "371180000E0572",
-      "lat": 47.226867,
-      "lon": 0.229184
-     },
-     {
-      "id_mutation": "2025-482820",
-      "code_insee": "37118",
-      "date": "2025-04-15",
-      "valeur": 2800.0,
-      "surface_m2": 6915.0,
-      "prix_m2": 0.405,
-      "typologie": "bois",
-      "nature": "taillis simples",
-      "section": "0D",
-      "id_parcelle": "371180000D0935",
-      "lat": 47.223039,
-      "lon": 0.232246
-     }
-    ]
-   },
-   "erreurs_enrichissement": [],
-   "note": "",
-   "suivi": "",
-   "favori": false,
-   "adresse_saisie": "",
-   "contact": {
-    "type": "pro",
-    "nom": null,
-    "agence": "SAFTI - Monsieur Bruno GRUSON",
-    "telephone": "06 60 90 52 26",
-    "email": null,
-    "adresse": "29100 DOUARNENEZ",
-    "site": "https://bareme.safti.fr/",
-    "frais_charge": "seller"
-   },
-   "honoraires": {
-    "pct": null,
-    "montant": null,
-    "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": null
    }
   },
   {
@@ -5477,14 +5045,14 @@
    }
   },
   {
-   "id": "bienici:immo-facile-61352863",
+   "id": "bienici:immo-facile-61358258",
    "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/immo-facile-61352863",
-   "titre": "TERRAIN BOISÉ EN BORD DE SEVRE  1 241 m²",
-   "description": "Nouveauté ! Amoureux de nature, de calme et de coins préservés, ce terrain est fait pour vous !<br>Situé en bordure de la Sèvre, découvrez ce terrain d'une forme allongée entièrement boisé d'une superficie de 1 241 m², offrant un cadre naturel et paisible au bord de l'eau.<br>Un véritable coin de fraîcheur, idéal pour profiter des beaux jours, organiser un pique-nique, pêcher, se détendre au bord de la rivière ou simplement profiter de la nature.<br>Le terrain est accessible UNIQUEMENT à pied, par un chemin d'environ 200 mètres, ce qui contribue à préserver la tranquillité des lieux.<br>Terrain classé en zone NSI du PLU.<br>Un petit coin de nature au bord de la Sèvre, parfait pour s'évader et profiter d'un environnement verdoyant.",
-   "prix": 4500.0,
-   "surface_m2": 1241.0,
-   "prix_m2": 3.63,
+   "url": "https://www.bienici.com/annonce/vente/immo-facile-61358258",
+   "titre": "TERRAIN DE LOISIRS BOISÉ EN BORD DE MAINE  1 337 m²",
+   "description": "Terrain en pente boisé situé à proximité immédiate d'un village découvrez ce terrain de loisirs boisé d'une superficie de 1337 m². Idéal pour profiter des beaux jours, organiser un pique-nique, <br>Le terrain est accessible uniquement à pied,<br>Terrain classé en zone NS du PLU.<br>",
+   "prix": 3000.0,
+   "surface_m2": 1337.0,
+   "prix_m2": 2.24,
    "departement": "44",
    "commune": "Saint-Fiacre-sur-Maine",
    "code_insee": "44159",
@@ -5495,32 +5063,42 @@
    "ref_cadastrale": null,
    "typologie": "bois",
    "mode_vente": "gre_a_gre",
-   "photo_url": "https://file.bienici.com/photo/immo-facile-61352863_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_6_1_3_5_2_8_6_3_61352863a.jpg_DATEMAJ_17_08_2026-22_46_03",
-   "date_publication": "2026-08-17",
+   "photo_url": "https://file.bienici.com/photo/immo-facile-61358258_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_6_1_3_5_8_2_5_8_61358258a.jpg_DATEMAJ_17_08_2026-22_57_24",
+   "date_publication": "2026-08-18",
    "premiere_vue": "2026-10-14T08:53:46+00:00",
    "derniere_vue": "2026-10-14T08:53:46+00:00",
-   "prix_initial": 4500.0,
+   "prix_initial": 3000.0,
    "historique_prix": [
     {
      "date": "2026-10-14",
-     "prix": 4500.0
+     "prix": 3000.0
     }
    ],
-   "score": 46.7,
-   "s_decote": 9.1,
-   "s_mutation": 10.5,
-   "s_acces": 15.0,
+   "score": 47.3,
+   "s_decote": 19.0,
+   "s_mutation": 5.2,
+   "s_acces": 11.0,
    "s_rarete": 12.1,
    "confiance": "faible",
    "explications": [
-    "Décote : 3.63 €/m² contre une médiane DVF de 2.80 €/m² (commune, 7 ventes) soit 130 % du marché.",
-    "Mutation : position connue à la commune seulement, facteur neutre (localiser la parcelle pour affiner).",
+    "Décote : 2.24 €/m² contre une médiane DVF de 2.80 €/m² (commune, 7 ventes) soit 80 % du marché.",
+    "Mutation : zone NS annoncée par le vendeur, position connue à la commune seulement (distance aux zones constructibles inconnue).",
     "Accès : distance à la voie inconnue.",
     "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
-    "Contraintes : PPRi sur la commune.",
+    "Contraintes : PPRi sur la commune, accès à pied uniquement.",
     "Rareté : Nantes à 14 km."
    ],
-   "alertes": [],
+   "alertes": [
+    {
+     "code": "acces_pied",
+     "libelle": "Accès à pied uniquement (pas d'accès véhicule)"
+    },
+    {
+     "code": "zone_annoncee",
+     "libelle": "Zone Ns annoncée au PLU",
+     "zone": "NS"
+    }
+   ],
    "urbanisme": {
     "parcelle_idu": null,
     "section": null,
@@ -5689,7 +5267,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": "Barème ABL (terrains) : 10 % TTC, minimum 5 000 € TTC",
+    "site_bareme": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
    }
   },
   {
@@ -5951,7 +5531,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": "https://bareme.safti.fr/"
    }
   },
   {
@@ -6207,7 +5789,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": "https://bareme.safti.fr/"
    }
   },
   {
@@ -6651,7 +6235,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": "Barème IAD : jusqu'à 10 000 € TTC pour un prix inférieur à 20 000 €",
+    "site_bareme": "https://bareme.iadfrance.fr/detail/23238"
    }
   },
   {
@@ -6746,6 +6332,269 @@
     "frais_charge": "purchaser"
    },
    "honoraires": null
+  },
+  {
+   "id": "bienici:safti-1-1699666",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/safti-1-1699666",
+   "titre": "2 parcelles de bois",
+   "description": "TERRAINS NON CONSTRUCTIBLE <br> <br>E484 en zone A  <br>                                     <br>B153 en zone  Nf<br> <br>Les informations sur les risques auxquels ce bien est exposé sont disponibles sur le site Géorisques : www.georisques.gouv.fr<br>Prix de vente : 8 700 €<br>Honoraires charge vendeur<br> <br>Contactez votre conseiller SAFTI : Bruno GRUSON, Tél. : <span class=\"importDescriptionDecorator\" data-type=\"phone\">06 60 90 52 26</span>, E-mail : <span class=\"importDescriptionDecorator\" data-type=\"email\">bruno.gruson@safti.fr</span> - EI - Agent commercial immatriculé au RSAC de Quimper  sous le numéro 539653410",
+   "prix": 8700.0,
+   "surface_m2": 11575.0,
+   "prix_m2": 0.75,
+   "departement": "37",
+   "commune": "Huismes",
+   "code_insee": "37118",
+   "code_postal": "37420",
+   "lat": 47.23663797312544,
+   "lon": 0.24845084757296756,
+   "precision_geo": "approx",
+   "ref_cadastrale": null,
+   "typologie": "bois",
+   "mode_vente": "gre_a_gre",
+   "photo_url": "https://file.bienici.com/photo/safti-1-1699666_cdn.safti.fr_bien-photo_61_99_1699666_ebed5f851babd1f5947254107c5558988d4879f0_rg.jpg",
+   "date_publication": "1970-01-01",
+   "premiere_vue": "2026-10-14T08:53:52+00:00",
+   "derniere_vue": "2026-10-14T08:53:52+00:00",
+   "prix_initial": 8700.0,
+   "historique_prix": [
+    {
+     "date": "2026-10-14",
+     "prix": 8700.0
+    }
+   ],
+   "score": 39.6,
+   "s_decote": 0.0,
+   "s_mutation": 16.8,
+   "s_acces": 19.0,
+   "s_rarete": 3.8,
+   "confiance": "moyenne",
+   "explications": [
+    "Décote : 0.75 €/m² contre une médiane DVF de 0.15 €/m² (commune, 37 ventes) soit 501 % du marché.",
+    "Mutation : le point approché tombe en zone UBb, mais l'annonce indique un terrain non constructible : terrain probablement en limite de zone urbanisée.",
+    "Mutation : position approximative (rayon de quelques centaines de mètres), facteur atténué.",
+    "Accès : voie publique (route à 1 chaussée) à 13 m.",
+    "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
+    "Contraintes : PPRi sur la commune.",
+    "Rareté : Tours à 37 km."
+   ],
+   "alertes": [
+    {
+     "code": "non_constructible",
+     "libelle": "Annoncé non constructible"
+    }
+   ],
+   "urbanisme": {
+    "parcelle_idu": "371180000E0946",
+    "section": "0E",
+    "contenance_m2": 4880.0,
+    "zone_plu": "UBb",
+    "type_zone": "U",
+    "doc_urbanisme": "PLUI",
+    "dist_zone_u_m": 0.0,
+    "dist_zone_au_m": 321.0,
+    "oap_proche_m": 93,
+    "prescriptions": [
+     "Élément de paysage / patrimoine protégé"
+    ],
+    "servitudes": [
+     "Abords de monument historique"
+    ]
+   },
+   "environnement": {
+    "natura2000": 0,
+    "znieff": 0,
+    "ppr_inondation": [
+     "PPRI - Vals de Bréhémont - Langeais",
+     "PPRI - Vals de Bréhémont - Langeais (révision)"
+    ],
+    "azi": [
+     "Vallée de la Loire"
+    ],
+    "risques_commune": [
+     "Inondation",
+     "Mouvement de terrain",
+     "Séisme",
+     "Rupture de barrage"
+    ],
+    "dist_littoral_km": null,
+    "agglo_proche": "Tours",
+    "dist_agglo_km": 37.3,
+    "dist_route_m": 13.0,
+    "nature_route": "Route à 1 chaussée"
+   },
+   "dvf": {
+    "niveau": "commune",
+    "n": 37,
+    "p25_m2": 0.12,
+    "mediane_m2": 0.15,
+    "p75_m2": 0.26,
+    "ventes": [
+     {
+      "id_mutation": "2025-492184",
+      "code_insee": "37118",
+      "date": "2025-12-23",
+      "valeur": 783.0,
+      "surface_m2": 6285.0,
+      "prix_m2": 0.125,
+      "typologie": "bois",
+      "nature": "peupleraies,terres",
+      "section": "0A",
+      "id_parcelle": "371180000A0508",
+      "lat": 47.250805,
+      "lon": 0.269548
+     },
+     {
+      "id_mutation": "2025-492201",
+      "code_insee": "37118",
+      "date": "2025-12-23",
+      "valeur": 2005.0,
+      "surface_m2": 14205.0,
+      "prix_m2": 0.141,
+      "typologie": "bois",
+      "nature": "prÃ©s,taillis simples",
+      "section": "0A",
+      "id_parcelle": "371180000A0426",
+      "lat": 47.254931,
+      "lon": 0.275179
+     },
+     {
+      "id_mutation": "2025-491409",
+      "code_insee": "37118",
+      "date": "2025-12-11",
+      "valeur": 700.0,
+      "surface_m2": 9740.0,
+      "prix_m2": 0.072,
+      "typologie": "bois",
+      "nature": "peupleraies,taillis simples",
+      "section": "0A",
+      "id_parcelle": "371180000A0604",
+      "lat": 47.247395,
+      "lon": 0.271928
+     },
+     {
+      "id_mutation": "2025-491476",
+      "code_insee": "37118",
+      "date": "2025-11-27",
+      "valeur": 1615.0,
+      "surface_m2": 8995.0,
+      "prix_m2": 0.18,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "0B",
+      "id_parcelle": "371180000B0183",
+      "lat": 47.239846,
+      "lon": 0.261169
+     },
+     {
+      "id_mutation": "2025-490887",
+      "code_insee": "37118",
+      "date": "2025-11-20",
+      "valeur": 1050.0,
+      "surface_m2": 4220.0,
+      "prix_m2": 0.249,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "0F",
+      "id_parcelle": "371180000F0759",
+      "lat": 47.21275,
+      "lon": 0.22419
+     },
+     {
+      "id_mutation": "2025-490074",
+      "code_insee": "37118",
+      "date": "2025-10-27",
+      "valeur": 780.0,
+      "surface_m2": 6750.0,
+      "prix_m2": 0.116,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "0B",
+      "id_parcelle": "371180000B0184",
+      "lat": 47.239653,
+      "lon": 0.26091
+     },
+     {
+      "id_mutation": "2025-490079",
+      "code_insee": "37118",
+      "date": "2025-10-27",
+      "valeur": 1387.0,
+      "surface_m2": 5185.0,
+      "prix_m2": 0.268,
+      "typologie": "bois",
+      "nature": "futaies feuillues,taillis simples",
+      "section": "0D",
+      "id_parcelle": "371180000D0695",
+      "lat": 47.22253,
+      "lon": 0.247306
+     },
+     {
+      "id_mutation": "2025-488947",
+      "code_insee": "37118",
+      "date": "2025-10-07",
+      "valeur": 3957.0,
+      "surface_m2": 25955.0,
+      "prix_m2": 0.152,
+      "typologie": "bois",
+      "nature": "peupleraies",
+      "section": "0A",
+      "id_parcelle": "371180000A0643",
+      "lat": 47.248029,
+      "lon": 0.259997
+     },
+     {
+      "id_mutation": "2025-486128",
+      "code_insee": "37118",
+      "date": "2025-07-22",
+      "valeur": 500.0,
+      "surface_m2": 8850.0,
+      "prix_m2": 0.056,
+      "typologie": "bois",
+      "nature": "peupleraies",
+      "section": "0E",
+      "id_parcelle": "371180000E0572",
+      "lat": 47.226867,
+      "lon": 0.229184
+     },
+     {
+      "id_mutation": "2025-482820",
+      "code_insee": "37118",
+      "date": "2025-04-15",
+      "valeur": 2800.0,
+      "surface_m2": 6915.0,
+      "prix_m2": 0.405,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "0D",
+      "id_parcelle": "371180000D0935",
+      "lat": 47.223039,
+      "lon": 0.232246
+     }
+    ]
+   },
+   "erreurs_enrichissement": [],
+   "note": "",
+   "suivi": "",
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "SAFTI - Monsieur Bruno GRUSON",
+    "telephone": "06 60 90 52 26",
+    "email": null,
+    "adresse": "29100 DOUARNENEZ",
+    "site": "https://bareme.safti.fr/",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": "https://bareme.safti.fr/"
+   }
   },
   {
    "id": "paruvendu:1286061218A1KIVHTE000",
@@ -7687,52 +7536,67 @@
    }
   },
   {
-   "id": "notaires:1892059",
-   "source": "notaires",
-   "url": "https://www.immobilier.notaires.fr/fr/annonce-immo/vente/terrain/st-etienne-de-mer-morte-44/1892059",
-   "titre": "Terrain 1315 m² – Saint-Étienne-de-Mer-Morte",
-   "description": "SAINT ETIENNE DE MER MORTE, Terrain non constructible - Dans un environnement très reposant, parcelle de taillis en zone naturelle donc non constructible d'une surface de 1315 m².Les informations...",
-   "prix": 7800.0,
-   "surface_m2": 1315.0,
-   "prix_m2": 5.93,
+   "id": "bienici:immo-facile-61352863",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/immo-facile-61352863",
+   "titre": "TERRAIN BOISÉ EN BORD DE SEVRE  1 241 m²",
+   "description": "Nouveauté ! Amoureux de nature, de calme et de coins préservés, ce terrain est fait pour vous !<br>Situé en bordure de la Sèvre, découvrez ce terrain d'une forme allongée entièrement boisé d'une superficie de 1 241 m², offrant un cadre naturel et paisible au bord de l'eau.<br>Un véritable coin de fraîcheur, idéal pour profiter des beaux jours, organiser un pique-nique, pêcher, se détendre au bord de la rivière ou simplement profiter de la nature.<br>Le terrain est accessible UNIQUEMENT à pied, par un chemin d'environ 200 mètres, ce qui contribue à préserver la tranquillité des lieux.<br>Terrain classé en zone NSI du PLU.<br>Un petit coin de nature au bord de la Sèvre, parfait pour s'évader et profiter d'un environnement verdoyant.",
+   "prix": 4500.0,
+   "surface_m2": 1241.0,
+   "prix_m2": 3.63,
    "departement": "44",
-   "commune": "Saint-Étienne-de-Mer-Morte",
-   "code_insee": "44157",
-   "code_postal": "44270",
-   "lat": 46.94543560478351,
-   "lon": -1.7184002075390572,
+   "commune": "Saint-Fiacre-sur-Maine",
+   "code_insee": "44159",
+   "code_postal": "44690",
+   "lat": 47.141533548155394,
+   "lon": -1.4103869225086694,
    "precision_geo": "commune",
    "ref_cadastrale": null,
    "typologie": "bois",
    "mode_vente": "gre_a_gre",
-   "photo_url": "https://media.immobilier.notaires.fr/inotr/media/7/44037/1892059/912afcd1_VGA.jpg",
-   "date_publication": "2026-01-21",
-   "premiere_vue": "2026-10-14T08:53:35+00:00",
-   "derniere_vue": "2026-10-14T08:53:35+00:00",
-   "prix_initial": 7800.0,
+   "photo_url": "https://file.bienici.com/photo/immo-facile-61352863_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_6_1_3_5_2_8_6_3_61352863a.jpg_DATEMAJ_17_08_2026-22_46_03",
+   "date_publication": "2026-08-17",
+   "premiere_vue": "2026-10-14T08:53:46+00:00",
+   "derniere_vue": "2026-10-14T08:53:46+00:00",
+   "prix_initial": 4500.0,
    "historique_prix": [
     {
      "date": "2026-10-14",
-     "prix": 7800.0
+     "prix": 4500.0
     }
    ],
-   "score": 30.9,
-   "s_decote": 0.0,
-   "s_mutation": 10.5,
-   "s_acces": 12.0,
-   "s_rarete": 8.4,
+   "score": 31.8,
+   "s_decote": 9.1,
+   "s_mutation": 1.6,
+   "s_acces": 9.0,
+   "s_rarete": 12.1,
    "confiance": "faible",
    "explications": [
-    "Décote : 5.93 €/m² contre une médiane DVF de 0.51 €/m² (département, 25 ventes) soit 1163 % du marché.",
-    "Mutation : position connue à la commune seulement, facteur neutre (localiser la parcelle pour affiner).",
+    "Décote : 3.63 €/m² contre une médiane DVF de 2.80 €/m² (commune, 7 ventes) soit 130 % du marché.",
+    "Mutation : zone NSI annoncée par le vendeur, position connue à la commune seulement (distance aux zones constructibles inconnue).",
+    "Mutation freinée : zone inondable signalée par l'annonce.",
     "Accès : distance à la voie inconnue.",
-    "Rareté : littoral à 23 km.",
-    "Rareté : Challans à 16 km."
+    "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
+    "Contraintes : PPRi sur la commune, zone inondable mentionnée, accès à pied uniquement.",
+    "Rareté : Nantes à 14 km."
    ],
    "alertes": [
     {
-     "code": "non_constructible",
-     "libelle": "Annoncé non constructible"
+     "code": "bord_eau",
+     "libelle": "En bord de cours d'eau : souvent en zone inondable"
+    },
+    {
+     "code": "acces_pied",
+     "libelle": "Accès à pied uniquement (pas d'accès véhicule)"
+    },
+    {
+     "code": "zone_annoncee",
+     "libelle": "Zone Nsi annoncée au PLU",
+     "zone": "NSI"
+    },
+    {
+     "code": "inondable",
+     "libelle": "Zone Nsi : indice « i » du PLU, secteur inondable"
     }
    ],
    "urbanisme": {
@@ -7742,19 +7606,20 @@
     "zone_plu": null,
     "type_zone": null,
     "doc_urbanisme": null,
-    "dist_zone_u_m": 1122.0,
-    "dist_zone_au_m": null,
-    "oap_proche_m": null,
+    "dist_zone_u_m": 25.0,
+    "dist_zone_au_m": 291.0,
+    "oap_proche_m": 341,
     "prescriptions": [],
     "servitudes": []
    },
    "environnement": {
     "natura2000": null,
     "znieff": null,
-    "ppr_inondation": [],
-    "azi": [
-     "Atlas des zones inondables des fleuves côtiers"
+    "ppr_inondation": [
+     "PPRi-Sèvre Nantaise",
+     "PPRi-Sèvre nantaise 44 révision"
     ],
+    "azi": [],
     "risques_commune": [
      "Inondation",
      "Par une crue à débordement lent de cours d'eau",
@@ -7768,48 +7633,118 @@
      "Foudre",
      "Grêle",
      "Neige et pluies verglaçantes",
-     "Radon"
+     "Rupture de barrage"
     ],
-    "dist_littoral_km": 23.3,
-    "agglo_proche": "Challans",
-    "dist_agglo_km": 16.4,
+    "dist_littoral_km": 45.4,
+    "agglo_proche": "Nantes",
+    "dist_agglo_km": 13.8,
     "dist_route_m": null,
     "nature_route": null
    },
    "dvf": {
-    "niveau": "departement",
-    "n": 25,
-    "p25_m2": 0.32,
-    "mediane_m2": 0.51,
-    "p75_m2": 2.19,
+    "niveau": "commune",
+    "n": 7,
+    "p25_m2": 1.2,
+    "mediane_m2": 2.8,
+    "p75_m2": 8.01,
     "ventes": [
      {
-      "id_mutation": "2024-543774",
-      "code_insee": "44157",
-      "date": "2024-09-13",
-      "valeur": 1900.0,
-      "surface_m2": 1315.0,
-      "prix_m2": 1.445,
+      "id_mutation": "2024-545042",
+      "code_insee": "44159",
+      "date": "2024-10-08",
+      "valeur": 5000.0,
+      "surface_m2": 485.0,
+      "prix_m2": 10.309,
       "typologie": "bois",
       "nature": "taillis simples",
-      "section": "AB",
-      "id_parcelle": "44157000AB0161",
-      "lat": 46.928779,
-      "lon": -1.745179
+      "section": "0C",
+      "id_parcelle": "441590000C0101",
+      "lat": 47.145851,
+      "lon": -1.398143
      },
      {
-      "id_mutation": "2022-757329",
-      "code_insee": "44157",
-      "date": "2022-12-30",
+      "id_mutation": "2022-733335",
+      "code_insee": "44159",
+      "date": "2022-02-02",
       "valeur": 500.0,
-      "surface_m2": 1840.0,
-      "prix_m2": 0.272,
+      "surface_m2": 357.0,
+      "prix_m2": 1.401,
       "typologie": "bois",
       "nature": "taillis simples",
-      "section": "ZX",
-      "id_parcelle": "44157000ZX0035",
-      "lat": 46.931843,
-      "lon": -1.736583
+      "section": "0C",
+      "id_parcelle": "441590000C0489",
+      "lat": 47.142023,
+      "lon": -1.395595
+     },
+     {
+      "id_mutation": "2022-734287",
+      "code_insee": "44159",
+      "date": "2022-02-02",
+      "valeur": 120.0,
+      "surface_m2": 150.0,
+      "prix_m2": 0.8,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "0C",
+      "id_parcelle": "441590000C0485",
+      "lat": 47.14196,
+      "lon": -1.395509
+     },
+     {
+      "id_mutation": "2021-769819",
+      "code_insee": "44159",
+      "date": "2021-12-21",
+      "valeur": 1250.0,
+      "surface_m2": 447.0,
+      "prix_m2": 2.796,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "0C",
+      "id_parcelle": "441590000C0406",
+      "lat": 47.141647,
+      "lon": -1.396464
+     },
+     {
+      "id_mutation": "2021-769837",
+      "code_insee": "44159",
+      "date": "2021-12-21",
+      "valeur": 1600.0,
+      "surface_m2": 280.0,
+      "prix_m2": 5.714,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "0C",
+      "id_parcelle": "441590000C0415",
+      "lat": 47.141628,
+      "lon": -1.397109
+     },
+     {
+      "id_mutation": "2021-761391",
+      "code_insee": "44159",
+      "date": "2021-09-01",
+      "valeur": 300.0,
+      "surface_m2": 303.0,
+      "prix_m2": 0.99,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "0B",
+      "id_parcelle": "441590000B0113",
+      "lat": 47.151902,
+      "lon": -1.411
+     },
+     {
+      "id_mutation": "2021-750287",
+      "code_insee": "44159",
+      "date": "2021-04-01",
+      "valeur": 6000.0,
+      "surface_m2": 140.0,
+      "prix_m2": 42.857,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "0C",
+      "id_parcelle": "441590000C1013",
+      "lat": 47.13362,
+      "lon": -1.398348
      }
     ]
    },
@@ -7819,19 +7754,22 @@
    "favori": false,
    "adresse_saisie": "",
    "contact": {
-    "type": "notaire",
-    "nom": "Florence BIARD",
-    "agence": "Office notarial (CRPCEN 44037)",
-    "telephone": "02 40 78 57 44",
-    "email": "florence.biard.44037@notaires.fr",
-    "adresse": "Place de la Gare, 44270 MACHECOUL-SAINT MEME",
-    "site": null
+    "type": "pro",
+    "nom": null,
+    "agence": "ABL Immobilier",
+    "telephone": "02 40 03 84 29",
+    "email": null,
+    "adresse": "44140 Aigrefeuille sur Maine",
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
+    "frais_charge": "seller"
    },
    "honoraires": {
-    "pct": 62.5,
-    "montant": 3000.0,
-    "net": 4800.0,
-    "charge": "acquereur"
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur",
+    "bareme": "Barème ABL (terrains) : 10 % TTC, minimum 5 000 € TTC",
+    "site_bareme": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
    }
   },
   {
@@ -7881,6 +7819,11 @@
     {
      "code": "non_constructible",
      "libelle": "Annoncé non constructible"
+    },
+    {
+     "code": "zone_annoncee",
+     "libelle": "Zone N annoncée au PLU",
+     "zone": "N"
     }
    ],
    "urbanisme": {
@@ -8092,7 +8035,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": "Barème IAD : jusqu'à 10 000 € TTC pour un prix inférieur à 20 000 €",
+    "site_bareme": "https://bareme.iadfrance.fr/detail/79900"
    }
   },
   {
@@ -8278,7 +8223,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": "https://bareme.safti.fr/"
    }
   },
   {
@@ -8732,7 +8679,162 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": "Barème Square Habitat : 4 000 € TTC jusqu'à 19 999 €",
+    "site_bareme": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/372650.pdf"
+   }
+  },
+  {
+   "id": "notaires:1892059",
+   "source": "notaires",
+   "url": "https://www.immobilier.notaires.fr/fr/annonce-immo/vente/terrain/st-etienne-de-mer-morte-44/1892059",
+   "titre": "Terrain 1315 m² – Saint-Étienne-de-Mer-Morte",
+   "description": "SAINT ETIENNE DE MER MORTE, Terrain non constructible - Dans un environnement très reposant, parcelle de taillis en zone naturelle donc non constructible d'une surface de 1315 m².Les informations...",
+   "prix": 7800.0,
+   "surface_m2": 1315.0,
+   "prix_m2": 5.93,
+   "departement": "44",
+   "commune": "Saint-Étienne-de-Mer-Morte",
+   "code_insee": "44157",
+   "code_postal": "44270",
+   "lat": 46.94543560478351,
+   "lon": -1.7184002075390572,
+   "precision_geo": "commune",
+   "ref_cadastrale": null,
+   "typologie": "bois",
+   "mode_vente": "gre_a_gre",
+   "photo_url": "https://media.immobilier.notaires.fr/inotr/media/7/44037/1892059/912afcd1_VGA.jpg",
+   "date_publication": "2026-01-21",
+   "premiere_vue": "2026-10-14T08:53:35+00:00",
+   "derniere_vue": "2026-10-14T08:53:35+00:00",
+   "prix_initial": 7800.0,
+   "historique_prix": [
+    {
+     "date": "2026-10-14",
+     "prix": 7800.0
+    }
+   ],
+   "score": 25.6,
+   "s_decote": 0.0,
+   "s_mutation": 5.2,
+   "s_acces": 12.0,
+   "s_rarete": 8.4,
+   "confiance": "faible",
+   "explications": [
+    "Décote : 5.93 €/m² contre une médiane DVF de 0.51 €/m² (département, 25 ventes) soit 1163 % du marché.",
+    "Mutation : zone N annoncée par le vendeur, position connue à la commune seulement (distance aux zones constructibles inconnue).",
+    "Accès : distance à la voie inconnue.",
+    "Rareté : littoral à 23 km.",
+    "Rareté : Challans à 16 km."
+   ],
+   "alertes": [
+    {
+     "code": "non_constructible",
+     "libelle": "Annoncé non constructible"
+    },
+    {
+     "code": "zone_annoncee",
+     "libelle": "Zone N annoncée au PLU",
+     "zone": "N"
+    }
+   ],
+   "urbanisme": {
+    "parcelle_idu": null,
+    "section": null,
+    "contenance_m2": null,
+    "zone_plu": null,
+    "type_zone": null,
+    "doc_urbanisme": null,
+    "dist_zone_u_m": 1122.0,
+    "dist_zone_au_m": null,
+    "oap_proche_m": null,
+    "prescriptions": [],
+    "servitudes": []
+   },
+   "environnement": {
+    "natura2000": null,
+    "znieff": null,
+    "ppr_inondation": [],
+    "azi": [
+     "Atlas des zones inondables des fleuves côtiers"
+    ],
+    "risques_commune": [
+     "Inondation",
+     "Par une crue à débordement lent de cours d'eau",
+     "Par ruissellement et coulée de boue",
+     "Par remontées de nappes naturelles",
+     "Mouvement de terrain",
+     "Tassements différentiels",
+     "Séisme",
+     "Phénomène lié à l'atmosphère",
+     "Tempête et grains (vent)",
+     "Foudre",
+     "Grêle",
+     "Neige et pluies verglaçantes",
+     "Radon"
+    ],
+    "dist_littoral_km": 23.3,
+    "agglo_proche": "Challans",
+    "dist_agglo_km": 16.4,
+    "dist_route_m": null,
+    "nature_route": null
+   },
+   "dvf": {
+    "niveau": "departement",
+    "n": 25,
+    "p25_m2": 0.32,
+    "mediane_m2": 0.51,
+    "p75_m2": 2.19,
+    "ventes": [
+     {
+      "id_mutation": "2024-543774",
+      "code_insee": "44157",
+      "date": "2024-09-13",
+      "valeur": 1900.0,
+      "surface_m2": 1315.0,
+      "prix_m2": 1.445,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "AB",
+      "id_parcelle": "44157000AB0161",
+      "lat": 46.928779,
+      "lon": -1.745179
+     },
+     {
+      "id_mutation": "2022-757329",
+      "code_insee": "44157",
+      "date": "2022-12-30",
+      "valeur": 500.0,
+      "surface_m2": 1840.0,
+      "prix_m2": 0.272,
+      "typologie": "bois",
+      "nature": "taillis simples",
+      "section": "ZX",
+      "id_parcelle": "44157000ZX0035",
+      "lat": 46.931843,
+      "lon": -1.736583
+     }
+    ]
+   },
+   "erreurs_enrichissement": [],
+   "note": "",
+   "suivi": "",
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "notaire",
+    "nom": "Florence BIARD",
+    "agence": "Office notarial (CRPCEN 44037)",
+    "telephone": "02 40 78 57 44",
+    "email": "florence.biard.44037@notaires.fr",
+    "adresse": "Place de la Gare, 44270 MACHECOUL-SAINT MEME",
+    "site": null
+   },
+   "honoraires": {
+    "pct": 62.5,
+    "montant": 3000.0,
+    "net": 4800.0,
+    "charge": "acquereur"
    }
   },
   {
@@ -8984,7 +9086,9 @@
     "pct": null,
     "montant": null,
     "net": null,
-    "charge": "vendeur"
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": "https://bareme.safti.fr/"
    }
   },
   {

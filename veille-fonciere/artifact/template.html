@@ -263,8 +263,19 @@ function frais(a) {
   return { total, dmto, emol, debours: DEBOURS, csi, taux: total / a.prix, tauxDep: dep, base: p };
 }
 // Honoraires de négociation (agence ou notaire), en % du prix hors honoraires
-const negoCell = (a) => { const h = a.honoraires; if (!h) return "—"; if (h.pct != null) return `${nf0.format(h.pct)} %`; return h.charge === "vendeur" ? '<span class="small">inclus vendeur</span>' : "—"; };
-const negoTitle = (a) => { const h = a.honoraires; if (!h) return "Non précisé dans l'annonce"; if (h.pct != null) return `${eur(h.montant)} d'honoraires sur ${eur(h.net)} pour le vendeur, à la charge de ${h.charge === "vendeur" ? "du vendeur" : "l'acheteur"}`; return "Honoraires à la charge du vendeur, déjà inclus dans le prix (montant non publié)"; };
+const negoCell = (a) => { const h = a.honoraires; if (!h) return "—"; if (h.pct != null) return `${nf0.format(h.pct)} %`; return h.charge === "vendeur" ? '<span class="small">vendeur, montant non publié</span>' : "—"; };
+const negoTitle = (a) => { const h = a.honoraires; if (!h) return "Non précisé dans l'annonce"; if (h.pct != null) return `${eur(h.montant)} d'honoraires sur ${eur(h.net)} pour le vendeur, à la charge de ${h.charge === "vendeur" ? "du vendeur" : "l'acheteur"}`; return `Honoraires payés par le vendeur, déjà inclus dans le prix ; l'annonce ne donne pas leur montant.${h.bareme ? " " + h.bareme + " (plafond : le montant réel est fixé au mandat)." : ""}`; };
+// Zone PLU : celle du point quand la position est fiable, sinon celle que cite l'annonce ; drapeau si inondable
+const alerte = (a, code) => (a.alertes || []).find((x) => x.code === code);
+function zoneCell(a) {
+  const u = a.urbanisme || {};
+  const za = alerte(a, "zone_annoncee")?.zone;
+  const flood = alerte(a, "inondable") || alerte(a, "zone_rouge");
+  const tag = flood ? ' <span class="small" title="Zone inondable signalée">· inondable</span>' : "";
+  if (a.precision_geo !== "commune") return `<span class="zone"><i style="background:var(${zoneVar(u.type_zone)})"></i>${esc(u.zone_plu || u.type_zone || "—")}</span>${tag}`;
+  if (za) return `<span class="zone" title="Zone citée par l'annonce"><i style="background:var(${zoneVar(za)})"></i>${esc(za)} (annonce)</span>${tag}`;
+  return `<span class="zone" title="Position connue à la commune seulement"><i style="background:var(--z-x)"></i>?</span>${tag}`;
+}
 const ratio = (a) => a.prix_m2 && a.dvf?.mediane_m2 ? a.prix_m2 / a.dvf.mediane_m2 : null;
 const dUAU = (a) => Math.min(a.urbanisme?.dist_zone_u_m ?? 1e9, a.urbanisme?.dist_zone_au_m ?? 1e9);
 
@@ -399,7 +410,7 @@ function renderList(v) {
   if (!v.length) { el.innerHTML = `<p class="empty">Aucun terrain ne correspond aux filtres. Baissez le score minimum ou retirez un filtre.</p>`; return; }
   el.innerHTML = [...v].sort((a, b) => (b.score ?? 0) - (a.score ?? 0)).map((a) => {
     const u = a.urbanisme || {}, r = ratio(a), nt = note(a.id);
-    const zone = a.precision_geo === "commune" ? `<span class="zone"><i style="background:var(--z-x)"></i>zone ?</span>`
+    const zone = a.precision_geo === "commune" ? zoneCell(a)
       : `<span class="zone"><i style="background:var(${zoneVar(u.type_zone)})"></i>${esc(u.zone_plu || u.type_zone || "?")}</span>`;
     return `<button class="card" data-id="${esc(a.id)}" aria-current="${a.id === S.sel}">
       <span class="score-badge num" style="background:${scoreColor(a.score)};color:${inkOn(scoreColor(a.score))}">${Math.round(a.score ?? 0)}</span>
@@ -430,7 +441,7 @@ function renderTable(v) {
       <td>${esc(a.commune)}</td><td>${a.departement}</td><td>${TYPOS[a.typologie] || ""}</td><td class="r num">${eur(a.prix)}</td>
       <td class="r num" title="Droits de mutation ${eur(frais(a)?.dmto)} + notaire ${eur(frais(a)?.emol)} + débours et CSI ${eur((frais(a)?.debours ?? 0) + (frais(a)?.csi ?? 0))}">${frais(a) ? `${eur(frais(a).total)} <span class="small">(${Math.round(frais(a).taux * 100)} %)</span>` : "—"}</td>
       <td class="r num">${surf(a.surface_m2)}</td><td class="r num">${eurm2(a.prix_m2)}</td><td class="r num">${r != null ? Math.round(r * 100) + " %" : "—"}</td>
-      <td><span class="zone"><i style="background:var(${a.precision_geo === "commune" ? "--z-x" : zoneVar(u.type_zone)})"></i>${a.precision_geo === "commune" ? "?" : esc(u.zone_plu || u.type_zone || "—")}</span></td>
+      <td>${zoneCell(a)}</td>
       <td class="r num" title="${esc(negoTitle(a))}">${negoCell(a)}</td>
       <td>${SOURCES[a.source] || a.source}</td><td>${nt.suivi ? SUIVIS[nt.suivi] : "—"}</td><td class="small">${dfr(a.premiere_vue)}</td></tr>`; }).join("")
   }</tbody></table>${rows.length ? "" : '<p class="empty">Aucun terrain ne correspond aux filtres.</p>'}`;
@@ -512,7 +523,7 @@ function renderFiche() {
     </div>
     ${(() => { const f = frais(a); return f ? `<div class="sec" style="border-top:0;padding-top:0"><h3>Coût d'acquisition estimé</h3>${kv([
       ["Prix affiché", eur(a.prix)],
-      a.honoraires?.pct != null ? [`dont honoraires de négociation (${nf0.format(a.honoraires.pct)} % du net vendeur)`, eur(a.honoraires.montant)] : a.honoraires?.charge === "vendeur" ? ["Honoraires de négociation", "inclus, à la charge du vendeur"] : null,
+      a.honoraires?.pct != null ? [`dont honoraires de négociation (${nf0.format(a.honoraires.pct)} % du net vendeur)`, eur(a.honoraires.montant)] : a.honoraires?.charge === "vendeur" ? ["Honoraires de négociation", `payés par le vendeur, inclus dans le prix, montant non publié${a.honoraires.bareme ? `<br><span class="small">${esc(a.honoraires.bareme)} : plafond, le montant réel est fixé au mandat. Demandez-le à l'agent : c'est votre marge de négociation.</span>` : ""}`] : null,
       [`Droits de mutation (${nf2.format((f.tauxDep * 1.0237 + 0.012) * 100)} %, dép. ${a.departement})`, eur(f.dmto)],
       ["Émoluments et formalités du notaire", eur(f.emol)],
       ["Débours et sécurité immobilière", eur(f.debours + f.csi)],

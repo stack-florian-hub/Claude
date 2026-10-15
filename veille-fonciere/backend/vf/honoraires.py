@@ -16,6 +16,20 @@ _PCT = [
 ]
 
 
+# Barèmes publiés (honoraires maximums TTC pour les petits prix), relevés le 15/10/2026 sur les PDF des agences
+BAREMES = [
+    ("iad", "Barème IAD : jusqu'à 10 000 € TTC pour un prix inférieur à 20 000 €"),
+    ("abl immobilier", "Barème ABL (terrains) : 10 % TTC, minimum 5 000 € TTC"),
+    ("proprietes privees", "Barème Propriétés Privées : 6 000 € TTC jusqu'à 50 000 €"),
+    ("square habitat", "Barème Square Habitat : 4 000 € TTC jusqu'à 19 999 €"),
+]
+
+
+def bareme(contact):
+    nom = normaliser(f"{(contact or {}).get('agence') or ''} {(contact or {}).get('nom') or ''}")
+    return next((txt for cle, txt in BAREMES if cle in nom), None)
+
+
 def _montant_apres(t, motif):
     m = re.search(motif, t)
     if not m:
@@ -59,7 +73,8 @@ def analyser(prix, description, brut=None, contact=None):
             net = round(prix / (1 + pct / 100))
             mt = prix - net
     if charge == "vendeur" and pct is None:
-        return {"pct": None, "montant": None, "net": None, "charge": "vendeur"}
+        return {"pct": None, "montant": None, "net": None, "charge": "vendeur", "bareme": bareme(contact),
+                "site_bareme": (contact or {}).get("site")}
     if pct is None and charge is None:
         return None
     return {"pct": pct, "montant": mt, "net": net, "charge": charge or ("acquereur" if pct else None)}

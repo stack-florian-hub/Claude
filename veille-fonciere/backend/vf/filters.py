@@ -145,6 +145,8 @@ ALERTES = [
     ("zone_rouge", r"\bzone rouge\b|\bzone r\d?\b.{0,20}\bppr", "Zone rouge d'un plan de prévention des risques (inconstructible)"),
     ("inondable", r"\b(inondable|ppri|pprl|pprn|zone humide|submersible|submersion|crue)\b", "Mention de risque d'inondation / submersion / zone humide"),
     ("bail_rural", r"\b(bail rural|fermage|loue a un agriculteur|exploite par)\b", "Bail rural en cours (fermier en place, droit de préemption)"),
+    ("bord_eau", r"\b(bord de l.eau|bord(ure)? (de la |de l.|du )?(riviere|sevre|loire|vienne|cher|indre|erdre|vendee|lay|maine|thouet|layon|eau|canal|ruisseau|fleuve)|berges?|pieds dans l.eau|rives? de)\b", "En bord de cours d'eau : souvent en zone inondable"),
+    ("acces_pied", r"\b(accessible|acces)\s*(uniquement |seulement )?a pied\b", "Accès à pied uniquement (pas d'accès véhicule)"),
     ("servitude", r"\bservitude\b", "Servitude mentionnée"),
     ("ligne_ht", r"\b(ligne (a )?haute tension|pylone|tht)\b", "Ligne haute tension"),
     ("non_constructible", r"\b(non|in) ?constructible\b", "Annoncé non constructible"),
@@ -172,6 +174,15 @@ def analyser(a: Annonce):
             if reel > 0:
                 a.brut["prix_reel_detecte"] = reel
     alertes = [{"code": c, "libelle": lib} for c, rx, lib in ALERTES if re.search(rx, t)]
+    # Zone du PLU citée par l'annonce (« zone NSi du PLU ») : l'indice « i » signale une zone inondable
+    m = re.search(r"\bzone\s+([a-z]{1,3}[a-z0-9]{0,4})\s+(?:du|au|de son)\s+plu", t)
+    z = m.group(1).upper() if m and not re.fullmatch(r"(de|du|la|le|les|en|non|a batir)", m.group(1)) else None
+    if z is None and (m := re.search(r"\bzone (agricole|naturelle)\b", t)):
+        z = "A" if m.group(1) == "agricole" else "N"
+    if z:
+        alertes.append({"code": "zone_annoncee", "libelle": f"Zone {z[:1]}{z[1:].lower()} annoncée au PLU", "zone": z})
+        if len(z) > 1 and z.endswith("I") and not any(x["code"] == "inondable" for x in alertes):
+            alertes.append({"code": "inondable", "libelle": f"Zone {z[:1]}{z[1:].lower()} : indice « i » du PLU, secteur inondable"})
     return motif, alertes
 
 
