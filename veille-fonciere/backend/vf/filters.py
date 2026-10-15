@@ -142,7 +142,8 @@ def prix_dans_texte(txt, prix_affiche):
 
 ALERTES = [
     ("enclave", r"\b(enclave|sans acces|pas d.acces|acces (par|via) (un )?(voisin|servitude))\b", "Terrain possiblement enclavé"),
-    ("inondable", r"\b(inondable|ppri|zone humide|submersible|crue)\b", "Mention de risque d'inondation / zone humide"),
+    ("zone_rouge", r"\bzone rouge\b|\bzone r\d?\b.{0,20}\bppr", "Zone rouge d'un plan de prévention des risques (inconstructible)"),
+    ("inondable", r"\b(inondable|ppri|pprl|pprn|zone humide|submersible|submersion|crue)\b", "Mention de risque d'inondation / submersion / zone humide"),
     ("bail_rural", r"\b(bail rural|fermage|loue a un agriculteur|exploite par)\b", "Bail rural en cours (fermier en place, droit de préemption)"),
     ("servitude", r"\bservitude\b", "Servitude mentionnée"),
     ("ligne_ht", r"\b(ligne (a )?haute tension|pylone|tht)\b", "Ligne haute tension"),

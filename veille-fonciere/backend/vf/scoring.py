@@ -38,6 +38,9 @@ def decote(a, e, why):
 
 
 def mutation(a, e, cfg, why):
+    if "zone_rouge" in _codes(e):
+        why.append("Mutation : zone rouge d'un plan de prévention des risques annoncée, inconstructibilité durable.")
+        return 0.0
     precis = a.precision_geo in ("parcelle", "adresse", "approx")
     tz = (e.get("type_zone") or "").upper()
     if not precis:
@@ -133,6 +136,9 @@ def acces(a, e, why):
     elif e.get("ppr_inondation"):
         contraintes -= 1
         motifs.append("PPRi sur la commune")
+    if "zone_rouge" in codes:
+        contraintes -= 5
+        motifs.append("zone rouge de PPR")
     if "inondable" in codes or any("inondable" in p.lower() for p in e.get("prescriptions") or []):
         contraintes -= 3
         motifs.append("zone inondable mentionnée")
