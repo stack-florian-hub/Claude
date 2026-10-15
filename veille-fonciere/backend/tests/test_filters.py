@@ -75,3 +75,17 @@ class TestQualifier(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestHonoraires(unittest.TestCase):
+    def test_cas_reels(self):
+        from vf.honoraires import analyser
+        self.assertEqual(analyser(6500, "", {"prixAffiche": 5000, "emoluments": 1500})["pct"], 30.0)
+        h = analyser(8800, "Prix : 8 800 dont 1 800 EUR TTC d'honoraires à la charge de l'acquéreur")
+        self.assertEqual((h["montant"], h["net"], h["pct"], h["charge"]), (1800, 7000, 25.7, "acquereur"))
+        h = analyser(9700, "Prix honoraires inclus : 9700 euros<br>Prix hors honoraires : 7700 euros<br>Honoraires TTC à la charge de l'acquéreur (25,97% du prix du bien hors honoraires) : 2000 euros")
+        self.assertEqual((h["pct"], h["net"]), (25.97, 7700))
+        h = analyser(8100, "Prix Hon. Négo Inclus : 8 100 € dont 8,00% Hon. Négo TTC charge acq.")
+        self.assertEqual((h["pct"], h["net"], h["charge"]), (8.0, 7500, "acquereur"))
+        self.assertEqual(analyser(5900, "Honoraires d'agence à la charge du vendeur.")["charge"], "vendeur")
+        self.assertIsNone(analyser(5000, "Beau terrain de loisir."))

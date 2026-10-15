@@ -1,5 +1,5 @@
 {
- "genere_le": "2026-10-15T17:12:20+00:00",
+ "genere_le": "2026-10-15T17:18:02+00:00",
  "annonces": [
   {
    "id": "bienici:iad-france-877884",
@@ -237,7 +237,14 @@
     "telephone": "06 87 64 43 95",
     "email": null,
     "adresse": "44860 SAINT-AIGNAN-GRANDLIEU",
-    "site": "https://bareme.iadfrance.fr/detail/65208"
+    "site": "https://bareme.iadfrance.fr/detail/65208",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -486,7 +493,14 @@
     "telephone": "02 40 03 84 29",
     "email": null,
     "adresse": "44140 Aigrefeuille sur Maine",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -737,7 +751,14 @@
     "telephone": "02 40 03 84 29",
     "email": null,
     "adresse": "44140 Aigrefeuille sur Maine",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -845,8 +866,10 @@
     "telephone": "02 51 46 93 58",
     "email": null,
     "adresse": "85110 chantonnay",
-    "site": null
-   }
+    "site": null,
+    "frais_charge": "purchaser"
+   },
+   "honoraires": null
   },
   {
    "id": "bienici:dr-house-immo-1-1145430",
@@ -1030,8 +1053,10 @@
     "telephone": "06 14 94 08 65",
     "email": null,
     "adresse": "37340 Savigné-sur-Lathan",
-    "site": "https://www.ledoc.immo/medias/baremes/248.pdf"
-   }
+    "site": "https://www.ledoc.immo/medias/baremes/248.pdf",
+    "frais_charge": "purchaser"
+   },
+   "honoraires": null
   },
   {
    "id": "bienici:immo-facile-59356553",
@@ -1292,7 +1317,14 @@
     "telephone": "02 40 03 84 29",
     "email": null,
     "adresse": "44140 Aigrefeuille sur Maine",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -1385,7 +1417,14 @@
     "telephone": "02 41 49 42 42",
     "email": null,
     "adresse": "49300 CHOLET",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/403808.pdf"
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/403808.pdf",
+    "frais_charge": "purchaser"
+   },
+   "honoraires": {
+    "pct": 20.0,
+    "montant": 2500.0,
+    "net": 12500,
+    "charge": "acquereur"
    }
   },
   {
@@ -1546,7 +1585,14 @@
     "telephone": "06 32 08 29 95",
     "email": null,
     "adresse": "85120 SAINT-PIERRE-DU-CHEMIN",
-    "site": "https://bareme.safti.fr/"
+    "site": "https://bareme.safti.fr/",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -1712,7 +1758,14 @@
     "telephone": "02 51 50 43 93",
     "email": null,
     "adresse": "85200 Fontenay-le-Comte",
-    "site": null
+    "site": null,
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -1828,7 +1881,14 @@
     "telephone": "06 74 38 00 86",
     "email": null,
     "adresse": "37160 DESCARTES",
-    "site": "https://bareme.safti.fr/"
+    "site": "https://bareme.safti.fr/",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -1993,6 +2053,12 @@
     "email": "negociation.cormery@ant.notaires.fr",
     "adresse": "58 bis rue nationale, 37320 CORMERY",
     "site": null
+   },
+   "honoraires": {
+    "pct": 8.0,
+    "montant": 600.0,
+    "net": 7500.0,
+    "charge": "acquereur"
    }
   },
   {
@@ -2241,7 +2307,14 @@
     "telephone": null,
     "email": null,
     "adresse": "37500 Chinon",
-    "site": "https://www.citya.com/agences-immobilieres/Chinon-37500/134"
+    "site": "https://www.citya.com/agences-immobilieres/Chinon-37500/134",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -2374,7 +2447,14 @@
     "telephone": "07 77 91 01 30",
     "email": null,
     "adresse": "37270 MONTLOUIS-SUR-LOIRE",
-    "site": "https://files.netty.immo/file/company54266xoj/2233/ZxEOR/tarif_belismmo_2025_1.pdf"
+    "site": "https://files.netty.immo/file/company54266xoj/2233/ZxEOR/tarif_belismmo_2025_1.pdf",
+    "frais_charge": "purchaser"
+   },
+   "honoraires": {
+    "pct": 40.0,
+    "montant": 2000.0,
+    "net": 5000.0,
+    "charge": "acquereur"
    }
   },
   {
@@ -2524,7 +2604,14 @@
     "telephone": "07 67 02 66 59",
     "email": null,
     "adresse": "85210 Sainte-Hermine",
-    "site": "https://bareme.iadfrance.fr/detail/74060"
+    "site": "https://bareme.iadfrance.fr/detail/74060",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -2648,6 +2735,12 @@
     "email": "negociation.cormery@ant.notaires.fr",
     "adresse": "58 bis rue nationale, 37320 CORMERY",
     "site": null
+   },
+   "honoraires": {
+    "pct": 6.0,
+    "montant": 780.0,
+    "net": 13000.0,
+    "charge": "acquereur"
    }
   },
   {
@@ -2856,7 +2949,14 @@
     "telephone": "02 40 03 84 29",
     "email": null,
     "adresse": "44140 Aigrefeuille sur Maine",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -2997,7 +3097,14 @@
     "telephone": "06 51 95 25 93",
     "email": null,
     "adresse": "85120 LA CHATAIGNERAIE",
-    "site": "https://bareme.safti.fr/"
+    "site": "https://bareme.safti.fr/",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -3155,6 +3262,12 @@
     "email": "renan.jouve@85093.notaires.fr",
     "adresse": "11, Avenue des Sables, 85700 Pouzauges",
     "site": null
+   },
+   "honoraires": {
+    "pct": 87.5,
+    "montant": 3500.0,
+    "net": 4000.0,
+    "charge": "acquereur"
    }
   },
   {
@@ -3401,8 +3514,10 @@
     "telephone": "02 28 14 20 99",
     "email": null,
     "adresse": "85400 LUCON",
-    "site": "https://www.century21-si-lucon.com/mentions_legales/"
-   }
+    "site": "https://www.century21-si-lucon.com/mentions_legales/",
+    "frais_charge": "purchaser"
+   },
+   "honoraires": null
   },
   {
    "id": "bienici:iad-france-1024437",
@@ -3598,7 +3713,14 @@
     "telephone": "06 44 00 34 80",
     "email": null,
     "adresse": "85120 La Châtaigneraie",
-    "site": "https://bareme.iadfrance.fr/detail/74899"
+    "site": "https://bareme.iadfrance.fr/detail/74899",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -3804,7 +3926,14 @@
     "telephone": "02 40 03 84 29",
     "email": null,
     "adresse": "44140 Aigrefeuille sur Maine",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -3916,7 +4045,14 @@
     "telephone": "07 43 01 31 24",
     "email": null,
     "adresse": "44120 VERTOU",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/354079.pdf"
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/354079.pdf",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -4171,7 +4307,14 @@
     "telephone": "02 41 40 10 02",
     "email": null,
     "adresse": "49700 Doué-en-Anjou",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/18008.pdf"
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/18008.pdf",
+    "frais_charge": "purchaser"
+   },
+   "honoraires": {
+    "pct": 72.0,
+    "montant": 3600.0,
+    "net": 5000,
+    "charge": "acquereur"
    }
   },
   {
@@ -4286,7 +4429,14 @@
     "telephone": "06 16 50 22 47",
     "email": null,
     "adresse": "49400 Saumur",
-    "site": "https://bareme.iadfrance.fr/detail/43194"
+    "site": "https://bareme.iadfrance.fr/detail/43194",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -4474,7 +4624,14 @@
     "telephone": "07 68 89 37 80",
     "email": null,
     "adresse": "85150 LANDERONDE",
-    "site": "http://assets.digitregroup.io/capifrance/capifrance_baremes_agence_B2026-A.pdf"
+    "site": "http://assets.digitregroup.io/capifrance/capifrance_baremes_agence_B2026-A.pdf",
+    "frais_charge": "purchaser"
+   },
+   "honoraires": {
+    "pct": 54.55,
+    "montant": 3000.0,
+    "net": 5500,
+    "charge": "acquereur"
    }
   },
   {
@@ -4679,7 +4836,14 @@
     "telephone": "06 16 62 09 82",
     "email": null,
     "adresse": "85120 Vouvant",
-    "site": "https://bareme.iadfrance.fr/detail/11640"
+    "site": "https://bareme.iadfrance.fr/detail/11640",
+    "frais_charge": "purchaser"
+   },
+   "honoraires": {
+    "pct": 23.81,
+    "montant": 2500.0,
+    "net": 10500.0,
+    "charge": "acquereur"
    }
   },
   {
@@ -4775,7 +4939,14 @@
     "telephone": "02 51 50 43 93",
     "email": null,
     "adresse": "85200 Fontenay-le-Comte",
-    "site": null
+    "site": null,
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -5029,7 +5200,14 @@
     "telephone": "06 60 90 52 26",
     "email": null,
     "adresse": "29100 DOUARNENEZ",
-    "site": "https://bareme.safti.fr/"
+    "site": "https://bareme.safti.fr/",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -5290,6 +5468,12 @@
     "email": "francois-xavier.laguerie@notaires.fr",
     "adresse": "63, rue des Roseaux, 85460 L'Aiguillon-sur-Mer",
     "site": null
+   },
+   "honoraires": {
+    "pct": 6.0,
+    "montant": 60.0,
+    "net": 1000.0,
+    "charge": "acquereur"
    }
   },
   {
@@ -5498,7 +5682,14 @@
     "telephone": "02 40 03 84 29",
     "email": null,
     "adresse": "44140 Aigrefeuille sur Maine",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf"
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/344257.pdf",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -5753,7 +5944,14 @@
     "telephone": "06 86 25 28 10",
     "email": null,
     "adresse": "37500 CHINON",
-    "site": "https://bareme.safti.fr/"
+    "site": "https://bareme.safti.fr/",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -6002,7 +6200,14 @@
     "telephone": "06 86 25 28 10",
     "email": null,
     "adresse": "37500 CHINON",
-    "site": "https://bareme.safti.fr/"
+    "site": "https://bareme.safti.fr/",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -6255,7 +6460,8 @@
     "adresse": null,
     "site": "https://www.ladresse.com/",
     "remarque": "Téléphone affiché au clic sur l'annonce ParuVendu"
-   }
+   },
+   "honoraires": null
   },
   {
    "id": "bienici:iad-france-910924",
@@ -6438,7 +6644,14 @@
     "telephone": "06 27 64 39 27",
     "email": null,
     "adresse": "85500 Beaurepaire",
-    "site": "https://bareme.iadfrance.fr/detail/23238"
+    "site": "https://bareme.iadfrance.fr/detail/23238",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -6529,8 +6742,10 @@
     "telephone": "06 66 57 37 31",
     "email": null,
     "adresse": "37420 AVOINE",
-    "site": "http://www.ligeria.fr/images/documents/honoraires-ligeria-2019.pdf"
-   }
+    "site": "http://www.ligeria.fr/images/documents/honoraires-ligeria-2019.pdf",
+    "frais_charge": "purchaser"
+   },
+   "honoraires": null
   },
   {
    "id": "paruvendu:1286061218A1KIVHTE000",
@@ -6781,7 +6996,8 @@
     "adresse": null,
     "site": "https://www.ladresse.com/",
     "remarque": "Téléphone affiché au clic sur l'annonce ParuVendu"
-   }
+   },
+   "honoraires": null
   },
   {
    "id": "bienici:iad-france-995417",
@@ -7025,7 +7241,14 @@
     "telephone": "06 69 46 70 03",
     "email": null,
     "adresse": "85150 Saint-Julien-des-Landes",
-    "site": "https://bareme.iadfrance.fr/detail/85777"
+    "site": "https://bareme.iadfrance.fr/detail/85777",
+    "frais_charge": "purchaser"
+   },
+   "honoraires": {
+    "pct": 25.97,
+    "montant": 2000.0,
+    "net": 7700.0,
+    "charge": "acquereur"
    }
   },
   {
@@ -7278,7 +7501,8 @@
     "adresse": null,
     "site": "http://www.capifrance.fr",
     "remarque": "Téléphone affiché au clic sur l'annonce ParuVendu"
-   }
+   },
+   "honoraires": null
   },
   {
    "id": "bienici:hektor-coimmobilierlege-10463",
@@ -7452,7 +7676,14 @@
     "telephone": "07 86 22 50 63",
     "email": null,
     "adresse": "44650 lege",
-    "site": "http://www.coimmobilier.fr/i/redac/honoraires?honofor=24"
+    "site": "http://www.coimmobilier.fr/i/redac/honoraires?honofor=24",
+    "frais_charge": "purchaser"
+   },
+   "honoraires": {
+    "pct": 25.7,
+    "montant": 1800.0,
+    "net": 7000.0,
+    "charge": "acquereur"
    }
   },
   {
@@ -7595,6 +7826,12 @@
     "email": "florence.biard.44037@notaires.fr",
     "adresse": "Place de la Gare, 44270 MACHECOUL-SAINT MEME",
     "site": null
+   },
+   "honoraires": {
+    "pct": 62.5,
+    "montant": 3000.0,
+    "net": 4800.0,
+    "charge": "acquereur"
    }
   },
   {
@@ -7848,7 +8085,14 @@
     "telephone": "06 73 47 45 89",
     "email": null,
     "adresse": "85170 LES LUCS-SUR-BOULOGNE",
-    "site": "https://bareme.iadfrance.fr/detail/79900"
+    "site": "https://bareme.iadfrance.fr/detail/79900",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -8027,7 +8271,14 @@
     "telephone": "06 86 25 28 10",
     "email": null,
     "adresse": "37500 CHINON",
-    "site": "https://bareme.safti.fr/"
+    "site": "https://bareme.safti.fr/",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -8276,6 +8527,12 @@
     "email": "negociation.85019@notaires.fr",
     "adresse": "1 rue de la Brèche, 85600 Montaigu-Vendée",
     "site": null
+   },
+   "honoraires": {
+    "pct": 30.0,
+    "montant": 1500.0,
+    "net": 5000.0,
+    "charge": "acquereur"
    }
   },
   {
@@ -8468,7 +8725,14 @@
     "telephone": "02 53 78 71 02",
     "email": null,
     "adresse": "37320 SAINT BRANCHS",
-    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/372650.pdf"
+    "site": "https://media.immo-facile.com/segments/immo/catalog/images/manufacturers_bareme/372650.pdf",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -8713,7 +8977,14 @@
     "telephone": "06 86 25 28 10",
     "email": null,
     "adresse": "37500 CHINON",
-    "site": "https://bareme.safti.fr/"
+    "site": "https://bareme.safti.fr/",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur"
    }
   },
   {
@@ -8951,6 +9222,12 @@
     "email": "negociation@37082.notaires.fr",
     "adresse": "3, impasse Marc Chagall, 37160 Descartes",
     "site": null
+   },
+   "honoraires": {
+    "pct": 8.3,
+    "montant": 500.0,
+    "net": 6000.0,
+    "charge": "acquereur"
    }
   },
   {
@@ -9196,8 +9473,10 @@
     "telephone": "02 51 95 66 30",
     "email": null,
     "adresse": "85340 OLONNE SUR MER",
-    "site": "https://www.century21-bm-olonne.com/mentions_legales/"
-   }
+    "site": "https://www.century21-bm-olonne.com/mentions_legales/",
+    "frais_charge": "purchaser"
+   },
+   "honoraires": null
   }
  ],
  "exclues": [

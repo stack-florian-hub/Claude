@@ -35,7 +35,7 @@ def bienici(http, a):
     return {"type": "pro" if c.get("contactIsPro") else "particulier", "nom": personne or None, "agence": agence or nom,
             "telephone": _tel(c.get("phoneToDisplay")), "email": None,
             "adresse": " ".join(x for x in (adr.get("postalCode"), adr.get("city")) if x) or None,
-            "site": d.get("agencyFeeUrl")}
+            "site": d.get("agencyFeeUrl"), "frais_charge": d.get("feesChargedTo")}
 
 
 def notaires(http, a):

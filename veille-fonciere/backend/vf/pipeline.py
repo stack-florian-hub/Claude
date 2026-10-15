@@ -4,7 +4,7 @@ import logging
 import os
 from collections import Counter
 
-from . import contacts, db, scoring
+from . import contacts, db, honoraires, scoring
 from .collectors import COLLECTEURS, ImportManuel
 from .db import annonce_from_row, now
 from .enrich import Enrichisseur, sauver
@@ -182,7 +182,8 @@ def exporter(con, chemin):
             "dvf": e.get("dvf"),
             "erreurs_enrichissement": e.get("erreurs") or [],
             "note": r["note"] or "", "suivi": r["suivi"] or "", "favori": bool(r["favori"]), "adresse_saisie": r["adresse_saisie"] or "",
-            "contact": json.loads(c[0]) if (c := con.execute("SELECT contact_json FROM contacts WHERE annonce_id=?", (r["id"],)).fetchone()) else None,
+            "contact": (ct := json.loads(c[0]) if (c := con.execute("SELECT contact_json FROM contacts WHERE annonce_id=?", (r["id"],)).fetchone()) else None),
+            "honoraires": honoraires.analyser(r["prix"], r["description"], brut, ct),
         })
     exclues = [dict(r) for r in con.execute(
         "SELECT id, source, url, titre, prix, surface_m2, departement, commune, motif_exclusion FROM annonces "

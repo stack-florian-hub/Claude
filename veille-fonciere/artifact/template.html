@@ -249,8 +249,10 @@ const DMTO_DEP = { "85": 0.05, "44": 0.05, "49": 0.05, "37": 0.05 };
 const TRANCHES = [[6500, 0.0387], [17000, 0.01596], [60000, 0.01064], [Infinity, 0.00799]];
 const FORMALITES_TTC = 450, DEBOURS = 350;
 function frais(a) {
-  const p = a.prix || 0;
-  if (!p) return null;
+  if (!a.prix) return null;
+  // Honoraires de négociation payés par l'acheteur et connus : l'acte est assis sur le prix hors honoraires
+  const h = a.honoraires;
+  const p = h?.charge === "acquereur" && h.net ? h.net : a.prix;
   const dep = DMTO_DEP[a.departement] ?? 0.045;
   const dmto = p * (dep * 1.0237 + 0.012);
   let reste = p, bas = 0, prop = 0;
@@ -258,8 +260,11 @@ function frais(a) {
   const emol = Math.min(prop * 1.2 + FORMALITES_TTC, Math.max(90, p * 0.10));
   const csi = Math.max(15, p * 0.001);
   const total = dmto + emol + DEBOURS + csi;
-  return { total, dmto, emol, debours: DEBOURS, csi, taux: total / p, tauxDep: dep };
+  return { total, dmto, emol, debours: DEBOURS, csi, taux: total / a.prix, tauxDep: dep, base: p };
 }
+// Honoraires de négociation (agence ou notaire), en % du prix hors honoraires
+const negoCell = (a) => { const h = a.honoraires; if (!h) return "—"; if (h.pct != null) return `${nf0.format(h.pct)} %`; return h.charge === "vendeur" ? '<span class="small">inclus vendeur</span>' : "—"; };
+const negoTitle = (a) => { const h = a.honoraires; if (!h) return "Non précisé dans l'annonce"; if (h.pct != null) return `${eur(h.montant)} d'honoraires sur ${eur(h.net)} pour le vendeur, à la charge de ${h.charge === "vendeur" ? "du vendeur" : "l'acheteur"}`; return "Honoraires à la charge du vendeur, déjà inclus dans le prix (montant non publié)"; };
 const ratio = (a) => a.prix_m2 && a.dvf?.mediane_m2 ? a.prix_m2 / a.dvf.mediane_m2 : null;
 const dUAU = (a) => Math.min(a.urbanisme?.dist_zone_u_m ?? 1e9, a.urbanisme?.dist_zone_au_m ?? 1e9);
 
@@ -412,7 +417,7 @@ const COLS = [["fav", "★", (a) => note(a.id).favori ? 1 : 0], ["score", "Score
   ["dep", "Dép.", (a) => a.departement], ["typo", "Type", (a) => a.typologie || ""], ["prix", "Prix", (a) => a.prix ?? 0, "r"],
   ["frais", "Frais notaire (est.)", (a) => frais(a)?.total ?? 0, "r"],
   ["surf", "Surface", (a) => a.surface_m2 ?? 0, "r"], ["pm2", "€/m²", (a) => a.prix_m2 ?? Infinity, "r"], ["dvf", "vs DVF", (a) => ratio(a) ?? Infinity, "r"],
-  ["zone", "Zone PLU", (a) => a.urbanisme?.zone_plu || ""], ["du", "→ U/AU", dUAU, "r"], ["src", "Source", (a) => a.source],
+  ["zone", "Zone PLU", (a) => a.urbanisme?.zone_plu || ""], ["nego", "% négo", (a) => a.honoraires?.pct ?? (a.honoraires?.charge === "vendeur" ? -1 : -2), "r"], ["src", "Source", (a) => a.source],
   ["suivi", "Suivi", (a) => note(a.id).suivi], ["vu", "Vu le", (a) => a.premiere_vue || ""]];
 function renderTable(v) {
   const col = COLS.find((c) => c[0] === S.tri.col), get = col[2];
@@ -426,7 +431,7 @@ function renderTable(v) {
       <td class="r num" title="Droits de mutation ${eur(frais(a)?.dmto)} + notaire ${eur(frais(a)?.emol)} + débours et CSI ${eur((frais(a)?.debours ?? 0) + (frais(a)?.csi ?? 0))}">${frais(a) ? `${eur(frais(a).total)} <span class="small">(${Math.round(frais(a).taux * 100)} %)</span>` : "—"}</td>
       <td class="r num">${surf(a.surface_m2)}</td><td class="r num">${eurm2(a.prix_m2)}</td><td class="r num">${r != null ? Math.round(r * 100) + " %" : "—"}</td>
       <td><span class="zone"><i style="background:var(${a.precision_geo === "commune" ? "--z-x" : zoneVar(u.type_zone)})"></i>${a.precision_geo === "commune" ? "?" : esc(u.zone_plu || u.type_zone || "—")}</span></td>
-      <td class="r num">${a.precision_geo === "commune" ? "?" : d < 1e9 ? nf0.format(d) + " m" : "> 1,5 km"}</td>
+      <td class="r num" title="${esc(negoTitle(a))}">${negoCell(a)}</td>
       <td>${SOURCES[a.source] || a.source}</td><td>${nt.suivi ? SUIVIS[nt.suivi] : "—"}</td><td class="small">${dfr(a.premiere_vue)}</td></tr>`; }).join("")
   }</tbody></table>${rows.length ? "" : '<p class="empty">Aucun terrain ne correspond aux filtres.</p>'}`;
 }
@@ -507,6 +512,7 @@ function renderFiche() {
     </div>
     ${(() => { const f = frais(a); return f ? `<div class="sec" style="border-top:0;padding-top:0"><h3>Coût d'acquisition estimé</h3>${kv([
       ["Prix affiché", eur(a.prix)],
+      a.honoraires?.pct != null ? [`dont honoraires de négociation (${nf0.format(a.honoraires.pct)} % du net vendeur)`, eur(a.honoraires.montant)] : a.honoraires?.charge === "vendeur" ? ["Honoraires de négociation", "inclus, à la charge du vendeur"] : null,
       [`Droits de mutation (${nf2.format((f.tauxDep * 1.0237 + 0.012) * 100)} %, dép. ${a.departement})`, eur(f.dmto)],
       ["Émoluments et formalités du notaire", eur(f.emol)],
       ["Débours et sécurité immobilière", eur(f.debours + f.csi)],
