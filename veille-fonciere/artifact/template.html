@@ -231,6 +231,25 @@ const surf = (v) => v == null ? "—" : v >= 10000 ? `${nf2.format(v / 10000)} h
 const dist = (v) => v == null ? "—" : v >= 9999 ? "> 400 m" : v >= 1000 ? `${nf2.format(v / 1000)} km` : `${nf0.format(v)} m`;
 const dfr = (s) => s ? new Date(s).toLocaleDateString("fr-FR") : "—";
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+// Frais d'acquisition (« frais de notaire ») estimés pour un terrain, barèmes 2026.
+// Droits de mutation : part départementale 5 % (85, 44, 49 et 37 l'ont relevée en 2025) + taxe communale 1,2 %
+// + frais d'assiette 2,37 % de la part départementale. Émoluments proportionnels du notaire (barème réglementé, HT)
+// + formalités, plafonnés à 10 % du prix ; débours (cadastre, état hypothécaire…) et contribution de sécurité immobilière.
+const DMTO_DEP = { "85": 0.05, "44": 0.05, "49": 0.05, "37": 0.05 };
+const TRANCHES = [[6500, 0.0387], [17000, 0.01596], [60000, 0.01064], [Infinity, 0.00799]];
+const FORMALITES_TTC = 450, DEBOURS = 350;
+function frais(a) {
+  const p = a.prix || 0;
+  if (!p) return null;
+  const dep = DMTO_DEP[a.departement] ?? 0.045;
+  const dmto = p * (dep * 1.0237 + 0.012);
+  let reste = p, bas = 0, prop = 0;
+  for (const [haut, taux] of TRANCHES) { const part = Math.min(reste, haut - bas); if (part <= 0) break; prop += part * taux; reste -= part; bas = haut; }
+  const emol = Math.min(prop * 1.2 + FORMALITES_TTC, Math.max(90, p * 0.10));
+  const csi = Math.max(15, p * 0.001);
+  const total = dmto + emol + DEBOURS + csi;
+  return { total, dmto, emol, debours: DEBOURS, csi, taux: total / p, tauxDep: dep };
+}
 const ratio = (a) => a.prix_m2 && a.dvf?.mediane_m2 ? a.prix_m2 / a.dvf.mediane_m2 : null;
 const dUAU = (a) => Math.min(a.urbanisme?.dist_zone_u_m ?? 1e9, a.urbanisme?.dist_zone_au_m ?? 1e9);
 
@@ -381,6 +400,7 @@ document.getElementById("list").addEventListener("click", (e) => { const c = e.t
 // ---- Tableau ----
 const COLS = [["fav", "★", (a) => note(a.id).favori ? 1 : 0], ["score", "Score", (a) => a.score ?? -1, "r"], ["commune", "Commune", (a) => a.commune || ""],
   ["dep", "Dép.", (a) => a.departement], ["typo", "Type", (a) => a.typologie || ""], ["prix", "Prix", (a) => a.prix ?? 0, "r"],
+  ["frais", "Frais notaire (est.)", (a) => frais(a)?.total ?? 0, "r"],
   ["surf", "Surface", (a) => a.surface_m2 ?? 0, "r"], ["pm2", "€/m²", (a) => a.prix_m2 ?? Infinity, "r"], ["dvf", "vs DVF", (a) => ratio(a) ?? Infinity, "r"],
   ["zone", "Zone PLU", (a) => a.urbanisme?.zone_plu || ""], ["du", "→ U/AU", dUAU, "r"], ["src", "Source", (a) => a.source],
   ["suivi", "Suivi", (a) => note(a.id).suivi], ["vu", "Vu le", (a) => a.premiere_vue || ""]];
@@ -393,6 +413,7 @@ function renderTable(v) {
       <td><button class="star" data-star="${esc(a.id)}" aria-pressed="${nt.favori}" aria-label="Favori">★</button></td>
       <td class="r num"><span class="sdot" style="background:${scoreColor(a.score)}"></span>${a.score ?? "—"}${a.confiance === "faible" ? ' <span class="small" title="Confiance faible">?</span>' : ""}</td>
       <td>${esc(a.commune)}</td><td>${a.departement}</td><td>${TYPOS[a.typologie] || ""}</td><td class="r num">${eur(a.prix)}</td>
+      <td class="r num" title="Droits de mutation ${eur(frais(a)?.dmto)} + notaire ${eur(frais(a)?.emol)} + débours et CSI ${eur((frais(a)?.debours ?? 0) + (frais(a)?.csi ?? 0))}">${frais(a) ? `${eur(frais(a).total)} <span class="small">(${Math.round(frais(a).taux * 100)} %)</span>` : "—"}</td>
       <td class="r num">${surf(a.surface_m2)}</td><td class="r num">${eurm2(a.prix_m2)}</td><td class="r num">${r != null ? Math.round(r * 100) + " %" : "—"}</td>
       <td><span class="zone"><i style="background:var(${a.precision_geo === "commune" ? "--z-x" : zoneVar(u.type_zone)})"></i>${a.precision_geo === "commune" ? "?" : esc(u.zone_plu || u.type_zone || "—")}</span></td>
       <td class="r num">${a.precision_geo === "commune" ? "?" : d < 1e9 ? nf0.format(d) + " m" : "> 1,5 km"}</td>
@@ -455,6 +476,13 @@ function renderFiche() {
       <div><div class="price num">${eur(a.prix)}</div><div class="small num">${eurm2(a.prix_m2)}${baisse ? ` · baisse depuis ${eur(a.prix_initial)}` : ""}</div></div>
       <div class="score"><b class="num" style="color:${scoreColor(a.score)}">${a.score ?? "—"}</b><div class="small">/ 100 · confiance ${a.confiance || "—"}</div></div>
     </div>
+    ${(() => { const f = frais(a); return f ? `<div class="sec" style="border-top:0;padding-top:0"><h3>Coût d'acquisition estimé</h3>${kv([
+      ["Prix affiché", eur(a.prix)],
+      [`Droits de mutation (${nf2.format((f.tauxDep * 1.0237 + 0.012) * 100)} %, dép. ${a.departement})`, eur(f.dmto)],
+      ["Émoluments et formalités du notaire", eur(f.emol)],
+      ["Débours et sécurité immobilière", eur(f.debours + f.csi)],
+      ["<b>Total à prévoir</b>", `<b>${eur(a.prix + f.total)}</b> (frais ${Math.round(f.taux * 100)} %)`]])}
+      <p class="small">Estimation : sur un petit prix, les frais fixes pèsent lourd. Le notaire donne le montant exact.${a.source === "notaires" ? " Le prix affiché inclut déjà ses honoraires de négociation." : ""}</p></div>` : ""; })()}
     <a class="cta" href="${esc(a.url)}" target="_blank" rel="noopener">Voir l'annonce source ↗</a>
     ${a.mode_vente !== "gre_a_gre" ? `<p class="small">Mode de vente : ${a.mode_vente === "encheres" ? "enchères" : "vente interactive (enchères en ligne)"}</p>` : ""}
     <div class="sec"><h3>Décomposition du score</h3>
