@@ -186,12 +186,20 @@ def exporter(con, chemin):
             "honoraires": honoraires.analyser(r["prix"], r["description"], brut, ct),
         })
     exclues = [dict(r) for r in con.execute(
-        "SELECT id, source, url, titre, prix, surface_m2, departement, commune, motif_exclusion FROM annonces "
-        "WHERE statut='exclue' ORDER BY derniere_vue DESC LIMIT 500")]
-    motifs = Counter(r[0] for r in con.execute("SELECT motif_exclusion FROM annonces WHERE statut='exclue'"))
+        "SELECT id, source, url, titre, prix, surface_m2, departement, commune, motif_exclusion, derniere_vue FROM annonces "
+        "WHERE statut IN ('exclue', 'retiree') ORDER BY statut DESC, derniere_vue DESC LIMIT 500")]
+    motifs = Counter(r[0] for r in con.execute("SELECT motif_exclusion FROM annonces WHERE statut IN ('exclue', 'retiree')"))
     collectes = [dict(r) for r in con.execute(
         "SELECT source, max(fin) AS fin, vues, nouvelles, exclues, erreur FROM collectes GROUP BY source ORDER BY source")]
-    out = {"genere_le": now(), "annonces": actives, "exclues": exclues, "motifs_exclusion": dict(motifs),
+    # Journal des mises à jour : nouvelles annonces retenues et annonces vendues / retirées, par jour (14 derniers jours)
+    journal = {}
+    for jour, aid in con.execute("SELECT substr(premiere_vue,1,10), id FROM annonces WHERE statut='active' AND premiere_vue >= date('now','-14 day')"):
+        journal.setdefault(jour, {"date": jour, "nouvelles": [], "vendues": []})["nouvelles"].append(aid)
+    for jour, aid, titre, commune, prix in con.execute(
+            "SELECT substr(derniere_vue,1,10), id, titre, commune, prix FROM annonces WHERE statut='retiree' AND derniere_vue >= date('now','-14 day')"):
+        journal.setdefault(jour, {"date": jour, "nouvelles": [], "vendues": []})["vendues"].append(
+            {"id": aid, "titre": titre, "commune": commune, "prix": prix})
+    out = {"genere_le": now(), "journal": sorted(journal.values(), key=lambda j: j["date"], reverse=True), "annonces": actives, "exclues": exclues, "motifs_exclusion": dict(motifs),
            "collectes": collectes}
     os.makedirs(os.path.dirname(os.path.abspath(chemin)), exist_ok=True)
     with open(chemin, "w", encoding="utf-8") as f:

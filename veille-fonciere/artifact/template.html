@@ -108,13 +108,23 @@ td { padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap
 tbody tr { cursor: pointer; }
 tbody tr:hover { background: var(--sunken); }
 tbody tr[aria-current="true"] { background: var(--land-focus); }
+tbody tr.ecarte td:not(:nth-child(2)) { opacity: .5; }
+.int { display: inline-flex; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; }
+.int button { background: var(--surface); border: 0; padding: 2px 7px; font-size: 11px; color: var(--muted); }
+.int button + button { border-left: 1px solid var(--line); }
+.int button[data-v="oui"][aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.int button[data-v="non"][aria-pressed="true"] { background: var(--muted); color: var(--surface); }
+.badge-new { display: inline-block; background: var(--focus); color: #fff; border-radius: 3px; font-size: 10px; font-weight: 600; padding: 0 5px; margin-left: 4px; letter-spacing: .03em; vertical-align: 1px; }
+.maj { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; font-size: 12px; margin-top: 4px; }
+.maj b { font-weight: 600; }
+.maj button { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; font-size: 12px; }
 .sdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
 .star { background: none; border: 0; padding: 0 2px; font-size: 15px; color: var(--line); line-height: 1; }
 .star[aria-pressed="true"] { color: var(--focus); }
 
 /* Fiche */
 .fiche { width: 440px; max-width: 100%; flex-shrink: 0; overflow-y: auto; background: var(--surface); border-left: 1px solid var(--line); padding-bottom: 32px; }
-.fiche-head { position: sticky; top: 0; background: var(--surface); padding-block: 12px 10px; border-bottom: 1px solid var(--line); display: flex; gap: 8px; align-items: flex-start; z-index: 2; }
+.fiche-head { position: sticky; top: 0; background: var(--surface); padding-block: 12px 10px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; z-index: 2; }
 .fiche-head .eyebrow { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
 .fiche-head h2 { font-family: var(--f-display); font-stretch: 82%; font-size: 21px; font-weight: 700; margin: 2px 0 0; line-height: 1.15; text-wrap: balance; }
 .close { background: none; border: 0; font-size: 22px; color: var(--muted); line-height: 1; padding: 0 2px; }
@@ -223,7 +233,7 @@ const PRECISIONS = { parcelle: "Parcelle exacte", adresse: "Adresse", approx: "A
 const MOTIFS = { prix_plancher: "Prix < 300 € (prix d'appel)", prix_plafond: "Prix > plafond", prix_absent: "Prix absent",
   prix_reel_texte: "Vrai prix dans le texte", viager: "Viager", gff_parts: "Parts de groupement", indivision: "Parts indivises",
   demembrement: "Nue-propriété / usufruit", location: "Location", recherche: "Annonce de recherche", pas_un_terrain: "Pas un terrain",
-  surface_hors_bornes: "Surface hors bornes", prix_m2_trop_eleve: "Prix/m² > 15 €", hors_zone: "Hors départements" };
+  surface_hors_bornes: "Surface hors bornes", prix_m2_trop_eleve: "Prix/m² > 15 €", hors_zone: "Hors départements", vendu: "Vendu ou retiré de la vente" };
 const CITIES = [["Nantes", 47.218, -1.554], ["Angers", 47.478, -0.563], ["Tours", 47.394, 0.685], ["La Roche-sur-Yon", 46.670, -1.426],
   ["Saint-Nazaire", 47.273, -2.214], ["Cholet", 47.060, -0.879], ["Saumur", 47.260, -0.077], ["Les Sables-d'Olonne", 46.497, -1.783]];
 
@@ -284,7 +294,7 @@ const notes = {};
 let db = null;
 const docId = (id) => id.replace(/[^A-Za-z0-9_-]/g, "_");
 try { Object.assign(notes, JSON.parse(localStorage.getItem("vf-notes") || "{}")); } catch (e) {}
-const note = (id) => notes[id] || { texte: "", suivi: "", favori: false, adresse: "" };
+const note = (id) => notes[id] || { texte: "", suivi: "", favori: false, adresse: "", interet: "" };
 async function saveNote(id, patch) {
   notes[id] = { ...note(id), ...patch, id, maj_le: new Date().toISOString() };
   try { localStorage.setItem("vf-notes", JSON.stringify(notes)); } catch (e) {}
@@ -294,7 +304,7 @@ async function saveNote(id, patch) {
 
 // ---- État ----
 const S = { vue: "carte", sel: null, deps: [], typos: [], sources: [], prixMax: "", surfMin: "", pm2Max: "", scoreMin: 0,
-  conf: "", suivi: "", fav: false, hideAb: true, q: "", tri: { col: "score", desc: true }, motif: "" };
+  conf: "", suivi: "", fav: false, hideAb: true, q: "", interet: "", nouveaux: false, tri: { col: "score", desc: true }, motif: "" };
 try { const v = localStorage.getItem("vf-vue"); if (v) S.vue = v; } catch (e) {}
 
 function visibles() {
@@ -307,14 +317,28 @@ function visibles() {
       (n(S.surfMin) == null || (a.surface_m2 || 0) >= n(S.surfMin)) && (n(S.pm2Max) == null || (a.prix_m2 != null && a.prix_m2 <= n(S.pm2Max))) &&
       (a.score ?? 0) >= S.scoreMin && (!S.conf || a.confiance === S.conf) && (!S.fav || nt.favori) &&
       (!S.suivi || nt.suivi === S.suivi) && (!S.hideAb || nt.suivi !== "abandon") &&
+      (!S.interet || (S.interet === "a_trier" ? !nt.interet : nt.interet === S.interet)) && (!S.nouveaux || estNouveau(a)) &&
       (!q || `${a.commune} ${a.titre} ${a.description} ${nt.texte} ${nt.adresse || ""} ${a.contact?.nom || ""} ${a.contact?.agence || ""}`.toLowerCase().includes(q));
   });
 }
 
+// ---- Nouveautés : annonces vues pour la première fois lors de la dernière mise à jour (ou dans les 3 jours) ----
+const JOURNAL = DATA.journal || [];
+const DERNIER = JOURNAL[0];
+// Le premier jour de collecte ne compte pas : toutes les annonces y sont « vues pour la première fois »
+const DEBUT_SUIVI = A.reduce((m, a) => (a.premiere_vue && a.premiere_vue.slice(0, 10) < m ? a.premiere_vue.slice(0, 10) : m), "9999");
+const estNouveau = (a) => a.premiere_vue && a.premiere_vue.slice(0, 10) > DEBUT_SUIVI && (Date.parse(DATA.genere_le) - Date.parse(a.premiere_vue)) < 3 * 86400000;
+const badgeNew = (a) => estNouveau(a) ? '<span class="badge-new">NOUVEAU</span>' : "";
+
 // ---- Bandeau ----
 function renderHeader(v) {
   const genere = dfr(DATA.genere_le);
-  document.getElementById("sub").textContent = `Collecte du ${genere} · ${A.length} terrains retenus sur ${A.length + Object.values(DATA.motifs_exclusion || {}).reduce((s, x) => s + x, 0)} annonces lues`;
+  const heure = DATA.genere_le ? new Date(DATA.genere_le).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }) : "";
+  const nNew = A.filter(estNouveau).length;
+  const nVendus = (DATA.exclues || []).filter((x) => x.motif_exclusion === "vendu" && x.derniere_vue && (Date.parse(DATA.genere_le) - Date.parse(x.derniere_vue)) < 3 * 86400000).length;
+  document.getElementById("sub").innerHTML = `<div>Mise à jour automatique chaque matin vers 6 h · dernière le ${genere} à ${heure} · ${A.length} terrains en vente</div>
+    <div class="maj"><span><b class="num">${nNew}</b> nouveau${nNew > 1 ? "x" : ""} (3 j)</span>${nNew ? '<button data-maj="nouveaux">Voir</button>' : ""}
+    <span><b class="num">${nVendus}</b> vendu${nVendus > 1 ? "s" : ""} ou retiré${nVendus > 1 ? "s" : ""} (3 j)</span>${nVendus ? '<button data-maj="vendus">Voir</button>' : ""}</div>`;
   const best = v.filter((a) => (a.score ?? 0) >= 65).length;
   const fav = A.filter((a) => note(a.id).favori).length;
   document.getElementById("kpis").innerHTML = [
@@ -325,9 +349,9 @@ function renderHeader(v) {
     document.getElementById(`tab-${k}`).setAttribute("aria-pressed", S.vue === k);
     document.getElementById(`v-${k}`).hidden = S.vue !== k;
   }
-  document.getElementById("tab-exclues").textContent = `Exclues (${(DATA.exclues || []).length})`;
+  document.getElementById("tab-exclues").textContent = `Exclues et vendues (${(DATA.exclues || []).length})`;
   document.getElementById("filters").hidden = S.vue === "exclues";
-  const actifs = S.deps.length + S.typos.length + S.sources.length + [S.prixMax, S.surfMin, S.pm2Max, S.conf, S.suivi, S.q].filter(Boolean).length + (S.scoreMin ? 1 : 0) + (S.fav ? 1 : 0);
+  const actifs = S.deps.length + S.typos.length + S.sources.length + [S.prixMax, S.surfMin, S.pm2Max, S.conf, S.suivi, S.q, S.interet].filter(Boolean).length + (S.scoreMin ? 1 : 0) + (S.fav ? 1 : 0) + (S.nouveaux ? 1 : 0);
   document.getElementById("f-toggle").textContent = actifs ? `Filtres (${actifs})` : "Filtres";
 }
 
@@ -346,20 +370,24 @@ function renderFilters() {
      <label class="field">Score ≥ <b class="num" id="f-score-v">${S.scoreMin}</b><input id="f-score" type="range" min="0" max="90" step="5" value="${S.scoreMin}"></label>
      <label class="field"><select id="f-conf" aria-label="Confiance"><option value="">Toute confiance</option><option value="haute">Confiance haute</option><option value="moyenne">Moyenne</option><option value="faible">Faible</option></select></label>
      <label class="field"><select id="f-suivi" aria-label="Suivi"><option value="">Tout suivi</option>${Object.entries(SUIVIS).filter(([k]) => k).map(([k, l]) => `<option value="${k}">${l}</option>`).join("")}</select></label>
+     <label class="field"><select id="f-int" aria-label="Intérêt"><option value="">Tout intérêt</option><option value="oui">Intéressé</option><option value="non">Pas intéressé</option><option value="a_trier">À trier</option></select></label>
+     <label class="field"><input id="f-new" type="checkbox" ${S.nouveaux ? "checked" : ""}> Nouveaux</label>
      <label class="field"><input id="f-fav" type="checkbox" ${S.fav ? "checked" : ""}> Favoris</label>
      <label class="field"><input id="f-ab" type="checkbox" ${S.hideAb ? "checked" : ""}> Masquer abandonnés</label>
      <label class="field"><input id="f-q" class="search" placeholder="Commune, mot-clé, note…" value="${esc(S.q)}"></label>
      <button class="link" id="f-reset">Réinitialiser</button>`;
   document.getElementById("f-conf").value = S.conf;
   document.getElementById("f-suivi").value = S.suivi;
+  document.getElementById("f-int").value = S.interet;
 }
 document.getElementById("filters").addEventListener("click", (e) => {
   const c = e.target.closest("[data-chip]");
   if (c) { const k = c.dataset.chip, v = c.dataset.v; S[k] = S[k].includes(v) ? S[k].filter((x) => x !== v) : [...S[k], v]; c.setAttribute("aria-pressed", S[k].includes(v)); render(); }
-  if (e.target.id === "f-reset") { Object.assign(S, { deps: [], typos: [], sources: [], prixMax: "", surfMin: "", pm2Max: "", scoreMin: 0, conf: "", suivi: "", fav: false, hideAb: true, q: "" }); renderFilters(); render(); }
+  if (e.target.id === "f-reset") { Object.assign(S, { deps: [], typos: [], sources: [], prixMax: "", surfMin: "", pm2Max: "", scoreMin: 0, conf: "", suivi: "", fav: false, hideAb: true, q: "", interet: "", nouveaux: false }); renderFilters(); render(); }
 });
 document.getElementById("filters").addEventListener("input", (e) => {
-  const map = { "f-prix": "prixMax", "f-surf": "surfMin", "f-pm2": "pm2Max", "f-q": "q", "f-conf": "conf", "f-suivi": "suivi" };
+  const map = { "f-prix": "prixMax", "f-surf": "surfMin", "f-pm2": "pm2Max", "f-q": "q", "f-conf": "conf", "f-suivi": "suivi", "f-int": "interet" };
+  if (e.target.id === "f-new") S.nouveaux = e.target.checked;
   if (map[e.target.id]) S[map[e.target.id]] = e.target.value;
   if (e.target.id === "f-score") { S.scoreMin = Number(e.target.value); document.getElementById("f-score-v").textContent = S.scoreMin; }
   if (e.target.id === "f-fav") S.fav = e.target.checked;
@@ -414,7 +442,7 @@ function renderList(v) {
       : `<span class="zone"><i style="background:var(${zoneVar(u.type_zone)})"></i>${esc(u.zone_plu || u.type_zone || "?")}</span>`;
     return `<button class="card" data-id="${esc(a.id)}" aria-current="${a.id === S.sel}">
       <span class="score-badge num" style="background:${scoreColor(a.score)};color:${inkOn(scoreColor(a.score))}">${Math.round(a.score ?? 0)}</span>
-      <span class="t">${nt.favori ? "★ " : ""}${esc(a.commune)} <span class="small">(${a.departement})</span></span>
+      <span class="t">${nt.favori ? "★ " : ""}${esc(a.commune)} <span class="small">(${a.departement})</span>${badgeNew(a)}${nt.interet === "oui" ? ' <span class="small">· intéressé</span>' : nt.interet === "non" ? ' <span class="small">· pas intéressé</span>' : ""}</span>
       <span class="p num">${eur(a.prix)}</span>
       <span class="m">${TYPOS[a.typologie] || ""} · ${surf(a.surface_m2)} ${zone}${nt.suivi ? ` · ${SUIVIS[nt.suivi]}` : ""}</span>
       <span class="r num">${r != null ? `${Math.round(r * 100)} % DVF` : eurm2(a.prix_m2)}</span>
@@ -424,7 +452,8 @@ function renderList(v) {
 document.getElementById("list").addEventListener("click", (e) => { const c = e.target.closest(".card"); if (c) select(c.dataset.id); });
 
 // ---- Tableau ----
-const COLS = [["fav", "★", (a) => note(a.id).favori ? 1 : 0], ["score", "Score", (a) => a.score ?? -1, "r"], ["commune", "Commune", (a) => a.commune || ""],
+const INT_ORDRE = { oui: 2, "": 1, non: 0 };
+const COLS = [["fav", "★", (a) => note(a.id).favori ? 1 : 0], ["interet", "Intéressé ?", (a) => INT_ORDRE[note(a.id).interet || ""]], ["score", "Score", (a) => a.score ?? -1, "r"], ["commune", "Commune", (a) => a.commune || ""],
   ["dep", "Dép.", (a) => a.departement], ["typo", "Type", (a) => a.typologie || ""], ["prix", "Prix", (a) => a.prix ?? 0, "r"],
   ["frais", "Frais notaire (est.)", (a) => frais(a)?.total ?? 0, "r"],
   ["surf", "Surface", (a) => a.surface_m2 ?? 0, "r"], ["pm2", "€/m²", (a) => a.prix_m2 ?? Infinity, "r"], ["dvf", "vs DVF", (a) => ratio(a) ?? Infinity, "r"],
@@ -435,10 +464,11 @@ function renderTable(v) {
   const rows = [...v].sort((a, b) => { const x = get(a), y = get(b); const r = typeof x === "string" ? x.localeCompare(y, "fr") : x - y; return S.tri.desc ? -r : r; });
   document.getElementById("table").innerHTML = `<table><thead><tr>${COLS.map(([k, l, , c]) =>
     `<th class="${c || ""}" data-col="${k}" aria-sort="${S.tri.col === k ? (S.tri.desc ? "descending" : "ascending") : "none"}">${l}${S.tri.col === k ? (S.tri.desc ? " ↓" : " ↑") : ""}</th>`).join("")}</tr></thead><tbody>${
-    rows.map((a) => { const u = a.urbanisme || {}, r = ratio(a), d = dUAU(a), nt = note(a.id); return `<tr data-id="${esc(a.id)}" aria-current="${a.id === S.sel}">
+    rows.map((a) => { const u = a.urbanisme || {}, r = ratio(a), d = dUAU(a), nt = note(a.id); return `<tr data-id="${esc(a.id)}" aria-current="${a.id === S.sel}" class="${nt.interet === "non" ? "ecarte" : ""}">
       <td><button class="star" data-star="${esc(a.id)}" aria-pressed="${nt.favori}" aria-label="Favori">★</button></td>
+      <td><span class="int" role="group" aria-label="Intérêt"><button data-int="${esc(a.id)}" data-v="oui" aria-pressed="${nt.interet === "oui"}">Oui</button><button data-int="${esc(a.id)}" data-v="non" aria-pressed="${nt.interet === "non"}">Non</button></span></td>
       <td class="r num"><span class="sdot" style="background:${scoreColor(a.score)}"></span>${a.score ?? "—"}${a.confiance === "faible" ? ' <span class="small" title="Confiance faible">?</span>' : ""}</td>
-      <td>${esc(a.commune)}</td><td>${a.departement}</td><td>${TYPOS[a.typologie] || ""}</td><td class="r num">${eur(a.prix)}</td>
+      <td>${esc(a.commune)}${badgeNew(a)}</td><td>${a.departement}</td><td>${TYPOS[a.typologie] || ""}</td><td class="r num">${eur(a.prix)}</td>
       <td class="r num" title="Droits de mutation ${eur(frais(a)?.dmto)} + notaire ${eur(frais(a)?.emol)} + débours et CSI ${eur((frais(a)?.debours ?? 0) + (frais(a)?.csi ?? 0))}">${frais(a) ? `${eur(frais(a).total)} <span class="small">(${Math.round(frais(a).taux * 100)} %)</span>` : "—"}</td>
       <td class="r num">${surf(a.surface_m2)}</td><td class="r num">${eurm2(a.prix_m2)}</td><td class="r num">${r != null ? Math.round(r * 100) + " %" : "—"}</td>
       <td>${zoneCell(a)}</td>
@@ -449,6 +479,8 @@ function renderTable(v) {
 document.getElementById("table").addEventListener("click", async (e) => {
   const th = e.target.closest("th[data-col]");
   if (th) { S.tri = { col: th.dataset.col, desc: S.tri.col === th.dataset.col ? !S.tri.desc : true }; return render(); }
+  const ib = e.target.closest("[data-int]");
+  if (ib) { e.stopPropagation(); const id = ib.dataset.int, v = ib.dataset.v; await saveNote(id, { interet: note(id).interet === v ? "" : v }); return render(); }
   const st = e.target.closest("[data-star]");
   if (st) { e.stopPropagation(); await saveNote(st.dataset.star, { favori: !note(st.dataset.star).favori }); return render(); }
   const tr = e.target.closest("tr[data-id]"); if (tr) select(tr.dataset.id);
@@ -513,6 +545,7 @@ function renderFiche() {
     <div class="fiche-head">
       <div style="flex:1;min-width:0"><div class="eyebrow">${SOURCES[a.source] || a.source} · ${TYPOS[a.typologie] || ""} · ${DEPS[a.departement] || a.departement}</div>
       <h2>${esc(a.commune)}, ${surf(a.surface_m2)}</h2></div>
+      <span class="int" role="group" aria-label="Intérêt"><button data-int="${esc(a.id)}" data-v="oui" aria-pressed="${nt.interet === "oui"}">Intéressé</button><button data-int="${esc(a.id)}" data-v="non" aria-pressed="${nt.interet === "non"}">Pas intéressé</button></span>
       <button class="star" style="font-size:22px" data-fstar aria-pressed="${nt.favori}" aria-label="Favori">★</button>
       <button class="close" data-close aria-label="Fermer la fiche">×</button>
     </div>
@@ -576,6 +609,8 @@ function renderFiche() {
 }
 document.getElementById("fiche").addEventListener("click", async (e) => {
   if (e.target.closest("[data-close]")) { S.sel = null; return render(); }
+  const ib = e.target.closest("[data-int]");
+  if (ib) { const v = ib.dataset.v; await saveNote(S.sel, { interet: note(S.sel).interet === v ? "" : v }); return render(); }
   if (e.target.closest("[data-fstar]")) { await saveNote(S.sel, { favori: !note(S.sel).favori }); return render(); }
   const cp = e.target.closest("[data-copy]");
   if (cp) {
@@ -602,6 +637,14 @@ document.getElementById("fiche").addEventListener("change", async (e) => {
 document.getElementById("f-toggle").addEventListener("click", (e) => {
   const open = document.getElementById("filters").classList.toggle("open");
   e.currentTarget.setAttribute("aria-expanded", open);
+});
+
+document.getElementById("sub").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-maj]");
+  if (!b) return;
+  if (b.dataset.maj === "nouveaux") { S.nouveaux = true; if (S.vue === "exclues") S.vue = "carte"; renderFilters(); }
+  else { S.vue = "exclues"; S.motif = "vendu"; }
+  render();
 });
 
 // ---- Navigation ----

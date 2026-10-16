@@ -11,6 +11,7 @@
   localiser ID IDU              fixe la parcelle (ex. 85147000ZK0123) puis ré-enrichit
   localiser ID --adresse "..."  fixe l'adresse exacte (géocodée par l'API Adresse) puis ré-enrichit
   contacts [--tout]             coordonnées des annonceurs (agent, notaire, agence)
+  verifier                      archive les annonces vendues ou retirées
   serve [-p 8765]               API locale (notes) + dashboard compilé
 """
 import argparse
@@ -47,6 +48,7 @@ def main(argv=None):
     sp.add_argument("--adresse")
     sp = sub.add_parser("contacts")
     sp.add_argument("--tout", action="store_true", help="rafraîchir aussi les contacts déjà connus")
+    sub.add_parser("verifier")
     sp = sub.add_parser("serve")
     sp.add_argument("-p", "--port", type=int, default=8765)
     a = p.parse_args(argv)
@@ -63,6 +65,8 @@ def main(argv=None):
         elif a.cmd in ("collecter", "tout"):
             pipeline.collecter(con, http, cfg, split(a.sources), split(a.deps))
             if a.cmd == "tout":
+                from .disponibilite import verifier
+                verifier(con, http)
                 pipeline.enrichir(con, http, cfg)
                 pipeline.scorer(con, cfg)
                 print(f"{pipeline.exporter(con, EXPORT_PATH)} opportunités exportées vers {EXPORT_PATH}")
@@ -90,6 +94,11 @@ def main(argv=None):
         elif a.cmd == "contacts":
             print(f"{pipeline.recuperer_contacts(con, http, a.tout)} contacts récupérés")
             pipeline.exporter(con, EXPORT_PATH)
+        elif a.cmd == "verifier":
+            from .disponibilite import verifier
+            ids = verifier(con, http)
+            pipeline.exporter(con, EXPORT_PATH)
+            print(f"{len(ids)} annonces archivées (vendues ou retirées)" + "".join(f"\n  {i}" for i in ids))
         elif a.cmd == "serve":
             from .server import serve
             serve(con, a.port)
