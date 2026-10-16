@@ -163,6 +163,16 @@ textarea { width: 100%; box-sizing: border-box; min-height: 96px; resize: vertic
 .note-row { display: flex; gap: 10px; align-items: center; margin-top: 6px; flex-wrap: wrap; }
 .btn { background: var(--ink); color: var(--bg); border: 0; border-radius: 5px; padding: 6px 12px; font-size: 12px; font-weight: 600; }
 .sel { background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 5px 8px; font-size: 12px; width: 100%; margin-bottom: 6px; }
+.docs { display: grid; gap: 6px; margin-bottom: 8px; }
+.doc { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; font-size: 12px; }
+.doc .quand { color: var(--faint); font-size: 11px; }
+.doc .corps { grid-column: 1 / -1; white-space: pre-line; overflow-wrap: anywhere; }
+.doc a { color: var(--accent); font-weight: 600; overflow-wrap: anywhere; }
+.doc .suppr { background: none; border: 0; color: var(--faint); font-size: 11px; text-decoration: underline; padding: 0; }
+.doc .suppr.arm { color: var(--z-u); }
+.drop { border: 1.5px dashed var(--line); border-radius: 6px; padding: 10px; text-align: center; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.drop.over { border-color: var(--accent); background: var(--land-focus); }
+.drop label { color: var(--accent); text-decoration: underline; cursor: pointer; }
 .desc { font-size: 12px; color: var(--muted); white-space: pre-line; }
 .links { display: grid; gap: 4px; font-size: 12px; }
 .links a { color: var(--accent); }
@@ -444,7 +454,7 @@ function renderList(v) {
       <span class="score-badge num" style="background:${scoreColor(a.score)};color:${inkOn(scoreColor(a.score))}">${Math.round(a.score ?? 0)}</span>
       <span class="t">${nt.favori ? "★ " : ""}${esc(a.commune)} <span class="small">(${a.departement})</span>${badgeNew(a)}${nt.interet === "oui" ? ' <span class="small">· intéressé</span>' : nt.interet === "non" ? ' <span class="small">· pas intéressé</span>' : ""}</span>
       <span class="p num">${eur(a.prix)}</span>
-      <span class="m">${TYPOS[a.typologie] || ""} · ${surf(a.surface_m2)} ${zone}${nt.suivi ? ` · ${SUIVIS[nt.suivi]}` : ""}</span>
+      <span class="m">${TYPOS[a.typologie] || ""} · ${surf(a.surface_m2)} ${zone}${nt.suivi ? ` · ${SUIVIS[nt.suivi]}` : ""}${(DOCS[a.id] || []).length ? ` · ${(DOCS[a.id] || []).length} doc.` : ""}</span>
       <span class="r num">${r != null ? `${Math.round(r * 100)} % DVF` : eurm2(a.prix_m2)}</span>
     </button>`;
   }).join("");
@@ -515,6 +525,58 @@ function links(a) {
   }
   return l;
 }
+// ---- Éléments complémentaires : textes et pièces jointes par annonce (base « documents » + stockage de fichiers) ----
+let assets = null;
+const DOCS = {};
+const fmtTaille = (n) => n >= 1048576 ? `${nf2.format(n / 1048576)} Mo` : `${nf0.format(Math.max(1, n / 1024))} Ko`;
+const fmtQuand = (s) => s ? new Date(s).toLocaleString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "";
+try { Object.assign(DOCS, JSON.parse(localStorage.getItem("vf-docs") || "{}")); } catch (e) {}
+function docsHtml(id) {
+  const l = (DOCS[id] || []).slice().sort((a, b) => (b.ajoute_le || "").localeCompare(a.ajoute_le || ""));
+  if (!l.length) return '<p class="small">Aucun élément pour l\'instant.</p>';
+  return l.map((d) => `<div class="doc">
+    <span>${d.type === "fichier" ? `<a href="${esc(d.url)}" target="_blank" rel="noopener">${esc(d.nom)}</a> <span class="quand">${fmtTaille(d.taille || 0)}</span>` : "<b>Note</b>"}</span>
+    <button class="suppr" data-suppr="${esc(d.doc_id)}">Supprimer</button>
+    <span class="quand">Ajouté le ${fmtQuand(d.ajoute_le)}</span>
+    ${d.type === "texte" ? `<div class="corps">${esc(d.texte)}</div>` : ""}
+  </div>`).join("");
+}
+function rafraichirDocs() { const el = document.getElementById("docs"); if (el && S.sel) el.innerHTML = docsHtml(S.sel); }
+function docsLocal() { try { localStorage.setItem("vf-docs", JSON.stringify(DOCS)); } catch (e) {} }
+async function ajouterDoc(data) {
+  const doc = { ...data, annonce_id: S.sel, ajoute_le: new Date().toISOString() };
+  if (db) {
+    const ref = await db.collection("documents").add(doc);
+    doc.doc_id = ref.id;
+  } else { doc.doc_id = "local-" + Date.now() + Math.random().toString(36).slice(2, 6); }
+  (DOCS[doc.annonce_id] ||= []).push(doc);
+  if (!db) docsLocal();
+  rafraichirDocs(); renderList(visibles());
+}
+async function supprimerDoc(docId) {
+  const id = S.sel, d = (DOCS[id] || []).find((x) => x.doc_id === docId);
+  if (!d) return;
+  if (db && !docId.startsWith("local-")) await db.collection("documents").doc(docId).delete();
+  if (d.type === "fichier" && assets && d.asset_id) { try { await assets.delete(d.asset_id); } catch (e) {} }
+  DOCS[id] = DOCS[id].filter((x) => x.doc_id !== docId);
+  if (!db) docsLocal();
+  rafraichirDocs(); renderList(visibles());
+}
+async function televerser(files) {
+  const etat = document.getElementById("d-etat");
+  for (const f of files) {
+    if (f.size > 20 * 1048576) { etat.textContent = `${f.name} : trop lourd (20 Mo maximum).`; continue; }
+    etat.textContent = `Envoi de ${f.name}…`;
+    try {
+      const r = await assets.upload(f);
+      await ajouterDoc({ type: "fichier", nom: f.name, url: r.url, asset_id: r.id, taille: r.sizeBytes, contentType: r.contentType });
+      etat.textContent = `${f.name} ajouté.`;
+    } catch (e) {
+      etat.textContent = `${f.name} : envoi impossible (${e?.code === "unsupported_type" ? "format non accepté" : e?.code === "too_large" ? "fichier trop lourd" : e?.message || "erreur"}).`;
+    }
+  }
+}
+
 const TYPE_CONTACT = { pro: "Professionnel", particulier: "Particulier", notaire: "Notaire" };
 function contactBlock(a, nt) {
   const c = a.contact;
@@ -602,6 +664,13 @@ function renderFiche() {
       <textarea id="n-texte" placeholder="Appel mairie, visite, avis du voisin, prix négocié…">${esc(nt.texte)}</textarea>
       <div class="note-row"><button class="btn" id="n-save">Enregistrer la note</button><span class="small" id="n-etat">${nt.maj_le ? `Modifiée le ${dfr(nt.maj_le)}` : ""}</span></div>
     </div>
+    <div class="sec"><h3>Éléments complémentaires</h3>
+      <div class="docs" id="docs">${docsHtml(a.id)}</div>
+      <textarea id="d-texte" placeholder="Coller ici les informations reçues : réponse du notaire, plan, références cadastrales, conditions…"></textarea>
+      <div class="note-row"><button class="btn" id="d-add">Ajouter ce texte</button><span class="small" id="d-etat"></span></div>
+      ${assets ? `<div class="drop" id="d-drop">Déposer des pièces jointes ici (PDF, photos, plans…) ou <label for="d-file">choisir des fichiers</label><input id="d-file" type="file" multiple hidden></div>`
+        : `<p class="small">${db ? "Pièces jointes indisponibles dans ce lecteur (réservées au propriétaire de la page)." : "Pièces jointes indisponibles : la base de la page ne répond pas."}</p>`}
+    </div>
     <div class="sec"><h3>Vérifier sur les sites officiels</h3><div class="links">${links(a).map(([l, h]) => `<a href="${esc(h)}" target="_blank" rel="noopener">${l} ↗</a>`).join("")}</div></div>
     <div class="sec"><h3>Texte de l'annonce</h3><p class="desc">${esc((a.description || "").replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]+>/g, ""))}</p>
       <p class="small">Vue pour la première fois le ${dfr(a.premiere_vue)} · publiée le ${dfr(a.date_publication)}</p></div>`;
@@ -624,13 +693,35 @@ document.getElementById("fiche").addEventListener("click", async (e) => {
     if (where !== "base") document.getElementById("n-adresse-etat").textContent = "Enregistrée dans ce navigateur seulement (base de la page indisponible).";
     return;
   }
+  if (e.target.id === "d-add") {
+    const ta = document.getElementById("d-texte"), txt = ta.value.trim();
+    if (!txt) return;
+    try { await ajouterDoc({ type: "texte", texte: txt }); ta.value = ""; document.getElementById("d-etat").textContent = "Texte ajouté."; }
+    catch (err) { document.getElementById("d-etat").textContent = "Enregistrement impossible, réessayez."; }
+    return;
+  }
+  const sup = e.target.closest("[data-suppr]");
+  if (sup) {
+    if (!sup.classList.contains("arm")) { sup.classList.add("arm"); sup.textContent = "Confirmer la suppression"; setTimeout(() => { sup.classList.remove("arm"); sup.textContent = "Supprimer"; }, 4000); return; }
+    try { await supprimerDoc(sup.dataset.suppr); } catch (err) { sup.textContent = "Échec, réessayez"; }
+    return;
+  }
   if (e.target.id === "n-save") {
     const where = await saveNote(S.sel, { texte: document.getElementById("n-texte").value });
     document.getElementById("n-etat").textContent = where === "base" ? "Enregistrée" : "Enregistrée dans ce navigateur";
     renderList(visibles());
   }
 });
+document.getElementById("fiche").addEventListener("dragover", (e) => { const z = e.target.closest("#d-drop"); if (z) { e.preventDefault(); z.classList.add("over"); } });
+document.getElementById("fiche").addEventListener("dragleave", (e) => { const z = e.target.closest("#d-drop"); if (z) z.classList.remove("over"); });
+document.getElementById("fiche").addEventListener("drop", (e) => {
+  const z = e.target.closest("#d-drop");
+  if (!z || !assets) return;
+  e.preventDefault(); z.classList.remove("over");
+  if (e.dataTransfer?.files?.length) televerser([...e.dataTransfer.files]);
+});
 document.getElementById("fiche").addEventListener("change", async (e) => {
+  if (e.target.id === "d-file" && e.target.files.length) { await televerser([...e.target.files]); e.target.value = ""; return; }
   if (e.target.id === "n-suivi") { await saveNote(S.sel, { suivi: e.target.value }); renderList(visibles()); renderHeader(visibles()); }
 });
 
@@ -678,11 +769,19 @@ render();
     if (!db) return;
     db.collection("notes").onSnapshot((snap) => {
       for (const doc of snap.docs) { const x = doc.data(); if (x?.id) notes[x.id] = x; }
-      const editing = ["n-texte", "n-adresse"].includes(document.activeElement?.id);
+      const editing = ["n-texte", "n-adresse", "d-texte"].includes(document.activeElement?.id);
       renderHeader(visibles());
       if (S.vue === "carte") renderList(visibles()); else if (S.vue === "tableau") renderTable(visibles());
       if (!editing) renderFiche();
     }, () => {});
+    db.collection("documents").onSnapshot((snap) => {
+      for (const k of Object.keys(DOCS)) delete DOCS[k];
+      for (const doc of snap.docs) { const x = doc.data(); if (x?.annonce_id) (DOCS[x.annonce_id] ||= []).push({ ...x, doc_id: doc.id }); }
+      rafraichirDocs();
+      if (S.vue === "carte") renderList(visibles());
+    }, () => {});
+    assets = window.claude?.use ? await window.claude.use("assets") : null;
+    if (assets && !["d-texte"].includes(document.activeElement?.id)) renderFiche();
   } catch (e) { db = null; }
 })();
 })();
