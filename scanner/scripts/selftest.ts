@@ -3,7 +3,7 @@ import fsx from 'node:fs';
 import { DEFAULT_SETTINGS, DEFAULT_ZONES } from '../src/lib/defaults';
 import { demoDvf, demoListings } from '../src/lib/demo';
 import { analyze, budgetFactor } from '../src/lib/scoring';
-import { detectRedFlags, parseListingText } from '../src/lib/detect';
+import { detectRedFlags, detectRent, isPro, parseListingText } from '../src/lib/detect';
 import { simulate } from '../src/lib/simulation';
 import type { DvfSource } from '../src/lib/dvf-query';
 import type { Listing } from '../src/lib/types';
@@ -75,5 +75,9 @@ import('node:fs').then(async (fs) => {
   const rf = detectRedFlags('Toiture à refaire. Aucune humidité. Pas de procédure en cours. Réfection toiture 2 ans. Infiltrations en sous-sol.').map((x) => x.id);
   check(rf.join(',') === 'toiture,infiltration', `Red flags : ${rf.join(',')}`);
   check(budgetFactor(120000, DEFAULT_SETTINGS).k > 1 && budgetFactor(300000, DEFAULT_SETTINGS).k < 0.7, 'Budget : projet < 150 k€ remonté, > 250 k€ abaissé');
+  // entrepôts : type, prix malgré une ligne « loyer » juste avant, loyer annuel, segment
+  const wh = parseListingText("Vente Local d'activités 600 m²\n3 Rue Thomas Edison, 44118 La Chevrolière\nUne cellule est louée pour un loyer de 13 740 Euros HT/an.\n720 000 €");
+  check(wh.lots[0]?.type === 'entrepot' && wh.price === 720000 && wh.surface === 600, `Entrepôt : ${wh.lots[0]?.type}, ${wh.price} €, ${wh.surface} m²`);
+  check(detectRent('Loyer mensuel actuel 1600 € HT et HC') === 19200 && isPro(wh), 'Entrepôt : loyer mensuel annualisé, segment pro');
   process.exit(fails ? 1 : 0);
 });

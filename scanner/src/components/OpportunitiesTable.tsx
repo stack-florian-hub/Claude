@@ -6,7 +6,7 @@ import { downloadCsv } from '@/lib/csv';
 import { eur, keur, pct } from '@/lib/util';
 
 export interface OppRow {
-  id: string; title: string; url?: string; source: string; network?: string; networkName?: string; agency?: string; offMarket?: boolean; strategy?: 'lots' | 'global'; seller: string; city: string; cp: string; dept: string; zone?: string; tension: number;
+  id: string; title: string; url?: string; source: string; network?: string; networkName?: string; agency?: string; offMarket?: boolean; strategy?: 'lots' | 'global' | 'pro'; rentYield?: number; segment?: 'logement' | 'pro'; seller: string; city: string; cp: string; dept: string; zone?: string; tension: number;
   lots: { type: string; surface?: number }[]; price: number; low: number; mid: number; high: number; ecart: number;
   gain: number; gainLow: number; gainHigh: number; gainPct: number; ratio: number; score: number; confidence: number; flagged: boolean;
   cash: number; priceMax: number; age: number; status: string; signals: string[]; warnings: string[]; dpe?: string; drop: number; demo?: boolean; redFlags?: string[]; travaux?: number;
@@ -14,10 +14,14 @@ export interface OppRow {
 
 type Key = keyof OppRow;
 const scoreColor = (s: number) => (s >= 65 ? 'var(--good)' : s >= 45 ? 'var(--warn)' : 'var(--muted)');
-const PREF_KEY = 'scanner.filtres.v4';
+const PREF_KEY_LOGEMENT = 'scanner.filtres.v4';
 
-export default function OpportunitiesTable({ rows, budget, elargi, minGain, minGainPct }: { rows: OppRow[]; budget: number; elargi: number; minGain: number; minGainPct: number }) {
+export default function OpportunitiesTable({ rows: all, budget, elargi, minGain, minGainPct, segment = 'logement' }: { rows: OppRow[]; budget: number; elargi: number; minGain: number; minGainPct: number; segment?: 'logement' | 'pro' }) {
   const router = useRouter();
+  const pro = segment === 'pro';
+  // onglet Appartements / Maisons ou onglet Entrepôts & locaux
+  const rows = useMemo(() => all.filter((r) => (r.segment ?? 'logement') === segment), [all, segment]);
+  const PREF_KEY = pro ? 'scanner.filtres.pro.v1' : PREF_KEY_LOGEMENT;
   const depts = [...new Set(rows.map((r) => r.dept))].sort();
   const networks = [...new Map(rows.filter((r) => r.network).map((r) => [r.network!, r.networkName || r.network!])).entries()].sort((a, b) => a[1].localeCompare(b[1]));
   const [f, setF] = useState({ dept: '', city: '', budget: 'tous', type: '', gainMin: '', ageMax: '', flagged: false, nego: false, negEcart: false, status: 'actifs', source: '', seller: '', q: '' });
@@ -46,7 +50,8 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
       if (f.type === 'groupe' && (r.lots.length < 2 || r.strategy === 'global')) return false;
       if (f.type === 'maisons' && r.strategy !== 'global') return false;
       if (f.type === 'multiapp' && r.lots.filter((l) => l.type === 'appartement').length < 2) return false;
-      if (f.type && !['copro', 'groupe', 'multiapp', 'maisons'].includes(f.type) && !r.lots.some((l) => l.type === f.type)) return false;
+      if (f.type === 'loue' && !r.rentYield) return false;
+      if (f.type && !['copro', 'groupe', 'multiapp', 'maisons', 'loue'].includes(f.type) && !r.lots.some((l) => l.type === f.type)) return false;
       if (f.gainMin && r.gain < +f.gainMin) return false;
       if (f.ageMax && r.age > +f.ageMax) return false;
       if (f.flagged && !r.flagged) return false;
@@ -76,10 +81,10 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
   );
 
   function exportCsv() {
-    downloadCsv('opportunites', list.map((r) => ({
+    downloadCsv(pro ? 'entrepots' : 'opportunites', list.map((r) => ({
       score: r.score, alerte: r.flagged ? 'oui' : '', titre: r.title, ville: r.city, cp: r.cp, zone: r.zone, reseau: r.networkName || SOURCE_LABELS[r.source], agence: r.agency, vendeur: SELLER_LABELS[r.seller],
       lots: r.lots.map((l) => LOT_LABELS[l.type] + (l.surface ? ` ${l.surface}m²` : '')).join(' + '), prix: r.price, estimation_basse: r.low, estimation_moyenne: r.mid, estimation_haute: r.high,
-      ecart: r.ecart, travaux: r.travaux, red_flags: (r.redFlags || []).join(' | '), gain_brut: r.gain, gain_pct: +(r.gainPct * 100).toFixed(1), ratio: +r.ratio.toFixed(2), offre_max: r.priceMax, cash_necessaire: r.cash, confiance: +(r.confidence * 100).toFixed(0), anciennete_j: r.age, statut: r.status, url: r.url,
+      ecart: r.ecart, rendement_brut_pct: r.rentYield ? +(r.rentYield * 100).toFixed(1) : '', travaux: r.travaux, red_flags: (r.redFlags || []).join(' | '), gain_brut: r.gain, gain_pct: +(r.gainPct * 100).toFixed(1), ratio: +r.ratio.toFixed(2), offre_max: r.priceMax, cash_necessaire: r.cash, confiance: +(r.confidence * 100).toFixed(0), anciennete_j: r.age, statut: r.status, url: r.url,
     })));
   }
 
@@ -90,7 +95,8 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
         <div className="kpi"><div className="l">Alertes (gain &gt; {keur(minGain)} ou &gt; {minGainPct} %)</div><div className="v pos">{flagged.length}</div></div>
         <div className="kpi"><div className="l">Gain brut potentiel (alertes)</div><div className="v">{keur(flagged.reduce((a, r) => a + r.gain, 0))}</div></div>
         <div className="kpi"><div className="l">Alertes finançables ≤ {keur(budget)}</div><div className="v">{flagged.filter((r) => r.cash <= budget).length}</div><div className="s">cash nécessaire ≤ trésorerie</div></div>
-        <div className="kpi"><div className="l">Lots groupés</div><div className="v">{list.filter((r) => r.lots.length > 1).length}</div></div>
+        {pro ? <div className="kpi"><div className="l">Loués (loyer cité)</div><div className="v">{list.filter((r) => r.rentYield).length}</div><div className="s">rendement brut médian {(() => { const y = list.filter((r) => r.rentYield).map((r) => r.rentYield!).sort((a, b) => a - b); return y.length ? `${(y[Math.floor(y.length / 2)] * 100).toFixed(1)} %` : '–'; })()}</div></div>
+          : <div className="kpi"><div className="l">Lots groupés</div><div className="v">{list.filter((r) => r.lots.length > 1).length}</div></div>}
       </div>
 
       <div className="filters">
@@ -108,8 +114,10 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
         </label>
         <label>Type de lot
           <select value={f.type} onChange={(e) => setF({ ...f, type: e.target.value })}>
-            <option value="">Tous</option><option value="copro">Copropriété (lots)</option><option value="groupe">Lots groupés en copropriété</option><option value="multiapp">Plusieurs appartements</option><option value="maisons">Maisons (décote, travaux, terrain)</option>
-            {Object.entries(LOT_LABELS).map(([k, l]) => <option key={k} value={k}>{l}</option>)}
+            <option value="">Tous</option>
+            {pro ? <><option value="entrepot">{LOT_LABELS.entrepot}</option><option value="local">{LOT_LABELS.local}</option><option value="loue">Loués (rendement)</option></> : <>
+            <option value="copro">Copropriété (lots)</option><option value="groupe">Lots groupés en copropriété</option><option value="multiapp">Plusieurs appartements</option><option value="maisons">Maisons (décote, travaux, terrain)</option>
+            {Object.entries(LOT_LABELS).filter(([k]) => k !== 'entrepot' && k !== 'local').map(([k, l]) => <option key={k} value={k}>{l}</option>)}</>}
           </select>
         </label>
         <label>Gain min (€)<input type="number" value={f.gainMin} onChange={(e) => setF({ ...f, gainMin: e.target.value })} step={5000} /></label>
@@ -141,7 +149,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
               {th('city', 'Lieu', false)}
               <th>Lots</th>
               {th('price', 'Prix affiché')}
-              {th('mid', 'Σ lots séparés')}
+              {th('mid', pro ? 'Valeur DVF' : 'Σ lots séparés')}
               {th('ecart', 'Écart')}
               {th('gain', 'Gain brut')}
               {th('gainPct', 'Gain / prix')}
@@ -155,7 +163,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
           <tbody>
             {list.map((r) => (
               <tr key={r.id} className={'click' + (r.flagged ? ' flag' : '')} onClick={() => router.push(`/opportunites/${r.id}`)} style={r.status === 'ecarte' ? { opacity: 0.5 } : undefined}>
-                <td className="num"><span className="score" style={{ color: scoreColor(r.score) }}>{r.score}</span>{r.flagged && <div><span className={'tag ' + (r.strategy === 'global' ? 'warn' : 'good')} style={{ marginTop: 2 }}>{r.strategy === 'global' ? 'décote maison' : 'lots copro'}</span></div>}
+                <td className="num"><span className="score" style={{ color: scoreColor(r.score) }}>{r.score}</span>{r.flagged && <div><span className={'tag ' + (r.strategy === 'lots' ? 'good' : 'warn')} style={{ marginTop: 2 }}>{r.strategy === 'global' ? 'décote maison' : r.strategy === 'pro' ? 'décote local' : 'lots copro'}</span></div>}
                   {!r.flagged && r.priceMax < r.price && r.priceMax >= r.price * 0.8 && r.confidence >= 0.3 && <div><span className="tag grey" style={{ marginTop: 2 }} title="Rentable si le prix descend jusqu’à l’offre maximale">à négocier −{Math.round((1 - r.priceMax / r.price) * 100)} %</span></div>}</td>
                 <td className="wrap" style={{ minWidth: 240, maxWidth: 340 }}>
                   {r.title}
@@ -165,7 +173,7 @@ export default function OpportunitiesTable({ rows, budget, elargi, minGain, minG
                 <td>{r.city}<div className="small muted">{r.cp} · {r.zone ? `T${r.tension}` : 'hors zone'}</div></td>
                 <td className="wrap" style={{ maxWidth: 200 }}>{r.lots.map((l, i) => <span key={i} className={'tag' + (r.lots.length > 1 ? ' good' : '')}>{LOT_LABELS[l.type]}{l.surface ? ` ${l.surface}` : ''}</span>)}</td>
                 <td className="num">{eur(r.price)}</td>
-                <td className="num">{eur(r.mid)}<div className="small muted">{r.strategy === 'global' ? 'valeur globale' : `${keur(r.low)} – ${keur(r.high)}`}</div></td>
+                <td className="num">{eur(r.mid)}<div className="small muted">{r.strategy === 'global' ? 'valeur globale' : `${keur(r.low)} – ${keur(r.high)}`}</div>{r.rentYield ? <div className="small"><span className="tag good">loué · {(r.rentYield * 100).toFixed(1)} % brut</span></div> : null}</td>
                 <td className={'num ' + (r.ecart > 0 ? 'pos' : 'neg')}>{eur(r.ecart)}</td>
                 <td className={'num ' + (r.gain > 0 ? 'pos' : 'neg')}><b>{eur(r.gain)}</b><div className="small muted">{keur(r.gainLow)} – {keur(r.gainHigh)}</div>{!!r.travaux && <div className="small muted">dont travaux −{keur(r.travaux)}</div>}</td>
                 <td className={'num ' + (r.gainPct > 0 ? 'pos' : 'neg')}>{pct(r.gainPct)}<div className="small muted">ratio {r.ratio.toFixed(2)}</div></td>

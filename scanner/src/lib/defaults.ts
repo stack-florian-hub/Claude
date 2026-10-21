@@ -71,7 +71,7 @@ export const DEFAULT_SETTINGS: Settings = {
     2: { garage: { low: 12000, mid: 17000, high: 22000 }, parking: { low: 8000, mid: 12000, high: 15000 }, cave: { low: 3000, mid: 4500, high: 6000 } },
     3: { garage: { low: 18000, mid: 24000, high: 30000 }, parking: { low: 12000, mid: 16000, high: 20000 }, cave: { low: 5000, mid: 6500, high: 8000 } },
   },
-  resaleMonths: { appartement: 5, maison: 6, garage: 3, parking: 3, cave: 4, local: 8, terrain: 9, autre: 6 },
+  resaleMonths: { appartement: 5, maison: 6, garage: 3, parking: 3, cave: 4, local: 8, entrepot: 9, terrain: 9, autre: 6 },
   dvf: { years: 3, minStreet: 3, minCommune: 5, useDemo: true },
   connectors: { castorus: { enabled: false }, meilleursAgents: { enabled: false }, geocode: true },
   treasury: {
@@ -84,7 +84,7 @@ export const DEFAULT_SETTINGS: Settings = {
 };
 
 export const LOT_LABELS: Record<string, string> = {
-  appartement: 'Appartement', maison: 'Maison', garage: 'Garage / box', parking: 'Parking', cave: 'Cave', local: 'Local', terrain: 'Terrain', autre: 'Autre',
+  appartement: 'Appartement', maison: 'Maison', garage: 'Garage / box', parking: 'Parking', cave: 'Cave', local: 'Local commercial / bureau', entrepot: 'Entrepôt / local d’activité', terrain: 'Terrain', autre: 'Autre',
 };
 export const SOURCE_LABELS: Record<string, string> = {
   seloger: 'SeLoger', leboncoin: 'Leboncoin', logicimmo: 'Logic-Immo', bienici: 'Bien’ici', pap: 'PAP', reseau: 'Site du réseau', notaires: 'Notaires', manuel: 'Manuel', autre: 'Autre',

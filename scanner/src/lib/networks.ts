@@ -6,7 +6,7 @@
 export interface Network {
   id: string;
   name: string;
-  kind: 'agence' | 'notaires';
+  kind: 'agence' | 'notaires' | 'pro'; // pro = immobilier d'entreprise (entrepôts, locaux d'activité)
   domains: string[];
   site: string; // page d'annonces de vente
   connector?: boolean;
@@ -29,6 +29,9 @@ export const NETWORKS: Network[] = [
   { id: 'ladresse', name: 'L’Adresse', kind: 'agence', domains: ['ladresse.com'], site: 'https://www.ladresse.com/' },
   { id: 'cimm', name: 'CIMM Immobilier', kind: 'agence', domains: ['cimm.com', 'cimm-immobilier.fr'], site: 'https://cimm.com/' },
   { id: 'laresidence', name: 'La Résidence', kind: 'agence', domains: ['laresidence.fr'], site: 'https://www.laresidence.fr/' },
+  { id: 'bureauxlocaux', connector: true, name: 'BureauxLocaux (immobilier d’entreprise)', kind: 'pro', domains: ['bureauxlocaux.com'], site: 'https://www.bureauxlocaux.com/', note: 'Entrepôts et locaux d’activité à vendre, adresse précise ; listes départementales autorisées par robots.txt (vérifié le 21/10/2026).' },
+  { id: 'arthurloyd', connector: true, name: 'Arthur Loyd', kind: 'pro', domains: ['arthur-loyd.com'], site: 'https://www.arthur-loyd.com/locaux-activite-entrepots-vente', note: 'Réseau spécialisé locaux d’activité ; offres lues depuis le plan de site (prix souvent donné au m² hors droits).' },
+  { id: 'geolocaux', name: 'Geolocaux', kind: 'pro', domains: ['geolocaux.com'], site: 'https://www.geolocaux.com/vente/entrepot/', note: 'Pages chargées en JavaScript : capture manuelle (collage).' },
   { id: 'immonot', connector: true, name: 'Immonot (notaires)', kind: 'notaires', domains: ['immonot.com'], site: 'https://www.immonot.com/', note: 'Annonces des offices notariaux, successions fréquentes.' },
   { id: 'notairesfr', name: 'Immobilier.notaires.fr', kind: 'notaires', domains: ['immobilier.notaires.fr', 'notaires.fr'], site: 'https://www.immobilier.notaires.fr/' },
   { id: '36h', name: '36h immo (vente notariale interactive)', kind: 'notaires', domains: ['36heures.immo', '36h-immo.com'], site: 'https://www.36heures.immo/', note: 'Prix de départ attractif, enchères en ligne sur 36 h.' },
@@ -46,6 +49,7 @@ export function detectNetwork(url?: string, text = ''): Network | undefined {
     ['ajp', /\bajp immobilier\b|\bajp\b/], ['century21', /century ?21/], ['orpi', /\borpi\b/], ['laforet', /\blafor[eê]t\b/], ['guyhoquet', /guy hoquet/],
     ['era', /\bera immobilier\b/], ['stephaneplaza', /st[ée]phane plaza/], ['squarehabitat', /square habitat/], ['nestenn', /\bnestenn\b/], ['citya', /\bcitya\b/],
     ['foncia', /\bfoncia\b/], ['arthurimmo', /arthurimmo/], ['ladresse', /l['’]adresse immobili|agence l['’]adresse/], ['cimm', /\bcimm\b/], ['laresidence', /\bla r[ée]sidence immobili/],
+    ['bureauxlocaux', /bureauxlocaux/], ['arthurloyd', /arthur ?loyd/], ['geolocaux', /geolocaux/],
     ['immonot', /immonot/], ['notairesfr', /immobilier\.notaires\.fr|notaires de france/], ['36h', /36 ?h(?:eures)?[- ]immo/],
   ];
   const k = KEYS.find(([, re]) => re.test(t));

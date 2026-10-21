@@ -1,6 +1,6 @@
 // Modèle de données du scanner. Voir ARCHITECTURE.md §3.
 
-export type LotType = 'appartement' | 'maison' | 'garage' | 'parking' | 'cave' | 'local' | 'terrain' | 'autre';
+export type LotType = 'appartement' | 'maison' | 'garage' | 'parking' | 'cave' | 'local' | 'entrepot' | 'terrain' | 'autre';
 export type Source = 'seloger' | 'leboncoin' | 'logicimmo' | 'bienici' | 'pap' | 'reseau' | 'notaires' | 'manuel' | 'autre';
 export type SellerType = 'particulier' | 'agence' | 'justice' | 'notaire' | 'inconnu';
 export type Dpe = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
@@ -126,7 +126,9 @@ export interface Analysis {
   cashNeeded: number; // apport + frais + travaux si financé, sinon prix + frais + travaux
   resaleMonths: number;
   priceCaps: { breakEven: number; forMinGain: number; forMinPct: number; max: number }; // offre / enchère maximale
-  strategy: 'lots' | 'global'; // lots = revente par lots de copropriété ; global = maison / terrain (valeur d'ensemble, hors stratégie)
+  strategy: 'lots' | 'global' | 'pro'; // lots = revente par lots de copropriété ; global = maison / terrain ; pro = entrepôt / local d'activité ou commercial
+  rentYield?: number; // rendement brut (loyer annuel / prix) quand un loyer est cité
+  rentAnnual?: number;
 }
 
 export type DealStage = 'repere' | 'visite' | 'offre' | 'signe' | 'revente' | 'clos' | 'abandonne';

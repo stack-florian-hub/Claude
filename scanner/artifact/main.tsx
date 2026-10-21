@@ -83,13 +83,13 @@ function Page() {
     case '/import':
       return (
         <>
-          <Head title="Import d’annonces" sub="Collez une annonce d’agence, de notaire ou de particulier : réseau, lots groupés et valeur DVF sont calculés tout de suite. Les annonces AJP arrivent seules chaque lundi." />
+          <Head title="Import d’annonces" sub="Collez une annonce d’agence, de notaire ou de particulier : réseau, lots groupés et valeur DVF sont calculés tout de suite. Les annonces des réseaux suivis arrivent seules chaque lundi." />
           <ImportPanel />
           <div className="panel"><h3>Formats acceptés</h3><table><tbody>{LISTING_PROVIDERS.filter((p) => p.available).map((p) => <tr key={p.id}><td>{p.label}</td><td className="wrap muted">{p.description}</td></tr>)}</tbody></table></div>
         </>
       );
     case '/reseaux':
-      return (<><Head title="Réseaux" sub="Grands réseaux d’agences et canaux notariaux. AJP est collecté automatiquement chaque lundi ; les autres se capturent depuis leur site (Import)." /><NetworksView rows={rows()} lastCollect={S.data?.meta.collecte ? frDate(S.data.meta.collecte.date) : undefined} /></>);
+      return (<><Head title="Réseaux" sub="Grands réseaux d’agences et canaux notariaux. Collecte automatique chaque lundi pour AJP, Century 21, Laforêt, Immonot, BureauxLocaux et Arthur Loyd ; les autres se capturent depuis leur site (Import)." /><NetworksView rows={rows()} lastCollect={S.data?.meta.collecte ? frDate(S.data.meta.collecte.date) : undefined} /></>);
     case '/marches':
       return (<><Head title="Marchés" sub="Vos communes comparées sur la DVF : prix, tendance, liquidité, dépendances et prime de revente séparée." /><MarketsView rows={S.data?.markets || []} /></>);
     case '/pipeline':
@@ -100,11 +100,19 @@ function Page() {
       return (<><Head title="Groupe TUÉ et Fils" sub="Financière TUÉ et Fils · Immobilière TUÉ et Fils · SCI du Hameau de la Vie. Matrices modifiables." /><GroupView settings={s} deals={S.deals} /></>);
     case '/parametres':
       return (<><Head title="Paramètres" sub="Hypothèses de calcul, zones cibles et données." /><SettingsView settings={s} zones={S.zones} dvf={(S.data?.meta.dvf || []).map((d) => ({ dept: d.dept, kind: 'reel', n: d.n, years: d.years, refDate: d.refDate, sizeMb: 0 }))} /></>);
+    case '/entrepots':
+      return (
+        <>
+          <Head title="Entrepôts & locaux" sub="Entrepôts, locaux d’activité et murs commerciaux à vendre (BureauxLocaux, Arthur Loyd, notaires, agences), comparés aux ventes DVF de locaux de surface proche. Rendement brut quand un loyer est cité."
+            right={<button className="primary" onClick={() => navigate('/import')}>+ Coller une annonce</button>} />
+          <OpportunitiesTable segment="pro" rows={rows()} budget={s.budget.cash} elargi={s.budget.elargi} minGain={s.thresholds.minGain} minGainPct={s.thresholds.minGainPct} />
+        </>
+      );
     default: {
       const rs = rows();
       return (
         <>
-          <Head title="Opportunités" sub="Chaque annonce est découpée en lots revendables séparément et comparée aux ventes réelles (DVF). Tri par score d’anomalie."
+          <Head title="Appartements / Maisons" sub="Chaque annonce est découpée en lots revendables séparément et comparée aux ventes réelles (DVF). Tri par score d’anomalie."
             right={<button className="primary" onClick={() => navigate('/import')}>+ Coller une annonce</button>} />
           <Weekly />
           <OpportunitiesTable rows={rs} budget={s.budget.cash} elargi={s.budget.elargi} minGain={s.thresholds.minGain} minGainPct={s.thresholds.minGainPct} />

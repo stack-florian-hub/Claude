@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const LINKS = [
-  ['/opportunites', 'Opportunités'],
+  ['/opportunites', 'Appartements / Maisons'],
+  ['/entrepots', 'Entrepôts & locaux'],
   ['/import', 'Import d’annonces'],
   ['/reseaux', 'Réseaux'],
   ['/marches', 'Marchés'],

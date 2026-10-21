@@ -36,7 +36,7 @@ const RED_FLAGS: [RedFlag, RegExp][] = [
   [{ id: 'humidite', label: 'Humidité / salpêtre', cost: (m) => m * 40 }, /humidit[ée]|remont[ée]es? capillaires?|salp[êe]tre|moisissures?/i],
   [{ id: 'fissures', label: 'Fissures / mouvement de structure', severe: true }, /fissures?|l[ée]zardes?|affaissement|tassement|mouvements? de terrain|reprise (?:en sous-[œo]euvre|de structure)/i],
   [{ id: 'xylophages', label: 'Mérule / termites / insectes xylophages', severe: true }, /m[ée]rule|termites?|capricornes?|xylophages?|vrillettes?/i],
-  [{ id: 'amiante', label: 'Présence d’amiante ou de plomb', severe: true }, /pr[ée]sence (?:d'|d’)?(?:amiante|plomb)|amiante (?:d[ée]tect[ée]e|pr[ée]sente|rep[ée]r[ée]e)|crep positif|plomb (?:d[ée]tect[ée]|au-dessus)/i],
+  [{ id: 'amiante', label: 'Présence d’amiante ou de plomb', severe: true }, /pr[ée]sence (?:d'|d’)?(?:amiante|plomb)|amiante (?:d[ée]tect[ée]e|pr[ée]sente|rep[ée]r[ée]e)|fibro-?ciment|\bfibro\b|toiture amiant|bac amiant|crep positif|plomb (?:d[ée]tect[ée]|au-dessus)/i],
   [{ id: 'assainissement', label: 'Assainissement non conforme', cost: () => 10000 }, /assainissement[^.\n]{0,25}non[- ]conforme|fosse (?:septique )?[àa] (?:refaire|changer|mettre aux normes)|mise aux normes de l'assainissement|spanc[^.\n]{0,30}non/i],
   [{ id: 'electricite', label: 'Électricité à refaire', cost: (m) => m * 80 }, /[ée]lectricit[ée][^.\n]{0,20}[àa] (?:refaire|reprendre|revoir|mettre aux normes)|installation [ée]lectrique[^.\n]{0,25}(?:non conforme|v[ée]tuste|[àa] refaire)/i],
   [{ id: 'inondable', label: 'Zone inondable / submersion', severe: true }, /zone inondable|risque (?:d'|d’)?(?:inondation|submersion)|\bppri\b|submersion marine/i],
@@ -74,8 +74,27 @@ export function detectLand(text: string): number | undefined {
   return v >= 50 && v < 500000 ? v : undefined;
 }
 
-export function detectSpecial(text: string): Special[] {
-  return SPECIALS.filter(([, re]) => re.test(text)).map(([sp]) => sp);
+export function detectSpecial(text: string, pro = false): Special[] {
+  // segment entrepôts / locaux : « local commercial », « hangar », « vendu loué » font partie du produit
+  return SPECIALS.filter(([sp, re]) => !(pro && ['local', 'batiment', 'loue', 'rehab'].includes(sp.id)) && re.test(text)).map(([sp]) => sp);
+}
+
+/** Annonce du segment entrepôts / locaux d'activité ou commerciaux (onglet dédié). */
+export function isPro(l: { lots: { type: string }[] }) {
+  return l.lots.some((x) => x.type === 'entrepot' || x.type === 'local');
+}
+
+/** Loyer annuel cité (« loyer annuel 13 740 € HT », « loyer mensuel 1 600 € HT » → × 12). */
+export function detectRent(text: string): number | undefined {
+  // cession de bail / fonds : le loyer est payé par l'acquéreur, ce n'est pas un revenu
+  const t0 = text.replace(/fonds et\/ou murs commerciaux/gi, ''); // intitulé de rubrique Immonot
+  if (/pas[- ]de[- ]porte|droit au bail|cession (?:de|du) bail|reprise du bail|fonds de commerce|loyer (?:attractif|mod[ée]r[ée])|dernier CA|chiffre d'affaires/i.test(t0) && !/\bmurs\b/i.test(t0)) return undefined;
+  const m = text.match(/loyer[^.\n€]{0,40}?(\d[\d\s\u00a0\u202f.]{2,9}(?:,\d+)?)\s*(?:€|euros?)\s*(?:HT|HC|TTC|\s)*\s*(?:\/\s*|par\s*)?(an|mois|annuel|mensuel|trimestre)?/i);
+  if (!m) return undefined;
+  const v = parseFloat(m[1].replace(/[\s\u00a0\u202f.]/g, '').replace(',', '.'));
+  const per = (m[2] || (/(?:mensuel|par mois)/i.test(m[0]) ? 'mois' : /(?:annuel|par an|\/an)/i.test(m[0]) ? 'an' : '')).toLowerCase();
+  const annual = per.startsWith('mois') || per === 'mensuel' ? v * 12 : per === 'trimestre' ? v * 4 : v;
+  return annual >= 1200 && annual <= 2000000 ? Math.round(annual) : undefined;
 }
 
 const WORDS: Record<string, number> = { un: 1, une: 1, deux: 2, trois: 3, quatre: 4, cinq: 5, six: 6 };
@@ -103,8 +122,12 @@ export function detectSeller(t: string, src?: Source): SellerType {
   return 'inconnu';
 }
 
+const WAREHOUSE = /\b(entrep[ôo]ts?|loca(?:l|ux) d['’]activit[ée]s?|b[âa]timents? (?:industriels?|d['’]activit[ée]s?|de stockage)|hangars?|ateliers?|plateforme logistique|cellules? d['’]activit[ée]s?|local de stockage|loca(?:l|ux) industriels?)\b/;
+
 export function detectMainType(t: string): LotType {
   const s = t.toLowerCase();
+  // titre d'annonce d'entrepôt / local d'activité (le bien principal est nommé en tête)
+  if (WAREHOUSE.test(s.split('\n')[0]) && !/\b(maison|appartement|villa|long[eè]re)\b/.test(s.split('\n')[0])) return 'entrepot';
   if (/\b(maison|pavillon|long[eè]re|villa|corps de ferme)\b/.test(s)) return 'maison';
   if (/\b(appartement|studio|duplex|triplex|loft)\b|\b[tf]\d\b/.test(s)) return 'appartement';
   if (/\b(local commercial|local professionnel|bureaux?|commerce|boutique)\b/.test(s)) return 'local';
@@ -161,7 +184,8 @@ export function buildLots(main: LotType, surface: number | undefined, rooms: num
 function pickPrice(t: string): number | undefined {
   const re = /(\d{1,3}(?:[\s  .]\d{3})+|\d{4,7})(?:,\d{2})?\s*(?:€|euros?\b|EUR\b)/gi;
   const cands: { v: number; ctx: string }[] = [];
-  for (const m of t.matchAll(re)) cands.push({ v: toNum(m[1]), ctx: t.slice(Math.max(0, m.index! - 35), m.index!).toLowerCase() });
+  // contexte : 35 caractères avant le montant, sur la même ligne (un « loyer » de la ligne précédente ne disqualifie pas le prix)
+  for (const m of t.matchAll(re)) cands.push({ v: toNum(m[1]), ctx: t.slice(Math.max(0, m.index! - 35), m.index!).split('\n').pop()!.toLowerCase() });
   const ok = cands.filter((c) => c.v >= 1000 && !/charges?|taxe|honoraires|frais|loyer|mensualit|\/m|par m|caution|d[ée]p[oô]t/.test(c.ctx));
   const labelled = ok.find((c) => /prix|vendu|vente|adjudication|net vendeur|fai/.test(c.ctx) && !/mise [àa] prix/.test(c.ctx));
   return (labelled ?? ok[0])?.v;
@@ -226,7 +250,7 @@ export function parseListingText(raw: string, url?: string): ListingInput & { pa
     streetM = m;
   }
   // « place de stationnement », « résidence principale… », fragments de phrase : pas une adresse
-  if (streetM && (/stationnement|parking|investissement|[ée]tage|\bpour\b|\bavec\b|principale|s[ée]curis|proximit|commerces|calme|standing|services|seniors?/i.test(streetM[2]) || streetM[2].split(/\s+/).length > 7)) streetM = null;
+  if (streetM && (/stationnement|parking|investissement|[ée]tage|\bpour\b|\bavec\b|principale|s[ée]curis|proximit|commerces|calme|standing|services|seniors?|portes?|portails?|sectionnel|quais? (?:de|et)\b/i.test(streetM[2]) || streetM[2].split(/\s+/).length > 7)) streetM = null;
   const dpeM = text.match(/(?:DPE|classe [ée]nerg(?:[ée]tique|ie)|consommation [ée]nerg[ée]tique|[ée]tiquette [ée]nergie|diagnostic de performance [ée]nerg[ée]tique(?:\s*\(DPE\))?)[)\s:]*(?:classe\s*)?([A-G])\b/i);
   const chM = text.match(/charges?[^\d\n]{0,30}(\d[\d\s .]*)\s*€\s*(?:\/|par)?\s*(an|mois|trimestre)?/i);
   let chargesAnnual: number | undefined;

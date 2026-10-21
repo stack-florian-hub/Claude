@@ -17,7 +17,7 @@ export default function OpportunitesPage() {
     <>
       <div className="head">
         <div>
-          <h1>Opportunités</h1>
+          <h1>Appartements / Maisons</h1>
           <p className="muted">Chaque annonce est découpée en lots revendables séparément et valorisée sur la DVF. Tri par score d’anomalie.</p>
         </div>
         <Link href="/import" className="btn primary">+ Importer des annonces</Link>

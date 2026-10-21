@@ -14,7 +14,7 @@ export interface DvfSource {
   slice(addr: Address): DvfSlice;
 }
 
-const TYPE_CODE: Partial<Record<SubLot['type'], DvfMutation['t']>> = { appartement: 'A', maison: 'M', local: 'L' };
+const TYPE_CODE: Partial<Record<SubLot['type'], DvfMutation['t']>> = { appartement: 'A', maison: 'M', local: 'L', entrepot: 'L' };
 
 function toComparable(m: DvfMutation, addr: Address): Comparable {
   return {
@@ -88,16 +88,19 @@ function valueBuilt(lot: SubLot, listing: Listing, pool: DvfSlice, s: Settings):
   const surf = lot.surface ?? (listing.lots.length === 1 ? listing.surface : undefined);
   const adj = dependencyAdjustment(pool);
   const net = (m: DvfMutation) => Math.max(m.v * 0.5, m.v - m.nd * adj);
+  // entrepôts : DVF range commerces, bureaux et entrepôts sous « Local » ; la bande de surface large (±50 %, ≥ 50 m²)
+  // écarte les boutiques et garde surtout les locaux d'activité
+  const wh = lot.type === 'entrepot';
   const ok = (m: DvfMutation) => {
-    if (m.t !== t || !m.s || m.s < 9) return false;
+    if (m.t !== t || !m.s || m.s < (wh ? Math.max(80, (surf ?? 0) * 0.5) : 9)) return false;
     const ppm = net(m) / m.s;
-    if (ppm < 300 || ppm > 20000) return false;
+    if (ppm < (t === 'L' ? 100 : 300) || ppm > 20000) return false;
     // maisons : bande de surface plus étroite (le €/m² baisse vite avec la surface)
-    const band = t === 'M' ? 0.25 : 0.4;
+    const band = t === 'M' ? 0.25 : wh ? 0.5 : 0.4;
     return !surf || (m.s >= surf * (1 - band) && m.s <= surf * (1 + band));
   };
   // maisons : terrain, état et annexes pèsent lourd → fourchette prudente (P20 / P40 / P60)
-  const Q = t === 'M' ? [0.2, 0.4, 0.6] : [0.25, 0.5, 0.75];
+  const Q = t === 'M' ? [0.2, 0.4, 0.6] : wh ? [0.25, 0.45, 0.65] : [0.25, 0.5, 0.75];
   for (const tier of tiers(pool, listing.address, ok, s)) {
     if (tier.list.length < tier.minN) continue;
     const used = tier.list;
@@ -110,12 +113,20 @@ function valueBuilt(lot: SubLot, listing: Listing, pool: DvfSlice, s: Settings):
           return { low: round(quantile(v, 0.25)), mid: round(quantile(v, 0.5)), high: round(quantile(v, 0.75)) };
         })();
     const notes: string[] = [];
-    let conf = tier.conf(used.length) * (surf ? 1 : 0.6) * (t === 'M' ? 0.7 : 1);
+    let conf = tier.conf(used.length) * (surf ? 1 : 0.6) * (t === 'M' || t === 'L' ? 0.7 : 1);
     if (!surf) notes.push('Surface inconnue : valeur médiane des ventes, peu fiable');
     if (t === 'M') notes.push('Maison : fourchette prudente (quantiles 20/40/60 %), terrain et état non pris en compte : visiter avant de conclure');
     if (t === 'M' && surf && surf > 150) conf *= 0.7;
+    if (wh && surf && surf < 80) { conf = Math.min(conf, 0.29); notes.push('Petit local (< 80 m²) : les ventes DVF comparables sont surtout des boutiques, valeur indicative seulement'); }
+    // entrepôt sans adresse précise : les ventes de la commune mêlent boutiques et locaux d'activité → bas de fourchette
+    if (wh && (tier.source === 'dvf-commune' || tier.source === 'dvf-environs' || tier.source === 'dvf-dept')) {
+      p.low = Math.round(quantile(ppm, 0.15)); p.mid = Math.round(quantile(ppm, 0.3)); p.high = Math.round(quantile(ppm, 0.5));
+      if (surf) Object.assign(val, { low: round(p.low * surf), mid: round(p.mid * surf), high: round(p.high * surf) });
+      notes.push('Sans adresse précise : quantiles 15/30/50 % des locaux de la zone (commerces inclus dans la DVF)');
+    }
+    if (t === 'L') notes.push(wh ? 'Entrepôt / local d’activité : ventes DVF de locaux de surface proche (±50 %), quantiles prudents 25/45/65 % ; état, hauteur sous plafond, quais et terrain non pris en compte' : 'Local : ventes DVF de locaux (commerces, bureaux, activité) de surface proche');
     const spread = p.low > 0 ? p.high / p.low : 1;
-    if ((tier.source === 'dvf-commune' || tier.source === 'dvf-environs') && spread > 1.45) {
+    if ((tier.source === 'dvf-commune' || tier.source === 'dvf-environs') && spread > (t === 'L' ? 1.8 : 1.45)) {
       // quartier inconnu dans une commune hétérogène : on se place en bas de fourchette (P15 / P35 / P60)
       // sous le seuil d'alerte : sans quartier, l'écart de prix peut venir d'un secteur moins cher (QPV, bord de rocade…)
       conf = Math.min(conf * 0.7, 0.29);

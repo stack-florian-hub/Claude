@@ -8,6 +8,8 @@ import { collectAjp } from '../src/lib/collect/ajp';
 import { collectCentury21 } from '../src/lib/collect/century21';
 import { collectLaforet } from '../src/lib/collect/laforet';
 import { collectImmonot } from '../src/lib/collect/immonot';
+import { collectBureauxLocaux } from '../src/lib/collect/bureauxlocaux';
+import { collectArthurLoyd } from '../src/lib/collect/arthurloyd';
 import { DiskCache } from '../src/lib/collect/http';
 import type { ListingInput } from '../src/lib/types';
 import { analyzeAll, geocode } from '../src/lib/server';
@@ -35,6 +37,9 @@ const log = (m: string) => { console.log(m); fs.appendFileSync(logFile, m + '\n'
     want('century21') ? collectCentury21({ depts, log, cache: new DiskCache(cacheDir('century21'), fs, path) }) : null,
     want('laforet') ? collectLaforet({ depts, log, cache: new DiskCache(cacheDir('laforet'), fs, path) }) : null,
     want('immonot') ? collectImmonot({ depts, log }) : null,
+    // immobilier d'entreprise (onglet Entrepôts)
+    want('bureauxlocaux') ? collectBureauxLocaux({ depts, log }) : null,
+    want('arthurloyd') ? collectArthurLoyd({ depts, log, cache: new DiskCache(cacheDir('arthurloyd'), fs, path) }) : null,
   ].map((p) => (p ? p.catch((e: Error) => ({ network: '?', label: '?', pages: 0, cards: 0, inputs: [] as ListingInput[], details: 0, errors: [e.message] })) : Promise.resolve(null))));
   const ran = results.filter((x): x is NonNullable<typeof x> => !!x);
   for (const x of ran) log(`${x.label} : ${x.cards} biens lus, ${x.inputs.length} retenus, ${x.details} fiches détaillées, ${x.errors.length} erreur(s)`);

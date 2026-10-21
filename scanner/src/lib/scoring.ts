@@ -3,7 +3,7 @@ import type { Analysis, CostBreakdown, Listing, LotValuation, Range, Settings, Z
 import type { DvfSource } from './dvf-query';
 import { valueLot } from './providers/valuation';
 import { clamp, daysBetween, normCity, round } from './util';
-import { detectLand, detectRedFlags, detectRenovated, detectRenovation, detectSpecial } from './detect';
+import { detectLand, detectRedFlags, detectRenovated, detectRenovation, detectRent, detectSpecial, isPro } from './detect';
 
 export function zoneFor(l: Listing, zones: Zone[]): Zone | undefined {
   const c = normCity(l.address.city);
@@ -88,7 +88,8 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
   const l: Listing = input.address.insee || /^\d{5}$/.test(input.address.postalCode) || !zoneInsee ? input : { ...input, address: { ...input.address, insee: zoneInsee } };
   const tension = zone?.tension ?? 2;
   // vendu loué : décote sur le logement occupé
-  const specials = detectSpecial(`${l.title}\n${l.description}`);
+  const pro = isPro(l);
+  const specials = detectSpecial(`${l.title}\n${l.description}`, pro);
   if (specials.some((x) => x.id === 'loue')) lots = lots.map((v) => (['appartement', 'maison'].includes(v.type) && v.source !== 'force' ? { ...v, low: round(v.low * 0.85), mid: round(v.mid * 0.87), high: round(v.high * 0.9), note: [v.note, 'Décote bien loué (−13 %)'].filter(Boolean).join(' · ') } : v));
   const total: Range = { low: 0, mid: 0, high: 0 };
   for (const v of lots) {
@@ -154,7 +155,15 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
   const redFlags = detectRedFlags(`${l.title}\n${l.description}`);
   if (cn.cash > s.budget.cash) warnings.push(`Cash nécessaire ${Math.round(cn.cash / 1000)} k€ > trésorerie ${Math.round(s.budget.cash / 1000)} k€`);
 
-  const liquidity = (tension / 3) * 6 + (l.lots.some((x) => ['garage', 'parking', 'cave'].includes(x.type)) || l.price < 150000 ? 4 : 1);
+  // entrepôts : rendement locatif quand un loyer est cité (investissement occupé) ; revente plus lente qu'un logement
+  const rentAnnual = pro ? detectRent(`${l.title}\n${l.description}`) : undefined;
+  const rentYield = rentAnnual && l.price > 0 ? rentAnnual / l.price : undefined;
+  if (rentYield) {
+    signals.push(`Loué : loyer ${Math.round(rentAnnual! / 100) * 100} €/an, rendement brut ${(rentYield * 100).toFixed(1)} %`);
+    sig += rentYield >= 0.09 ? 4 : rentYield >= 0.075 ? 2 : 0;
+    if (rentYield > 0.15) warnings.push('Rendement supérieur à 15 % : vérifier le loyer (HT/HC, mensuel ou annuel) et la solidité du locataire');
+  }
+  const liquidity = pro ? (tension / 3) * 4 + (l.price < 300000 ? 2 : 0) : (tension / 3) * 6 + (l.lots.some((x) => ['garage', 'parking', 'cave'].includes(x.type)) || l.price < 150000 ? 4 : 1);
   let score = clamp(gainPct / 0.4, 0, 1) * 35 + clamp(gain.mid / 100000, 0, 1) * 35 + confidence * 10 + Math.min(10, sig) + Math.min(10, liquidity);
   score -= Math.min(12, redFlags.filter((x) => x.severe).length * 4);
   const bf = budgetFactor(l.price + c.acquisitionFees + c.travaux, s);
@@ -170,7 +179,8 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
   if (blocking) score = Math.min(score, 20);
   // pas d'alerte sur une estimation trop fragile (comparables départementaux, valeurs par défaut…)
   // maison / terrain : valeur d'ensemble (bâti + terrain au €/m² DVF), pas une revente par lots de copropriété
-  const strategy: Analysis['strategy'] = l.lots.every((x) => x.type === 'maison' || x.type === 'terrain') ? 'global' : 'lots';
+  const strategy: Analysis['strategy'] = pro ? 'pro' : l.lots.every((x) => x.type === 'maison' || x.type === 'terrain') ? 'global' : 'lots';
+  if (strategy === 'pro') warnings.unshift('Entrepôt / local : valeur au €/m² DVF des locaux de surface proche ; état, hauteur, quais, accès poids lourds, zonage (PLU) et bail en cours à vérifier. Prix souvent hors taxes et hors droits (HD)');
   if (strategy === 'global') warnings.unshift('Maison : estimation globale (bâti + terrain au €/m² DVF des maisons voisines), sans revente par lots ni valeur séparée du terrain : alerte « décote maison » à confirmer par la visite');
   const at = autoTravaux(l, s);
   if (at) warnings.unshift(`Travaux estimés automatiquement : ${at.items.map((x) => `${x.label.split(' (')[0].toLowerCase()} ${Math.round(x.amount / 1000)} k€`).join(' + ')} → ${Math.round(at.amount / 1000)} k€ (ordre de grandeur, à remplacer par un devis)`);
@@ -183,7 +193,10 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
   const oddHouse = strategy === 'global' && surfMain >= 60 && /\b(?:T1|F1|1 pi[eè]ces?)\b/i.test(`${l.title}\n${l.description}`);
   if (oddHouse) warnings.unshift(`Maison d’une seule pièce pour ${surfMain} m² : probablement grange, hangar ou plateau non aménagé, à vérifier sur la fiche`);
   if (mainWeak || oddHouse) score = Math.min(score, 30);
-  const flagged = !blocking && !mainWeak && !oddHouse && confidence >= 0.3 && gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100);
+  // entrepôt loué : un rendement brut ≥ 9 % (marché régional 7-8 %) est une anomalie en soi, indépendante de la DVF
+  const yieldAlert = pro && !blocking && !!rentYield && rentYield >= 0.09 && rentYield <= 0.15;
+  if (yieldAlert) score = Math.max(score, Math.min(80, 40 + (rentYield! - 0.09) * 600));
+  const flagged = yieldAlert || (!blocking && !mainWeak && !oddHouse && confidence >= 0.3 && gain.mid > 0 && (gain.mid > s.thresholds.minGain || gainPct > s.thresholds.minGainPct / 100));
   if ((confidence < 0.3 || mainWeak) && gain.mid > 0) warnings.push('Confiance trop faible pour une alerte : compléter l’adresse ou forcer la valeur des lots');
 
   // Prix plafond (offre ou enchère maximale) : gain(prix) = Σ×(1−agence) − prix×(1+frais%) − coûts fixes hors frais d'acquisition
@@ -196,6 +209,6 @@ export function aggregate(input: Listing, lotsIn: LotValuation[], s: Settings, z
 
   return {
     listingId: l.id, lots, total, costs: c, priceCaps, strategy, gain, gainPct, ratio, ecart: total.mid - l.price, score: Math.round(score),
-    confidence, flagged, signals, warnings, redFlags: redFlags.map((x) => x.label), travauxDetail: at?.items, cashNeeded: Math.round(cn.cash), resaleMonths: months,
+    confidence, flagged, signals, warnings, redFlags: redFlags.map((x) => x.label), rentAnnual, rentYield, travauxDetail: at?.items, cashNeeded: Math.round(cn.cash), resaleMonths: months,
   };
 }

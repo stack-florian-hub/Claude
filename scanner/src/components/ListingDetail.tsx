@@ -98,7 +98,7 @@ export default function ListingDetail({ listing: l, analysis: a, zone, tension, 
 
       <div className="kpis">
         <div className="kpi"><div className="l">Prix affiché</div><div className="v">{eur(l.price)}</div><div className="s">{first && first > l.price ? `initial ${eur(first)} (−${pct(1 - l.price / first)})` : `${l.lots.length} lot(s)`}</div></div>
-        <div className="kpi"><div className="l">{a.strategy === 'global' ? 'Valeur globale estimée (moy.)' : 'Valeur des lots séparés (moy.)'}</div><div className="v">{eur(a.total.mid)}</div><div className="s">bas {keur(a.total.low)} · haut {keur(a.total.high)}</div></div>
+        <div className="kpi"><div className="l">{a.strategy === 'global' ? 'Valeur globale estimée (moy.)' : a.strategy === 'pro' ? 'Valeur DVF du local (moy.)' : 'Valeur des lots séparés (moy.)'}</div><div className="v">{eur(a.total.mid)}</div><div className="s">bas {keur(a.total.low)} · haut {keur(a.total.high)}</div></div>
         <div className="kpi"><div className="l">Écart (Σ lots − prix)</div><div className={'v ' + (a.ecart > 0 ? 'pos' : 'neg')}>{eur(a.ecart)}</div><div className="s">{pct(a.ecart / l.price)} du prix</div></div>
         <div className="kpi"><div className="l">Gain brut (moyen)</div><div className={'v ' + (a.gain.mid > 0 ? 'pos' : 'neg')}>{eur(a.gain.mid)}</div><div className="s">bas {keur(a.gain.low)} · haut {keur(a.gain.high)}</div></div>
         <div className="kpi"><div className="l">Gain / prix · ratio</div><div className="v">{pct(a.gainPct)}</div><div className="s">ratio {num(a.ratio, 2)} (&gt; 1 = rentable)</div></div>
@@ -151,7 +151,7 @@ export default function ListingDetail({ listing: l, analysis: a, zone, tension, 
           <h2>Calcul du gain (scénario moyen)</h2>
           <table>
             <tbody>
-              <tr><td>Σ valeurs des lots séparés</td><td className="num">{eur(a.total.mid)}</td></tr>
+              <tr><td>{a.strategy === 'pro' ? 'Valeur DVF (locaux de surface proche)' : 'Σ valeurs des lots séparés'}</td><td className="num">{eur(a.total.mid)}</td></tr>
               <tr><td>− Agence à la revente ({s.fees.agenceRevPct} %)</td><td className="num neg">−{eur(c.resaleAgency)}</td></tr>
               <tr><td>− Prix d’achat affiché</td><td className="num neg">−{eur(l.price)}</td></tr>
               <tr><td>− Frais d’acquisition ({s.fees.useMdbRegime ? `régime MdB ${s.fees.notaireMdbPct}` : `droit commun ${s.fees.notaireDroitCommunPct}`} %)</td><td className="num neg">−{eur(c.acquisitionFees)}</td></tr>
@@ -166,6 +166,7 @@ export default function ListingDetail({ listing: l, analysis: a, zone, tension, 
               <tr><td className="muted">Seuils d’alerte</td><td className="num muted">&gt; {keur(s.thresholds.minGain)} ou &gt; {s.thresholds.minGainPct} %</td></tr>
             </tbody>
           </table>
+          {a.rentYield ? <p className="small"><b>Bien loué</b> : loyer cité {eur(a.rentAnnual!)} / an, rendement brut {(a.rentYield * 100).toFixed(1)} % au prix affiché. Repère local d’activité en régions : 7 à 9 %. Vérifier bail, locataire, charges refacturées et taxe foncière.</p> : null}
           <p className="small muted">Fourchette : bas {eur(a.gain.low)} · haut {eur(a.gain.high)} (scénarios sur la valeur des lots ; agence {pct(agency)} appliquée à chaque scénario).</p>
           {!!a.redFlags?.length && <div style={{ marginTop: 6 }}><b className="small">Red flags de l’annonce : </b>{a.redFlags.map((x) => <span key={x} className="tag bad">⚑ {x}</span>)}<div className="small muted">À vérifier à la visite et dans les diagnostics ; chaque défaut grave retire 4 points au score.</div></div>}
           {a.signals.length > 0 && <div style={{ marginTop: 6 }}>{a.signals.map((x) => <span key={x} className="tag good">{x}</span>)}</div>}

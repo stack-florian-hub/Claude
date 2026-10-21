@@ -8,7 +8,7 @@ const BASE = 'https://www.immonot.com/immobilier-notaire/annonces/';
 
 interface Product { name?: string; description?: string; url?: string; sku?: string; offers?: { price?: string | number; seller?: { name?: string } } }
 
-function products(html: string): Product[] {
+export function products(html: string): Product[] {
   const out: Product[] = [];
   for (const m of html.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)) {
     try {
@@ -50,6 +50,28 @@ export function productToInput(p: Product, dept: string): ListingInput | null {
   };
 }
 
+/** « Fonds et/ou murs commerciaux » : seuls les murs (immobilier) sont gardés, les fonds de commerce seuls sont écartés. */
+export function productToProInput(p: Product, dept: string): ListingInput | null {
+  const name = decodeEntities(p.name || '');
+  const m = name.match(/^(.+?) en vente (.+?) \((\d{5})\)/i);
+  const price = Number(p.offers?.price);
+  const desc = decodeEntities(p.description || '').replace(/fonds et\/ou murs commerciaux/gi, '');
+  if (!m || !price) return null;
+  const murs = /\bmurs\b|local|entrep[ôo]t|b[âa]timent|hangar|atelier|bureaux?|immeuble|surface de \d/i.test(desc);
+  if (!murs || (/fonds de commerce|droit au bail|cession de (?:fonds|bail)|pas[- ]de[- ]porte|chiffre d'affaires|\bCA\b|reprise (?:du bail|de l'activit)/i.test(desc) && !/\bmurs\b/i.test(desc))) return null;
+  const parsed = parseListingText(`${name}\n${m[3]} ${m[2]}\nPrix : ${price} €\n${desc}`, p.url);
+  const { parseNotes: _n, ...rest } = parsed;
+  const type = /entrep[ôo]t|local d'activit|locaux d'activit|hangar|atelier|stockage|b[âa]timent (?:industriel|d'activit)/i.test(desc) ? 'entrepot' : 'local';
+  return {
+    ...rest,
+    title: `${type === 'entrepot' ? 'Local d’activité / entrepôt' : 'Murs commerciaux'} à vendre – ${m[2]} (${m[3]})`,
+    source: 'notaires', network: 'immonot', sourceRef: p.sku, url: p.url, price,
+    agency: p.offers?.seller?.name, seller: 'notaire',
+    address: { ...parsed.address, postalCode: m[3], city: m[2], dept },
+    lots: [{ id: `l${p.sku}`, type, surface: parsed.surface }],
+  };
+}
+
 export async function collectImmonot(opts: { depts: string[]; log?: CollectLog; maxPages?: number }): Promise<CollectResult> {
   const { depts, log = () => {}, maxPages = 40 } = opts;
   const inputs: ListingInput[] = [];
@@ -79,6 +101,30 @@ export async function collectImmonot(opts: { depts: string[]; log?: CollectLog; 
       }
     }
     log(`  Immonot ${d} : ${n} annonces (hors terrains, biens agricoles, viagers)`);
+    // murs commerciaux et locaux d'activité (onglet Entrepôts)
+    const [code, name] = slug.split('/');
+    // la liste générale contient aussi ces annonces (écartées comme « fonds ») : suivi séparé
+    const seenPro = new Set<string>();
+    let np = 0;
+    for (let page = 1; page <= 10; page++) {
+      let html: string;
+      try {
+        html = await get(`${BASE}${code}/achat-fonds-et-ou-murs-commerciaux-${name}.html${page > 1 ? `?page=${page}` : ''}`);
+      } catch (e) {
+        if (!/404/.test((e as Error).message)) errors.push((e as Error).message);
+        break;
+      }
+      pages++;
+      const ps = products(html).filter((p) => p.url && !seenPro.has(p.url));
+      if (!ps.length) break;
+      for (const p of ps) {
+        seenPro.add(p.url!);
+        cards++;
+        const i = productToProInput(p, d);
+        if (i) { inputs.push(i); np++; }
+      }
+    }
+    log(`  Immonot ${d} : ${np} murs commerciaux / locaux (fonds de commerce seuls écartés)`);
   }
   return { network: 'immonot', label: 'Immonot (notaires)', pages, cards, inputs, details: 0, errors };
 }

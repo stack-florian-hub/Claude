@@ -92,7 +92,7 @@ Indicateur de marché clé (écran Marchés) : **prime de vente séparée** = m�
 ## 5. Connecteurs futurs
 
 - `ListingProvider` : collage de texte, CSV, JSON, saisie manuelle, bookmarklet (capture de la page affichée, déclenchée par l'utilisateur).
-- Collecteurs (`src/lib/collect/`, outils communs dans `http.ts`) : **AJP Immobilier**, **Century 21**, **Laforêt**, **Immonot** (`npm run collect`, exécutés en parallèle ; un réseau en erreur ne retire pas ses annonces). Les réseaux reconnus sont listés dans `src/lib/networks.ts` ; un nouveau collecteur = un module qui renvoie des `ListingInput` (vérifier d'abord le robots.txt du réseau).
+- Collecteurs (`src/lib/collect/`, outils communs dans `http.ts`) : logements — **AJP Immobilier**, **Century 21**, **Laforêt**, **Immonot** ; entrepôts / locaux (segment `pro`, `isPro()`) — **BureauxLocaux**, **Arthur Loyd**, **Immonot murs commerciaux** (`npm run collect`, exécutés en parallèle ; un réseau en erreur ne retire pas ses annonces). Les réseaux reconnus sont listés dans `src/lib/networks.ts` ; un nouveau collecteur = un module qui renvoie des `ListingInput` (vérifier d'abord le robots.txt du réseau).
 
 ## 6. Artefact
 
