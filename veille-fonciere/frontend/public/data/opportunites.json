@@ -1,6 +1,13 @@
 {
- "genere_le": "2026-11-14T05:03:50+00:00",
+ "genere_le": "2026-11-15T04:55:56+00:00",
  "journal": [
+  {
+   "date": "2026-11-15",
+   "nouvelles": [
+    "bienici:hektor-Abie-Immobilier-17840"
+   ],
+   "vendues": []
+  },
   {
    "date": "2026-11-14",
    "nouvelles": [
@@ -125,168 +132,9 @@
      "prix": 1980.0
     }
    ]
-  },
-  {
-   "date": "2026-10-31",
-   "nouvelles": [
-    "bienici:square-habitat-immo-facile-43502446"
-   ],
-   "vendues": []
   }
  ],
  "annonces": [
-  {
-   "id": "bienici:netty-company35657aol-land-76",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/netty-company35657aol-land-76",
-   "titre": "TERRAIN CONSTRUCTIBLE NON VIABILISE",
-   "description": "Situé au coeur du bourg de Saint-Maurice-des-Noues, découvrez ce joli terrain de 1 080 m², offrant un cadre agréable et verdoyant.<br>Hors lotissement, il bénéficie d'un environnement arboré et d'un cadre paisible, idéal pour concrétiser votre projet de construction et imaginer une maison à votre image.<br>Il est non viabilisé mais facilement raccordable. <br>Pour plus de renseignements, n'hésitez pas à me contacter.<br>Honoraires à la charge du vendeur.  Les informations sur les risques auxquels ce bien est exposé sont disponibles sur le site Géorisques : georisques.gouv.fr. <br>Votre conseiller GIRAUD IMMOBILIER : Fleur ROY<br>Agent commercial (Entreprise individuelle)  <br>  RSAC 891055725  <br>  RCP 80202258",
-   "prix": 13900.0,
-   "surface_m2": 1080.0,
-   "prix_m2": 12.87,
-   "departement": "85",
-   "commune": "Saint-Maurice-des-Noues",
-   "code_insee": "85251",
-   "code_postal": "85120",
-   "lat": 46.601142818238145,
-   "lon": -0.7264107264609926,
-   "precision_geo": "approx",
-   "ref_cadastrale": null,
-   "typologie": "constructible",
-   "mode_vente": "gre_a_gre",
-   "photo_url": "https://file.bienici.com/photo/netty-company35657aol-land-76_img.netty.immo_productw_company35657aol_2_VT076_1794493267_VT076_3_original.jpg",
-   "date_publication": "2026-11-13",
-   "premiere_vue": "2026-11-14T05:00:14+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
-   "prix_initial": 13900.0,
-   "historique_prix": [
-    {
-     "date": "2026-11-14",
-     "prix": 13900.0
-    }
-   ],
-   "score": 73.2,
-   "s_decote": 30.0,
-   "s_mutation": 25.2,
-   "s_acces": 18.0,
-   "s_rarete": 0.0,
-   "confiance": "moyenne",
-   "explications": [
-    "Décote : 12.87 €/m² contre une médiane DVF de 86.21 €/m² (département, 369 ventes) soit 15 % du marché.",
-    "Mutation : zone A à 4 m de la zone constructible la plus proche.",
-    "Mutation : OAP (projet d'aménagement) à 90 m.",
-    "Mutation : position approximative (rayon de quelques centaines de mètres), facteur atténué.",
-    "Accès : voie publique (route à 1 chaussée) à 33 m.",
-    "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
-    "Rareté : La Roche-sur-Yon à 54 km."
-   ],
-   "alertes": [
-    {
-     "code": "viabilise",
-     "libelle": "Réseaux à proximité"
-    }
-   ],
-   "urbanisme": {
-    "parcelle_idu": "852510000A0518",
-    "section": "0A",
-    "contenance_m2": 581.0,
-    "zone_plu": "A",
-    "type_zone": "A",
-    "doc_urbanisme": "PLUI",
-    "dist_zone_u_m": 4.0,
-    "dist_zone_au_m": 457.0,
-    "oap_proche_m": 90,
-    "prescriptions": [],
-    "servitudes": []
-   },
-   "environnement": {
-    "natura2000": 0,
-    "znieff": 0,
-    "ppr_inondation": [],
-    "azi": [],
-    "risques_commune": [
-     "Mouvement de terrain",
-     "Tassements différentiels",
-     "Séisme",
-     "Feu de forêt",
-     "Phénomène lié à l'atmosphère",
-     "Neige et pluies verglaçantes",
-     "Radon",
-     "Transport de marchandises dangereuses",
-     "Affaissement minier",
-     "Effondrements généralisés",
-     "Effondrements localisés",
-     "Affaissements progressifs",
-     "Tassements",
-     "Glissements ou mouvements de pente"
-    ],
-    "dist_littoral_km": 54.0,
-    "agglo_proche": "La Roche-sur-Yon",
-    "dist_agglo_km": 54.0,
-    "dist_route_m": 33.0,
-    "nature_route": "Route à 1 chaussée"
-   },
-   "dvf": {
-    "niveau": "departement",
-    "n": 369,
-    "p25_m2": 55.36,
-    "mediane_m2": 86.21,
-    "p75_m2": 120.35,
-    "ventes": [
-     {
-      "id_mutation": "2024-1045706",
-      "code_insee": "85251",
-      "date": "2024-07-10",
-      "valeur": 10483.5,
-      "surface_m2": 723.0,
-      "prix_m2": 14.5,
-      "typologie": "constructible",
-      "nature": "terrains a bÃ¢tir",
-      "section": "ZE",
-      "id_parcelle": "85251000ZE0144",
-      "lat": 46.605476,
-      "lon": -0.721089
-     },
-     {
-      "id_mutation": "2021-1463878",
-      "code_insee": "85251",
-      "date": "2021-06-08",
-      "valeur": 10112.5,
-      "surface_m2": 809.0,
-      "prix_m2": 12.5,
-      "typologie": "constructible",
-      "nature": "terrains a bÃ¢tir",
-      "section": "ZE",
-      "id_parcelle": "85251000ZE0140",
-      "lat": 46.605406,
-      "lon": -0.722357
-     }
-    ]
-   },
-   "erreurs_enrichissement": [],
-   "note": "",
-   "suivi": "",
-   "favori": false,
-   "adresse_saisie": "",
-   "contact": {
-    "type": "pro",
-    "nom": null,
-    "agence": "GIRAUD IMMOBILIER - Fleur ROY",
-    "telephone": "07 67 92 88 32",
-    "email": null,
-    "adresse": "85200 Fontenay-le-Comte",
-    "site": "https://files.netty.immo/file/company35657aol/1043/vD0BH/bareme_honoraires_giraud_immobilier_2026.pdf",
-    "frais_charge": "seller"
-   },
-   "honoraires": {
-    "pct": null,
-    "montant": null,
-    "net": null,
-    "charge": "vendeur",
-    "bareme": null,
-    "site_bareme": "https://files.netty.immo/file/company35657aol/1043/vD0BH/bareme_honoraires_giraud_immobilier_2026.pdf"
-   }
-  },
   {
    "id": "paruvendu:1296202666A1KIVHTE000",
    "source": "paruvendu",
@@ -729,7 +577,7 @@
    "photo_url": "https://file.bienici.com/photo/iad-france-1911926_images.playiad.com_property_broadcast_2025_12_18_019b308341284ee882dfbb27460dcdac.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-11-05T04:54:39+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 13500.0,
    "historique_prix": [
     {
@@ -887,7 +735,7 @@
    "photo_url": "https://file.bienici.com/photo/dr-house-immo-1-1145430_images.drhouse-immo.com_images_full_HD_filigrane_1_bandeau_1_5_1_vente_145430_1.jpg_1790861314",
    "date_publication": "2026-10-01",
    "premiere_vue": "2026-10-14T08:53:52+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:51+00:00",
    "prix_initial": 7000.0,
    "historique_prix": [
     {
@@ -1073,7 +921,7 @@
    "photo_url": "https://file.bienici.com/photo/hektor-chantimmo85-8540_chantimmo.staticlbi.com_original_images_biens_1_6c09d3dd4adacedecae54d8ea284c222_9c83372b5907cce6202dc1b64f2d37a5.jpg",
    "date_publication": "2026-09-25",
    "premiere_vue": "2026-10-14T08:53:39+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 11000.0,
    "historique_prix": [
     {
@@ -1183,7 +1031,7 @@
    "photo_url": "https://media.immobilier.notaires.fr/inotr/media/7/37034/1949960/41c79999_VGA.jpg",
    "date_publication": "2026-04-24",
    "premiere_vue": "2026-10-14T08:53:38+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:49+00:00",
    "prix_initial": 8100.0,
    "historique_prix": [
     {
@@ -1358,7 +1206,7 @@
    "photo_url": "https://file.bienici.com/photo/safti-1-1711909_cdn.safti.fr_bien-photo_71_11_1711909_d50a978bb1c89b948a71620fbe834cb86e6f3560_rg-2.jpg",
    "date_publication": "2026-09-12",
    "premiere_vue": "2026-10-14T08:53:39+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 15000.0,
    "historique_prix": [
     {
@@ -1527,7 +1375,7 @@
    "photo_url": "https://file.bienici.com/photo/guy-hoquet-18-GT0130-6749_d2m2j20yzublln.cloudfront.net_202_347839_6c10daaa-109a-583f-b4f7-74879c8b16e3.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:41+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 15000.0,
    "historique_prix": [
     {
@@ -1701,7 +1549,7 @@
    "photo_url": "https://media.immobilier.notaires.fr/inotr/media/7/37034/79287/9e59aa01_VGA.jpg",
    "date_publication": "2015-04-15",
    "premiere_vue": "2026-10-14T08:53:38+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:49+00:00",
    "prix_initial": 13780.0,
    "historique_prix": [
     {
@@ -1830,7 +1678,7 @@
    "photo_url": "https://file.bienici.com/photo/iad-france-2096704_images.playiad.com_property_broadcast_2026_08_26_01a03d6dd365cc3972d97214303d44e1.jpg",
    "date_publication": "2026-11-04",
    "premiere_vue": "2026-11-05T04:54:40+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 14000.0,
    "historique_prix": [
     {
@@ -1933,6 +1781,156 @@
    }
   },
   {
+   "id": "bienici:netty-company35657aol-land-76",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/netty-company35657aol-land-76",
+   "titre": "TERRAIN CONSTRUCTIBLE NON VIABILISE",
+   "description": "Situé au coeur du bourg de Saint-Maurice-des-Noues, découvrez ce joli terrain de 1 080 m², offrant un cadre agréable et verdoyant.<br>Hors lotissement, il bénéficie d'un environnement arboré et d'un cadre paisible, idéal pour concrétiser votre projet de construction et imaginer une maison à votre image.<br>Il est non viabilisé mais facilement raccordable. <br>Pour plus de renseignements, n'hésitez pas à me contacter.<br>Honoraires à la charge du vendeur.  Les informations sur les risques auxquels ce bien est exposé sont disponibles sur le site Géorisques : georisques.gouv.fr. <br>Votre conseiller GIRAUD IMMOBILIER : Fleur ROY<br>Agent commercial (Entreprise individuelle)  <br>  RSAC 891055725  <br>  RCP 80202258",
+   "prix": 13900.0,
+   "surface_m2": 1080.0,
+   "prix_m2": 12.87,
+   "departement": "85",
+   "commune": "Saint-Maurice-des-Noues",
+   "code_insee": "85251",
+   "code_postal": "85120",
+   "lat": 46.601142818238145,
+   "lon": -0.7264107264609926,
+   "precision_geo": null,
+   "ref_cadastrale": null,
+   "typologie": "constructible",
+   "mode_vente": "gre_a_gre",
+   "photo_url": "https://file.bienici.com/photo/netty-company35657aol-land-76_img.netty.immo_productw_company35657aol_2_VT076_1794493267_VT076_3_original.jpg",
+   "date_publication": "2026-11-13",
+   "premiere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
+   "prix_initial": 13900.0,
+   "historique_prix": [
+    {
+     "date": "2026-11-14",
+     "prix": 13900.0
+    }
+   ],
+   "score": 58.5,
+   "s_decote": 30.0,
+   "s_mutation": 10.5,
+   "s_acces": 18.0,
+   "s_rarete": 0.0,
+   "confiance": "moyenne",
+   "explications": [
+    "Décote : 12.87 €/m² contre une médiane DVF de 86.21 €/m² (département, 369 ventes) soit 15 % du marché.",
+    "Mutation : position connue à la commune seulement, facteur neutre (localiser la parcelle pour affiner).",
+    "Accès : voie publique (route à 1 chaussée) à 33 m.",
+    "Usage : réseaux probablement à proximité (zone urbanisée ≤ 100 m ou annonce).",
+    "Rareté : La Roche-sur-Yon à 54 km."
+   ],
+   "alertes": [
+    {
+     "code": "viabilise",
+     "libelle": "Réseaux à proximité"
+    }
+   ],
+   "urbanisme": {
+    "parcelle_idu": "852510000A0518",
+    "section": "0A",
+    "contenance_m2": 581.0,
+    "zone_plu": "A",
+    "type_zone": "A",
+    "doc_urbanisme": "PLUI",
+    "dist_zone_u_m": 4.0,
+    "dist_zone_au_m": 457.0,
+    "oap_proche_m": 90,
+    "prescriptions": [],
+    "servitudes": []
+   },
+   "environnement": {
+    "natura2000": 0,
+    "znieff": 0,
+    "ppr_inondation": [],
+    "azi": [],
+    "risques_commune": [
+     "Mouvement de terrain",
+     "Tassements différentiels",
+     "Séisme",
+     "Feu de forêt",
+     "Phénomène lié à l'atmosphère",
+     "Neige et pluies verglaçantes",
+     "Radon",
+     "Transport de marchandises dangereuses",
+     "Affaissement minier",
+     "Effondrements généralisés",
+     "Effondrements localisés",
+     "Affaissements progressifs",
+     "Tassements",
+     "Glissements ou mouvements de pente"
+    ],
+    "dist_littoral_km": 54.0,
+    "agglo_proche": "La Roche-sur-Yon",
+    "dist_agglo_km": 54.0,
+    "dist_route_m": 33.0,
+    "nature_route": "Route à 1 chaussée"
+   },
+   "dvf": {
+    "niveau": "departement",
+    "n": 369,
+    "p25_m2": 55.36,
+    "mediane_m2": 86.21,
+    "p75_m2": 120.35,
+    "ventes": [
+     {
+      "id_mutation": "2024-1045706",
+      "code_insee": "85251",
+      "date": "2024-07-10",
+      "valeur": 10483.5,
+      "surface_m2": 723.0,
+      "prix_m2": 14.5,
+      "typologie": "constructible",
+      "nature": "terrains a bÃ¢tir",
+      "section": "ZE",
+      "id_parcelle": "85251000ZE0144",
+      "lat": 46.605476,
+      "lon": -0.721089
+     },
+     {
+      "id_mutation": "2021-1463878",
+      "code_insee": "85251",
+      "date": "2021-06-08",
+      "valeur": 10112.5,
+      "surface_m2": 809.0,
+      "prix_m2": 12.5,
+      "typologie": "constructible",
+      "nature": "terrains a bÃ¢tir",
+      "section": "ZE",
+      "id_parcelle": "85251000ZE0140",
+      "lat": 46.605406,
+      "lon": -0.722357
+     }
+    ]
+   },
+   "erreurs_enrichissement": [],
+   "note": "",
+   "suivi": "",
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "GIRAUD IMMOBILIER - Fleur ROY",
+    "telephone": "07 67 92 88 32",
+    "email": null,
+    "adresse": "85200 Fontenay-le-Comte",
+    "site": "https://files.netty.immo/file/company35657aol/1043/vD0BH/bareme_honoraires_giraud_immobilier_2026.pdf",
+    "frais_charge": "seller"
+   },
+   "honoraires": {
+    "pct": null,
+    "montant": null,
+    "net": null,
+    "charge": "vendeur",
+    "bareme": null,
+    "site_bareme": "https://files.netty.immo/file/company35657aol/1043/vD0BH/bareme_honoraires_giraud_immobilier_2026.pdf"
+   }
+  },
+  {
    "id": "bienici:apimo-87512572",
    "source": "bienici",
    "url": "https://www.bienici.com/annonce/vente/apimo-87512572",
@@ -1954,7 +1952,7 @@
    "photo_url": "https://file.bienici.com/photo/apimo-87512572_media.apimo.pro_cache_9df346b0bb92b7fff63abfa442318dd8_11de2b9e0e_1844-original.jpg",
    "date_publication": "2026-10-22",
    "premiere_vue": "2026-10-23T03:54:11+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 9000.0,
    "historique_prix": [
     {
@@ -2103,7 +2101,7 @@
    "photo_url": "https://file.bienici.com/photo/safti-1-1708764_cdn.safti.fr_bien-photo_71_08_1708764_e588bb6bb7c7590acd4dc75e1a3558453b4e36f4_g.jpg",
    "date_publication": "2026-10-05",
    "premiere_vue": "2026-10-14T08:53:39+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 13500.0,
    "historique_prix": [
     {
@@ -2253,7 +2251,7 @@
    "photo_url": "https://file.bienici.com/photo/century-21-202_3580_1585_images.century21.fr_202_3580_c21_202_3580_1585_1_4C9F96F1-3F77-4476-BBD2-07C22208D147.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:43+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 8000.0,
    "historique_prix": [
     {
@@ -2502,7 +2500,7 @@
    "photo_url": "https://file.bienici.com/photo/citya-1-134-TTER103291_dqcwxbr1h80rn.cloudfront.net_200_185108_31aee561-ace2-53bd-9877-961f060ccfb7.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:53+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:51+00:00",
    "prix_initial": 12500.0,
    "historique_prix": [
     {
@@ -2757,7 +2755,7 @@
    "photo_url": "https://media.immobilier.notaires.fr/inotr/media/29/85093/1897261/a9b25b68_VGA.jpg",
    "date_publication": "2026-01-29",
    "premiere_vue": "2026-10-14T08:53:34+00:00",
-   "derniere_vue": "2026-11-14T05:00:13+00:00",
+   "derniere_vue": "2026-11-15T04:53:48+00:00",
    "prix_initial": 7500.0,
    "historique_prix": [
     {
@@ -2920,7 +2918,7 @@
    "photo_url": "https://file.bienici.com/photo/iad-france-2120818_images.playiad.com_property_broadcast_2026_09_18_01a0b358bbecfa206347be38a860b98a.jpg",
    "date_publication": "2026-11-04",
    "premiere_vue": "2026-11-05T04:54:39+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 7000.0,
    "historique_prix": [
     {
@@ -3126,7 +3124,7 @@
    "photo_url": "https://file.bienici.com/photo/immo-facile-57170933_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_5_7_1_7_0_9_3_3_57170933a.jpg_DATEMAJ_21_03_2025-06_20_31",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:47+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 3500.0,
    "historique_prix": [
     {
@@ -3385,7 +3383,7 @@
    "photo_url": "https://file.bienici.com/photo/ag440414-542383610_photos.ubiflow.net_440414_542383610_photos_1.jpg_INSOON_EB_5512801818_20260725182318",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:49+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 14000.0,
    "historique_prix": [
     {
@@ -3506,7 +3504,7 @@
    "photo_url": "https://file.bienici.com/photo/immo-facile-57516602_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_5_7_5_1_6_6_0_2_57516602a.jpg_DATEMAJ_21_03_2025-06_23_38",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:47+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 4950.0,
    "historique_prix": [
     {
@@ -3768,7 +3766,7 @@
    "photo_url": "https://file.bienici.com/photo/iad-france-2060795_images.playiad.com_property_broadcast_2026_07_03_019f28c1281c30f492e08b0ace8c520d.jpg",
    "date_publication": "2026-11-04",
    "premiere_vue": "2026-11-05T04:54:39+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 13000.0,
    "historique_prix": [
     {
@@ -3980,7 +3978,7 @@
    "photo_url": "https://file.bienici.com/photo/guy-hoquet-18-GT0130-6687_d2m2j20yzublln.cloudfront.net_202_347515_5cd9cf14-2762-5f4e-86ab-ac056d54fc47.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:41+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 9500.0,
    "historique_prix": [
     {
@@ -4083,7 +4081,7 @@
    "photo_url": null,
    "date_publication": "2026-10-06",
    "premiere_vue": "2026-10-14T08:53:34+00:00",
-   "derniere_vue": "2026-11-14T05:00:13+00:00",
+   "derniere_vue": "2026-11-15T04:53:48+00:00",
    "prix_initial": 1060.0,
    "historique_prix": [
     {
@@ -4349,7 +4347,7 @@
    "photo_url": "https://file.bienici.com/photo/immo-facile-61358258_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_6_1_3_5_8_2_5_8_61358258a.jpg_DATEMAJ_17_08_2026-22_57_24",
    "date_publication": "2026-08-18",
    "premiere_vue": "2026-10-14T08:53:46+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 3000.0,
    "historique_prix": [
     {
@@ -4577,7 +4575,7 @@
    "photo_url": "https://file.bienici.com/photo/safti-1-1694794_cdn.safti.fr_bien-photo_61_94_1694794_8bcbfc59a348173e2d74894d897faf2501257820_rg-9.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:52+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:51+00:00",
    "prix_initial": 9900.0,
    "historique_prix": [
     {
@@ -4953,7 +4951,7 @@
    "photo_url": "https://file.bienici.com/photo/netty-company54266xoj-land-140_img.netty.immo_productcw_company54266xoj_2_VT140_1751979995_VT140_1_original.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:55+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:51+00:00",
    "prix_initial": 7000.0,
    "historique_prix": [
     {
@@ -5092,7 +5090,7 @@
    "photo_url": "https://file.bienici.com/photo/century-21-202_3601_1827_images.century21.fr_202_3601_c21_202_3601_1827_1_4F0A1AFF-94B9-4222-BCD1-1CD7461DA735.jpg",
    "date_publication": "2026-11-06",
    "premiere_vue": "2026-11-06T04:54:04+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 9000.0,
    "historique_prix": [
     {
@@ -5278,7 +5276,7 @@
    "photo_url": "https://file.bienici.com/photo/hektor-ligeria37-2400_ligeria.staticlbi.com_original_images_biens_1_38956c855f5bbd4ed03a8fab62da2d4f_photo_361a47a2871a1907107e6adc95da6999.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:55+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:51+00:00",
    "prix_initial": 5000.0,
    "historique_prix": [
     {
@@ -5371,7 +5369,7 @@
    "photo_url": "https://file.bienici.com/photo/immo-facile-57170856_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_5_7_1_7_0_8_5_6_57170856a.jpg_DATEMAJ_20_11_2025-13_28_04",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:47+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 5750.0,
    "historique_prix": [
     {
@@ -5585,7 +5583,7 @@
    "photo_url": "https://file.bienici.com/photo/apimo-87569900_media.apimo.pro_cache_91ba6003d41d6ae921fb419b7a5bd0b2_27f6f02cfd_1448-original.jpg",
    "date_publication": "2026-11-08",
    "premiere_vue": "2026-11-09T04:54:42+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 7900.0,
    "historique_prix": [
     {
@@ -6294,7 +6292,7 @@
    "photo_url": "https://file.bienici.com/photo/nestenn-1-99939622933_media.immo-facile.com_office15_avis-doue-la-fontaine_catalog_images_pr_p_3_9_6_2_2_9_3_3_39622933a.jpg_DATEMAJ_31_08_2026-16_52_33",
    "date_publication": "2026-08-31",
    "premiere_vue": "2026-10-14T08:53:49+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 8600.0,
    "historique_prix": [
     {
@@ -6555,7 +6553,7 @@
    "photo_url": "https://file.bienici.com/photo/ag340369-540715148_photos.ubiflow.net_340369_540715148_photos_1.jpg_INSOON_EB_5512801818_20260715084104",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:40+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 8500.0,
    "historique_prix": [
     {
@@ -6749,7 +6747,7 @@
    "photo_url": "https://file.bienici.com/photo/immo-facile-59356553_media.immo-facile.com_office20_ablimm832052022_catalog_images_pr_p_5_9_3_5_6_5_5_3_59356553a.jpg_DATEMAJ_13_10_2025-16_40_51",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:47+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 6500.0,
    "historique_prix": [
     {
@@ -7025,7 +7023,7 @@
    "photo_url": "https://file.bienici.com/photo/iad-france-2090790_images.playiad.com_property_broadcast_2026_08_14_01a001181a9227d59ff89d1097d5e1ff.jpg",
    "date_publication": "2026-11-04",
    "premiere_vue": "2026-11-05T04:54:40+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 9700.0,
    "historique_prix": [
     {
@@ -7277,7 +7275,7 @@
    "photo_url": "https://file.bienici.com/photo/safti-1-1700741_cdn.safti.fr_bien-photo_71_00_1700741_a063858d1686e099d6c62f6a3609c80ddc104956_rg-2.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-11-11T04:53:35+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 10000.0,
    "historique_prix": [
     {
@@ -8608,7 +8606,7 @@
    "photo_url": "https://file.bienici.com/photo/hektor-coimmobilierlege-10463_coimmobilier.staticlbi.com_original_images_biens_2_badd73821b1aca24cf2738836bb6cbfb_photo_2a160e2b34f543ce71ac24e11949e8d9.jpg",
    "date_publication": "2026-10-08",
    "premiere_vue": "2026-10-14T08:53:39+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 8800.0,
    "historique_prix": [
     {
@@ -8790,7 +8788,7 @@
    "photo_url": "https://file.bienici.com/photo/safti-1-1699666_cdn.safti.fr_bien-photo_61_99_1699666_ebed5f851babd1f5947254107c5558988d4879f0_rg.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:52+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:51+00:00",
    "prix_initial": 8700.0,
    "historique_prix": [
     {
@@ -9052,7 +9050,7 @@
    "photo_url": "https://file.bienici.com/photo/century-21-202_2754_13558_images.century21.fr_202_2754_c21_202_2754_13558_1_FD483BDA-7DA6-4C06-BCAD-AA3BA302DC41.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:43+00:00",
-   "derniere_vue": "2026-11-14T05:00:14+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 10000.0,
    "historique_prix": [
     {
@@ -9300,7 +9298,7 @@
    "photo_url": "https://file.bienici.com/photo/square-habitat-immo-facile-43502446_media.immo-facile.com_office17_sh_square_habitat_neuf_defisca_catalog_images_pr_p_4_3_5_0_2_4_4_6_43502446a.jpg_DATEMAJ_30_10_2026-15_26_16",
    "date_publication": "2026-10-30",
    "premiere_vue": "2026-10-31T04:53:58+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:51+00:00",
    "prix_initial": 14900.0,
    "historique_prix": [
     {
@@ -9479,7 +9477,7 @@
    "photo_url": "https://file.bienici.com/photo/safti-1-1688539_cdn.safti.fr_bien-photo_61_88_1688539_349a155f41e9a6de0f26ecf0e8a788189e5b47e7_rg.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:53+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:51+00:00",
    "prix_initial": 8950.0,
    "historique_prix": [
     {
@@ -9741,7 +9739,7 @@
    "photo_url": "https://file.bienici.com/photo/safti-1-1573164_cdn.safti.fr_bien-photo_51_73_1573164_c32142f1db20082fd7451302bd0041bfc283844c_rg-4.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-10-14T08:53:55+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:51+00:00",
    "prix_initial": 5750.0,
    "historique_prix": [
     {
@@ -9929,7 +9927,7 @@
    "photo_url": "https://media.immobilier.notaires.fr/inotr/media/29/85019/1910161/bbe35adc_VGA.jpg",
    "date_publication": "2026-02-27",
    "premiere_vue": "2026-10-14T08:53:35+00:00",
-   "derniere_vue": "2026-11-14T05:00:13+00:00",
+   "derniere_vue": "2026-11-15T04:53:48+00:00",
    "prix_initial": 6500.0,
    "historique_prix": [
     {
@@ -10183,7 +10181,7 @@
    "photo_url": "https://media.immobilier.notaires.fr/inotr/media/7/44037/1892059/912afcd1_VGA.jpg",
    "date_publication": "2026-01-21",
    "premiere_vue": "2026-10-14T08:53:35+00:00",
-   "derniere_vue": "2026-11-14T05:00:13+00:00",
+   "derniere_vue": "2026-11-15T04:53:48+00:00",
    "prix_initial": 7800.0,
    "historique_prix": [
     {
@@ -10336,7 +10334,7 @@
    "photo_url": "https://file.bienici.com/photo/iad-france-2027042_images.playiad.com_property_broadcast_2026_05_19_019e3f27b7bb62034dcaf7c4761a266c.jpg",
    "date_publication": "1970-01-01",
    "premiere_vue": "2026-11-05T04:54:39+00:00",
-   "derniere_vue": "2026-11-14T05:00:15+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
    "prix_initial": 5550.0,
    "historique_prix": [
     {
@@ -11059,6 +11057,214 @@
     "remarque": "Téléphone affiché au clic sur l'annonce ParuVendu"
    },
    "honoraires": null
+  },
+  {
+   "id": "bienici:hektor-Abie-Immobilier-17840",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/hektor-Abie-Immobilier-17840",
+   "titre": "Terrain de loisirs bord de rivière Maillé MARAIS POITEVIN",
+   "description": "Terrain de loisirs au bord de la Sèvre   MAILLE   MARAIS POITEVIN<br>Envie de nature, de calme et de pêche ? Ce terrain de 1 943 m2, situé à Maillé, à seulement 50 mètres de la Sèvre, est fait pour vous.<br>Entièrement clôturé et arboré, il offre un cadre verdoyant et paisible, idéal pour se ressourcer le week-end ou pendant les vacances.<br>Les atouts :<br>Proximité immédiate de la rivière : pêche, balades, observation de la nature<br>Grande parcelle arborée, ombragée et privative<br>Terrain clos, sécurisant<br>Possibilité d'installer une caravane ou un abri (selon la réglementation en vigueur)<br>Terrain situé en zone inondable.<br>Prix : 9 300 EUR, frais d'agence inclus<br> Nous réalisons les compromis de vente. TONY MONTES <span class=\"importDescriptionDecorator\" data-type=\"phone\">07 86 57 98 70</span> Agent Commercial - Numéro RSAC : 921 665 808- LA ROCHE SUR YON.<br>",
+   "prix": 9300.0,
+   "surface_m2": 1943.0,
+   "prix_m2": 4.79,
+   "departement": "85",
+   "commune": "Maillé",
+   "code_insee": "85132",
+   "code_postal": "85420",
+   "lat": 46.32644555212656,
+   "lon": -0.779403156947778,
+   "precision_geo": "commune",
+   "ref_cadastrale": null,
+   "typologie": "loisir",
+   "mode_vente": "gre_a_gre",
+   "photo_url": "https://file.bienici.com/photo/hektor-Abie-Immobilier-17840_abieimmobilier.staticlbi.com_original_images_biens_1_1a4d8c500a8a417496f439d05017b309_photo_ffb5a45aed7e85c46e6a6ae12561d94b.jpg",
+   "date_publication": "2026-11-14",
+   "premiere_vue": "2026-11-15T04:53:50+00:00",
+   "derniere_vue": "2026-11-15T04:53:50+00:00",
+   "prix_initial": 9300.0,
+   "historique_prix": [
+    {
+     "date": "2026-11-15",
+     "prix": 9300.0
+    }
+   ],
+   "score": 18.0,
+   "s_decote": 6.9,
+   "s_mutation": 3.1,
+   "s_acces": 8.0,
+   "s_rarete": 0.0,
+   "confiance": "faible",
+   "explications": [
+    "Décote : 4.79 €/m² contre une médiane DVF de 3.41 €/m² (commune, 6 ventes) soit 140 % du marché.",
+    "Mutation : position connue à la commune seulement, facteur neutre (localiser la parcelle pour affiner).",
+    "Mutation freinée : zone inondable signalée par l'annonce.",
+    "Accès : distance à la voie inconnue.",
+    "Contraintes : PPRi sur la commune, zone inondable mentionnée.",
+    "Rareté : La Roche-sur-Yon à 63 km."
+   ],
+   "alertes": [
+    {
+     "code": "inondable",
+     "libelle": "Mention de risque d'inondation / submersion / zone humide"
+    },
+    {
+     "code": "bord_eau",
+     "libelle": "En bord de cours d'eau : souvent en zone inondable"
+    },
+    {
+     "code": "abri",
+     "libelle": "Construction légère / bâtiment existant"
+    }
+   ],
+   "urbanisme": {
+    "parcelle_idu": null,
+    "section": null,
+    "contenance_m2": null,
+    "zone_plu": null,
+    "type_zone": null,
+    "doc_urbanisme": null,
+    "dist_zone_u_m": 1260.0,
+    "dist_zone_au_m": null,
+    "oap_proche_m": null,
+    "prescriptions": [],
+    "servitudes": []
+   },
+   "environnement": {
+    "natura2000": null,
+    "znieff": null,
+    "ppr_inondation": [
+     "PPRN-I - Rivière d'Autise et Sèvre niortaise"
+    ],
+    "azi": [
+     "AZI Marais Poitevin",
+     "ASM "
+    ],
+    "risques_commune": [
+     "Inondation",
+     "Par une crue à débordement lent de cours d'eau",
+     "Mouvement de terrain",
+     "Tassements différentiels",
+     "Séisme",
+     "Phénomène lié à l'atmosphère",
+     "Neige et pluies verglaçantes",
+     "Radon",
+     "Transport de marchandises dangereuses"
+    ],
+    "dist_littoral_km": 40.0,
+    "agglo_proche": "La Roche-sur-Yon",
+    "dist_agglo_km": 62.6,
+    "dist_route_m": null,
+    "nature_route": null
+   },
+   "dvf": {
+    "niveau": "commune",
+    "n": 6,
+    "p25_m2": 2.24,
+    "mediane_m2": 3.41,
+    "p75_m2": 5.97,
+    "ventes": [
+     {
+      "id_mutation": "2025-1113993",
+      "code_insee": "85132",
+      "date": "2025-08-07",
+      "valeur": 5500.0,
+      "surface_m2": 1420.0,
+      "prix_m2": 3.873,
+      "typologie": "loisir",
+      "nature": "jardins,terres",
+      "section": "0B",
+      "id_parcelle": "851320000B1710",
+      "lat": 46.348382,
+      "lon": -0.786457
+     },
+     {
+      "id_mutation": "2024-1050501",
+      "code_insee": "85132",
+      "date": "2024-10-21",
+      "valeur": 2400.0,
+      "surface_m2": 360.0,
+      "prix_m2": 6.667,
+      "typologie": "loisir",
+      "nature": "jardins",
+      "section": "0B",
+      "id_parcelle": "851320000B1060",
+      "lat": 46.340492,
+      "lon": -0.791292
+     },
+     {
+      "id_mutation": "2023-1166112",
+      "code_insee": "85132",
+      "date": "2023-12-20",
+      "valeur": 20000.0,
+      "surface_m2": 797.0,
+      "prix_m2": 25.094,
+      "typologie": "loisir",
+      "nature": "jardins",
+      "section": "ZB",
+      "id_parcelle": "85132000ZB0340",
+      "lat": 46.340692,
+      "lon": -0.778951
+     },
+     {
+      "id_mutation": "2023-1152304",
+      "code_insee": "85132",
+      "date": "2023-05-05",
+      "valeur": 1000.0,
+      "surface_m2": 340.0,
+      "prix_m2": 2.941,
+      "typologie": "loisir",
+      "nature": "jardins",
+      "section": "0B",
+      "id_parcelle": "851320000B1250",
+      "lat": 46.343062,
+      "lon": -0.794548
+     },
+     {
+      "id_mutation": "2022-1439405",
+      "code_insee": "85132",
+      "date": "2022-05-18",
+      "valeur": 250.0,
+      "surface_m2": 125.0,
+      "prix_m2": 2.0,
+      "typologie": "loisir",
+      "nature": "jardins",
+      "section": "0B",
+      "id_parcelle": "851320000B1082",
+      "lat": 46.340757,
+      "lon": -0.792061
+     },
+     {
+      "id_mutation": "2022-1439411",
+      "code_insee": "85132",
+      "date": "2022-05-18",
+      "valeur": 204.0,
+      "surface_m2": 102.0,
+      "prix_m2": 2.0,
+      "typologie": "loisir",
+      "nature": "jardins",
+      "section": "0B",
+      "id_parcelle": "851320000B1100",
+      "lat": 46.340903,
+      "lon": -0.792343
+     }
+    ]
+   },
+   "erreurs_enrichissement": [],
+   "note": "",
+   "suivi": "",
+   "favori": false,
+   "adresse_saisie": "",
+   "contact": {
+    "type": "pro",
+    "nom": null,
+    "agence": "Agence Benet Immobilier Européenne - Abie Immobilier",
+    "telephone": "02 51 00 09 45",
+    "email": null,
+    "adresse": "85490 benet",
+    "site": "https://abieimmobilier.la-boite-immo.com/i/redac/honoraires?honofor=1",
+    "frais_charge": "purchaser"
+   },
+   "honoraires": null
   }
  ],
  "exclues": [
@@ -11217,6 +11423,390 @@
    "commune": "Nort-sur-Erdre",
    "motif_exclusion": "vendu",
    "derniere_vue": "2026-10-16T07:30:45+00:00"
+  },
+  {
+   "id": "bienici:safti-1-1724641",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/safti-1-1724641",
+   "titre": "Terrain de loisir 1705m2",
+   "prix": 12000.0,
+   "surface_m2": 1705.0,
+   "departement": "37",
+   "commune": "Beaumont-en-Véron",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:safti-1-1699667",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/safti-1-1699667",
+   "titre": "5 parcelles de terre et de bois",
+   "prix": 12000.0,
+   "surface_m2": 18405.0,
+   "departement": "37",
+   "commune": "Huismes",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:safti-1-1688463",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/safti-1-1688463",
+   "titre": "1ha 7458 d'un seul tenant",
+   "prix": 12000.0,
+   "surface_m2": 17458.0,
+   "departement": "37",
+   "commune": "Chinon",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:safti-1-1660300",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/safti-1-1660300",
+   "titre": "Super terrain forestier au calme et sans vis à vis !",
+   "prix": 11590.0,
+   "surface_m2": 19185.0,
+   "departement": "37",
+   "commune": "Huismes",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:square-habitat-immo-facile-43154417",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/square-habitat-immo-facile-43154417",
+   "titre": "Terrain de loisirs Boussay",
+   "prix": 12000.0,
+   "surface_m2": 2290.0,
+   "departement": "37",
+   "commune": "Boussay",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:immo-facile-59405849",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/immo-facile-59405849",
+   "titre": "TERRAIN DE LOISIRS (Coup de pêche)",
+   "prix": 14000.0,
+   "surface_m2": 1431.0,
+   "departement": "37",
+   "commune": "Noizay",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:immo-facile-59405890",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/immo-facile-59405890",
+   "titre": "TERRAIN A LOISIRS, BORD DE CISSE",
+   "prix": 14000.0,
+   "surface_m2": 1431.0,
+   "departement": "37",
+   "commune": "Noizay",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:netty-company36775kxb-land-1445",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/netty-company36775kxb-land-1445",
+   "titre": "Cave et jardin",
+   "prix": 11000.0,
+   "surface_m2": 88.0,
+   "departement": "37",
+   "commune": "Sainte-Maure-de-Touraine",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:safti-1-1737391",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/safti-1-1737391",
+   "titre": "Parcelle de Bois Chêne et Epicéa bordure de route 3008m2  cave attenante",
+   "prix": 12000.0,
+   "surface_m2": 3008.0,
+   "departement": "37",
+   "commune": "Rigny-Ussé",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:iad-france-1841942",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/iad-france-1841942",
+   "titre": "Vente Terrain 1 791 m²",
+   "prix": 11000.0,
+   "surface_m2": 1791.0,
+   "departement": "37",
+   "commune": "Savigny-en-Véron",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:iad-france-2120844",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/iad-france-2120844",
+   "titre": "Vente Terrain 11 930 m²",
+   "prix": 12000.0,
+   "surface_m2": 11930.0,
+   "departement": "37",
+   "commune": "Champigny-sur-Veude",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:iad-france-2093494",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/iad-france-2093494",
+   "titre": "Vente Terrain 100 m²",
+   "prix": 12000.0,
+   "surface_m2": 100.0,
+   "departement": "37",
+   "commune": "Rigny-Ussé",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:iad-france-2025773",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/iad-france-2025773",
+   "titre": "Vente Terrain 1 191 m²",
+   "prix": 12500.0,
+   "surface_m2": 1191.0,
+   "departement": "37",
+   "commune": "Cormery",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:iad-france-2151458",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/iad-france-2151458",
+   "titre": "Vente Terrain 3 940 m²",
+   "prix": 15000.0,
+   "surface_m2": 3940.0,
+   "departement": "37",
+   "commune": "Vouvray",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:51+00:00"
+  },
+  {
+   "id": "bienici:ag311656-548388734",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/ag311656-548388734",
+   "titre": "LA ROCHE-SUR-YON – LA BENETIÈRE – TERRAIN DE LOISIRS NON CONSTRUCTIBLE – PARCELLE DE 900 M² DANS UN CADRE NATUREL PRIVILÉGIÉ",
+   "prix": 14900.0,
+   "surface_m2": 900.0,
+   "departement": "85",
+   "commune": "La Roche-sur-Yon",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:ag743447-532300976",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/ag743447-532300976",
+   "titre": "Terrain",
+   "prix": 12500.0,
+   "surface_m2": 2535.0,
+   "departement": "85",
+   "commune": "Beauvoir-sur-Mer",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:guy-hoquet-18-GT0130-6686",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/guy-hoquet-18-GT0130-6686",
+   "titre": "Terrain de loisirs Fontenay Le Comte 604 m2",
+   "prix": 12500.0,
+   "surface_m2": 604.0,
+   "departement": "85",
+   "commune": "Fontenay-le-Comte",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:immo-facile-60057112",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/immo-facile-60057112",
+   "titre": "Terrain Sallertaine 6990 m2",
+   "prix": 11000.0,
+   "surface_m2": 6990.0,
+   "departement": "85",
+   "commune": "Sallertaine",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:safti-1-1578683",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/safti-1-1578683",
+   "titre": "L'Ile d'Olonne, terrain agricole 2574m2.",
+   "prix": 14999.0,
+   "surface_m2": 2574.0,
+   "departement": "85",
+   "commune": "L'Île-d'Olonne",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:safti-1-1555600",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/safti-1-1555600",
+   "titre": "Les Sables d'Olonne. Terrain agricole 2230m2",
+   "prix": 14500.0,
+   "surface_m2": 2230.0,
+   "departement": "85",
+   "commune": "Les Sables-d'Olonne",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:immo-facile-58791362",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/immo-facile-58791362",
+   "titre": "À VENDRE ! TERRAIN DE LOISIRS AUX PORTES DE LA ROCHE-SUR-YON",
+   "prix": 10000.0,
+   "surface_m2": 362.0,
+   "departement": "85",
+   "commune": "La Ferrière",
+   "motif_exclusion": "prix_m2_trop_eleve",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:immo-facile-58580820",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/immo-facile-58580820",
+   "titre": "Terrain idéal pour animaux 7470m²",
+   "prix": 12200.0,
+   "surface_m2": 7407.0,
+   "departement": "44",
+   "commune": "Saint-Lumine-de-Clisson",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:adapt-immo-85002127649",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/adapt-immo-85002127649",
+   "titre": "Terrain boisé – forêt",
+   "prix": 12000.0,
+   "surface_m2": 10836.0,
+   "departement": "49",
+   "commune": "Morannes",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:safti-1-1657348",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/safti-1-1657348",
+   "titre": "Terrain de loisir sur la commune de DURTAL.",
+   "prix": 15000.0,
+   "surface_m2": 1826.0,
+   "departement": "49",
+   "commune": "Durtal",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:laforet-immo-facile-21649832",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/laforet-immo-facile-21649832",
+   "titre": "Terrain de Loisirs  LA JUMELLIERE",
+   "prix": 10000.0,
+   "surface_m2": 101.0,
+   "departement": "49",
+   "commune": "Chemillé-en-Anjou",
+   "motif_exclusion": "surface_hors_bornes",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:guy-hoquet-18-GT0130-6901",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/guy-hoquet-18-GT0130-6901",
+   "titre": "Terrain à vendre",
+   "prix": 11500.0,
+   "surface_m2": 2930.0,
+   "departement": "85",
+   "commune": "Longèves",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:iad-france-2075724",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/iad-france-2075724",
+   "titre": "Vente Terrain 70 m²",
+   "prix": 9000.0,
+   "surface_m2": 70.0,
+   "departement": "85",
+   "commune": "Mareuil-sur-Lay-Dissais",
+   "motif_exclusion": "surface_hors_bornes",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:iad-france-1913835",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/iad-france-1913835",
+   "titre": "Vente Terrain agricole 7 264 m²",
+   "prix": 12000.0,
+   "surface_m2": 7264.0,
+   "departement": "44",
+   "commune": "Saint-Lumine-de-Clisson",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "bienici:century-21-202_3601_1828",
+   "source": "bienici",
+   "url": "https://www.bienici.com/annonce/vente/century-21-202_3601_1828",
+   "titre": "",
+   "prix": 13000.0,
+   "surface_m2": 2130.0,
+   "departement": "85",
+   "commune": "Les Sables-d'Olonne",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:50+00:00"
+  },
+  {
+   "id": "notaires:1869425",
+   "source": "notaires",
+   "url": "https://www.immobilier.notaires.fr/fr/annonce-immo/vente/terrain/jaulnay-37/1869425",
+   "titre": "Terrain 2555 m² – Jaulnay",
+   "prix": 13000.0,
+   "surface_m2": 2555.0,
+   "departement": "37",
+   "commune": "Jaulnay",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:49+00:00"
+  },
+  {
+   "id": "notaires:1733978",
+   "source": "notaires",
+   "url": "https://www.immobilier.notaires.fr/fr/annonce-immo/vente/terrain/cormery-37/1733978",
+   "titre": "Terrain 1560 m² – Cormery",
+   "prix": 14600.0,
+   "surface_m2": 1560.0,
+   "departement": "37",
+   "commune": "Cormery",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:49+00:00"
+  },
+  {
+   "id": "notaires:1979114",
+   "source": "notaires",
+   "url": "https://www.immobilier.notaires.fr/fr/annonce-immo/vente/terrain/beaufort-en-anjou-49/1979114",
+   "titre": "Terrain 6191 m² – Beaufort-en-Anjou",
+   "prix": 10240.0,
+   "surface_m2": 6191.0,
+   "departement": "49",
+   "commune": "Beaufort-en-Anjou",
+   "motif_exclusion": "prix_plafond",
+   "derniere_vue": "2026-11-15T04:53:48+00:00"
   },
   {
    "id": "paruvendu:1288749473A1KIVHTE000",
@@ -11517,390 +12107,6 @@
    "commune": "Mareuil-sur-lay-dissais",
    "motif_exclusion": "surface_hors_bornes",
    "derniere_vue": "2026-11-14T05:00:32+00:00"
-  },
-  {
-   "id": "bienici:immo-facile-58580820",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/immo-facile-58580820",
-   "titre": "Terrain idéal pour animaux 7470m²",
-   "prix": 12200.0,
-   "surface_m2": 7407.0,
-   "departement": "44",
-   "commune": "Saint-Lumine-de-Clisson",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:adapt-immo-85002127649",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/adapt-immo-85002127649",
-   "titre": "Terrain boisé – forêt",
-   "prix": 12000.0,
-   "surface_m2": 10836.0,
-   "departement": "49",
-   "commune": "Morannes",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:safti-1-1657348",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/safti-1-1657348",
-   "titre": "Terrain de loisir sur la commune de DURTAL.",
-   "prix": 15000.0,
-   "surface_m2": 1826.0,
-   "departement": "49",
-   "commune": "Durtal",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:laforet-immo-facile-21649832",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/laforet-immo-facile-21649832",
-   "titre": "Terrain de Loisirs  LA JUMELLIERE",
-   "prix": 10000.0,
-   "surface_m2": 101.0,
-   "departement": "49",
-   "commune": "Chemillé-en-Anjou",
-   "motif_exclusion": "surface_hors_bornes",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:safti-1-1724641",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/safti-1-1724641",
-   "titre": "Terrain de loisir 1705m2",
-   "prix": 12000.0,
-   "surface_m2": 1705.0,
-   "departement": "37",
-   "commune": "Beaumont-en-Véron",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:safti-1-1699667",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/safti-1-1699667",
-   "titre": "5 parcelles de terre et de bois",
-   "prix": 12000.0,
-   "surface_m2": 18405.0,
-   "departement": "37",
-   "commune": "Huismes",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:safti-1-1688463",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/safti-1-1688463",
-   "titre": "1ha 7458 d'un seul tenant",
-   "prix": 12000.0,
-   "surface_m2": 17458.0,
-   "departement": "37",
-   "commune": "Chinon",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:safti-1-1660300",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/safti-1-1660300",
-   "titre": "Super terrain forestier au calme et sans vis à vis !",
-   "prix": 11590.0,
-   "surface_m2": 19185.0,
-   "departement": "37",
-   "commune": "Huismes",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:square-habitat-immo-facile-43154417",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/square-habitat-immo-facile-43154417",
-   "titre": "Terrain de loisirs Boussay",
-   "prix": 12000.0,
-   "surface_m2": 2290.0,
-   "departement": "37",
-   "commune": "Boussay",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:immo-facile-59405849",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/immo-facile-59405849",
-   "titre": "TERRAIN DE LOISIRS (Coup de pêche)",
-   "prix": 14000.0,
-   "surface_m2": 1431.0,
-   "departement": "37",
-   "commune": "Noizay",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:immo-facile-59405890",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/immo-facile-59405890",
-   "titre": "TERRAIN A LOISIRS, BORD DE CISSE",
-   "prix": 14000.0,
-   "surface_m2": 1431.0,
-   "departement": "37",
-   "commune": "Noizay",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:netty-company36775kxb-land-1445",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/netty-company36775kxb-land-1445",
-   "titre": "Cave et jardin",
-   "prix": 11000.0,
-   "surface_m2": 88.0,
-   "departement": "37",
-   "commune": "Sainte-Maure-de-Touraine",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:iad-france-1913835",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/iad-france-1913835",
-   "titre": "Vente Terrain agricole 7 264 m²",
-   "prix": 12000.0,
-   "surface_m2": 7264.0,
-   "departement": "44",
-   "commune": "Saint-Lumine-de-Clisson",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:safti-1-1737391",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/safti-1-1737391",
-   "titre": "Parcelle de Bois Chêne et Epicéa bordure de route 3008m2  cave attenante",
-   "prix": 12000.0,
-   "surface_m2": 3008.0,
-   "departement": "37",
-   "commune": "Rigny-Ussé",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:iad-france-1841942",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/iad-france-1841942",
-   "titre": "Vente Terrain 1 791 m²",
-   "prix": 11000.0,
-   "surface_m2": 1791.0,
-   "departement": "37",
-   "commune": "Savigny-en-Véron",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:iad-france-2120844",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/iad-france-2120844",
-   "titre": "Vente Terrain 11 930 m²",
-   "prix": 12000.0,
-   "surface_m2": 11930.0,
-   "departement": "37",
-   "commune": "Champigny-sur-Veude",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:iad-france-2093494",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/iad-france-2093494",
-   "titre": "Vente Terrain 100 m²",
-   "prix": 12000.0,
-   "surface_m2": 100.0,
-   "departement": "37",
-   "commune": "Rigny-Ussé",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:iad-france-2025773",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/iad-france-2025773",
-   "titre": "Vente Terrain 1 191 m²",
-   "prix": 12500.0,
-   "surface_m2": 1191.0,
-   "departement": "37",
-   "commune": "Cormery",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "bienici:iad-france-2151458",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/iad-france-2151458",
-   "titre": "Vente Terrain 3 940 m²",
-   "prix": 15000.0,
-   "surface_m2": 3940.0,
-   "departement": "37",
-   "commune": "Vouvray",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:15+00:00"
-  },
-  {
-   "id": "notaires:1979114",
-   "source": "notaires",
-   "url": "https://www.immobilier.notaires.fr/fr/annonce-immo/vente/terrain/beaufort-en-anjou-49/1979114",
-   "titre": "Terrain 6191 m² – Beaufort-en-Anjou",
-   "prix": 10240.0,
-   "surface_m2": 6191.0,
-   "departement": "49",
-   "commune": "Beaufort-en-Anjou",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
-  },
-  {
-   "id": "notaires:1869425",
-   "source": "notaires",
-   "url": "https://www.immobilier.notaires.fr/fr/annonce-immo/vente/terrain/jaulnay-37/1869425",
-   "titre": "Terrain 2555 m² – Jaulnay",
-   "prix": 13000.0,
-   "surface_m2": 2555.0,
-   "departement": "37",
-   "commune": "Jaulnay",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
-  },
-  {
-   "id": "notaires:1733978",
-   "source": "notaires",
-   "url": "https://www.immobilier.notaires.fr/fr/annonce-immo/vente/terrain/cormery-37/1733978",
-   "titre": "Terrain 1560 m² – Cormery",
-   "prix": 14600.0,
-   "surface_m2": 1560.0,
-   "departement": "37",
-   "commune": "Cormery",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
-  },
-  {
-   "id": "bienici:ag311656-548388734",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/ag311656-548388734",
-   "titre": "LA ROCHE-SUR-YON – LA BENETIÈRE – TERRAIN DE LOISIRS NON CONSTRUCTIBLE – PARCELLE DE 900 M² DANS UN CADRE NATUREL PRIVILÉGIÉ",
-   "prix": 14900.0,
-   "surface_m2": 900.0,
-   "departement": "85",
-   "commune": "La Roche-sur-Yon",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
-  },
-  {
-   "id": "bienici:ag743447-532300976",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/ag743447-532300976",
-   "titre": "Terrain",
-   "prix": 12500.0,
-   "surface_m2": 2535.0,
-   "departement": "85",
-   "commune": "Beauvoir-sur-Mer",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
-  },
-  {
-   "id": "bienici:guy-hoquet-18-GT0130-6686",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/guy-hoquet-18-GT0130-6686",
-   "titre": "Terrain de loisirs Fontenay Le Comte 604 m2",
-   "prix": 12500.0,
-   "surface_m2": 604.0,
-   "departement": "85",
-   "commune": "Fontenay-le-Comte",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
-  },
-  {
-   "id": "bienici:immo-facile-60057112",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/immo-facile-60057112",
-   "titre": "Terrain Sallertaine 6990 m2",
-   "prix": 11000.0,
-   "surface_m2": 6990.0,
-   "departement": "85",
-   "commune": "Sallertaine",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
-  },
-  {
-   "id": "bienici:safti-1-1578683",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/safti-1-1578683",
-   "titre": "L'Ile d'Olonne, terrain agricole 2574m2.",
-   "prix": 14999.0,
-   "surface_m2": 2574.0,
-   "departement": "85",
-   "commune": "L'Île-d'Olonne",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
-  },
-  {
-   "id": "bienici:safti-1-1555600",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/safti-1-1555600",
-   "titre": "Les Sables d'Olonne. Terrain agricole 2230m2",
-   "prix": 14500.0,
-   "surface_m2": 2230.0,
-   "departement": "85",
-   "commune": "Les Sables-d'Olonne",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
-  },
-  {
-   "id": "bienici:immo-facile-58791362",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/immo-facile-58791362",
-   "titre": "À VENDRE ! TERRAIN DE LOISIRS AUX PORTES DE LA ROCHE-SUR-YON",
-   "prix": 10000.0,
-   "surface_m2": 362.0,
-   "departement": "85",
-   "commune": "La Ferrière",
-   "motif_exclusion": "prix_m2_trop_eleve",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
-  },
-  {
-   "id": "bienici:guy-hoquet-18-GT0130-6901",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/guy-hoquet-18-GT0130-6901",
-   "titre": "Terrain à vendre",
-   "prix": 11500.0,
-   "surface_m2": 2930.0,
-   "departement": "85",
-   "commune": "Longèves",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
-  },
-  {
-   "id": "bienici:iad-france-2075724",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/iad-france-2075724",
-   "titre": "Vente Terrain 70 m²",
-   "prix": 9000.0,
-   "surface_m2": 70.0,
-   "departement": "85",
-   "commune": "Mareuil-sur-Lay-Dissais",
-   "motif_exclusion": "surface_hors_bornes",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
-  },
-  {
-   "id": "bienici:century-21-202_3601_1828",
-   "source": "bienici",
-   "url": "https://www.bienici.com/annonce/vente/century-21-202_3601_1828",
-   "titre": "",
-   "prix": 13000.0,
-   "surface_m2": 2130.0,
-   "departement": "85",
-   "commune": "Les Sables-d'Olonne",
-   "motif_exclusion": "prix_plafond",
-   "derniere_vue": "2026-11-14T05:00:14+00:00"
   },
   {
    "id": "paruvendu:1296549888A1KIVHTE000",
@@ -17073,15 +17279,15 @@
  "collectes": [
   {
    "source": "bienici",
-   "fin": "2026-11-14T05:00:15+00:00",
-   "vues": 65,
+   "fin": "2026-11-15T04:53:51+00:00",
+   "vues": 66,
    "nouvelles": 1,
    "exclues": 29,
    "erreur": null
   },
   {
    "source": "notaires",
-   "fin": "2026-11-14T05:00:14+00:00",
+   "fin": "2026-11-15T04:53:49+00:00",
    "vues": 9,
    "nouvelles": 0,
    "exclues": 3,
@@ -17089,10 +17295,10 @@
   },
   {
    "source": "paruvendu",
-   "fin": "2026-11-14T05:02:38+00:00",
-   "vues": 36,
+   "fin": "2026-11-15T04:54:37+00:00",
+   "vues": 0,
    "nouvelles": 0,
-   "exclues": 25,
+   "exclues": 0,
    "erreur": null
   }
  ]
